@@ -11,7 +11,7 @@ Description: hatchR is intended to bridge the analytic gap of
     (e.g., Beacham and Murray 1990) and applying them to real world 
     temperature data sets using an effective value framework 
     developed by Sparks et al. (2019).
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
