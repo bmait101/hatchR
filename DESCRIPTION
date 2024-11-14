@@ -2,18 +2,19 @@ Package: hatchR
 Type: Package
 Title: Predict Fish Hatching and Emergence from Daily Temperature Data
 Version: 0.1.0
-Authors@R:
+Authors@R: c(
     person(given = "Bryan", 
            family = "Maitland",
            role = c("aut", "cre"),
            email = "bryan.maitland@usda.gov",
            comment = c(ORCID = "0000-0002-4491-5064")
-           )
+           ),
     person(given = "Morgan", 
            family = "Sparks",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "morgan.sparks@usda.gov"
            )
+    )
 Maintainer: Bryan Maitland <bryan.maitland@usda.gov>
 Description: hatchR is intended to bridge the analytic gap of 
     taking statistical models developed in hatchery settings 
