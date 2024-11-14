@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot_check_temp.R
 \name{plot_check_temp}
 \alias{plot_check_temp}
-\title{Plot imported data}
+\title{Plot imported data to check temperature values}
 \usage{
-plot_check_temp(data, dates, temperature, temp_min, temp_max)
+plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 }
 \arguments{
-\item{data}{imported data}
+\item{data}{data.frame with dates and temperature}
 
 \item{dates}{date column}
 
@@ -17,6 +17,16 @@ plot_check_temp(data, dates, temperature, temp_min, temp_max)
 
 \item{temp_max}{max temp on plot}
 }
+\value{
+A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
+}
 \description{
-Plot imported data
+The \code{plot_check_temp} function is used to plot imported data to check temperature values.
+The function takes a data frame with dates and temperature values,
+and plots the temperature values over time. The function also allows users
+to specify the minimum and maximum temperature values to be plotted.
+}
+\examples{
+library(hatchR)
+plot_check_temp(data = RMRS_MT103, dates = SampleDate, temperature = temperature)
 }
