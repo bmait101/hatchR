@@ -12,7 +12,12 @@
 #' @examples
 #' library(hatchR)
 #' # access the parameterization for sockeye hatching using model #2 from Beacham and Murray (1990)
-#' sockeye_hatch_mod <- model_select(author = "Beacham and Murray 1990", species = "sockeye", model = 2, dev.type = "hatch")
+#' sockeye_hatch_mod <- model_select(
+#' author = "Beacham and Murray 1990",
+#' species = "sockeye",
+#' model = 2,
+#' dev.type = "hatch"
+#' )
 #' # print out the expression to check
 #' sockeye_hatch_mod
 model_select <- function(author,
