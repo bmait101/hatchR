@@ -15,9 +15,13 @@
 #' sockeye_hatch_mod <- model_select(author = "Beacham and Murray 1990", species = "sockeye", model = 2, dev.type = "hatch")
 #' # print out the expression to check
 #' sockeye_hatch_mod
-model_select <- function(author, species, model, dev.type){
+model_select <- function(author,
+                         species,
+                         model,
+                         dev.type
+                         ){
 
-  #select model based on the various arguments provided in the function (base R syntax--needs strings as arguments)
+  # base R syntax--needs strings as arguments
   mod <- model_table[which(model_table$author == author &
                              model_table$species == species &
                              model_table$model == model &
@@ -33,6 +37,5 @@ model_select <- function(author, species, model, dev.type){
 
   mod <- parse(text = mod) # turn model to text and parse
   return(mod)
-
 
 }
