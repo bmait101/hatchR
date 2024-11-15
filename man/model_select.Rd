@@ -21,7 +21,7 @@ A model function.
 \description{
 The function calls a model table with the parameterizations for
 different species from different studies built in. Refer to the
-table (\code{model_table.csv}) before using function to find inputs for
+table (\code{model_table}) before using function to find inputs for
 the different function arguments. It pulls the model format as a
 string and parses it to be usable in \code{hatchR} model.
 }
