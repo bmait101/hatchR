@@ -2,5 +2,6 @@
 
 export(model_select)
 export(plot_check_temp)
+export(predict_phenology)
 export(summarize_temp)
 importFrom(utils,globalVariables)
