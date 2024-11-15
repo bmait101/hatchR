@@ -1,4 +1,4 @@
-#' Model parameterizations for salmonid species to predict phenology
+#' Table of phenology models
 #'
 #' Description to come...
 #'
