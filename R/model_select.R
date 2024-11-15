@@ -1,8 +1,8 @@
 #' Select a development model structure
 #'
-#' The function calls a model table with the parameterizations for
+#' @description The function calls a model table with the parameterizations for
 #' different species from different studies built in. Refer to the
-#' table (`model_table.csv`) before using function to find inputs for
+#' table (`model_table`) before using function to find inputs for
 #' the different function arguments. It pulls the model format as a
 #' string and parses it to be usable in `hatchR` model.
 #'
@@ -40,8 +40,8 @@ model_select <- function(author,
         species == {{species}} &
         model == {{model}} &
         dev.type == {{dev.type}}
-      )  |>
-    dplyr::pull(func)
+      ) |>
+    dplyr::pull("func")
 
   # base R syntax (needs strings as arguments)
   # mod <- model_table[which(model_table$author == author &
@@ -49,7 +49,7 @@ model_select <- function(author,
   #                            model_table$model == model &
   #                            model_table$dev.type == dev.type), "func"]
 
-  mod <- parse(text = mod) # turn model to text and parse
+  mod <- parse(text = mod)
   return(mod)
 
 }
