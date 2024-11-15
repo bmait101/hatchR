@@ -1,4 +1,8 @@
-#' Select a development model
+#' Select a development model structure
+#'
+#' Parameterizations from published literature for
+#' numerous salmonid species used predict
+#' both hatching and emergence
 #'
 #' @param author Source of model.
 #' @param species Species common name.
@@ -11,14 +15,15 @@
 #'
 #' @examples
 #' library(hatchR)
-#' # access the parameterization for sockeye hatching using model #2 from Beacham and Murray (1990)
+#' # access the parameterization for sockeye hatching using
+#' # model #2 from Beacham and Murray (1990)
 #' sockeye_hatch_mod <- model_select(
-#' author = "Beacham and Murray 1990",
-#' species = "sockeye",
-#' model = 2,
-#' dev.type = "hatch"
+#'   author = "Beacham and Murray 1990",
+#'   species = "sockeye",
+#'   model = 2,
+#'   dev.type = "hatch"
 #' )
-#' # print out the expression to check
+#' # print
 #' sockeye_hatch_mod
 model_select <- function(author,
                          species,
@@ -32,6 +37,9 @@ model_select <- function(author,
                              model_table$model == model &
                              model_table$dev.type == dev.type), "func"]
 
+  # use dplyr and stingr functions to select model
+
+
   # model select using tidyverse (not returning correctly)
   # mod <- model.table %>%
   #   filter(author == {{author}} &
@@ -44,3 +52,6 @@ model_select <- function(author,
   return(mod)
 
 }
+
+# TO DO:
+# - use tidyvserse instead of base r
