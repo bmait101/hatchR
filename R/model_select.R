@@ -7,7 +7,7 @@
 #' @param author Source of model.
 #' @param species Species common name.
 #' @param model Model number of type from Beacham and Murray (1990).
-#' @param dev.type Phenology type (e.g., hatch or emerge).
+#' @param dev.type Phenology type (e.g., "hatch" or "emerge").
 #'
 #' @return A model function.
 #'
@@ -31,22 +31,21 @@ model_select <- function(author,
                          dev.type
                          ){
 
-  # base R syntax--needs strings as arguments
-  mod <- model_table[which(model_table$author == author &
-                             model_table$species == species &
-                             model_table$model == model &
-                             model_table$dev.type == dev.type), "func"]
-
-  # use dplyr and stingr functions to select model
-
-
   # model select using tidyverse (not returning correctly)
-  # mod <- model.table %>%
-  #   filter(author == {{author}} &
-  #            species == {{species}} &
-  #            model == {{model}} &
-  #            dev.type == {{dev.type}}) %>%
-  #   pull(func)
+  mod <- model_table  |>
+    dplyr::filter(
+      author == {{author}} &
+        species == {{species}} &
+        model == {{model}} &
+        dev.type == {{dev.type}}
+      )  |>
+    dplyr::pull(func)
+
+  # base R syntax (needs strings as arguments)
+  # mod <- model_table[which(model_table$author == author &
+  #                            model_table$species == species &
+  #                            model_table$model == model &
+  #                            model_table$dev.type == dev.type), "func"]
 
   mod <- parse(text = mod) # turn model to text and parse
   return(mod)
@@ -55,3 +54,4 @@ model_select <- function(author,
 
 # TO DO:
 # - use tidyvserse instead of base r
+# - add ID to each model for easily selection
