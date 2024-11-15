@@ -28,5 +28,9 @@ to specify the minimum and maximum temperature values to be plotted.
 }
 \examples{
 library(hatchR)
-plot_check_temp(data = RMRS_MT103, dates = SampleDate, temperature = temperature)
+plot_check_temp(
+  data = RMRS_MT103,
+  dates = SampleDate,
+  temperature = temperature
+)
 }
