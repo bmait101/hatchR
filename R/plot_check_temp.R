@@ -18,7 +18,11 @@
 #'
 #' @examples
 #' library(hatchR)
-#' plot_check_temp(data = RMRS_MT103, dates = SampleDate, temperature = temperature)
+#' plot_check_temp(
+#'   data = RMRS_MT103,
+#'   dates = SampleDate,
+#'   temperature = temperature
+#' )
 plot_check_temp <- function(data,
                             dates,
                             temperature,
@@ -29,14 +33,16 @@ plot_check_temp <- function(data,
   check_dates <- data |> dplyr::pull({{dates}}) |>is.character()
   if(check_dates == TRUE){
     stop(
-      "Date column is not Date or Date-time class; convert to date or date-time (e.g. `lubridate::ymd()`.",
+      "Date column is not Date or Date-time class; convert to date or
+      date-time (e.g. `lubridate::ymd()`.",
       call. = FALSE
       )
     }
 
   # d <- data |> dplyr::pull({{dates}})
   # if(class({{d}})[1] != "Date" | class({{d}})[1] != "POSIXct"){
-  #   stop("Date column is not Date or Date-time class; convert to date or date-time (e.g. `lubridate::ymd()`.")
+  #   stop("Date column is not Date or Date-time class; convert to
+  #   date or date-time (e.g. `lubridate::ymd()`.")
   # }
 
   p <- data |>
