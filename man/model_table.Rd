@@ -3,7 +3,7 @@
 \docType{data}
 \name{model_table}
 \alias{model_table}
-\title{Model parameterizations for salmonid species to predict phenology}
+\title{Table of phenology models}
 \format{
 Data frame
 \describe{
