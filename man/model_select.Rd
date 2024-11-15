@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_select.R
 \name{model_select}
 \alias{model_select}
-\title{Select a development model}
+\title{Select a development model structure}
 \usage{
 model_select(author, species, model, dev.type)
 }
@@ -13,23 +13,28 @@ model_select(author, species, model, dev.type)
 
 \item{model}{Model number of type from Beacham and Murray (1990).}
 
-\item{dev.type}{Phenology type (e.g., hatch or emerge).}
+\item{dev.type}{Phenology type (e.g., "hatch" or "emerge").}
 }
 \value{
 A model function.
 }
 \description{
-Select a development model
+The function calls a model table with the parameterizations for
+different species from different studies built in. Refer to the
+table (\code{model_table.csv}) before using function to find inputs for
+the different function arguments. It pulls the model format as a
+string and parses it to be usable in \code{hatchR} model.
 }
 \examples{
 library(hatchR)
-# access the parameterization for sockeye hatching using model #2 from Beacham and Murray (1990)
+# access the parameterization for sockeye hatching using
+# model #2 from Beacham and Murray (1990)
 sockeye_hatch_mod <- model_select(
-author = "Beacham and Murray 1990",
-species = "sockeye",
-model = 2,
-dev.type = "hatch"
+  author = "Beacham and Murray 1990",
+  species = "sockeye",
+  model = 2,
+  dev.type = "hatch"
 )
-# print out the expression to check
+# print
 sockeye_hatch_mod
 }

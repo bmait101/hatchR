@@ -1,8 +1,10 @@
 #' Select a development model structure
 #'
-#' Parameterizations from published literature for
-#' numerous salmonid species used predict
-#' both hatching and emergence
+#' The function calls a model table with the parameterizations for
+#' different species from different studies built in. Refer to the
+#' table (`model_table.csv`) before using function to find inputs for
+#' the different function arguments. It pulls the model format as a
+#' string and parses it to be usable in `hatchR` model.
 #'
 #' @param author Source of model.
 #' @param species Species common name.
