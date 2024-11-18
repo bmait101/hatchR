@@ -33,6 +33,8 @@ effective value approach.
 library(hatchR)
 # vector of temperatures
 temperature <- c(2,5,8,11,14)
-vector of days to hatch
-days <- c(194,87,54,35,28)
+# vector of days to hatch
+days_to_hatch <- c(194,87,54,35,28)
+quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
+bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
 }
