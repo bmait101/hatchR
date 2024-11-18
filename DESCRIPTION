@@ -35,6 +35,7 @@ Imports:
     ggplot2,
     lubridate,
     rlang,
+    stats,
     tibble,
     utils
 Suggests: 
