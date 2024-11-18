@@ -27,17 +27,17 @@ plot_check_temp <- function(data,
                             dates,
                             temperature,
                             temp_min = 0,
-                            temp_max = 25
-                            ){
-
-  check_dates <- data |> dplyr::pull({{dates}}) |>is.character()
-  if(check_dates == TRUE){
+                            temp_max = 25) {
+  check_dates <- data |>
+    dplyr::pull({{ dates }}) |>
+    is.character()
+  if (check_dates == TRUE) {
     stop(
       "Date column is not Date or Date-time class; convert to date or
       date-time (e.g. `lubridate::ymd()`.",
       call. = FALSE
-      )
-    }
+    )
+  }
 
   # d <- data |> dplyr::pull({{dates}})
   # if(class({{d}})[1] != "Date" | class({{d}})[1] != "POSIXct"){
@@ -46,13 +46,15 @@ plot_check_temp <- function(data,
   # }
 
   p <- data |>
-    ggplot2::ggplot(ggplot2::aes(x = {{dates}}, y = {{temperature}})) +
+    ggplot2::ggplot(ggplot2::aes(x = {{ dates }}, y = {{ temperature }})) +
     ggplot2::geom_point(size = 0.5) +
     ggplot2::geom_line(linewidth = 0.5) +
     ggplot2::geom_hline(
-      yintercept = c(temp_min), linetype = "dashed", color = "dodgerblue") +
+      yintercept = c(temp_min), linetype = "dashed", color = "dodgerblue"
+    ) +
     ggplot2::geom_hline(
-      yintercept = c(temp_max), linetype = "dashed", color = "red") +
+      yintercept = c(temp_max), linetype = "dashed", color = "red"
+    ) +
     ggplot2::labs(x = "Date", y = "Temperature") +
     ggplot2::theme_classic()
 

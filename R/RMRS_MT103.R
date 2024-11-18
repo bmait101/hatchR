@@ -11,5 +11,5 @@
 #' \item{temperture}{Temperature in degrees Celsius.}
 #' }
 #' @examples
-#'   RMRS_MT103
+#' RMRS_MT103
 "RMRS_MT103"

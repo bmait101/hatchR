@@ -30,17 +30,15 @@
 model_select <- function(author,
                          species,
                          model,
-                         dev.type
-                         ){
-
+                         dev.type) {
   # model select using tidyverse (not returning correctly)
-  mod <- model_table  |>
+  mod <- model_table |>
     dplyr::filter(
-      author == {{author}} &
-        species == {{species}} &
-        model == {{model}} &
-        dev.type == {{dev.type}}
-      ) |>
+      author == {{ author }} &
+        species == {{ species }} &
+        model == {{ model }} &
+        dev.type == {{ dev.type }}
+    ) |>
     dplyr::pull("func")
 
   # base R syntax (needs strings as arguments)
@@ -51,7 +49,6 @@ model_select <- function(author,
 
   mod <- parse(text = mod)
   return(mod)
-
 }
 
 # TO DO:

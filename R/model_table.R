@@ -12,5 +12,5 @@
 #' \item{func}{character string desciption of the function}
 #' }
 #' @examples
-#'   model_table
+#' model_table
 "model_table"

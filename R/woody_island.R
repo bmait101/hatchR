@@ -13,5 +13,5 @@
 #' \item{func}{character string desciption of the function}
 #' }
 #' @examples
-#'   woody_island
+#' woody_island
 "woody_island"
