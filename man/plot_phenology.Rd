@@ -4,12 +4,12 @@
 \alias{plot_phenology}
 \title{Plot phenology}
 \usage{
-plot_phenology(plot, style, labels)
+plot_phenology(plot, style = "all", labels = TRUE)
 }
 \arguments{
 \item{plot}{object output from predict_phenology}
 
-\item{style}{different plot types (all, ef_cumsum, ef_daily)}
+\item{style}{different plot types: all, ef_cumsum, ef_daily}
 
 \item{labels}{true or false, used to turn on and off the information at the top of plots}
 }
@@ -20,5 +20,8 @@ ggplot2 object
 Plot phenology
 }
 \examples{
-to come...
+library(hatchR)
+plot_phenology(WI_hatch, style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
+plot_phenology(WI_hatch, style = "ef_daily") # shows a plot with just the ef daily values
+plot_phenology(WI_hatch, labels = FALSE) # turns off the labeling for a cleaner figure
 }
