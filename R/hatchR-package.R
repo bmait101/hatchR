@@ -4,6 +4,7 @@
 utils::globalVariables(c("model_table", "woody_island"))
 
 ## usethis namespace: start
+#' @importFrom modelr add_predictions
 #' @importFrom rlang .data
 #' @importFrom stats coef
 #' @importFrom stats lm
