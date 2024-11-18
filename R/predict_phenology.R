@@ -1,4 +1,4 @@
-#' Predict phenologt of fish based on temperature
+#' Predict phenology of fish
 #'
 #' @description
 #' A short description...
@@ -12,15 +12,14 @@
 #' @return
 #' A list with the following elements:
 #'
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
 #' # to come...
-predict_phenology <- function(data, dates, temperature,  spawn.date, model){
+predict_phenology <- function(data, dates, temperature, spawn.date, model){
 
-  #define user dataframe and make sure dates are sorted
-  dat <-  data |>
-    dplyr::arrange({{dates}})
+  dat <-  data |> dplyr::arrange({{dates}})
 
   # errors if data is in wrong format (Date)
   if(lubridate::is.timepoint(spawn.date) == TRUE || lubridate::is.Date(spawn.date) == TRUE ){
@@ -39,20 +38,20 @@ predict_phenology <- function(data, dates, temperature,  spawn.date, model){
   }
 
   # turn dates from strings to datetime for using lubridate
-  s.d<- lubridate::ymd(spawn.date)
+  s.d <- lubridate::ymd(spawn.date)
   #dat[,dates] <-mdy(dat[,dates] )
 
-  #subset to spawn date
-  #spawn.position<- which(dat[,dates] == s.d) # old base R version
-  spawn.position <-dat |>
+  # subset to spawn date
+  # spawn.position <- which(dat[,dates] == s.d)  #old base R version
+  spawn.position <- dat |>
     tibble::rownames_to_column() |>
-    dplyr::mutate(rowname = as.numeric(rowname)) |>
+    dplyr::mutate(rowname = as.numeric(.data$rowname)) |>
     dplyr::filter({{dates}} == s.d) |>
-    dplyr::pull(rowname) # grab row number where spawn data matches
+    dplyr::pull("rowname")
 
-  spawn.period <- dat[spawn.position:c(nrow(dat)),] # subset data frame for spawn period
+  spawn.period <- dat[spawn.position:c(nrow(dat)),]
 
-  #effective value function
+  # effective value function
   Ef <- model
   #Ef.t <-function(x){1 / exp(6.727 - log(x + 2.394))}
 
