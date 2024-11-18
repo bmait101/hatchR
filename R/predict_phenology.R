@@ -12,7 +12,6 @@
 #' @return
 #' A list with the following elements:
 #'
-#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
