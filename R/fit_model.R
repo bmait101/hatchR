@@ -1,0 +1,100 @@
+#' Fit B&M model 2 to new data
+#'
+#' @description
+#' Generate your own custom parameterized models for predicting hatching and emergence phenology
+#'
+#' @details
+#' `hatchR` also includes functionality to generate your own custom
+#' parameterized models for predicting hatching and emergence phenology.
+#' Importantly, the custom parameterization relies on the model format
+#' developed from model 2 of Beacham and Murray (1990), which we chose
+#' because of its overall simplicity and negligible loss of accuracy.
+#' See Beacham and Murray (1990) and Sparks et al. (2019) for more
+#' specific discussion regarding model 2 and the development of the
+#' effective value approach.
+#'
+#' @param df Data.frame with new data
+#' @param temp Column with temperature measurement
+#' @param days Column with day of temperature measurement
+#'
+#' @return List with model object, coefficients, model expression, and plot
+#'
+#' @export
+#'
+#' @examples
+#' library(hatchR)
+#' # vector of temperatures
+#' temperature <- c(2,5,8,11,14)
+#' vector of days to hatch
+#' days <- c(194,87,54,35,28)
+fit_model <- function(df, temp, days)
+{
+  # fit linear model to log data
+  m1 <- lm(log(days) ~ log(temp), data = df)
+  summary(m1)
+
+  # estimate starting values for nls
+  m1_a <- exp(coef(m1)[1])  # exponentiate the intercept
+  m1_b <- coef(m1)[2]
+
+  # fit model 2 from Beacham & Murray (1990) to data
+  m2 <- nls(days ~ a / (temp - b), data = df, start = list(a = m1_a, b = m1_b))
+  summary(m2)
+
+  # check coefficients
+  m2_a <- log(coef(m2)[1])
+  m2_b <- coef(m2)[2]
+
+  # model expression for hatch function
+  mod <- paste("1 / exp(", m2_a, " - log(x + ", m2_b*-1, "))", sep = "")  # is *-1 correct?
+  mod <- parse(text = mod)
+
+  # plot predictions and data --------------------------
+
+  grid <- data.frame(temp = seq(min(temp), max(temp), 0.1))
+  grid <- grid |> modelr::add_predictions(m2)  # same as predict(m2, newdata = grid)
+  p_pred <- df |>
+    ggplot(aes(x = temp, y = days)) +
+    geom_point() +
+    geom_line(data = grid, aes(x = temp, y = pred), col = "blue") +
+    theme_classic()
+  p_pred
+
+  # model diagnostics --------------------------------
+
+  # Predicted values
+  y <- temp
+  y_pred <- predict(m2)
+
+  # Calculate residuals
+  residuals <- y - y_pred
+
+  # Calculate total sum of squares (SST)
+  sst <- sum((y - mean(y))^2)
+
+  # Calculate sum of squared residuals (SSR)
+  ssr <- sum(residuals^2)
+
+  # Calculate peudo R-squared
+  r_squared <- 1 - (ssr / sst)
+
+  # Mean Squared Error (MSE)
+  mse <- mean(residuals^2)
+
+  # Root Mean Squared Error (RMSE)
+  rmse <- sqrt(mse)
+
+  # list of outputs ----------------------
+  out <- list(
+    model = m2,
+    m2_a = m2_a,
+    m2_b = m2_b,
+    mod = mod,
+    pred_plot = p_pred,
+    r_squared = r_squared,
+    mse = mse,
+    rmse = rmse
+  )
+
+  return(out)
+}
