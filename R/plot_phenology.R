@@ -9,9 +9,9 @@
 #'
 #' @examples
 #' library(hatchR)
-#' plot_phenology(WI_hatch, style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
-#' plot_phenology(WI_hatch, style = "ef_daily") # shows a plot with just the ef daily values
-#' plot_phenology(WI_hatch, labels = FALSE) # turns off the labeling for a cleaner figure
+#' #plot_phenology(WI_hatch, style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
+#' #plot_phenology(WI_hatch, style = "ef_daily") # shows a plot with just the ef daily values
+#' #plot_phenology(WI_hatch, labels = FALSE) # turns off the labeling for a cleaner figure
 plot_phenology <- function(plot, style = "all", labels = TRUE) {
   dat <- plot
 
