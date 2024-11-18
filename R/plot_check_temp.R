@@ -31,6 +31,7 @@ plot_check_temp <- function(data,
   check_dates <- data |>
     dplyr::pull({{ dates }}) |>
     is.character()
+
   if (check_dates == TRUE) {
     stop(
       "Date column is not Date or Date-time class; convert to date or
@@ -38,12 +39,6 @@ plot_check_temp <- function(data,
       call. = FALSE
     )
   }
-
-  # d <- data |> dplyr::pull({{dates}})
-  # if(class({{d}})[1] != "Date" | class({{d}})[1] != "POSIXct"){
-  #   stop("Date column is not Date or Date-time class; convert to
-  #   date or date-time (e.g. `lubridate::ymd()`.")
-  # }
 
   p <- data |>
     ggplot2::ggplot(ggplot2::aes(x = {{ dates }}, y = {{ temperature }})) +
