@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict_phenology.R
 \name{predict_phenology}
 \alias{predict_phenology}
-\title{Predict phenologt of fish based on temperature}
+\title{Predict phenology of fish}
 \usage{
 predict_phenology(data, dates, temperature, spawn.date, model)
 }
