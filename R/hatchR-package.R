@@ -9,6 +9,7 @@ utils::globalVariables(c("model_table", "woody_island"))
 #' @importFrom stats coef
 #' @importFrom stats lm
 #' @importFrom stats nls
+#' @importFrom stats predict
 #' @importFrom utils globalVariables
 ## usethis namespace: end
 NULL
