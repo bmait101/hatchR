@@ -25,25 +25,27 @@
 #' library(hatchR)
 #' # vector of temperatures
 #' temperature <- c(2,5,8,11,14)
-#' vector of days to hatch
-#' days <- c(194,87,54,35,28)
+#' # vector of days to hatch
+#' days_to_hatch <- c(194,87,54,35,28)
+#' quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
+#' bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
 fit_model <- function(df, temp, days)
 {
   # fit linear model to log data
-  m1 <- lm(log(days) ~ log(temp), data = df)
+  m1 <- stats::lm(log(days) ~ log(temp), data = df)
   summary(m1)
 
   # estimate starting values for nls
-  m1_a <- exp(coef(m1)[1])  # exponentiate the intercept
-  m1_b <- coef(m1)[2]
+  m1_a <- exp(stats::coef(m1)[1])  # exponentiate the intercept
+  m1_b <- stats::coef(m1)[2]
 
   # fit model 2 from Beacham & Murray (1990) to data
-  m2 <- nls(days ~ a / (temp - b), data = df, start = list(a = m1_a, b = m1_b))
+  m2 <- stats::nls(days ~ a / (temp - b), data = df, start = list(a = m1_a, b = m1_b))
   summary(m2)
 
   # check coefficients
-  m2_a <- log(coef(m2)[1])
-  m2_b <- coef(m2)[2]
+  m2_a <- log(stats::coef(m2)[1])
+  m2_b <- stats::coef(m2)[2]
 
   # model expression for hatch function
   mod <- paste("1 / exp(", m2_a, " - log(x + ", m2_b*-1, "))", sep = "")  # is *-1 correct?
@@ -54,17 +56,17 @@ fit_model <- function(df, temp, days)
   grid <- data.frame(temp = seq(min(temp), max(temp), 0.1))
   grid <- grid |> modelr::add_predictions(m2)  # same as predict(m2, newdata = grid)
   p_pred <- df |>
-    ggplot(aes(x = temp, y = days)) +
-    geom_point() +
-    geom_line(data = grid, aes(x = temp, y = pred), col = "blue") +
-    theme_classic()
+    ggplot2::ggplot(ggplot2::aes(x = temp, y = days)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line(data = grid, ggplot2::aes(x = .data$temp, y = .data$pred), col = "blue") +
+    ggplot2::theme_classic()
   p_pred
 
   # model diagnostics --------------------------------
 
   # Predicted values
   y <- temp
-  y_pred <- predict(m2)
+  y_pred <- stats::predict(m2)
 
   # Calculate residuals
   residuals <- y - y_pred
