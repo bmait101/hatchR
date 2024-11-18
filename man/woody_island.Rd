@@ -24,6 +24,6 @@ woody_island
 Temperature Data from Lake Iliamna on Woody Island, Alaska
 }
 \examples{
-  woody_island
+woody_island
 }
 \keyword{datasets}

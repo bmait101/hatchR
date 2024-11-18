@@ -23,6 +23,6 @@ Daily stream temperature data from the US Forest Service Rocky
 Mountain Research Station, Water and Watersheds Program.
 }
 \examples{
-  RMRS_MT103
+RMRS_MT103
 }
 \keyword{datasets}

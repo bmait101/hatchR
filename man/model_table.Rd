@@ -24,6 +24,6 @@ model_table
 Description to come...
 }
 \examples{
-  model_table
+model_table
 }
 \keyword{datasets}
