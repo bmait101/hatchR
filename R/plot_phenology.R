@@ -1,16 +1,15 @@
 #' Plot phenology
 #'
-#' @param plot blah
-#' @param style blah
-#' @param labels blah
+#' @param plot object output from predict_phenology
+#' @param style different plot types (all, ef_cumsum, ef_daily)
+#' @param labels true or false, used to turn on and off the information at the top of plots
 #'
-#' @return blah
+#' @return ggplot2 object
 #' @export
 #'
 #' @examples
 #' to come...
 plot_phenology <- function(plot, style, labels) {
-  # data object
   dat <- plot
 
   if (missing(style)) {
@@ -20,7 +19,7 @@ plot_phenology <- function(plot, style, labels) {
     labels <- TRUE
   }
 
-  ### switch labels on/off
+  # switch labels on/off
   if (labels == TRUE) {
     all_label <- labs(
       x = "Date", y = "Mean daily temperature",
@@ -43,9 +42,7 @@ plot_phenology <- function(plot, style, labels) {
 
   if (labels == FALSE) {
     all_label <- labs(x = "Date", y = "Mean daily temperature")
-
     ef_cumsum_label <- labs(x = "Date", y = "Mean daily temperature")
-
     ef_daily_label <- labs(x = "Date", y = "Mean daily temperature")
   }
 

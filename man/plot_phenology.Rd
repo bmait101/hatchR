@@ -7,14 +7,14 @@
 plot_phenology(plot, style, labels)
 }
 \arguments{
-\item{plot}{blah}
+\item{plot}{object output from predict_phenology}
 
-\item{style}{blah}
+\item{style}{different plot types (all, ef_cumsum, ef_daily)}
 
-\item{labels}{blah}
+\item{labels}{true or false, used to turn on and off the information at the top of plots}
 }
 \value{
-blah
+ggplot2 object
 }
 \description{
 Plot phenology
