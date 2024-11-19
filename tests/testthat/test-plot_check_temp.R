@@ -1,5 +1,5 @@
 test_that("plot_check_temp() returns list", {
-  p <- plot_check_temp(RMRS_MT103, SampleDate, temperature)
+  p <- plot_check_temp(crooked_river, date, temp_c)
   expect_type(p, "list")
   expect_s3_class(p, "gg")
   plot_names <- names(p)
