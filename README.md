@@ -1,14 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# hatchR
-
-**IN DEVELOPMENT**
-
 <!-- badges: start -->
 <!-- badges: end -->
 
-## Overview
+# hatchR: Predicting Fish Developmental Phenology
+
+**IN DEVELOPMENT**
 
 `hatchR` is an R package for predicting fish developmental phenology
 using statistical models. It is intended to bridge the analytic gap of
@@ -16,9 +13,19 @@ taking statistical models developed in hatchery settings (e.g., Beacham
 and Murray 1990) and applying them to real world temperature data sets
 using the effective value framework developed by Sparks et al. (2019).
 
-## Installation
+## Citation
 
-You can install the development version of hatchR from
+If you use `hatchR` in a formal publication or report, please cite it.
+Citing `hatchR` lets us devote more resources to it in the future. View
+the `hatchR` citation by running
+
+``` r
+citation(package = "hatchR")
+```
+
+## Installation Instructions
+
+You can install the development version of `hatchR` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -26,34 +33,55 @@ You can install the development version of hatchR from
 pak::pak("bmait101/hatchR")
 ```
 
-## Usage
+## Contributing to `hatchR`
 
-**IN DEVELOPMENT**
+We encourage users to report bugs and/or contribute to `hatchR`. For
+more detail on how to do this, please see our contributing guide
+(`CONTRIBUTING.md`).
+
+## Getting Help
+
+There are several ways to get help with `hatchR`:
+
+1.  Open a GitHub issue [link
+    here](https://github.com/bmait101/hatchR/issues).
+2.  Email the hatchR support team ([Morgan
+    Sparks](morgan.sparks@usda.gov), [Bryan
+    Maitland](bryan.maitland@usda.gov))
+3.  Post on a support website like Stack Overflow or Cross Validated.
+
+## Example Usage
+
+To come…
+
+## Imported Packages
+
+`hacthR` imports the following **R** packages:
+
+- dplyr: For data manipulation.
+- ggplot2: For vignette visualizations.
+- lubridate: For working with dates.
+- tibble: For creating tibbles as output for various functions.
+- modelr: For modeling functions.
+- rlang: For `.data` usage.
+- stats: For various modeling functions (e.g., `confint()`).
+- utils: For various utility functions.
 
 ## Suggested Packages
 
-<!-- `hatchR` suggests the following **R** Packages: -->
-<!-- * `ggplot2` - for vignette vizualizations. -->
-<!-- * `lubridate` - for date-time manipulation. -->
-<!-- * `knitr`: For vignette building. -->
-<!-- * `rmarkdown`: For vignette building. -->
-<!-- * `testthat`: For unit testing. -->
+`hatchR` suggests the following **R** packages:
 
-## Getting help
-
-If you encounter a clear bug, please file an issue with a minimal
-reproducible example on
-[GitHub](https://github.com/bmait101/hatchR/issues). For questions and
-other discussion, please reach out to the package authors: [Morgan
-Sparks](morgan.sparks@usda.gov), [Bryan
-Maitland](bryan.maitland@usda.gov).
+- knitr: For vignette building.
+- readr: For reading in data.
+- rmarkdown: For vignette building.
+- testthat: For unit testing.
 
 ## License
 
 This project is licensed under the GNU General Public License,
 [GPL-3](https://cran.r-project.org/web/licenses/GPL-3).
 
-## Disclaimer
+## USDA Disclaimer
 
 `hatchR` project code is provided on an “as is” basis and the user
 assumes responsibility for its use. USDA Forest Service has relinquished
