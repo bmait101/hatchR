@@ -53,43 +53,71 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="hatchr">hatchR<a class="anchor" aria-label="anchor" href="#hatchr"></a>
+<div class="page-header"><h1 id="hatchr-predicting-fish-developmental-phenology">hatchR: Predicting Fish Developmental Phenology<a class="anchor" aria-label="anchor" href="#hatchr-predicting-fish-developmental-phenology"></a>
 </h1></div>
 <p><strong>IN DEVELOPMENT</strong></p>
-<!-- badges: start -->
-<!-- badges: end -->
-<div class="section level2">
-<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h2>
 <p><code>hatchR</code> is an R package for predicting fish developmental phenology using statistical models. It is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (e.g., Beacham and Murray 1990) and applying them to real world temperature data sets using the effective value framework developed by Sparks et al. (2019).</p>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>If you use <code>hatchR</code> in a formal publication or report, please cite it. Citing <code>hatchR</code> lets us devote more resources to it in the future. View the <code>hatchR</code> citation by running</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"hatchR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="installation-instructions">Installation Instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>You can install the development version of hatchR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>You can install the development version of <code>hatchR</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"bmait101/hatchR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h2 id="contributing-to-hatchr">Contributing to <code>hatchR</code>
+<a class="anchor" aria-label="anchor" href="#contributing-to-hatchr"></a>
 </h2>
-<p><strong>IN DEVELOPMENT</strong></p>
+<p>We encourage users to report bugs and/or contribute to <code>hatchR</code>. For more detail on how to do this, please see our contributing guide (<code>CONTRIBUTING.md</code>).</p>
+</div>
+<div class="section level2">
+<h2 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
+<p>There are several ways to get help with <code>hatchR</code>:</p>
+<ol style="list-style-type: decimal">
+<li>Open a GitHub issue <a href="https://github.com/bmait101/hatchR/issues" class="external-link">link here</a>.</li>
+<li>Email the hatchR support team (<a href="morgan.sparks@usda.gov">Morgan Sparks</a>, <a href="bryan.maitland@usda.gov">Bryan Maitland</a>)</li>
+<li>Post on a support website like Stack Overflow or Cross Validated.</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="example-usage">Example Usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
+</h2>
+<p>To come…</p>
+</div>
+<div class="section level2">
+<h2 id="imported-packages">Imported Packages<a class="anchor" aria-label="anchor" href="#imported-packages"></a>
+</h2>
+<p><code>hacthR</code> imports the following <strong>R</strong> packages:</p>
+<ul>
+<li>dplyr: For data manipulation.</li>
+<li>ggplot2: For vignette visualizations.</li>
+<li>lubridate: For working with dates.</li>
+<li>tibble: For creating tibbles as output for various functions.</li>
+<li>modelr: For modeling functions.</li>
+<li>rlang: For <code>.data</code> usage.</li>
+<li>stats: For various modeling functions (e.g., <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code>).</li>
+<li>utils: For various utility functions.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="suggested-packages">Suggested Packages<a class="anchor" aria-label="anchor" href="#suggested-packages"></a>
 </h2>
-<!-- `hatchR` suggests the following **R** Packages: -->
-<!-- * `ggplot2` - for vignette vizualizations. -->
-<!-- * `lubridate` - for date-time manipulation. -->
-<!-- * `knitr`: For vignette building. -->
-<!-- * `rmarkdown`: For vignette building. -->
-<!-- * `testthat`: For unit testing. -->
-</div>
-<div class="section level2">
-<h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
-</h2>
-<p>If you encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/bmait101/hatchR/issues" class="external-link">GitHub</a>. For questions and other discussion, please reach out to the package authors: <a href="morgan.sparks@usda.gov">Morgan Sparks</a>, <a href="bryan.maitland@usda.gov">Bryan Maitland</a>.</p>
+<p><code>hatchR</code> suggests the following <strong>R</strong> packages:</p>
+<ul>
+<li>knitr: For vignette building.</li>
+<li>readr: For reading in data.</li>
+<li>rmarkdown: For vignette building.</li>
+<li>testthat: For unit testing.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -97,7 +125,7 @@
 <p>This project is licensed under the GNU General Public License, <a href="https://cran.r-project.org/web/licenses/GPL-3" class="external-link">GPL-3</a>.</p>
 </div>
 <div class="section level2">
-<h2 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
+<h2 id="usda-disclaimer">USDA Disclaimer<a class="anchor" aria-label="anchor" href="#usda-disclaimer"></a>
 </h2>
 <p><code>hatchR</code> project code is provided on an “as is” basis and the user assumes responsibility for its use. USDA Forest Service has relinquished control of the information and no longer has responsibility to protect the integrity , confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by USDA Forest Service.</p>
 </div>
