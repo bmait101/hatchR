@@ -2,22 +2,24 @@
 % Please edit documentation in R/plot_phenology.R
 \name{plot_phenology}
 \alias{plot_phenology}
-\title{Plot phenology}
+\title{Visualize the phenology of fish development}
 \usage{
 plot_phenology(plot, style = "all", labels = TRUE)
 }
 \arguments{
-\item{plot}{object output from predict_phenology}
+\item{plot}{A list containing the output from \code{predict_phenology()}}
 
-\item{style}{different plot types: all, ef_cumsum, ef_daily}
+\item{style}{The style of the plot. A vector with possible values "all",
+"ef_cumsum", "ef_daily". The default is "all".}
 
-\item{labels}{true or false, used to turn on and off the information at the top of plots}
+\item{labels}{Logical. If TRUE (default), labels are added to the plot.}
 }
 \value{
 ggplot2 object
 }
 \description{
-Plot phenology
+The function takes the output from \code{predict_phenology()}
+and creates a ggplot2 object.
 }
 \examples{
 library(hatchR)

@@ -4,19 +4,19 @@
 \alias{model_select}
 \title{Select a development model structure}
 \usage{
-model_select(author, species, model, dev.type)
+model_select(author, species, model, dev.type = "hatch")
 }
 \arguments{
-\item{author}{Source of model.}
+\item{author}{Character string of author name.}
 
-\item{species}{Species common name.}
+\item{species}{Character string of species name.}
 
-\item{model}{Model number of type from Beacham and Murray (1990).}
+\item{model}{Model number from Beacham and Murray (1990).}
 
-\item{dev.type}{Phenology type (e.g., "hatch" or "emerge").}
+\item{dev.type}{The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".}
 }
 \value{
-A model function.
+An expression of length 1 giving the selected model structure to be run with \code{predict_phenology()}.
 }
 \description{
 The function calls a model table with the parameterizations for

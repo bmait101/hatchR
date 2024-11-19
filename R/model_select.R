@@ -6,12 +6,12 @@
 #' the different function arguments. It pulls the model format as a
 #' string and parses it to be usable in `hatchR` model.
 #'
-#' @param author Source of model.
-#' @param species Species common name.
-#' @param model Model number of type from Beacham and Murray (1990).
-#' @param dev.type Phenology type (e.g., "hatch" or "emerge").
+#' @param author Character string of author name.
+#' @param species Character string of species name.
+#' @param model Model number from Beacham and Murray (1990).
+#' @param dev.type The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".
 #'
-#' @return A model function.
+#' @return An expression of length 1 giving the selected model structure to be run with `predict_phenology()`.
 #'
 #' @export
 #'
@@ -30,8 +30,7 @@
 model_select <- function(author,
                          species,
                          model,
-                         dev.type) {
-  # model select using tidyverse (not returning correctly)
+                         dev.type = "hatch") {
   mod <- model_table |>
     dplyr::filter(
       author == {{ author }} &
@@ -41,16 +40,9 @@ model_select <- function(author,
     ) |>
     dplyr::pull("func")
 
-  # base R syntax (needs strings as arguments)
-  # mod <- model_table[which(model_table$author == author &
-  #                            model_table$species == species &
-  #                            model_table$model == model &
-  #                            model_table$dev.type == dev.type), "func"]
-
   mod <- parse(text = mod)
   return(mod)
 }
 
 # TO DO:
-# - use tidyvserse instead of base r
 # - add ID to each model for easily selection

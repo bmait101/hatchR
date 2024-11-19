@@ -1,10 +1,15 @@
-#' Plot phenology
+#' Visualize the phenology of fish development
 #'
-#' @param plot object output from predict_phenology
-#' @param style different plot types: all, ef_cumsum, ef_daily
-#' @param labels true or false, used to turn on and off the information at the top of plots
+#' @description The function takes the output from `predict_phenology()`
+#'  and creates a ggplot2 object.
+#'
+#' @param plot A list containing the output from `predict_phenology()`
+#' @param style The style of the plot. A vector with possible values "all",
+#'  "ef_cumsum", "ef_daily". The default is "all".
+#' @param labels Logical. If TRUE (default), labels are added to the plot.
 #'
 #' @return ggplot2 object
+#'
 #' @export
 #'
 #' @examples
