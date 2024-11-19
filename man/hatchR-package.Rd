@@ -11,7 +11,7 @@ hatchR is intended to bridge the analytic gap of taking statistical models devel
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/bmait101/hatchR}
+  \item \url{https://bmait101.github.io/hatchR/}
   \item Report bugs at \url{https://github.com/bmait101/hatchR/issues}
 }
 
