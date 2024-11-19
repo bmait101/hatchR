@@ -19,6 +19,15 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 }
 \value{
 A list with the following elements:
+\itemize{
+\item \code{ef.vals}: A numeric vector of each day's effective value.
+\item \code{days2done}: A numeric vector of length 1; number of predicted days to hatch or emerge.
+\item \code{ef.tibble}: An n x 4 tibble (n = number of days to hatch or emerge) with
+the dates, temperature, effective values, and cumulative sum of the effective values.
+\item \code{dev.period}: a 1x2 dataframe with the dates corresponding to when your
+fish's parent spawned (input with \code{predict_phenology(spawn.date = ...)})
+and the date when the fish is predicted to hatch or emerge.
+}
 }
 \description{
 A short description...
