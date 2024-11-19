@@ -2,20 +2,20 @@
 % Please edit documentation in R/plot_check_temp.R
 \name{plot_check_temp}
 \alias{plot_check_temp}
-\title{Plot imported data to check temperature values}
+\title{Visual check of imported data}
 \usage{
 plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 }
 \arguments{
-\item{data}{data.frame with dates and temperature}
+\item{data}{A data.frame, or data frame extension (e.g. a tibble).}
 
-\item{dates}{date column}
+\item{dates}{Column representing the date of the temperature measurements}
 
-\item{temperature}{temperature column}
+\item{temperature}{Column representing the temperature values.}
 
-\item{temp_min}{min temp on plot}
+\item{temp_min}{Threshold for lower range of expected temperature. Default is 0.}
 
-\item{temp_max}{max temp on plot}
+\item{temp_max}{Threshold for upper range of expected temperature. Default is 25.}
 }
 \value{
 A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.

@@ -1,14 +1,14 @@
-#' Summarize Temperature Data
+#' Summarize temperature data to daily values
 #'
 #' The `summarize_temp` function is used to summarize sub-daily temperature
 #' measurements to obtain mean daily temperature.
 #'
-#' @param data data.frame with dates and temperature
-#' @param dates date column
-#' @param temperature temperature column
+#' @param data A data.frame, or data frame extension (e.g. a tibble).
+#' @param dates Column representing the date of temperature measurements.
+#' @param temperature Column representing temperature values.
 #'
 #' @return
-#' A data frame with summarized daily temperature values.
+#' A data.frame with summarized daily temperature values.
 #'
 #' @export
 #'

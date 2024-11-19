@@ -1,15 +1,15 @@
-#' Plot imported data to check temperature values
+#' Visual check of imported data
 #'
 #' The `plot_check_temp` function is used to plot imported data to check temperature values.
 #' The function takes a data frame with dates and temperature values,
 #' and plots the temperature values over time. The function also allows users
 #' to specify the minimum and maximum temperature values to be plotted.
 #'
-#' @param data data.frame with dates and temperature
-#' @param dates date column
-#' @param temperature temperature column
-#' @param temp_min min temp on plot
-#' @param temp_max max temp on plot
+#' @param data A data.frame, or data frame extension (e.g. a tibble).
+#' @param dates Column representing the date of the temperature measurements
+#' @param temperature Column representing the temperature values.
+#' @param temp_min Threshold for lower range of expected temperature. Default is 0.
+#' @param temp_max Threshold for upper range of expected temperature. Default is 25.
 #'
 #' @return
 #' A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.

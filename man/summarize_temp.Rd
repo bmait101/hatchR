@@ -2,19 +2,19 @@
 % Please edit documentation in R/summarize_temp.R
 \name{summarize_temp}
 \alias{summarize_temp}
-\title{Summarize Temperature Data}
+\title{Summarize temperature data to daily values}
 \usage{
 summarize_temp(data, dates, temperature)
 }
 \arguments{
-\item{data}{data.frame with dates and temperature}
+\item{data}{A data.frame, or data frame extension (e.g. a tibble).}
 
-\item{dates}{date column}
+\item{dates}{Column representing the date of temperature measurements.}
 
-\item{temperature}{temperature column}
+\item{temperature}{Column representing temperature values.}
 }
 \value{
-A data frame with summarized daily temperature values.
+A data.frame with summarized daily temperature values.
 }
 \description{
 The \code{summarize_temp} function is used to summarize sub-daily temperature
