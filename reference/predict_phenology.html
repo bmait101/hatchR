@@ -72,12 +72,28 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following elements:</p>
+    <p>A list with the following elements:</p><ul><li><p><code>ef.vals</code>: A numeric vector of each day's effective value.</p></li>
+<li><p><code>days2done</code>: A numeric vector of length 1; number of predicted days to hatch or emerge.</p></li>
+<li><p><code>ef.tibble</code>: An n x 4 tibble (n = number of days to hatch or emerge) with
+the dates, temperature, effective values, and cumulative sum of the effective values.</p></li>
+<li><p><code>dev.period</code>: a 1x2 dataframe with the dates corresponding to when your
+fish's parent spawned (input with <code>predict_phenology(spawn.date = ...)</code>)
+and the date when the fish is predicted to hatch or emerge.</p></li>
+</ul></div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Sparks, M.M., Falke, J.A., Quinn, T.P., Adkinson, M.D., Schindler, D.E.
+(2017). Influences of spawning timing, water temperature, and
+climatic warming on early life history phenology in western
+Alaska sockeye salmon.
+<em>Canadian Journal of Fisheries and Aquatic Sciences</em>,
+<b>76(1)</b>, 123–135</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># to come...</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
