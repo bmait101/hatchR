@@ -16,13 +16,13 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 # hatchR
 
+**IN DEVELOPMENT**
+
 <!-- badges: start -->
 
 <!-- badges: end -->
 
 ## Overview
-
-**IN DEVELOPMENT**
 
 `hatchR` is an R package for predicting fish developmental phenology using statistical models. It is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (e.g., Beacham and Murray 1990) and applying them to real world temperature data sets using the effective value framework developed by Sparks et al. (2019).
 
@@ -41,13 +41,13 @@ pak::pak("bmait101/hatchR")
 
 ## Suggested Packages
 
-`hatchR` suggests the following **R** Packages:
+<!-- `hatchR` suggests the following **R** Packages: -->
 
-* `ggplot2` - for vignette vizualizations.
-* `lubridate` - for date-time manipulation.
-* `knitr`: For vignette building.
-* `rmarkdown`: For vignette building.
-* `testthat`: For unit testing.
+<!-- * `ggplot2` - for vignette vizualizations. -->
+<!-- * `lubridate` - for date-time manipulation. -->
+<!-- * `knitr`: For vignette building. -->
+<!-- * `rmarkdown`: For vignette building. -->
+<!-- * `testthat`: For unit testing. -->
 
 ## Getting help
 
