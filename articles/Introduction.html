@@ -57,6 +57,8 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Introduction</h1>
+                        <h4 data-toc-skip class="author">Morgan Sparks,
+Bryan M. Maitland</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/bmait101/hatchR/blob/master/vignettes/Introduction.Rmd" class="external-link"><code>vignettes/Introduction.Rmd</code></a></small>
@@ -65,9 +67,305 @@
 
     
     
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
+<p><code>hatchR</code> is an R package designed to allow users to
+leverage daily temperature records to predict when a fish is expected to
+hatch and/or emerge using statistical models. Specifically,
+<code>hatchR</code> is intended to bridge the analytic gap of taking
+statistical models developed in hatchery settings <span class="citation">(e.g., Beacham and Murray 1990)</span> and applying
+them to real world temperature data sets using an effective value
+framework developed by <span class="citation">Sparks et al.
+(2019)</span>.</p>
+<div class="section level3">
+<h3 id="input-data">Input Data<a class="anchor" aria-label="anchor" href="#input-data"></a>
+</h3>
+<p>Fundamentally, this package assumes you have data with two columns: a
+date column, giving the date/date-time of a stream temperature
+measurement, and a temperature column, giving temperature measurement
+(in centigrade).</p>
+<p>Generally, temperature datasets are either 1) already summarized by
+day (i.e., mean daily temperature) or, 2) in a raw format from something
+like a HOBO TidbiT where readings are taken multiple times per day,
+which can be summarized into a mean daily temperatures. Alternatively,
+new statistical models like that of <span class="citation">Siegel et al.
+(2023)</span> could be similarly implemented.</p>
+<p>We expect your data to look something like this:</p>
+<table class="table">
+<thead><tr class="header">
+<th>date</th>
+<th>temperature</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>2000-01-01</td>
+<td>2.51</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>2000-07-01</td>
+<td>16.32</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>2000-12-31</td>
+<td>3.13</td>
+</tr>
+</tbody>
+</table>
+<p>Other columns are okay to include, but these two columns (with any
+name—just <em>without</em> spaces) are needed.</p>
+<p>At present, <code>hatchR</code> only uses continuous data. Therefore,
+your data is expected to be continuous and complete. If you have days of
+missing data, you could impute them using rolling means or other
+approaches. <code>hatchR</code> can use values down to freezing (e.g, 0
+°C), which returns extremely small effective values, and time to hatch
+or emerge may be &gt; 1 year. In these cases, we suggest users consider
+how much of that data type is reasonable with their data.</p>
+<div class="callout-important">
+<p><code>hatchR</code> assumes you’ve checked for missing records or
+errors in your data as it can function with gaps, so it’s important to
+go through the data checks discussed below, as well as your own sanity
+checks.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="importing-your-data">Importing your data<a class="anchor" aria-label="anchor" href="#importing-your-data"></a>
+</h3>
+<p><code>hatchR</code> expects the date column to be a date
+(&lt;date&gt;) or timepoint (&lt;dttm&gt;) object.</p>
+<p>In this and other vignettes, we will use two datasets that come
+installed with the package: <code>crooked_river</code> and
+<code>woody_island</code>. Each dataset is available to the user as R
+objected once <code>hatchR</code> is installed and attached (see
+<code><a href="../reference/crooked_river.html">?crooked_river</a></code> or <code><a href="../reference/woody_island.html">?woody_island</a></code> for more
+information).</p>
+<p>The raw input data (.csv files) are stored in the
+<code>extdata/</code> directory installed alongside <code>hatchR</code>.
+We may store the file path to the Crooked River example data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="va">path_cr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/crooked_river.csv"</span>, package <span class="op">=</span> <span class="st">"hatchR"</span><span class="op">)</span></span>
+<span><span class="va">path_wi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/woody_island.csv"</span>, package <span class="op">=</span> <span class="st">"hatchR"</span><span class="op">)</span></span></code></pre></div>
+<p>We recommend importing your data into R using the <a href="https://readr.tidyverse.org/" class="external-link">`readr`</a>. This is important
+because functions like <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv()</a></code> or
+<code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv()</a></code> or <code><a href="https://readr.tidyverse.org/reference/read_table.html" class="external-link">read_table()</a></code> will parse date
+columns into a &lt;date&gt; (if values are in the from
+<code>"2000-09-01"</code>) &lt;timepoint&gt; (if in the form
+<code>"2000-09-01 12:00:00"</code>) types.</p>
+<p>We can load readr using:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span></code></pre></div>
+<p>After specifying <code>path</code> (using
+<code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>), we load the dataset into R:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crooked_river</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="va">path_cr</span><span class="op">)</span></span></code></pre></div>
+<p>We check the <code>crooked_river</code> dataset by running either
+<code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> or <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">tibble::glimpse()</a></code> to see the
+structure of the data. <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> is a little like
+<code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> applied to a data frame, but it tries to show you as
+much data as possible. We prefer <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> because it is
+more compact and easier to read. It can be loaded with the
+<code>tibble</code> package.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
+<p>Now we can check the structure of the <code>crooked_river</code>
+dataset:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
+<span><span class="co">#&gt; spc_tbl_ [3,367 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ date  : POSIXct[1:3367], format: "2011-09-09" "2011-09-10" ...</span></span>
+<span><span class="co">#&gt;  $ temp_c: num [1:3367] 7.57 7.39 7.19 7.24 7.59 7.68 7.51 7.41 6.19 6.65 ...</span></span>
+<span><span class="co">#&gt;  - attr(*, "spec")=</span></span>
+<span><span class="co">#&gt;   .. cols(</span></span>
+<span><span class="co">#&gt;   ..   date = <span style="color: #0000BB;">col_datetime(format = "")</span>,</span></span>
+<span><span class="co">#&gt;   ..   temp_c = <span style="color: #00BB00;">col_double()</span></span></span>
+<span><span class="co">#&gt;   .. )</span></span>
+<span><span class="co">#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 3,367</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2011-09-09, 2011-09-10, 2011-09-11, 2011-09-12, 2011-09-13, 20…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.57, 7.39, 7.19, 7.24, 7.59, 7.68, 7.51, 7.41, 6.19, 6.65, 6.7…</span></span></code></pre></div>
+<div class="callout-note">
+<p>The column <code>date</code> is a &lt;dttm&gt; object, which is short
+for a <code>lubridate</code> timepoint (sometimes called date-time).</p>
+</div>
+<p>For your own data, assuming you have a .csv file in a
+<code>data</code> folder in your working directory called
+<code>your_data.csv</code>, you would call:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
+<span><span class="va">your_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"data/your_data.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span></code></pre></div>
+<p>If you import your data in with base R functions like
+<code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code>, data columns will be formatted as a characters
+(&lt;char&gt;; e.g., <code>"2000-09-01"</code> or
+<code>"2000-09-01 12:00:00"</code>). You will have convert to this
+column to a &lt;date&gt; or &lt;dttm&gt; type. We recommend using the <a href="https://lubridate.tidyverse.org/" class="external-link">`lubridate`</a> package to do
+this, which makes dealing with date a litter easier. Here is an example
+of how you might do this:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">crooked_river</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">path_cr</span><span class="op">)</span></span>
+<span><span class="va">woody_island</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">path_wi</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span> <span class="co"># note date column is imported as a character (&lt;chr&gt;)</span></span>
+<span><span class="co">#&gt; 'data.frame':    3367 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ date  : chr  "2011-09-09T00:00:00Z" "2011-09-10T00:00:00Z" "2011-09-11T00:00:00Z" "2011-09-12T00:00:00Z" ...</span></span>
+<span><span class="co">#&gt;  $ temp_c: num  7.57 7.39 7.19 7.24 7.59 7.68 7.51 7.41 6.19 6.65 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span> <span class="co"># note date column is imported as a character (&lt;chr&gt;)</span></span>
+<span><span class="co">#&gt; 'data.frame':    739 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ date  : chr  "8/11/1990" "8/12/1990" "8/13/1990" "8/14/1990" ...</span></span>
+<span><span class="co">#&gt;  $ temp_c: num  25.9 23.3 18.5 15.3 14 ...</span></span>
+<span></span>
+<span><span class="co"># change to dttm using lubridate</span></span>
+<span><span class="va">crooked_river</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">$</span><span class="va">date</span><span class="op">)</span> <span class="co"># if your date is in the form "2000-09-01 12:00:00"</span></span>
+<span><span class="va">woody_island</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>  <span class="co"># if your date is in the form "2000-09-01"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 3,367</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2011-09-09, 2011-09-10, 2011-09-11, 2011-09-12, 2011-09-13, 20…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.57, 7.39, 7.19, 7.24, 7.59, 7.68, 7.51, 7.41, 6.19, 6.65, 6.7…</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 739</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-08-11, 1990-08-12, 1990-08-13, 1990-08-14, 1990-08-15, 19…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>
+<p>While <code>hatchR</code> can take dates formatted in any style as
+long as they are either &lt;date&gt; or &lt;dttm&gt; types,
+<code>hatchR</code> operates on them in the <strong>ISO 8601</strong> <a href="https://en.wikipedia.org/wiki/ISO_8601" class="external-link">format</a>, which is how
+they are output (either in year-month-day or
+year-month-day-hour-minute-second) from functions. This is also
+convenient because <code>ggplot2</code> handles &lt;date&gt; and
+&lt;dttm&gt; objects well without significant need for change when
+plotting.</p>
+</div>
+<div class="section level3">
+<h3 id="data-checks">Data Checks<a class="anchor" aria-label="anchor" href="#data-checks"></a>
+</h3>
+<p>First, we recommend using the built-in function
+<code><a href="../reference/plot_check_temp.html">plot_check_temp()</a></code> to visualize your imported data and
+verify nothing strange happened during your import process. The
+arguments <code>temp_min =</code> and <code>temp_max =</code> can be
+used to custom set thresholds for expected temperature ranges (otherwise
+they are set at 0 and 25 C). Here is an example using the built-in
+dataset <code>crooked_river</code>:</p>
+<p>ggplot2 is installed alongside <code>hatchR</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river</span>, </span>
+<span>                dates <span class="op">=</span> <span class="va">date</span>, </span>
+<span>                temperature <span class="op">=</span> <span class="va">temp_c</span>, </span>
+<span>                temp_min <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>                temp_max <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="section level4">
+<h4 id="summarize-data">Summarize Data<a class="anchor" aria-label="anchor" href="#summarize-data"></a>
+</h4>
+<p>If you imported raw data with multiple recordings per day,
+<code>hatchR</code> has a built in function to summarize those data to a
+daily average mean called <code><a href="../reference/summarize_temp.html">summarize_temp()</a></code>. The output of
+the function is a tibble with mean daily temperature and its
+corresponding day.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># check how many rows in raw data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span> <span class="co">#3367 records</span></span>
+<span><span class="co">#&gt; [1] 3367</span></span>
+<span></span>
+<span><span class="co">#summarize to day</span></span>
+<span><span class="va">crooked_river_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_temp.html">summarize_temp</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">crooked_river</span>, </span>
+<span>  dates <span class="op">=</span> <span class="va">date</span>, </span>
+<span>  temperature <span class="op">=</span> <span class="va">temp_c</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">crooked_river_sum</span><span class="op">)</span> <span class="co">#1826 records</span></span>
+<span><span class="co">#&gt; [1] 1826</span></span>
+<span></span>
+<span><span class="co"># note the names of the columns have changed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crooked_river_sum</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="co">#&gt;   date       daily_temp</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2010-12-01       1.16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2010-12-02       1.34</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2010-12-03       1.25</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2010-12-04       1.01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2010-12-05       1.29</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2010-12-06       1.23</span></span></code></pre></div>
+<p>We again recommend, at a minimum, visually checking your data once it
+has been summarized.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#note we are now using crooked_river_sum instead of crooked_river</span></span>
+<span><span class="fu"><a href="../reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river_sum</span>, </span>
+<span>                dates <span class="op">=</span> <span class="va">date</span>, </span>
+<span>                temperature <span class="op">=</span> <span class="va">daily_temp</span>, </span>
+<span>                temp_min <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>                temp_max <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
+</h2>
+<p>After importing, checking, and wrangling your data, there are a
+number of different actions you can take. To demonstrate the full
+workflow for <code>hatchR</code>, we will recreate part of the analysis
+from <span class="citation">Sparks et al. (2019)</span> and use data
+from Woody Island from Lake Iliamna, Alaska (see the <strong>Predict
+Phenology Basic</strong> and <strong>Predict Phenology Advanced</strong>
+vignettes).</p>
+<p>However, the generalized workflow for <code>hatchR</code> is
+demonstrated below.</p>
+<p><img src="img%2Fworkflow.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="callout-note">
+<p><code>hatchR</code> is designed so it can be used within a single
+spawn season or automated across many sites or years. However, if you
+plan to use <code>hatchR</code> to estimate phenology within a single
+season, your data will need to be subdivided for the expected
+developmental period accordingly. Single and batched processing is
+demonstrated in the <strong>Predict Phenology Basic</strong> and
+<strong>Predict Phenology Advanced</strong> vignettes.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-beacham1990" class="csl-entry">
+Beacham, Terry D., and Clyde B. Murray. 1990. <span>“Temperature, Egg
+Size, and Development of Embryos and Alevins of Five Species of Pacific
+Salmon: A Comparative Analysis.”</span> <em>Transactions of the American
+Fisheries Society</em> 119 (6): 927–45. <a href="https://doi.org/10.1577/1548-8659(1990)119&lt;0927:TESADO&gt;2.3.CO;2" class="external-link">https://doi.org/10.1577/1548-8659(1990)119&lt;0927:TESADO&gt;2.3.CO;2</a>.
+</div>
+<div id="ref-siegel2023" class="csl-entry">
+Siegel, Jared E., Aimee H. Fullerton, Alyssa M. FitzGerald, Damon
+Holzer, and Chris E. Jordan. 2023. <span>“Daily Stream Temperature
+Predictions for Free-Flowing Streams in the Pacific Northwest,
+USA.”</span> <em>PLOS Water</em> 2 (8): e0000119. <a href="https://doi.org/10.1371/journal.pwat.0000119" class="external-link">https://doi.org/10.1371/journal.pwat.0000119</a>.
+</div>
+<div id="ref-sparks2019" class="csl-entry">
+Sparks, Morgan M., Jeffrey A. Falke, Thomas P. Quinn, Milo D. Adkison,
+Daniel E. Schindler, Krista Bartz, Dan Young, and Peter A. H. Westley.
+2019. <span>“Influences of Spawning Timing, Water Temperature, and
+Climatic Warming on Early Life History Phenology in Western Alaska
+Sockeye Salmon.”</span> <em>Canadian Journal of Fisheries and Aquatic
+Sciences</em> 76 (1): 123–35. <a href="https://doi.org/10.1139/cjfas-2017-0468" class="external-link">https://doi.org/10.1139/cjfas-2017-0468</a>.
+</div>
+</div>
+<p>:::::::</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
