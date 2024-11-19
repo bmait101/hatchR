@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 
 # load packages
 library(hatchR)
+library(readr)
 library(tibble)
 library(ggplot2)
 library(lubridate)
@@ -59,56 +60,83 @@ In these cases, we suggest users consider how much of that data type is reasonab
 
 `hatchR` expects the date column to be a date (\<date\>) or timepoint (\<dttm\>) object.
 
-We recommend importing your data into R using the [\`readr\`](https://readr.tidyverse.org/) package from `tidyverse` ecosystem. This is important because functions like `read_csv()` or `read_tsv()` or `read_table()` will (generally) automatically parse date columns into a date (if values are in the from `"2000-09-01"`) timepoint (if in the form `"2000-09-01 12:00:00"`) types. 
+In this and other vignettes, we will use two datasets that come installed with the package: `crooked_river` and `woody_island`. Each dataset is available to the user as R objected once `hatchR` is installed and attached (see `?crooked_river` or `?woody_island` for more information). 
 
-For example, you can import your data using the following code snippet, assuming you have a CSV file in a `data` folder in your working directory called `your_data.csv`:
+The raw input data (.csv files) are stored in the `extdata/` directory installed
+alongside `hatchR`. We may store the file path to the Crooked River example data:
+
+```{r}
+path_cr <- system.file("extdata/crooked_river.csv", package = "hatchR")
+path_wi <- system.file("extdata/woody_island.csv", package = "hatchR")
+```
+
+We recommend importing your data into R using the [\`readr\`](https://readr.tidyverse.org/). This is important because functions like `read_csv()` or `read_tsv()` or `read_table()` will parse date columns into a \<date>\ (if values are in the from `"2000-09-01"`) \<timepoint>\ (if in the form `"2000-09-01 12:00:00"`) types. 
+
+We can load readr using:
 
 ```{r, eval=FALSE}
 library(readr)
+```
 
-# import
+After specifying `path` (using `system.file()`), we load the dataset into R:
+
+```{r}
+crooked_river <- read_csv(path_cr)
+```
+
+We check the `crooked_river` dataset by running either `str()` or `tibble::glimpse()` to see the structure of the data. `glimpse()` is a little like `str()` applied to a data frame, but it tries to show you as much data as possible. We prefer `glimpse()` because it is more compact and easier to read. It can be loaded with the `tibble` package.
+
+```{r, eval=FALSE}
+library(tibble)
+```
+
+Now we can check the structure of the `crooked_river` dataset:
+
+```{r}
+str(crooked_river)
+glimpse(crooked_river)
+```
+
+::: callout-note
+The column `date` is a \<dttm\> object, which is short for a `lubridate` timepoint (sometimes called date-time).
+:::
+
+For your own data, assuming you have a .csv file in a `data` folder in your working directory called `your_data.csv`, you would call:
+
+```{r, eval=FALSE}
+library(readr)
 your_data <- read_csv("data/your_data.csv")
-
-# look at your data once imported
 head(your_data)
 ```
 
-If you import your data in with base R functions like `read.csv()`, data columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\> type.
+If you import your data in with base R functions like `read.csv()`, data columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\> type. We recommend using the [\`lubridate\`](https://lubridate.tidyverse.org/) package to do this, which makes dealing with date a litter easier. Here is an example of how you might do this:
 
-We recommend using the [\`lubridate\`](https://lubridate.tidyverse.org/) package to do this, which makes dealing with date a litter easier. Here is an example of how you might do this:
-
-```{r, eval=FALSE}
+```{r}
 library(lubridate)
 
-#import
-your_data <- read.csv("data/your_data.csv"))
+crooked_river <- read.csv(path_cr)
+woody_island <- read.csv(path_wi)
 
-# look at data format 
-head(your_data) # note date column is imported as a character string (<chr>)
+str(crooked_river) # note date column is imported as a character (<chr>)
+str(woody_island) # note date column is imported as a character (<chr>)
 
 # change to dttm using lubridate
-your_data$date <- ymd_hms(your_data$date) # if your date is in the form "2000-09-01 12:00:00"
-your_data$date <- ymd(your_data$date)  # if your date is in the form "2000-09-01"
+crooked_river$date <- ymd_hms(crooked_river$date) # if your date is in the form "2000-09-01 12:00:00"
+woody_island$date <- mdy(woody_island$date)  # if your date is in the form "2000-09-01"
 
-head(your_data)
+glimpse(crooked_river)
+glimpse(woody_island)
 ```
 
 While `hatchR` can take dates formatted in any style as long as they are either \<date\> or \<dttm\> types, `hatchR` operates on them in the **ISO 8601** [format](https://en.wikipedia.org/wiki/ISO_8601), which is how they are output (either in year-month-day or year-month-day-hour-minute-second) from functions. This is also convenient because `ggplot2` handles \<date\> and \<dttm\> objects well without significant need for change when plotting.
-
-## Example Date: Crooked River and Woody Island
-
-Here is an example of what your data might look if you used the above approach, using one of our two built-in datasets (more on these in XX vignette). `crooked_rover` has dates in \<dttm\> format, and `woody_island` has \<date\> in date format.
-
-```{r}
-head(crooked_river)
-head(woody_island)
-```
-
 
 
 ## Data Checks
 
 First, we recommend using the built-in function `plot_check_temp()` to visualize your imported data and verify nothing strange happened during your import process. The arguments `temp_min =` and `temp_max =` can be used to custom set thresholds for expected temperature ranges (otherwise they are set at 0 and 25 C). Here is an example using the built-in dataset `crooked_river`:
+
+ggplot2 is installed alongside `hatchR`. 
+
 
 ```{r, fig.align='center',fig.width=6}
 plot_check_temp(data = crooked_river, 
