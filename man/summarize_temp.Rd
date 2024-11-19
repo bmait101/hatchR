@@ -22,5 +22,8 @@ measurements to obtain mean daily temperature.
 }
 \examples{
 library(hatchR)
-summarize_temp(data = RMRS_MT103, dates = SampleDate, temperature = temperature)
+summarize_temp(data = crooked_river,
+  dates = date,
+  temperature = temp_c
+  )
 }
