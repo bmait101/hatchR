@@ -43,7 +43,9 @@ Suggests:
     knitr,
     nycflights13,
     readr,
+    purrr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
