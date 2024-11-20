@@ -23,12 +23,13 @@ knitr::opts_chunk$set(
 # load packages
 library(hatchR)
 library(purrr)
-library(modelr)
-# library(readr)
-# library(tibble)
-# library(ggplot2)
-# library(ggridges)
-# library(patchwork)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(stringr)
+library(ggridges)
+library(patchwork)
 ```
 
 
@@ -36,7 +37,7 @@ library(modelr)
 
 The goal of this vignette is to provide some examples of how you might access results from `predict_phenology()` and how you might plot your data.
 
-```{r}
+```{r, eval=FALSE}
 library(hatchR)
 library(purrr)
 library(tidyr)
