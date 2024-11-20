@@ -1,0 +1,242 @@
+---
+title: "Predict fish phenology: basic"
+author: "Morgan Sparks, Bryan M. Maitland"
+bibliography: '`r system.file("references.bib", package="hatchR")`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Predict_phenology_basic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# rmd style
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  warning = FALSE, 
+  message = FALSE, 
+  fig.align = 'center',
+  fig.width = 6
+)
+
+# load packages
+library(hatchR)
+library(tibble)
+library(ggplot2)
+library(lubridate)
+```
+
+## Overview
+
+Now that we've checked and pre-processed our data, and know how to select model parameterizations, we're ready to predict the developmental phenology of the fish species we're interested in.
+
+To demonstrate the full workflow for **hatchR**, we will recreate part of the analysis from @sparks2019 and use data from Woody Island from Lake Iliamna, Alaska. The data comes installed with the package and is called `woody_island`. First, we load packages:
+
+```{r, eval = FALSE}
+library(hatchR)  # for data and phenology modeling
+library(ggplot2)  # for additional plotting options
+library(lubridate)  # for date manipulation
+```
+
+## Data checks
+
+First, let's check the data to make sure it's in the right format. We'll use `head()` to print the first few rows and `summary()` to get a sense of the data:
+
+```{r}
+# print data
+head(woody_island)
+
+#summarize data
+summary(woody_island)
+```
+
+You can see that each day already is summarized as a mean temperature. You can also see that the data spans multiple years. We'll use `plot_check_temp()` to make visually check the data:
+
+```{r}
+plot_check_temp(
+  data = woody_island,
+  dates = date, 
+  temperature = temp_c
+  )
+```
+
+There appear to be outliers in the data, specifically in the very beginning and end of the period of record, and right in the middle. The loggers look to have been recording observations outside of the water and then in the middle where the water level may have dropped and exposed it to the air.
+
+However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Becuase `plot_check_temp()` is a ggplot object, we can add geoms to the plot to represent the approximate phenology window:
+
+```{r}
+p <- plot_check_temp(
+  data = woody_island,
+  dates = date, 
+  temperature = temp_c
+  ) + 
+  labs(title = "Temperature data from Woody Island, Lake Iliamna, Alaska")
+
+p + 
+  geom_rect(
+    aes(
+      xmin = ymd("1990-08-18"),  # spawn date
+      xmax = ymd("1991-04-01"),  # approx phenology window end
+      ymin = -10,  # lower bound
+      ymax = 25),  # upper bound
+    fill = "darkgreen",  # color rectangle dark green
+    alpha = 0.01  # make rectangle semi-transparent
+    ) 
+```
+
+If we just apply the model within the green polygon we've drawn, the model should work just fine.
+
+## Model select
+
+Now that our temperature data is usable we can select our models. We'll predict both hatching and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `dev.type`, which can be either "hatch" or "emerge".
+
+```{r}
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  dev.type = "hatch"
+  )
+
+sockeye_emerge_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  dev.type = "emerge"
+  )
+
+```
+
+
+Let's look at the expressions for the two different models we've selected:
+
+```{r}
+sockeye_hatch_mod ; sockeye_emerge_mod
+```
+
+You can see they are parameterized slightly differently to account for the differences between hatch and emergence timing.
+
+## Predict phenology
+
+We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
+
+```{r}
+WI_hatch <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
+  )
+```
+
+And then look inside the returned object (see @sec-results for additional context) to see days to hatch and development period:
+
+```{r}
+WI_hatch$days2done
+WI_hatch$dev.period
+```
+
+We can also do the same with emergence:
+
+```{r}
+WI_emerge <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_emerge_mod   # notice we're using emerge model expression here
+  )
+
+# see days to hatch and development period
+WI_emerge$days2done
+WI_emerge$dev.period
+```
+
+## Understanding your results {#sec-results}
+
+The output from `predict_phenology()` includes a lot of information.
+
+If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
+
+```{r}
+str(WI_hatch)
+```
+
+`WI_hatch$days2done` outputs the predicted days to hatch or emerge.
+
+`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
+
+`WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
+
+`WI_hatch$ef.tibble` is a *n* x 4 tibble (*n* = number of days to hatch or emerge) and the columns are the date, each day's temperature and effective value, and the cumulative sum of the effective values. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+
+## Plotting phenology
+
+**hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results. The plot visualizes three specific components:
+
+1.  the temperature regime over which you are predicting
+2.  the cumulative sum of effective values
+3.  the effective value for each day in your prediction span
+
+The function allows you to output various figures based on your interests, but defaults to a figure with all information and lots of labeling.
+
+In the output of `plot_phenology()` the *cumulative effective values* are scaled by the warmest temperature in `ef.tibble` and the *daily effective values* are scaled by multiplying by 100 so everything is visibly congruent in the figure.
+
+Let's look at the basic call, which gives you all the information:
+
+```{r}
+plot_phenology(WI_hatch)
+```
+
+You can turn of labeling or plot specific values using the function arguments `style` and `labels`, for example (plots not rendered):
+
+```{r, eval=FALSE}
+plot_phenology(WI_hatch, 
+               style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
+plot_phenology(WI_hatch, 
+               style = "ef_daily") # shows a plot with just the ef daily values
+plot_phenology(WI_hatch, 
+               labels = FALSE) # turns off the labeling for a cleaner figure
+```
+
+## A note about negative temperatures
+
+Occasionally, temperature data sets will have a few negative values or values very close to 0. Negative numbers below a certain threshold will output "not a number" (`NaN`) effective values because they are undefined in the model expression. Similarly, even negative values above that threshold will produce very small effective values. Because these values are so small, we allow the model to accumulate them even though development below 0 is biologically unlikely. We **assume** your data set has been checked for these values and doesn't include long periods of freezing, however the model allows for the occasional dip below freezing because the effect is so negligible toward development over incubation.
+
+A toy example of this phenomenon is shown below.
+
+```{r}
+# vector of temps from -5 to 15 by 0.5
+x <- seq(from = -5, to = 15, by = 0.5)
+x
+
+# get effective values for those temperatures
+# You can see the NaN warning that shows up in our past applications
+demo_ef_vals <- eval(sockeye_hatch_mod)
+demo_ef_vals
+
+# bring together as a tibble
+demo <- tibble(x, demo_ef_vals)
+demo
+
+# plot (note NaNs are removed from figure)
+# rectangle added to highlight the approximate temperatures of interest
+demo |> 
+  ggplot(aes(x = x, y = demo_ef_vals)) +
+  geom_rect(aes(ymin = 0, ymax  = 0.005, 
+                xmin = -5, xmax = 2), 
+            fill = "dodgerblue", alpha = 0.25) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Temperature (C)", y = "Effective Value") +
+  theme_classic()
+```
+
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+:::::::
