@@ -4,7 +4,7 @@ author: "Morgan Sparks, Bryan M. Maitland"
 bibliography: '`r system.file("references.bib", package="hatchR")`'
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Predict_phenology_advanced}
+  %\VignetteIndexEntry{Predict fish phenology: advanced}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
