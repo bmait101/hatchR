@@ -41,6 +41,7 @@ Imports:
     utils
 Suggests: 
     knitr,
+    nycflights13,
     readr,
     rmarkdown,
     testthat (>= 3.0.0)
