@@ -40,18 +40,27 @@ plot_check_temp <- function(data,
     )
   }
 
+  title <- "Temperature Check"
+  label_x <- "Date"
+  label_y <- "Temperature"
+  col_min <- "dodgerblue"
+  col_max <- "red"
+
   p <- data |>
     ggplot2::ggplot(ggplot2::aes(x = {{ dates }}, y = {{ temperature }})) +
     ggplot2::geom_point(size = 0.5) +
     ggplot2::geom_line(linewidth = 0.5) +
     ggplot2::geom_hline(
-      yintercept = c(temp_min), linetype = "dashed", color = "dodgerblue"
+      yintercept = c(temp_min), linetype = "dashed", color = col_min
     ) +
     ggplot2::geom_hline(
-      yintercept = c(temp_max), linetype = "dashed", color = "red"
+      yintercept = c(temp_max), linetype = "dashed", color = col_max
     ) +
-    ggplot2::labs(x = "Date", y = "Temperature") +
+    ggplot2::labs(title = title, x = label_x, y = label_y) +
     ggplot2::theme_classic()
+    # add x and y axis scales that depend on the data
+    # ggplot2::scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+    # ggplot2::scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5))
 
   return(p)
 }
