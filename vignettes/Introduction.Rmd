@@ -16,7 +16,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>", 
   warning = FALSE, 
-  message = FALSE
+  message = FALSE, 
+  fig.align = 'center',
+  fig.width = 6
 )
 
 # load packages
@@ -234,7 +236,7 @@ Next, it is best practice to visualize your data to ensure that it was imported 
 
 To aid users, `hatchR` comes with wrapper function `plot_check_temp()` to visualize your imported data and verify nothing strange happened during your import process. The arguments `temp_min =` and `temp_max =` can be used to custom set thresholds for expected temperature ranges (defaults are set at 0 and 25 C). Here is an example using the built-in dataset `crooked_river`:
 
-```{r, fig.align='center',fig.width=6}
+```{r}
 plot_check_temp(data = crooked_river, 
                 dates = date, 
                 temperature = temp_c, 
@@ -249,7 +251,7 @@ library(ggplot2)
 ```
 
 Then:
-```{r, fig.align='center',fig.width=6}
+```{r}
 crooked_river |>
     ggplot(aes(x = date, y =  temp_c)) +
     geom_point(size = 0.5) +
@@ -288,7 +290,7 @@ head(crooked_river_sum)
 
 We again recommend, at a minimum, visually checking your data once it has been summarized.
 
-```{r, fig.align='center',fig.width=6}
+```{r}
 # note we are now using crooked_river_sum instead of crooked_river
 plot_check_temp(data = crooked_river_sum, 
                 dates = date, 
@@ -302,7 +304,7 @@ plot_check_temp(data = crooked_river_sum,
 
 After importing, checking, and wrangling your data, there are a number of different actions you can take. To demonstrate the full workflow for `hatchR`, we will recreate part of the analysis from @sparks2019 and use data from Woody Island from Lake Iliamna, Alaska (see the **Predict Phenology Basic** and **Predict Phenology Advanced** vignettes). However, the generalized workflow for `hatchR` is demonstrated below.
 
-```{r echo = FALSE, out.width = '50%', fig.align='center'}
+```{r echo = FALSE, out.width = '50%'}
 knitr::include_graphics("img/workflow.png")
 ```
 
