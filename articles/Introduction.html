@@ -33,7 +33,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/Introduction.html">Introduction</a></li>
+<li><a class="dropdown-item" href="../articles/Adavanced_plotting.html">Adavanced plotting</a></li>
+    <li><a class="dropdown-item" href="../articles/Introduction.html">Introduction</a></li>
     <li><a class="dropdown-item" href="../articles/Parameterize_models.html">Parameterize hatchR Models</a></li>
     <li><a class="dropdown-item" href="../articles/Predict_phenology_advanced.html">Predict fish phenology: advanced</a></li>
     <li><a class="dropdown-item" href="../articles/Predict_phenology_basic.html">Predict fish phenology: basic</a></li>
@@ -190,7 +191,7 @@ current date or date-time:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2024-11-20"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-11-20 20:46:06 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2024-11-20 22:22:22 UTC"</span></span></code></pre></div>
 <p>In the context of <code>hatchR</code>, the ways you are likley to
 create a date/time are:</p>
 <ul>
@@ -277,7 +278,7 @@ vignette.</p>
 a datetime with <code><a href="https://lubridate.tidyverse.org/reference/make_datetime.html" class="external-link">make_datetime()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 336,776 × 5</span></span></span>
 <span><span class="co">#&gt;     year month   day  hour minute</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -294,8 +295,8 @@ a datetime with <code><a href="https://lubridate.tidyverse.org/reference/make_da
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 336,766 more rows</span></span></span>
 <span></span>
 <span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>departure <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/make_datetime.html" class="external-link">make_datetime</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>departure <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/make_datetime.html" class="external-link">make_datetime</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 336,776 × 6</span></span></span>
 <span><span class="co">#&gt;     year month   day  hour minute departure          </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
