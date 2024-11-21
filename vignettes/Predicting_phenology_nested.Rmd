@@ -1,0 +1,284 @@
+---
+title: "Predicting phenology: nested"
+author: "Morgan Sparks, Bryan M. Maitland"
+bibliography: '`r system.file("references.bib", package="hatchR")`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Predicting phenology: nested}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+# rmd style
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  eval = FALSE,
+  fig.align = "center",
+  fig.width = 6
+)
+
+# load packages
+library(hatchR)
+library(purrr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(stringr)
+library(ggridges)
+library(patchwork)
+```
+
+
+## Overview
+
+The goal of this vignette is to provide some examples of how you might access results from `predict_phenology()` and how you might plot your data.
+
+```{r, eval=FALSE}
+library(hatchR)
+library(purrr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(stringr)
+library(ggridges)
+library(patchwork)
+
+isaak_dat <- read_csv("~/Library/CloudStorage/Box-Box/Morgan.Sparks/Projects/hatchR/data/Isaak_et_al_2018_long.csv")
+isaak_dat <- isaak_dat |> 
+  na.omit()
+```
+
+## Introduction
+
+**hatchR** is designed to be flexible to achieve many applications. However, by virtue of being built as a scripting application, **hatchR** is able to tackle very large datasets relatively quickly and efficiently. Below we demonstrate an example of a nested dataset with multiple sites that include multiple years of data.
+
+## Data
+
+### Initial Checks
+
+These data are downloaded (and modified to long format) from @isaak2018 and generally cover the Boise, Payette, Clearwater, and upper Salmon River watersheds.
+
+<!-- ![Figure 1 from Isaak et al. 2018.](images/Screenshot%202024-11-20%20at%209.46.14%20AM.png){width="331"} -->
+
+To get started lets take a quick look at the data.
+
+```{r}
+# it's quite a large dataset, about 826000 records
+dim(isaak_dat)
+
+#count number of unique sites
+isaak_dat |> 
+  pull(site) |> # grab site column
+  unique() |> #pair down so we only have a single instance of each site name
+  length() #count the number of records of the unique site name vector
+
+```
+
+You can see there are 226 sites with about 826,000 individual records of water temperature.
+
+For this application, we'll be thinking about these sites at putative bull trout spawning habitat. We know from @isaak2015 that we generally stop observing bull trout where mean August temperatures are above 13 °C. So, we'll first filter sites out for those cooler than 13 °C.
+
+```{r}
+# create a vector of site names with temps at or below 13 C
+bull_trout_sites <- isaak_dat |> 
+  mutate(month = month(SampleDate)) |> #make a month column (numeric)
+  filter(month == 8) |> # filter out Aug.
+  group_by(site) |> # apply grouping by site
+  summarise(mean_aug_temp = mean(temperature)) |> 
+  filter(mean_aug_temp <= 13) |> # keep only sites 13 C or cooler
+  pull(site) |> 
+  unique()
+
+# we now have a list of 139 sites
+length(bull_trout_sites)
+
+# create a dataset filtered on our bull trout sites
+isaak_dat_bt <- isaak_dat |> 
+  filter(site %in% bull_trout_sites) # only keep sites in our vector of bull trout sites
+
+#still lots of data!
+dim(isaak_dat_bt)
+
+
+```
+
+Next we'll want to do some data checks to make sure everything looks alright.
+
+```{r}
+# lets look at a couple individual sites
+PIBO_1345 <- isaak_dat_bt |> 
+  filter(site == "PIBO_1345")
+
+# looks nice
+plot_check_temp(data = PIBO_1345,
+                        dates = SampleDate,
+                        temperature = temperature)
+
+#looks like there are multiple records per day so we need to summarize those in the larger dataframe (isaak_dat_bt)
+PIBO_1345 |> 
+  arrange(SampleDate)
+
+```
+
+### Nested Dataframes
+
+The package `dplyr` allows us to use a neat functionality called nested data. For our datatset, we can think of it in terms of a dataframe made up of a bunch of smaller dataframes where the identifier for separating the data is the name in the `site` column. These sub dataframes then are the records for each site in our example and we can separate them to programatically so that we can use the same function across them without skipping into the next datafield. It utilizes the same approach we applied with `map()` but allows us to separate the function across individual datasets stored in our larger dataframe.
+
+In this first example we want to summarize our data by day, which we can do using the following code.
+
+First let's just look at what nesting does before we actually make an object.
+
+```{r}
+isaak_dat_bt |> 
+  group_by(site) |>  # we group by site
+  nest() |> # nest our grouped data
+  head()
+```
+
+The resulting data structure is tibble with a new data column called data. The data column is actually a list and each row contains its own individual tibble (dataframe).
+
+```{r}
+
+isaak_summ_bt <- isaak_dat_bt |> 
+  group_by(site) |> # we group by site
+  nest() |> # use dplyr to nest our data based on our grouping
+  mutate(summ_obj = map(data, # we'll create a new list column called summ_obj
+                            summarize_temp,
+                            temperature = temperature,
+                            dates = SampleDate)) |> # 
+  select(site, summ_obj) 
+
+# look at first six rows of full object
+isaak_summ_bt |>  
+  head() # look at first six rows
+
+#pluck the first site to see its structure
+isaak_summ_bt |> 
+  pluck("summ_obj", 1) # pluck first tibble of summ_obj
+```
+
+Since we'll be operating on these as nests we will keep them as a nest, however if you wanted to change back to the original dataframe format it's easy with `unnest()`.
+
+```{r}
+isaak_summ_bt |> 
+  unnest(cols = summ_obj)
+```
+
+### Data Check
+
+We can do a last data check to make sure we have continuous data.
+
+First we'll use a smaller example to show how it works and then expand to our full dataset.
+
+```{r}
+#start on an idividual example
+
+PIBO_1345_summ <- isaak_summ_bt |> 
+  filter(site == "PIBO_1345") |> 
+  unnest(cols = "summ_obj")
+
+
+# we create a column that eiter contains NA, TRUE, or FALSE
+# NA is for first data
+# TRUE is if the difference between one row and the row preceding it is 1
+# FALSE is the difference is not 1
+PIBO_1345_summ |> 
+  mutate(diff = c(NA, diff(date)) ==1) |> 
+  filter(diff == FALSE) # since the output is empty there are no FALSE in diff
+
+# we can do the same to our isaak_summ_bt dataset
+# only difference here is we are mapping with an anonymoys function hence the
+# ~{..., .x$date...}
+# ~{} tells us it's an anonymous function while the .x allows to us to call the column from whatever data
+# is piped in
+
+isaak_summ_bt |> 
+  mutate(diff =  map(summ_obj,~{c(NA, diff(.x$date)==1)})) |> 
+  unnest(cols = c(summ_obj, diff)) |> # unnest for our filter
+  filter(diff == FALSE) # all continuous!
+```
+
+## Mapping Across Nested Data
+
+Now that we have our data in the format we want and we're confident that it doesn't have any gaps we can start to map our **hatchR** functions onto the data.
+
+First we need to make a vector of spawn dates and get our model set up.
+
+```{r}
+#| warning: false
+# spawn datest
+spawn_dates <- map(c(2011:2014), # year vector to map for custom function 
+                                  function(year) #custom paste function
+                                    c(paste0(year, "-09-01"), 
+                                      paste0(year,"-09-15"), 
+                                      paste0(year, "-09-30"))) |> #pipe to unlist() to make a vector 
+  unlist()
+
+# bull trout hatch model
+bt_hatch <- model_select(dev.type = "hatch",
+                         author = "Austin et al. 2017", 
+                         species = "bull trout", 
+                         model = "MM")
+```
+
+Then we can map it across our nested dataframe.
+
+```{r}
+# see description of the multiple mapping and pipes below
+hatch_res <- isaak_summ_bt |> 
+  mutate(dev_period = map2(summ_obj, spawn_dates, 
+                          predict_phenology,
+                          temperature = daily_temp,
+                          model = bt_hatch,
+                          dates = date
+                          ) |> 
+           map_df("dev.period") |> list()) |> 
+  select(site, dev_period) |> # just select the columns we want
+  unnest(cols = c(dev_period)) |> # unnest everything
+  mutate(days_to_hatch = stop - start) # make a new column of days to hatch
+
+head(hatch_res)
+```
+
+::: callout-warning
+## It's not output here, but this will output a boatload of warnings that some fish aren't hatching. However, it's pretty safe to assume that some of these habitats are actually too cold for bull trout and those are the places where they won't have hatched. If we were trying to make management decisions about these fish or testing a some kind of hypothesis it would be worth following up with why those fish weren't hatching, but for now, we'll rest on the assumption it's just too cold.
+:::
+
+A couple notes about what we did above. First we use `map2()` instead of `pmap()` but they are interchangeable here as long as you set up your variable grid for `pmap()`. Secondly, we're actually piping the output of the `map2()` into `map_df()` function so we can just pull out the `dev.period` list element out of the `predict_phenology()` output. Otherwise we'd end up with a list of the 4 outputs from `predict_phenology()`, which would end up being a pretty big object in your memory. So better just to store the 1x2 vector that is `dev.period`. Lastly, the `map_df()` is piped into a list because the nested dataframe doesn't know how to hold onto multiple dimension object (the 1x2 vector), it just wants a singular list containing all the elements.
+
+With that in mind we can plot our data.
+
+Briefly, we'll add an extra set of columns to define whether a fish spawned early, mid, or late and then plot the distributions across those time periods.
+
+```{r}
+
+hatch_res |> 
+  mutate(day = day(start)) |> # convert spawn date to day of month
+  mutate(spawn_time = case_when(day == 1 ~ "Early",
+                                day == 15 ~ "Mid",
+                                day == 30 ~ "Late")) |> # add a character column to match day
+  mutate(spawn_time = factor(spawn_time, levels = c("Late", "Mid", "Early"), ordered = TRUE)) |> # reorder as factors
+  ggplot(aes(x = days_to_hatch, y = spawn_time, fill = spawn_time, color = spawn_time)) + # plot!
+  geom_density_ridges(alpha = 0.9) +
+  scale_fill_brewer(palette = "Blues", direction = 1) +
+  scale_color_brewer(palette = "Blues", direction = 1) +
+  labs(x = "Days to hatch", y = "Spawn time") +
+  theme_classic() +
+  theme(legend.position = "none")
+  
+
+```
+
+
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+:::::::
