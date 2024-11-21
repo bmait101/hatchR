@@ -9,7 +9,8 @@
 #'  "ef_cumsum", "ef_daily". The default is "all".
 #' @param labels Logical. If TRUE (default), labels are added to the plot.
 #'
-#' @return ggplot2 object
+#' @return
+#' A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
 #'
 #' @export
 #'
