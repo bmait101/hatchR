@@ -70,5 +70,3 @@ plot_check_temp <- function(data,
 
   return(p)
 }
-
-# TO DO:
