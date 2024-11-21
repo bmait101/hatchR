@@ -233,9 +233,6 @@ hatch_2015 <- map(dates_2015,
   temperature = temp_c,
   model = bull_hatch_mod
 )
-
-hatch_2015 |>
-  map_dbl("days2done")
 ```
 
 See how we receive a warning "Fish did not develop, did not accrue enough effective units. Spawn date =2015-09-15. Did your fish spawn too close to the end of your data?" It tells us the spawn date we used so we can reference which date isn't working if we use an string of multiple dates to predict over.
