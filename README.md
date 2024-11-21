@@ -4,6 +4,8 @@
 # hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # hatchR: Predicting Fish Developmental Phenology
