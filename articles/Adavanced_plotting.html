@@ -38,6 +38,7 @@
     <li><a class="dropdown-item" href="../articles/Parameterize_models.html">Parameterize hatchR Models</a></li>
     <li><a class="dropdown-item" href="../articles/Predict_phenology_advanced.html">Predict fish phenology: advanced</a></li>
     <li><a class="dropdown-item" href="../articles/Predict_phenology_basic.html">Predict fish phenology: basic</a></li>
+    <li><a class="dropdown-item" href="../articles/Predicting_phenology_nested.html">Predicting phenology: nested</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -70,9 +71,9 @@ Bryan M. Maitland</h4>
 
     
     
-<div class="section level2">
-<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h2>
+<div class="section level3">
+<h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h3>
 <p>The goal of this vignette is to provide some examples of how you
 might access results from <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> and how you
 might plot your data.</p>
@@ -87,9 +88,9 @@ might plot your data.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggridges/" class="external-link">ggridges</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
-</h2>
+<div class="section level3">
+<h3 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
+</h3>
 <p>We’ll return to our first example with Woody Island to show how you
 might present data for a single spawning season. First let’s get our
 results and output them into a plotting format.</p>
@@ -162,9 +163,9 @@ labels on the legend.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Phenology"</span>, y <span class="op">=</span> <span class="st">"Temperature (C)"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Adavanced_plotting_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="plotting-multiple-years">Plotting multiple years<a class="anchor" aria-label="anchor" href="#plotting-multiple-years"></a>
-</h2>
+<div class="section level3">
+<h3 id="plotting-multiple-years">Plotting multiple years<a class="anchor" aria-label="anchor" href="#plotting-multiple-years"></a>
+</h3>
 <p>Let’s use the Crooked River data again as it has a number of
 continuous years of data without any temperature anomalies.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -266,16 +267,16 @@ is that our results span multiple years and may start and stop in the
 same intervals over multiple years (particularly for fall spawning
 species).</p>
 </div>
-<div class="section level2 callout-note">
-<h2 id="note-that-we-run-out-of-temperature-data-in-2015-which-is-why-it-is-cutoff-relative-to-the-others--if-you-really-wanted-to-fix-that-you-could-be-adding-on-the-necessary-dates-with-no-temperature-data-to-the-crooked_river_sy-tibble-">Note that we run out of temperature data in 2015, which is why it is
+<div class="section level3">
+<h3 id="note-that-we-run-out-of-temperature-data-in-2015-which-is-why-it-is-cutoff-relative-to-the-others--if-you-really-wanted-to-fix-that-you-could-be-adding-on-the-necessary-dates-with-no-temperature-data-to-the-crooked_river_sy-tibble-">Note that we run out of temperature data in 2015, which is why it is
 cutoff relative to the others. If you really wanted to fix that you
 could be adding on the necessary dates with no temperature data to the
 <code>crooked_river_sy</code> tibble.<a class="anchor" aria-label="anchor" href="#note-that-we-run-out-of-temperature-data-in-2015-which-is-why-it-is-cutoff-relative-to-the-others--if-you-really-wanted-to-fix-that-you-could-be-adding-on-the-necessary-dates-with-no-temperature-data-to-the-crooked_river_sy-tibble-"></a>
-</h2>
+</h3>
 </div>
-<div class="section level2">
-<h2 id="plotting-multiple-individual-spawning-events">Plotting multiple individual spawning events<a class="anchor" aria-label="anchor" href="#plotting-multiple-individual-spawning-events"></a>
-</h2>
+<div class="section level3">
+<h3 id="plotting-multiple-individual-spawning-events">Plotting multiple individual spawning events<a class="anchor" aria-label="anchor" href="#plotting-multiple-individual-spawning-events"></a>
+</h3>
 <p>Another common plotting scenario is that you might have data for when
 a number of fish spawn in a single or multiple seasons and want to
 represent those results.</p>
@@ -573,6 +574,14 @@ plots we highly recommend the <a href="https://patchwork.data-imaginist.com/" cl
 <p>There are many more ways you can plot your data but we these are
 meant to serve as templates and/or guides around common issues related
 to plotting phenology data.</p>
+</div>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs">
+
+</div>
+<p>:::::::</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
