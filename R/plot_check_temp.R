@@ -8,7 +8,7 @@
 #' to specify the minimum and maximum temperature values to be plotted.
 #'
 #' @param data A data.frame, or data frame extension (e.g. a tibble).
-#' @param dates Column representing the date of the temperature measurements
+#' @param dates Column representing the date of the temperature measurements.
 #' @param temperature Column representing the temperature values.
 #' @param temp_min Threshold for lower range of expected temperature. Default is 0.
 #' @param temp_max Threshold for upper range of expected temperature. Default is 25.
