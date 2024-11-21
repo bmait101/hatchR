@@ -8,8 +8,6 @@
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-# hatchR: Predicting Fish Developmental Phenology
-
 **IN DEVELOPMENT**
 
 `hatchR` is an R package for predicting fish developmental phenology
