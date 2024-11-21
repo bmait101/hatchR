@@ -33,6 +33,7 @@ Depends:
 Imports: 
     dplyr,
     ggplot2,
+    lifecycle,
     lubridate,
     modelr,
     rlang,
