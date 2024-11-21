@@ -35,6 +35,7 @@ Imports:
     ggplot2,
     lifecycle,
     lubridate,
+    readr,
     modelr,
     rlang,
     stats,
@@ -43,7 +44,6 @@ Imports:
 Suggests: 
     knitr,
     nycflights13,
-    readr,
     purrr,
     rmarkdown,
     testthat (>= 3.0.0),
