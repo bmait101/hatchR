@@ -1,5 +1,7 @@
 #' Summarize temperature data to daily values
 #'
+#' @description
+#' `r lifecycle::badge("experimental")`
 #' The `summarize_temp` function is used to summarize sub-daily temperature
 #' measurements to obtain mean daily temperature.
 #'

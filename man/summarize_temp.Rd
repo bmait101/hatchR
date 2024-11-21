@@ -17,6 +17,7 @@ summarize_temp(data, dates, temperature)
 A data.frame with summarized daily temperature values.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 The \code{summarize_temp} function is used to summarize sub-daily temperature
 measurements to obtain mean daily temperature.
 }

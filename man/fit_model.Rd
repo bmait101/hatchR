@@ -17,6 +17,7 @@ fit_model(df, temp, days)
 List with model object, coefficients, model expression, and plot
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Generate your own custom parameterized models for predicting hatching and emergence phenology
 }
 \details{

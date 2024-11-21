@@ -1,6 +1,7 @@
 #' Fit B&M model 2 to new data
 #'
 #' @description
+#' `r lifecycle::badge("experimental")`
 #' Generate your own custom parameterized models for predicting hatching and emergence phenology
 #'
 #' @details

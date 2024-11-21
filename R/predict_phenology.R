@@ -1,6 +1,7 @@
 #' Predict phenology of fish
 #'
 #' @description
+#' #' `r lifecycle::badge("experimental")`
 #' A short description...
 #'
 #' @param data Dataframe with dates and temperature.

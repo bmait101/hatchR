@@ -18,8 +18,8 @@ plot_phenology(plot, style = "all", labels = TRUE)
 ggplot2 object
 }
 \description{
-The function takes the output from \code{predict_phenology()}
-and creates a ggplot2 object.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+The function takes the output from \code{predict_phenology()} and creates a ggplot2 object.
 }
 \examples{
 library(hatchR)

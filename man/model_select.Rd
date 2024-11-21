@@ -19,6 +19,7 @@ model_select(author, species, model, dev.type = "hatch")
 An expression of length 1 giving the selected model structure to be run with \code{predict_phenology()}.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 The function calls a model table with the parameterizations for
 different species from different studies built in. Refer to the
 table (\code{model_table}) before using function to find inputs for
