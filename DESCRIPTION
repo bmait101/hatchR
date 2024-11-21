@@ -35,7 +35,6 @@ Imports:
     ggplot2,
     lifecycle,
     lubridate,
-    readr,
     modelr,
     rlang,
     stats,
@@ -43,13 +42,14 @@ Imports:
     utils
 Suggests: 
     knitr,
-    nycflights13,
+    readr,
     purrr,
     rmarkdown,
-    testthat (>= 3.0.0),
+    nycflights13,
     tidyr,
     stringr,
     ggridges,
-    patchwork
+    patchwork,
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
