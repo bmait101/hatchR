@@ -448,12 +448,12 @@ outputted.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   Date                Phenology     y</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2014-12-19 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2014-12-21 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2014-12-21 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2014-12-21 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2014-12-26 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2014-12-26 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>014</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2015-04-11 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2015-04-17 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2015-04-17 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span></code></pre></div>
 <p>Before we plot, let’s briefly walk through what we did there. First
 we made our predictions but then only output the start and stop data
 with the <code>map_df("dev.period")</code> command. Next we added a
@@ -490,8 +490,8 @@ limits to set everything on the same scale.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>phen_days <span class="op">=</span> <span class="va">stop</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">phen_days</span><span class="op">)</span> <span class="co"># output max value</span></span>
 <span><span class="co">#&gt;        start       stop phen_days</span></span>
-<span><span class="co">#&gt; 1 2013-09-28 2014-01-06  100 days</span></span>
-<span><span class="co">#&gt; 2 2013-09-28 2014-01-06  100 days</span></span>
+<span><span class="co">#&gt; 1 2013-09-28 2014-04-30  214 days</span></span>
+<span><span class="co">#&gt; 2 2013-09-28 2014-04-30  214 days</span></span>
 <span></span>
 <span><span class="co"># make custom lims using 30 days before first spawn and 244 days max (214 + 30) from above</span></span>
 <span><span class="co"># makes a 30 day buffer</span></span>
