@@ -1,4 +1,4 @@
-#' Visual check of imported data
+#' Visual check of imported temperature data
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -30,17 +30,21 @@ plot_check_temp <- function(data,
                             temperature,
                             temp_min = 0,
                             temp_max = 25) {
-  check_dates <- data |>
-    dplyr::pull({{ dates }}) |>
-    is.character()
 
-  if (check_dates == TRUE) {
+  check_dates <- data |> dplyr::pull({{ dates }})
+  if (is.character(check_dates) == TRUE) {
     stop(
-      "Date column is not Date or Date-time class; convert to date or
+      "Date column is not Date or Date-time (POSIXct) class; convert to date or
       date-time (e.g. `lubridate::ymd()`.",
       call. = FALSE
     )
   }
+
+  # if date is POSIXct (date-time) class, convert to Date class for plot
+  # if (inherits(check_dates, "POSIXct")) {
+  #   data <- data |>
+  #     dplyr::mutate({{ dates }} := as.Date({{ dates }}))
+  # }
 
   title <- "Temperature Check"
   label_x <- "Date"
@@ -61,13 +65,10 @@ plot_check_temp <- function(data,
     ggplot2::labs(title = title, x = label_x, y = label_y) +
     ggplot2::theme_classic()
     # add x and y axis scales that depend on the data
-    # ggplot2::scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+    # ggplot2::scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
     # ggplot2::scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5))
 
   return(p)
 }
 
 # TO DO:
-# - Add a title to the plot
-# - Add a subtitle to the plot
-# - add x and y axis scales that depend on the data

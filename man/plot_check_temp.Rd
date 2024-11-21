@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_check_temp.R
 \name{plot_check_temp}
 \alias{plot_check_temp}
-\title{Visual check of imported data}
+\title{Visual check of imported temperature data}
 \usage{
 plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 }
