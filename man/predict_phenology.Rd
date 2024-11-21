@@ -13,9 +13,9 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 
 \item{temperature}{Temperature measurements.}
 
-\item{spawn.date}{Date of spawning.}
+\item{spawn.date}{Date of spawning, given as a character string (e.g., "1990-08-18")}
 
-\item{model}{Model to predict phenology.}
+\item{model}{Model to predict phenology. Use \code{model_select()} to get model parameterization.}
 }
 \value{
 A list with the following elements:
@@ -31,10 +31,29 @@ and the date when the fish is predicted to hatch or emerge.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-A short description...
+Predict the phenology of fish using the effective value framework.
+}
+\details{
+Additional details...
 }
 \examples{
-# to come...
+library(hatchR)
+# get model parameterization
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990",
+  species = "sockeye",
+  model = 2,
+  dev.type = "hatch"
+)
+
+# predict phenology
+sockeye_hatch <- predict_phenology(
+data = woody_island,
+dates = date,
+temperature = temp_c,
+spawn.date = "1990-08-18",
+model = sockeye_hatch_mod
+)
 
 }
 \references{

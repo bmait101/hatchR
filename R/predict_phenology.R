@@ -2,13 +2,16 @@
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' A short description...
+#' Predict the phenology of fish using the effective value framework.
 #'
 #' @param data Dataframe with dates and temperature.
 #' @param dates Date of temperature measurements.
 #' @param temperature Temperature measurements.
-#' @param spawn.date Date of spawning.
-#' @param model Model to predict phenology.
+#' @param spawn.date Date of spawning, given as a character string (e.g., "1990-08-18")
+#' @param model Model to predict phenology. Use `model_select()` to get model parameterization.
+#'
+#' @details
+#' Additional details...
 #'
 #' @return
 #' A list with the following elements:
@@ -23,7 +26,23 @@
 #' @export
 #'
 #' @examples
-#' # to come...
+#' library(hatchR)
+#' # get model parameterization
+#' sockeye_hatch_mod <- model_select(
+#'   author = "Beacham and Murray 1990",
+#'   species = "sockeye",
+#'   model = 2,
+#'   dev.type = "hatch"
+#' )
+#'
+#' # predict phenology
+#' sockeye_hatch <- predict_phenology(
+#' data = woody_island,
+#' dates = date,
+#' temperature = temp_c,
+#' spawn.date = "1990-08-18",
+#' model = sockeye_hatch_mod
+#' )
 #'
 #' @references
 #' Sparks, M.M., Falke, J.A., Quinn, T.P., Adkinson, M.D., Schindler, D.E.
@@ -33,51 +52,43 @@
 #'   \emph{Canadian Journal of Fisheries and Aquatic Sciences},
 #'   \bold{76(1)}, 123--135
 predict_phenology <- function(data, dates, temperature, spawn.date, model) {
+  # arrange data by dates
   dat <- data |> dplyr::arrange({{ dates }})
 
+  # check if dates are formatted as dates
+  check_dates <- dat |> dplyr::pull({{ dates }})
+  if (is.character(check_dates) == TRUE) {
+    stop("Your dates are formatted as a character, they need to
+         be formatted as a date (e.g. using `lubridate::ymd()`)")
+  }
+
+  # check if spawn.date is formatted as a character
   if (lubridate::is.timepoint(spawn.date) == TRUE ||
-    lubridate::is.Date(spawn.date) == TRUE) {
+      lubridate::is.Date(spawn.date) == TRUE) {
     stop("Your spawn.date is formatted as a Date but needs to
          be formatted as a character string (e.g. '09-15-2000')")
   }
 
-  check <- dat |>
-    dplyr::pull({{ dates }}) |>
-    is.character()
-
-  if (check == TRUE) {
-    stop("Your dates are formatted as a character, they need to
-         be formatted as a timepoint (e.g. using ymd())")
-  }
-
-  # turn dates from strings to datetime for using lubridate
+  # subset to spawning period
   s.d <- lubridate::ymd(spawn.date)
-  # dat[,dates] <-mdy(dat[,dates] )
-
-  # subset to spawn date
-  # spawn.position <- which(dat[,dates] == s.d)  #old base R version
   spawn.position <- dat |>
     tibble::rownames_to_column() |>
     dplyr::mutate(rowname = as.numeric(.data$rowname)) |>
     dplyr::filter({{ dates }} == s.d) |>
     dplyr::pull("rowname")
-
   spawn.period <- dat[spawn.position:c(nrow(dat)), ]
 
   # effective value function
   Ef <- model
-  # Ef.t <-function(x){1 / exp(6.727 - log(x + 2.394))}
 
-  x <- spawn.period |> dplyr::pull({{ temperature }}) # vector of temps for Ef to evluate
+  # vector of temps for Ef to evaluate
+  x <- spawn.period |> dplyr::pull({{ temperature }})
 
-  # walk along temps and sum Ef to 1 and count how many days
-  # D_Ef <- min(which(cumsum(Ef.t(spawn.period[, temps])) >= 1)) #Apply Effective Value model
-
-
+  # walk along temps and sum Ef to 1 and count how many days it takes
   D_Ef <- min(which(cumsum(eval(Ef)) >= 1))
+  # If fish doesn't hatch value returns Inf
 
-  ####  If fish doesn't hatch value returns Inf, if that's the case this returns ef.results as NULL ####
-  #### which can be used in a loop to pass over the Inf vals and skip to next iteration             ####
+  # output results
   if (D_Ef == Inf) {
     ef.results <- NULL
     message(
