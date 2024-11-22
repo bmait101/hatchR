@@ -35,7 +35,6 @@ Imports:
     ggplot2,
     lifecycle,
     lubridate,
-    modelr,
     rlang,
     stats,
     tibble,

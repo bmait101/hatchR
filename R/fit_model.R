@@ -1,8 +1,8 @@
-#' Fit B&M model 2 to new data
+#' Fit B&M model 2 to new data using `stats::nls()`
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Generate your own custom parameterized models for predicting hatching and emergence phenology
+#' Generate your own custom parameterized models for predicting hatching and emergence phenology.
 #'
 #' @details
 #' `hatchR` also includes functionality to generate your own custom
@@ -25,19 +25,18 @@
 #' @examples
 #' library(hatchR)
 #' # vector of temperatures
-#' temperature <- c(2,5,8,11,14)
+#' temperature <- c(2, 5, 8, 11, 14)
 #' # vector of days to hatch
-#' days_to_hatch <- c(194,87,54,35,28)
+#' days_to_hatch <- c(194, 87, 54, 35, 28)
 #' quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
 #' bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
-fit_model <- function(df, temp, days)
-{
+fit_model <- function(df, temp, days) {
   # fit linear model to log data
   m1 <- stats::lm(log(days) ~ log(temp), data = df)
   summary(m1)
 
   # estimate starting values for nls
-  m1_a <- exp(stats::coef(m1)[1])  # exponentiate the intercept
+  m1_a <- exp(stats::coef(m1)[1]) # exponentiate the intercept
   m1_b <- stats::coef(m1)[2]
 
   # fit model 2 from Beacham & Murray (1990) to data
@@ -49,13 +48,13 @@ fit_model <- function(df, temp, days)
   m2_b <- stats::coef(m2)[2]
 
   # model expression for hatch function
-  mod <- paste("1 / exp(", m2_a, " - log(x + ", m2_b*-1, "))", sep = "")  # is *-1 correct?
+  mod <- paste("1 / exp(", m2_a, " - log(x + ", m2_b * -1, "))", sep = "") # is *-1 correct?
   mod <- parse(text = mod)
 
   # plot predictions and data --------------------------
 
   grid <- data.frame(temp = seq(min(temp), max(temp), 0.1))
-  grid <- grid |> modelr::add_predictions(m2)  # same as predict(m2, newdata = grid)
+  grid$pred <- stats::predict(m2, newdata = grid)
   p_pred <- df |>
     ggplot2::ggplot(ggplot2::aes(x = temp, y = days)) +
     ggplot2::geom_point() +

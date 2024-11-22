@@ -65,7 +65,6 @@ To come…
 - ggplot2: For vignette visualizations.
 - lubridate: For working with dates.
 - tibble: For creating tibbles as output for various functions.
-- modelr: For modeling functions.
 - rlang: For `.data` usage.
 - stats: For various modeling functions (e.g., `confint()`).
 - utils: For various utility functions.

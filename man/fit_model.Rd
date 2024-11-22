@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_model.R
 \name{fit_model}
 \alias{fit_model}
-\title{Fit B&M model 2 to new data}
+\title{Fit B&M model 2 to new data using \code{stats::nls()}}
 \usage{
 fit_model(df, temp, days)
 }
@@ -18,7 +18,7 @@ List with model object, coefficients, model expression, and plot
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Generate your own custom parameterized models for predicting hatching and emergence phenology
+Generate your own custom parameterized models for predicting hatching and emergence phenology.
 }
 \details{
 \code{hatchR} also includes functionality to generate your own custom
@@ -33,9 +33,9 @@ effective value approach.
 \examples{
 library(hatchR)
 # vector of temperatures
-temperature <- c(2,5,8,11,14)
+temperature <- c(2, 5, 8, 11, 14)
 # vector of days to hatch
-days_to_hatch <- c(194,87,54,35,28)
+days_to_hatch <- c(194, 87, 54, 35, 28)
 quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
 bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
 }
