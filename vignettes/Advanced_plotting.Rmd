@@ -1,10 +1,10 @@
 ---
-title: "Adavanced plotting"
+title: "Advanced plotting"
 author: "Morgan Sparks, Bryan M. Maitland"
 bibliography: '`r system.file("references.bib", package="hatchR")`'
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Adavanced plotting}
+  %\VignetteIndexEntry{Advanced plotting}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
