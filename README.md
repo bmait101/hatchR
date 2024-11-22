@@ -55,7 +55,102 @@ There are several ways to get help with `hatchR`:
 
 ## Example Usage
 
-To come…
+Below we provide a brief example showing how to use `hatchR`. For a
+thorough introduction to the software, see our introductory vignette
+[linked
+here](https://bmait101.github.io/hatchR/articles/Introduction.html). For
+a list of all functions available in `hatchR`, see our function
+reference [linked
+here](https://bmait101.github.io/hatchR/reference/index.html).
+
+First we load `hatchR` and helper packages by running
+
+``` r
+library(hatchR)
+library(ggplot2)  # for additional plotting options
+library(lubridate)  # for working with dates
+```
+
+The example `woody_island` dataset is included in `hatchR` and contains
+temperature data from Woody Island, Lake Iliamna, Alaska. It includes
+daily water temperature data from 1990-1992. We can use
+`plot_check_temp()` to visually check the data:
+
+``` r
+p <- plot_check_temp(
+  data = woody_island,
+  dates = date, 
+  temperature = temp_c
+  )
+p
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+Spawning in this system typically peaks around August 18 and hatching
+and emergence are done before the start of the following spawning
+season, so we can predict phenology within a subset of a year.
+
+``` r
+p + 
+  geom_rect(
+    aes(
+      xmin = ymd("1990-08-18"),  # spawn date
+      xmax = ymd("1991-04-01"),  # approx phenology window end
+      ymin = -10,  # lower bound
+      ymax = 25),  # upper bound
+    fill = "darkgreen",  # color rectangle dark green
+    alpha = 0.01  # make rectangle semi-transparent
+    ) 
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+Next, select hatch and emerge models we want to use to predict
+phenology:
+
+``` r
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  dev.type = "hatch"
+  )
+```
+
+Now we can predict phenology for the sockeye salmon using the
+`predict_phenology()` function:
+
+``` r
+WI_hatch <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
+  )
+```
+
+We can check the predicted phenology by running:
+
+``` r
+# see days to hatch
+WI_hatch$days2done
+#> [1] 74
+# and development period
+WI_hatch$dev.period
+#>        start       stop
+#> 1 1990-08-18 1990-10-30
+```
+
+Finally, we can visualize the predicted phenology using
+`plot_phenology()`:
+
+``` r
+plot_phenology(WI_hatch)
+```
+
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ## Imported Packages
 
