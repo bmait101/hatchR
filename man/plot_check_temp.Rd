@@ -9,9 +9,9 @@ plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 \arguments{
 \item{data}{A data.frame, or data frame extension (e.g. a tibble).}
 
-\item{dates}{Column representing the date of the temperature measurements.}
+\item{dates}{Vector of dates for temperature measurements. Must be date or date-time class.}
 
-\item{temperature}{Column representing the temperature values.}
+\item{temperature}{Vector of temperature values.}
 
 \item{temp_min}{Threshold for lower range of expected temperature. Default is 0.}
 

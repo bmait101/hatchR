@@ -8,8 +8,8 @@
 #' to specify the minimum and maximum temperature values to be plotted.
 #'
 #' @param data A data.frame, or data frame extension (e.g. a tibble).
-#' @param dates Column representing the date of the temperature measurements.
-#' @param temperature Column representing the temperature values.
+#' @param dates Vector of dates for temperature measurements. Must be date or date-time class.
+#' @param temperature Vector of temperature values.
 #' @param temp_min Threshold for lower range of expected temperature. Default is 0.
 #' @param temp_max Threshold for upper range of expected temperature. Default is 25.
 #'
@@ -31,27 +31,23 @@ plot_check_temp <- function(data,
                             temp_min = 0,
                             temp_max = 25) {
 
+  # check if dates are a character vector
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
     stop(
-      "Date column is not Date or Date-time (POSIXct) class; convert to date or
-      date-time (e.g. `lubridate::ymd()`.",
+      "Date column is character vector; convert to date or date-time class.",
       call. = FALSE
     )
   }
 
-  # if date is POSIXct (date-time) class, convert to Date class for plot
-  # if (inherits(check_dates, "POSIXct")) {
-  #   data <- data |>
-  #     dplyr::mutate({{ dates }} := as.Date({{ dates }}))
-  # }
-
+  # plotting parameters
   title <- "Temperature Check"
   label_x <- "Date"
   label_y <- "Temperature"
   col_min <- "dodgerblue"
   col_max <- "red"
 
+  # plot
   p <- data |>
     ggplot2::ggplot(ggplot2::aes(x = {{ dates }}, y = {{ temperature }})) +
     ggplot2::geom_point(size = 0.5) +
@@ -64,9 +60,6 @@ plot_check_temp <- function(data,
     ) +
     ggplot2::labs(title = title, x = label_x, y = label_y) +
     ggplot2::theme_classic()
-    # add x and y axis scales that depend on the data
-    # ggplot2::scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
-    # ggplot2::scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5))
 
   return(p)
 }

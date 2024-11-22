@@ -37,11 +37,11 @@
 #'
 #' # predict phenology
 #' sockeye_hatch <- predict_phenology(
-#' data = woody_island,
-#' dates = date,
-#' temperature = temp_c,
-#' spawn.date = "1990-08-18",
-#' model = sockeye_hatch_mod
+#'   data = woody_island,
+#'   dates = date,
+#'   temperature = temp_c,
+#'   spawn.date = "1990-08-18",
+#'   model = sockeye_hatch_mod
 #' )
 #'
 #' @references
@@ -55,16 +55,18 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   # arrange data by dates
   dat <- data |> dplyr::arrange({{ dates }})
 
-  # check if dates are formatted as dates
+  # check if dates are a character vector
   check_dates <- dat |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
-    stop("Your dates are formatted as a character, they need to
-         be formatted as a date (e.g. using `lubridate::ymd()`)")
+    stop(
+      "Date column is character vector; convert to date or date-time class.",
+      call. = FALSE
+    )
   }
 
   # check if spawn.date is formatted as a character
   if (lubridate::is.timepoint(spawn.date) == TRUE ||
-      lubridate::is.Date(spawn.date) == TRUE) {
+    lubridate::is.Date(spawn.date) == TRUE) {
     stop("Your spawn.date is formatted as a Date but needs to
          be formatted as a character string (e.g. '09-15-2000')")
   }

@@ -16,19 +16,19 @@
 #'
 #' @examples
 #' library(hatchR)
-#' summarize_temp(data = crooked_river,
+#' summarize_temp(
+#'   data = crooked_river,
 #'   dates = date,
 #'   temperature = temp_c
-#'   )
+#' )
 summarize_temp <- function(data,
                            dates,
                            temperature) {
-  check_dates <- data |>
-    dplyr::pull({{ dates }}) |>
-    is.character()
-  if (check_dates == TRUE) {
+  # check if dates are a character vector
+  check_dates <- data |> dplyr::pull({{ dates }})
+  if (is.character(check_dates) == TRUE) {
     stop(
-      "Date column is not Date or Date-time class; convert to date or date-time (e.g. `lubridate::ymd()`.",
+      "Date column is character vector; convert to date or date-time class.",
       call. = FALSE
     )
   }

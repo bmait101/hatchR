@@ -48,11 +48,11 @@ sockeye_hatch_mod <- model_select(
 
 # predict phenology
 sockeye_hatch <- predict_phenology(
-data = woody_island,
-dates = date,
-temperature = temp_c,
-spawn.date = "1990-08-18",
-model = sockeye_hatch_mod
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
 )
 
 }
