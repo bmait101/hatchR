@@ -1,4 +1,4 @@
-test_that("plot_check_temp() returns list", {
+test_that("plot_check_temp() works", {
   p <- plot_check_temp(crooked_river, date, temp_c)
   expect_type(p, "list")
   expect_s3_class(p, "gg")
