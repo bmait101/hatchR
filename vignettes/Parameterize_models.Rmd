@@ -28,7 +28,7 @@ library(ggplot2)
 
 ## Overview
 
-This vignette describes the process of parameterizing models for predicting fish phenology using **hatchR**. The package provides two options for choosing phenological models. One is to use built-in model parameterizations within the package and the other is to create your own using data you import. We will cover both options in this vignette. First, we load `hatchR`:
+This vignette describes the process of parameterizing models for predicting fish phenology using **hatchR**. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. We will cover both options in this vignette. First, we load `hatchR`:
 
 ```{r, eval = FALSE}
 library(hatchR)
@@ -37,9 +37,9 @@ library(hatchR)
 
 ## Built-in parameterizations
 
-The simplest way to get started is to use built-in parameterizations, which are included in the `model_table`. This table includes parameterizations for numerous salmonid species to predict both hatching and emergence and can be selected using `model_select()`.
+The simplest way to get started is to use built-in parameterizations, which are included in the `model_table`. This table includes parameterizations for several salmonid species relating temperature to hatch and emergence timing, and can be selected using `model_select()`.
 
-Let get a sense of the table, which comes installed with `hatchR`):
+Let get a sense of the table, which comes installed with `hatchR`:
 
 ```{r}
 model_table
@@ -47,9 +47,9 @@ model_table
 
 We see that `model_table` is a tbble with 51 rows and 5 columns:
 
-* `author`: The author(s) of the model
+* `author`: The author(s) and year of publication for the model
 * `species`: The species the model is parameterized for
-* `model`: The model number or type (specific to @beacham1990 who created several models)
+* `model`: The model number (specific to @beacham1990 who created several models)
 * `dev.type`: The phenological development type (i.e., hatch or emerge)
 * `func`: The model expression / parameterization
 
