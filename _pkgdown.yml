@@ -5,12 +5,14 @@ template:
 
 articles:
   - title: "Introduction to hatchR"
+    navbar: "Introduction to hatchR"
     contents:
     - Introduction
     - Parameterize_models
     - Predict_phenology_basic
 
   - title: "Advanced hatchR"
+    navebar: "Advanced hatchR"
     contents:
     - Predict_phenology_advanced
     - Predict_phenology_nested
