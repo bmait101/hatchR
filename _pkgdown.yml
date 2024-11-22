@@ -1,4 +1,17 @@
 url: https://bmait101.github.io/hatchR/
+
 template:
   bootstrap: 5
 
+articles:
+  - title: "Introduction to hatchR"
+    contents:
+    - Introduction
+    - Parameterize_models
+    - Predict_phenology_basic
+
+  - title: "Advanced hatchR"
+    contents:
+    - Predict_phenology_advanced
+    - Predict_phenology_nested
+    - Advanced_plotting
