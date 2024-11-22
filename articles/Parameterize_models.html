@@ -30,17 +30,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/Adavanced_plotting.html">Adavanced plotting</a></li>
-    <li><a class="dropdown-item" href="../articles/Introduction.html">Introduction</a></li>
-    <li><a class="dropdown-item" href="../articles/Parameterize_models.html">Parameterize hatchR Models</a></li>
-    <li><a class="dropdown-item" href="../articles/Predict_phenology_advanced.html">Predict fish phenology: advanced</a></li>
-    <li><a class="dropdown-item" href="../articles/Predict_phenology_basic.html">Predict fish phenology: basic</a></li>
-    <li><a class="dropdown-item" href="../articles/Predicting_phenology_nested.html">Predicting phenology: nested</a></li>
-  </ul>
-</li>
+<li class="active nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -77,9 +67,9 @@ Bryan M. Maitland</h4>
 <p>This vignette describes the process of parameterizing models for
 predicting fish phenology using <strong>hatchR</strong>. The package
 provides two options for choosing phenological models. One is to use
-built-in model parameterizations within the package and the other is to
-create your own using data you import. We will cover both options in
-this vignette. First, we load <code>hatchR</code>:</p>
+model parameterizations installed the package and the other is to create
+your own using data you import. We will cover both options in this
+vignette. First, we load <code>hatchR</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -88,10 +78,11 @@ this vignette. First, we load <code>hatchR</code>:</p>
 </h3>
 <p>The simplest way to get started is to use built-in parameterizations,
 which are included in the <code>model_table</code>. This table includes
-parameterizations for numerous salmonid species to predict both hatching
-and emergence and can be selected using <code><a href="../reference/model_select.html">model_select()</a></code>.</p>
+parameterizations for several salmonid species relating temperature to
+hatch and emergence timing, and can be selected using
+<code><a href="../reference/model_select.html">model_select()</a></code>.</p>
 <p>Let get a sense of the table, which comes installed with
-<code>hatchR</code>):</p>
+<code>hatchR</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_table</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 51 × 5</span></span></span>
@@ -112,12 +103,13 @@ and emergence and can be selected using <code><a href="../reference/model_select
 columns:</p>
 <ul>
 <li>
-<code>author</code>: The author(s) of the model</li>
+<code>author</code>: The author(s) and year of publication for the
+model</li>
 <li>
 <code>species</code>: The species the model is parameterized
 for</li>
 <li>
-<code>model</code>: The model number or type (specific to <span class="citation">Beacham and Murray (1990)</span> who created several
+<code>model</code>: The model number (specific to <span class="citation">Beacham and Murray (1990)</span> who created several
 models)</li>
 <li>
 <code>dev.type</code>: The phenological development type (i.e.,
