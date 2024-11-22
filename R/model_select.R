@@ -45,6 +45,3 @@ model_select <- function(author,
   mod <- parse(text = mod)
   return(mod)
 }
-
-# TO DO:
-# - add ID to each model for easily selection
