@@ -1,10 +1,10 @@
 ---
-title: "Predicting phenology: nested"
+title: "Predict fish phenology: nested"
 author: "Morgan Sparks, Bryan M. Maitland"
 bibliography: '`r system.file("references.bib", package="hatchR")`'
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Predicting phenology: nested}
+  %\VignetteIndexEntry{Predict fish phenology: nested}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
