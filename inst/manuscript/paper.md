@@ -51,6 +51,8 @@ To widen the user application of these methods, we distribute two user-interface
 `hatchR` is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice.
 
 
+\begin{center}\includegraphics[width=5.68in,height=0.5\textheight]{flowchart} \end{center}
+
 
 ## Effective value models
 

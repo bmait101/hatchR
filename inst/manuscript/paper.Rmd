@@ -53,48 +53,10 @@ To widen the user application of these methods, we distribute two user-interface
 
 `hatchR` is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice.
 
-```{r echo=FALSE, eval=FALSE}
-## THIS WONT WORK WITH PDF OUTPUT
-
-graph <- 
-  "digraph {
-      # a 'graph' statement
-      graph [overlap = false, label = 'hatchR workflow',labelloc = t, fontsize = 30]
-      # label nodes
-      node [fontsize = 20]
-      import [label = 'import data', shape = circle, fillcolor = Beige]
-      dates [label = 'check dates', shape = circle, fillcolor = Beige]
-      plot1 [label = 'plot_check_data()' shape = rectangle]
-      format [label = 'is data as\ndaily average?', shape = circle, fillcolor = Beige]
-      plot2 [label = 'plot_check_data()' shape = rectangle]
-      summarize [label = 'sumamrize_temp()',  shape = rectangle]
-      continuous [label = 'check_continuous()', shape = rectangle]
-      model [label = 'model type:\ncustom or included?', shape = circle, fillcolor = Beige]
-      select [label = 'model_select()', shape = rectangle]
-      fit [label = 'fit_model()', shape = rectangle]
-      phenology [label = 'predict_phenology()', shape = rectangle]
-      plot3 [label = 'plot_phenology()', shape = rectangle]
-      # edge definitions with the node IDs
-      edge [fontsize = 20]
-      import -> dates
-      dates -> dates [label = 'not dttm\nuse lubridate']
-      dates-> plot1 [label = 'is dttm']
-      plot1 -> format
-      format -> summarize [label = 'multiple measures\nw/in a day']
-      format -> model [label = 'mean daily average']
-      summarize -> continuous -> plot2 -> model
-      model -> select [label = 'hatchR built-in\nmodel']
-      model -> fit [label = 'user custom data']
-      {select, fit} -> phenology
-      phenology -> plot3
-    }
-"
-
-DiagrammeR::grViz(graph,
-    width = 500
-    )
-
+```{r echo = FALSE, out.height = '50%', fig.align = 'center'}
+knitr::include_graphics("flowchart.png")
 ```
+
 
 ## Effective value models
 

@@ -25,10 +25,10 @@ digraph {
       dates -> plot1 [label = 'is dttm']
       plot1 -> format
       format -> summarize [label = 'multiple measures\nw/in a day']
-      format -> model [label = 'mean daily average']
+      format -> model [label = '  mean daily average']
       summarize -> continuous -> plot2 -> model
-      model -> select [label = 'hatchR built-in\nmodel']
-      model -> fit [label = 'user custom data']
+      model -> select [label = 'hatchR built-\nin model']
+      model -> fit [label = ' user custom data']
       {select, fit} -> phenology
       phenology -> plot3
 
