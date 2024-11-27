@@ -80,8 +80,15 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dplyr::pull("rowname")
   spawn.period <- dat[spawn.position:c(nrow(dat)), ]
 
+  # bring in model df and extract the expression
+
+  model.df <- model %>%
+    dplyr::pull("func")
+
+  model.expression <- parse(text=model.df)
+
   # effective value function
-  Ef <- model
+  Ef <- model.expression
 
   # vector of temps for Ef to evaluate
   x <- spawn.period |> dplyr::pull({{ temperature }})
@@ -92,7 +99,23 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
 
   # output results
   if (D_Ef == Inf) {
-    ef.results <- NULL
+
+    ef.df <- spawn.period
+    x <- ef.df |> dplyr::pull({{ temperature }})
+    ef.df$ef_vals <- eval(Ef)
+    ef.df$ef_cumsum <- cumsum(ef.df$ef_vals)
+    colnames(ef.df)[1:2] <- c("dates", "temperature")
+
+    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev.period) <- c("start", "stop")
+    dev.period$start <- min(ef.df$dates)
+    dev.period$stop <- as_date(NA)
+
+    ef.results <- list(days2done=as.numeric(NA),
+                       dev.period=dev.period,
+                       ef.vals = ef.df$ef_vals,
+                       ef.tibble = ef.df,
+                       model.specs=model)
     message(
       "| Fish did not develop, did not accrue enough
             effective units. Spawn date = ",
@@ -117,7 +140,8 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
       days2done = D_Ef,
       dev.period = dev.period,
       ef.vals = ef.df$ef_vals,
-      ef.tibble = ef.df
+      ef.tibble = ef.df,
+      model.specs = model
     )
   }
   return(ef.results)
