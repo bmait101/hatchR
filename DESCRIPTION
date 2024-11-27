@@ -49,6 +49,7 @@ Suggests:
     stringr,
     ggridges,
     patchwork,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    cli
 Config/testthat/edition: 3
 VignetteBuilder: knitr
