@@ -111,7 +111,7 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
     colnames(dev.period) <- c("start", "stop")
     dev.period$start <- min(ef.df$dates)
-    dev.period$stop <- as_date(NA)
+    dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(days2done=as.numeric(NA),
                        dev.period=dev.period,
