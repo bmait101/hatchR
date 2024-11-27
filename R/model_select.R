@@ -38,10 +38,10 @@ model_select <- function(author,
       author == {{ author }} &
         species == {{ species }} &
         model == {{ model }} &
-        dev.type == {{ dev.type }}
-    ) |>
-    dplyr::pull("func")
-
-  mod <- parse(text = mod)
-  return(mod)
+        dev.type == {{ dev.type }})
+  #   ) |>
+  #   dplyr::pull("func")
+  #
+  # mod <- parse(text = mod)
+  # return(mod)
 }
