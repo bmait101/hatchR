@@ -1,13 +1,20 @@
 test_that("predict phenology works", {
   m <- model_select(
     author = "Beacham and Murray 1990",
-    species = "sockeye",model = 2,dev.type = "hatch")
+    species = "sockeye",
+    model = 2,
+    dev.type = "hatch"
+    )
   p <- suppressWarnings(predict_phenology(
     data = woody_island,dates = date,
-    temperature = temp_c,spawn.date = "1990-08-18",model = m))
+    temperature = temp_c,
+    spawn.date = "1990-08-18",
+    model = m
+    )
+    )
 
   expect_type(p, "list")
-  expect_length(p, 4)
+  expect_length(p, 5)
 
   expect_type(p$days2done, "integer")
 
@@ -18,5 +25,9 @@ test_that("predict phenology works", {
 
   expect_s3_class(p$dev.period, "data.frame")
   expect_equal(ncol(p$dev.period), 2)
+
+  expect_s3_class(p$model.specs, "data.frame")
+  expect_equal(ncol(p$model.specs), 5)
+
 
 })
