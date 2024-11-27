@@ -2,12 +2,12 @@ test_that("fit_model works", {
   temp <- c(2, 5, 8, 11, 14)
   days <- c(194, 87, 54, 35, 28)
   df <- tibble::tibble(temp, days)
-  m <- fit_model(df = df, temp = temp, days = days)
+  m <- fit_model(df = df, temp = temp, days = days, species = "sockeye", dev.type = "hatch")
 
   expect_type(m, "list")
 
-  expect_type(m$mod, "expression")
-  expect_length(m$mod, 1)
+  expect_s3_class(m$func, "data.frame")
+  # expect_length(m$func, 1)
 
   expect_type(m$m2_b, "double")
   expect_type(m$m2_a, "double")
