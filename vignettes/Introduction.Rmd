@@ -32,27 +32,14 @@ library(ggplot2)
 
 # Overview
 
-`hatchR` is an R package designed to allow users to leverage daily water temperature records to predict when a fish is expected to hatch and/or emerge using statistical models. Specifically, `hatchR` is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [e.g., @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019.
+`hatchR` is an R package designed to allow users to leverage daily water temperature records to predict when a fish is expected to hatch and/or emerge using statistical models, as well as additional tools to aid in those analyses. Specifically, `hatchR` is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [e.g., @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019.
 
-MORE DETAILS HERE....
+This vignette describes input data requirements, recommendations for importing data, basic data checks, and overview of downstream steps in a `hatchR` workflow that are covered in other vignettes. 
 
-This vignette provides an overview of basic features in `hatchR`. We load `hatchR` by running
+We load `hatchR` by running
 ```{r, eval = FALSE}
 library(hatchR)
 ```
-
-We'll also load some other packages that we'll use in this vignette:
-
-```{r, eval = FALSE}
-library(lubridate)  # for working with dates
-library(readr)  # for reading in data
-library(dplyr)  # for data manipulation
-library(tibble)  # for glimpse(), a cleaner version of str()
-library(ggplot2)  # for plotting
-library(nycflights13)  # for example data to work with dates
-```
-
-Note: nycflights13 is only installed alongside `hatchR` when `dependencies = TRUE` in `install.packages()`
 
 ## Input Data
 
@@ -77,13 +64,17 @@ Fundamentally, `hatchR` assumes you have input data with two columns: a date col
 
 Numeric temperature values are simple to work with in R, but dates and time can be tricky. Here we provide a brief overview of how to work with dates and times in R, but refer the user to Chapter 17 in [R for Data Science](https://r4ds.hadley.nz/datetimes.html) [@wickham_r_2023] for a more in-depth discussion.
 
-We recommend using the [`lubridate`](https://lubridate.tidyverse.org/) package, which makes it easier to work with dates and times in R, to ensure your dates are in the correct format.
+We recommend using the [`lubridate`](https://lubridate.tidyverse.org/) package, which makes it easier to work with dates and times in R, to ensure your dates are in the correct format. `lubridate` comes installed with `hatchR`, and can be loaded with:
+
+```{r}
+library(lubridate)
+```
 
 There are three types of date/time data that refer to an instant in time:
 
 * A **date**, which Tibbles print as \<date\>
-* A **time**, which Tibbles print as \<time\>
-* A **date-time**, which Tibbles print as \<dttm\>
+* A **time** within a day, which Tibbles print as \<time\>
+* A **date-time** is a date plus time, which Tibbles print as \<dttm\>. Base R calls these POSIXct, but that's not a helpful name. 
 
 You can use `today()` or `now()` from `lubridate` to get the current date or date-time:
 ```{r}
@@ -91,7 +82,7 @@ today()
 now()
 ```
 
-In the context of `hatchR`, the ways you are likley to create a date/time are:
+In the context of `hatchR`, the ways you are likely to create a date/time are:
 
 * while reading a file into R with `readr::read_csv()`
 * from a string (e.g., if data was read into R with `read.csv()`)
@@ -99,9 +90,10 @@ In the context of `hatchR`, the ways you are likley to create a date/time are:
 
 #### Reading in dates
 
-When reading in a CSV file with `readr::read_csv()`, `readr` will automatically parse (recognize) dates if they are in the form "YYYY-MM-DD" or "YYYY-MM-DD HH:MM:SS". These are ISO8601 date or date-time formats. ISO8601 is an international standard for writing dates where the components of a date are organized from biggest to smallest separated by -. Here is an example of reading in a CSV file with dates in the form "YYYY-MM-DD" and "YYYY-MM-DD HH:MM:SS":
+When reading in a CSV file with `readr::read_csv()`, `readr` (which also comes installed with `hatchR`) will automatically parse (recognize) dates and date-times if they are in the form "YYYY-MM-DD" or "YYYY-MM-DD HH:MM:SS". These are ISO8601 date (\<date\>) and date-time (\<dttm\>) formats, respectively. ISO8601 is an international standard for writing dates where the components of a date are organized from biggest to smallest separated by -. Here is an example of reading in a CSV file with dates in the form "YYYY-MM-DD" and "YYYY-MM-DD HH:MM:SS":
 
 ```{r}
+library(readr)
 csv <- "
   date,datetime
   2022-01-02,2022-01-02 05:12
@@ -113,7 +105,7 @@ If your dates are in a different format, you’ll need to use `col_types` plus `
 
 #### From strings
 
-If you you read in a CSV file using `read.csv()`, date columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\>. lubridate’s helpers attempt to automatically determine the format once you specify the order of the component. To use them, identify the order in which year, month, and day appear in your dates, then arrange “y”, “m”, and “d” in the same order. That gives you the name of the lubridate function that will parse your date. For date-time, add an underscore and one or more of “h”, “m”, and “s” to the name of the parsing function. 
+If you you read in a CSV file using `read.csv()` from base R, date columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\>. lubridate’s helpers attempt to automatically determine the format once you specify the order of the component. To use them, identify the order in which year, month, and day appear in your dates, then arrange “y”, “m”, and “d” in the same order. That gives you the name of the `lubridate` function that will parse your date. For date-time, add an underscore and one or more of “h”, “m”, and “s” to the name of the parsing function. 
 
 ```{r}
 ymd("2017-01-31")
@@ -125,9 +117,12 @@ mdy_hm("01/31/2017 08:01")
 
 #### From individual components
 
-Sometimes you have the components of a date in separate columns. You can use `make_date()` or `make_datetime()` to combine them into a date or date-time. To show this, we'll use the `flights` dataset that comes with `nycflights13`. 
+Sometimes you have the components of a date in separate columns. You can use `make_date()` or `make_datetime()` to combine them into a date or date-time. To show this, we'll use the `flights` dataset that comes with `nycflights13`, which is only installed alongside `hatchR` when `dependencies = TRUE` in `install.packages()`. We also make use of helper functions from dplyr to select and mutate columns.
 
 ```{r}
+library(nycflights13)
+library(dplyr)
+
 flights |> 
   select(year, month, day, hour, minute)
 
@@ -143,7 +138,7 @@ flights |>
 
 # Importing your data
 
-Because `hatchR` uses daily water temperature records to predict fish developmental phenology, we enforce a (\<date\>) class for date fields. This is also convenient because `ggplot2` handles \<date\> and \<dttm\> vector classes well without significant need for change when doing visualizations of data and model outputs. 
+Because `hatchR` uses daily water temperature records to predict fish developmental phenology, we enforce a (\<date\>) class for date fields. This is also convenient because `ggplot2` handles \<date\> (and \<dttm\>) vector classes well without significant need for change when doing visualizations of data and model outputs. 
 
 In this and other vignettes, we will use two datasets that come installed with the package: `crooked_river` and `woody_island`. Each dataset is available to the user as R objects once `hatchR` is installed and attached (see `?crooked_river` or `?woody_island` for more information). 
 
@@ -156,7 +151,7 @@ path_wi <- system.file("extdata/woody_island.csv", package = "hatchR")
 
 ## Using `readr::read_csv()`
 
-As noted in **prereq section**, we recommend loading your data into R using `readr::read_csv()`. We can load readr using:
+As noted in **prerequisite section**, we recommend loading your data into R using `readr::read_csv()`. We can load readr using:
 
 After specifying `path_*` (using `system.file()`), we load the example dataset into R:
 
@@ -165,11 +160,13 @@ crooked_river <- read_csv(path_cr)
 woody_island <- read_csv(path_wi)
 ```
 
-We check the `crooked_river` dataset by running either `str()` or `tibble::glimpse()` to see the structure of the data. `glimpse()` is a little like `str()` applied to a data frame, but it tries to show you as much data as possible. We prefer `glimpse()` because it is more compact and easier to read. 
+We check the `crooked_river` dataset by running either `str()` or `tibble::glimpse()` to see the structure of the data. `glimpse()` is a little like `str()` applied to a data frame, but it tries to show you as much data as possible. We prefer `tibble::glimpse()` because it is more compact and easier to read. `tibble` also comes installed with `hatchR`. 
 
 Now we can check the structure of the `crooked_river` dataset:
 
 ```{r}
+library(tibble)
+
 glimpse(crooked_river)
 glimpse(woody_island)
 ```
@@ -233,6 +230,8 @@ plot_check_temp(data = crooked_river,
 You can replicate the above plot using `ggplot`:
 
 ```{r}
+library(ggplot2)
+
 crooked_river |>
     ggplot(aes(x = date, y =  temp_c)) +
     geom_point(size = 0.5) +
@@ -247,24 +246,9 @@ crooked_river |>
     theme_classic()
 ```
 
-
-## Check for continuous data
-
-At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete. 
-
-You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is not continuous or complete. 
-
-```{r}
-check_continuous(data = crooked_river, dates = date)
-```
-
-If you have days of missing data, you could impute them using rolling means or other approaches. 
-
-
 ## Summarize Data
 
 If you imported raw data with multiple recordings per day, `hatchR` has a built in function to summarize those data to a daily average mean called `summarize_temp()`. The output of the function is a tibble with mean daily temperature and its corresponding day.
-
 
 ```{r}
 # create date object for a year with 30 min temperature measurement intervals
@@ -310,6 +294,18 @@ plot_check_temp(data = temp.test_sum,
                 temp_max = 15)
 ```
 
+
+## Check for continuous data
+
+At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete. 
+
+You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is not continuous or complete. 
+
+```{r}
+check_continuous(data = crooked_river, dates = date)
+```
+
+If you have days of missing data, you could impute them using rolling means or other approaches. 
 
 # Workflow
 
