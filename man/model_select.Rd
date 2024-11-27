@@ -16,7 +16,7 @@ model_select(author, species, model, dev.type = "hatch")
 \item{dev.type}{The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".}
 }
 \value{
-An expression of length 1 giving the selected model structure to be run with \code{predict_phenology()}.
+A data.frame giving model specifications to be passed to \code{predict_phenology()}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

@@ -13,7 +13,7 @@
 #' @param model Model number from Beacham and Murray (1990).
 #' @param dev.type The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".
 #'
-#' @return An expression of length 1 giving the selected model structure to be run with `predict_phenology()`.
+#' @return A data.frame giving model specifications to be passed to `predict_phenology()`.
 #'
 #' @export
 #'

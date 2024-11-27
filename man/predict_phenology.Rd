@@ -15,7 +15,9 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 
 \item{spawn.date}{Date of spawning, given as a character string (e.g., "1990-08-18")}
 
-\item{model}{Model to predict phenology. Use \code{model_select()} to get model parameterization.}
+\item{model}{A data.frame giving model specifications. This must have a
+column providing a model expression. Can be obtained using \code{model_select()}
+or using you own data to obtain a model expression (see \code{fit_model}).}
 }
 \value{
 A list with the following elements:
@@ -27,6 +29,7 @@ the dates, temperature, effective values, and cumulative sum of the effective va
 \item \code{dev.period}: a 1x2 dataframe with the dates corresponding to when your
 fish's parent spawned (input with \code{predict_phenology(spawn.date = ...)})
 and the date when the fish is predicted to hatch or emerge.
+\item \code{model.specs}: A data.frame with the model specifications.
 }
 }
 \description{

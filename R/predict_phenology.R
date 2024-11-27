@@ -8,7 +8,9 @@
 #' @param dates Date of temperature measurements.
 #' @param temperature Temperature measurements.
 #' @param spawn.date Date of spawning, given as a character string (e.g., "1990-08-18")
-#' @param model Model to predict phenology. Use `model_select()` to get model parameterization.
+#' @param model A data.frame giving model specifications. This must have a
+#' column providing a model expression. Can be obtained using `model_select()`
+#' or using you own data to obtain a model expression (see `fit_model`).
 #'
 #' @details
 #' Additional details...
@@ -22,6 +24,7 @@
 #' * `dev.period`: a 1x2 dataframe with the dates corresponding to when your
 #'  fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
 #'  and the date when the fish is predicted to hatch or emerge.
+#'  * `model.specs`: A data.frame with the model specifications.
 #'
 #' @export
 #'
