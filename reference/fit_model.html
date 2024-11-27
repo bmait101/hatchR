@@ -51,7 +51,7 @@ Generate your own custom parameterized models for predicting hatching and emerge
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_model</span><span class="op">(</span><span class="va">df</span>, <span class="va">temp</span>, <span class="va">days</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_model</span><span class="op">(</span><span class="va">df</span>, <span class="va">temp</span>, <span class="va">days</span>, species <span class="op">=</span> <span class="cn">NULL</span>, dev.type <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,10 +69,19 @@ Generate your own custom parameterized models for predicting hatching and emerge
 <dt id="arg-days">days<a class="anchor" aria-label="anchor" href="#arg-days"></a></dt>
 <dd><p>Column with day of temperature measurement</p></dd>
 
+
+<dt id="arg-species">species<a class="anchor" aria-label="anchor" href="#arg-species"></a></dt>
+<dd><p>Character string of species name (e.g., "sockeye")</p></dd>
+
+
+<dt id="arg-dev-type">dev.type<a class="anchor" aria-label="anchor" href="#arg-dev-type"></a></dt>
+<dd><p>Character string of development type: "hatch" or "emerge"</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>List with model object, coefficients, model expression, and plot</p>
+    <p>List with fit model object, model coefficients, model specifications
+data.frame, and plot of observations and model fit.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -94,7 +103,8 @@ effective value approach.</p>
 <span class="r-in"><span><span class="co"># vector of days to hatch</span></span></span>
 <span class="r-in"><span><span class="va">days_to_hatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">194</span>, <span class="fl">87</span>, <span class="fl">54</span>, <span class="fl">35</span>, <span class="fl">28</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">quinn_bt_hatch</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="va">temperature</span>, <span class="va">days_to_hatch</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu">fit_model</span><span class="op">(</span>df <span class="op">=</span> <span class="va">quinn_bt_hatch</span>, temp <span class="op">=</span> <span class="va">temperature</span>, days <span class="op">=</span> <span class="va">days_to_hatch</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu">fit_model</span><span class="op">(</span>df <span class="op">=</span> <span class="va">quinn_bt_hatch</span>, temp <span class="op">=</span> <span class="va">temperature</span>,</span></span>
+<span class="r-in"><span>days <span class="op">=</span> <span class="va">days_to_hatch</span>, species <span class="op">=</span> <span class="st">"sockeye"</span>, dev.type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
 </code></pre></div>

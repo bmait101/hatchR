@@ -165,33 +165,45 @@ run through each element of the <code>woody_island</code> dataset.</p>
 <span><span class="co"># (i.e., the four outputs of predict_phenology())</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT_loop_all</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
@@ -239,33 +251,45 @@ Functionals | Advanced r”</span> (n.d.)</span>) shown above.</p>
 <span><span class="co"># we now have a list of lists the same as OUT_loop</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_map</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
@@ -297,33 +321,45 @@ family.</p>
 <span><span class="co"># you can see that lapply and map output the same results</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_lapply</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
@@ -402,9 +438,15 @@ enough data to hatch and emerge.</p>
 <span></span>
 <span><span class="co"># models are different</span></span>
 <span><span class="va">bull_hatch_mod</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
+<span><span class="co">#&gt;   author             species    model dev.type func                      </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Austin et al. 2017 bull trout MM    hatch    1/exp(5.086 - (x * 0.131))</span></span>
 <span><span class="va">bull_emerge_mod</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
+<span><span class="co">#&gt;   author             species    model dev.type func                       </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Austin et al. 2017 bull trout MM    emerge   1/exp(5.590 - (x  * 0.126))</span></span>
 <span></span>
 <span><span class="co">### check 2015 dates</span></span>
 <span></span>
@@ -501,243 +543,339 @@ as follows:</p>
 <span><span class="co"># look at results</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 24</span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 88</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 88</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2011-11-27"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:88] 0.0148 0.0144 0.0144 0.0148 0.0152 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [88 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:88] 0.0148 0.0144 0.0144 0.0148 0.0152 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [88 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 106</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 106</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2011-12-29"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:106] 0.0165 0.0163 0.0139 0.0148 0.015 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [106 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:106] 0.0165 0.0163 0.0139 0.0148 0.015 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [106 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 124</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 124</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-01-31"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:124] 0.0152 0.0158 0.0153 0.0151 0.0149 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [124 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:124] 0.0152 0.0158 0.0153 0.0151 0.0149 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [124 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 89</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 89</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-11-28"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:89] 0.0183 0.0158 0.0156 0.0158 0.0159 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [89 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:89] 0.0183 0.0158 0.0156 0.0158 0.0159 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [89 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 104</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 104</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-12-27"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:104] 0.015 0.0153 0.0146 0.0144 0.0146 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [104 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:104] 0.015 0.0153 0.0146 0.0144 0.0146 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [104 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 122</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 122</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-01-29"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:122] 0.0143 0.0139 0.0136 0.0115 0.0102 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [122 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:122] 0.0143 0.0139 0.0136 0.0115 0.0102 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [122 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 83</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 83</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-11-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:83] 0.0203 0.0212 0.021 0.0217 0.0222 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [83 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:83] 0.0203 0.0212 0.021 0.0217 0.0222 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [83 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 109</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 109</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-01-01"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:109] 0.0202 0.02 0.0182 0.0159 0.0139 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [109 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:109] 0.0202 0.02 0.0182 0.0159 0.0139 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [109 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 126</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 126</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-02-02"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:126] 0.013 0.0119 0.0115 0.0108 0.0102 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [126 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:126] 0.013 0.0119 0.0115 0.0108 0.0102 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [126 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 83</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 83</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-11-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:83] 0.0153 0.0155 0.015 0.0136 0.0141 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [83 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:83] 0.0153 0.0155 0.015 0.0136 0.0141 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [83 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 94</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 94</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-12-17"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:94] 0.0149 0.017 0.017 0.0168 0.0159 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [94 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:94] 0.0149 0.017 0.017 0.0168 0.0159 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [94 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 114</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 114</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-01-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:114] 0.0142 0.0123 0.012 0.0119 0.0125 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [114 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:114] 0.0142 0.0123 0.012 0.0119 0.0125 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [114 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 187</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 187</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-03-05"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:187] 0.00863 0.00842 0.00843 0.00864 0.00889 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [187 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:187] 0.00863 0.00842 0.00843 0.00864 0.00889 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [187 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 202</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 202</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-04-03"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:202] 0.00962 0.0095 0.00815 0.00863 0.00874 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [202 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:202] 0.00962 0.0095 0.00815 0.00863 0.00874 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [202 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 215</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 215</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-05-01"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:215] 0.00889 0.00921 0.00894 0.00882 0.00869 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [215 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:215] 0.00889 0.00921 0.00894 0.00882 0.00869 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [215 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 187</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 187</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-03-06"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:187] 0.0106 0.00918 0.00909 0.00923 0.00929 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [187 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:187] 0.0106 0.00918 0.00909 0.00923 0.00929 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [187 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 203</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 203</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-04-05"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:203] 0.00878 0.00892 0.00855 0.00844 0.00856 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [203 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:203] 0.00878 0.00892 0.00855 0.00844 0.00856 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [203 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 217</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 217</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-05-04"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:217] 0.00836 0.00817 0.00796 0.0068 0.00607 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [217 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:217] 0.00836 0.00817 0.00796 0.0068 0.00607 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [217 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 181</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 181</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-02-28"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:181] 0.0117 0.0122 0.0121 0.0125 0.0128 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [181 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:181] 0.0117 0.0122 0.0121 0.0125 0.0128 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [181 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 204</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 204</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-04-06"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:204] 0.01165 0.01158 0.01055 0.00926 0.00815 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [204 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:204] 0.01165 0.01158 0.01055 0.00926 0.00815 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [204 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 216</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 216</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-05-03"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:216] 0.00766 0.00704 0.0068 0.00638 0.00606 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [216 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:216] 0.00766 0.00704 0.0068 0.00638 0.00606 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [216 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 175</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 175</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-01"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-02-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:175] 0.00892 0.00906 0.00874 0.00799 0.00826 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [175 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:175] 0.00892 0.00906 0.00874 0.00799 0.00826 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [175 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 188</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 188</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-15"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-03-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:188] 0.00869 0.00987 0.0099 0.00978 0.00925 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [188 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:188] 0.00869 0.00987 0.0099 0.00978 0.00925 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [188 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 204</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 204</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-30"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-04-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:204] 0.00829 0.00721 0.00706 0.00702 0.00733 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [204 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:204] 0.00829 0.00721 0.00706 0.00702 0.00733 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [204 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
@@ -802,14 +940,14 @@ mapping.</p>
 <span><span class="va">var_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">dev_mods</span>, spawn.date <span class="op">=</span> <span class="va">spawn_dates</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">var_grid</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
-<span><span class="co">#&gt;   model        spawn.date</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;expression&gt;</span> 2011-09-01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;expression&gt;</span> 2011-09-15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;expression&gt;</span> 2011-09-30</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;expression&gt;</span> 2012-09-01</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;expression&gt;</span> 2012-09-15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> <span style="color: #949494;">&lt;expression&gt;</span> 2012-09-30</span></span>
+<span><span class="co">#&gt;   model              spawn.date</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2011-09-01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2011-09-15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2011-09-30</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-30</span></span>
 <span></span>
 <span><span class="co">### mutliple input mapping</span></span>
 <span></span>
@@ -954,33 +1092,45 @@ would pipe into your mapping function.</p>
 <span><span class="co"># you can now see each list is named according to its respective spawn date</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">WI_named_list</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ 1990-08-14:List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;  $ 1990-08-14:List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:71] 0.0213 0.0196 0.0165 0.0139 0.0147 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [71 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ 1990-08-18:List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ 1990-08-18:List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [74 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ 1990-09-3 :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period:'data.frame':   1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ 1990-09-3 :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.vals   : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef.vals    : num [1:110] 0.0163 0.0165 0.0165 0.0165 0.0165 ...</span></span>
+<span><span class="co">#&gt;   ..$ ef.tibble  : spc_tbl_ [110 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>

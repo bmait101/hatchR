@@ -144,7 +144,10 @@ Murray (1990)</span> you would run:</p>
 <span></span>
 <span><span class="co">#print out the expression to check</span></span>
 <span><span class="va">sockeye_hatch_mod</span></span>
-<span><span class="co">#&gt; expression(1/exp(6.727 - log(x + 2.394)))</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
+<span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394))</span></span></code></pre></div>
 <p>Note, that the above arguments are equivalent to the first line and
 four columns from <code>model_table</code>. Your model function
 object—in this case <code>sockeye_hatch_mod</code>—can then be passed to
@@ -221,7 +224,9 @@ parameterization from our data.</p>
 <code class="sourceCode R"><span><span class="co"># brown trout hatch mod</span></span>
 <span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">quinn_bt_hatch</span>, </span>
 <span>                          temp <span class="op">=</span> <span class="va">temperature</span>, </span>
-<span>                          days <span class="op">=</span> <span class="va">days_to_hatch</span><span class="op">)</span></span></code></pre></div>
+<span>                          days <span class="op">=</span> <span class="va">days_to_hatch</span>, </span>
+<span>                          species <span class="op">=</span> <span class="st">"bull_trout"</span>, </span>
+<span>                          dev.type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
 <p>The output of <code><a href="../reference/fit_model.html">fit_model()</a></code> is a list with numerous
 elements, including the full model, coefficients for
 <em>log<sub>e</sub>a</em> and <em>b</em>, the expression you will pass
@@ -244,7 +249,7 @@ either pass directly with the <code>$</code> operator by calling
 Like so</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># creae an object with the model expression to pass to predict_phenology()</span></span>
-<span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">mod</span></span></code></pre></div>
+<span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">func</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="important-considerations-for-your-custom-models">Important considerations for your custom models<a class="anchor" aria-label="anchor" href="#important-considerations-for-your-custom-models"></a>
 </h4>

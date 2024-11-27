@@ -148,7 +148,6 @@ duration for the hatch and emergence periods.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position.inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot1</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>We can add some labels for days to hatch or emergence and change the
 labels on the legend.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -162,7 +161,6 @@ labels on the legend.</p>
 <span>  <span class="op">)</span> <span class="op">+</span> <span class="co"># place label halfway down bar</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"navyblue"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Emerge"</span>, <span class="st">"Hatch"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># this would replae scale_fill_manual in your orginal figure</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Phenology"</span>, y <span class="op">=</span> <span class="st">"Temperature (C)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="plotting-multiple-years">Plotting multiple years<a class="anchor" aria-label="anchor" href="#plotting-multiple-years"></a>
@@ -259,7 +257,6 @@ break the years up in the plot.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"navyblue"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Emerge"</span>, <span class="st">"Hatch"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># custom colors</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Phenology"</span>, x <span class="op">=</span> <span class="st">"Date"</span>, y <span class="op">=</span> <span class="st">"Temperature (C)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>As you can see, this allows us to put our figures on the same X scale
 despite flowing into multiple years. You’ll have to figure out the right
 way to cut up your data (or find similar alternative options). But this
@@ -295,17 +292,13 @@ mean).</p>
 <span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co"># summary</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fish_dist</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;    1.00   11.00   14.00   14.38   18.00   28.00</span></span>
 <span></span>
 <span><span class="co"># change 0s to 1s</span></span>
 <span><span class="va">fish_dist</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">fish_dist</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="co"># look at distribution</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">fish_dist</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">fish_dist</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># make a vector of fish dates and add mo_day to combine with fish_dist</span></span>
 <span><span class="va">fish_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2014-09-01"</span><span class="op">)</span>, <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2014-09-30"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"days"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>mo_day <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">mday</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
@@ -323,8 +316,6 @@ mean).</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fish_dates_norm</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2014-09-01" "2014-09-02" "2014-09-03" "2014-09-03" "2014-09-03"</span></span>
-<span><span class="co">#&gt; [6] "2014-09-04"</span></span>
 <span></span>
 <span><span class="co"># now let's make the same vector for 2013 so we can compare two years</span></span>
 <span><span class="va">fish_dates_13</span> <span class="op">&lt;-</span> <span class="va">fish_dates_norm</span> <span class="op">|&gt;</span></span>
@@ -335,11 +326,7 @@ mean).</p>
 <span></span>
 <span><span class="co"># looks good!</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fish_dates_all</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2013-09-01" "2013-09-02" "2013-09-03" "2013-09-03" "2013-09-03"</span></span>
-<span><span class="co">#&gt; [6] "2013-09-04"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">fish_dates_all</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2014-09-25" "2014-09-26" "2014-09-26" "2014-09-26" "2014-09-28"</span></span>
-<span><span class="co">#&gt; [6] "2014-09-28"</span></span>
 <span></span>
 <span><span class="co"># remember these all need to be in a character string for predict_phenology()!</span></span>
 <span><span class="va">fish_dates_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">fish_dates_all</span>, <span class="st">"%Y-%m-%d"</span><span class="op">)</span></span></code></pre></div>
@@ -355,7 +342,7 @@ developmental period estimated) in our memory. So instead, we will pipe
 <code>map_dbl("dev.period")</code> command so we only are left with our
 phenology estimates and not all the other data we would have otherwise
 outputted.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># make variable grid for pmap (we use dev_mods from previous example)</span></span>
 <span><span class="va">spawn_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">dev_mods</span>, spawn.date <span class="op">=</span> <span class="va">fish_dates_str</span><span class="op">)</span></span>
 <span></span>
@@ -372,48 +359,12 @@ outputted.</p>
 <span><span class="co"># first you can see the output and the spawn grid have the same number of rows so</span></span>
 <span><span class="co"># we can borrow the format from the spawn grid</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bull_trout_dist</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">spawn_grid</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1200    2</span></span>
 <span></span>
 <span><span class="co"># moreover from the grid, you can see that it predicts hatch for all the dates first</span></span>
 <span><span class="co"># and then predicts emergence</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">spawn_grid</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[4]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[5]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[6]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.086 - (x * 0.131)))</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">spawn_grid</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[3]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[4]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[5]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[6]]</span></span>
-<span><span class="co">#&gt; expression(1/exp(5.59 - (x * 0.126)))</span></span>
 <span></span>
 <span><span class="co"># now we can borrow all that information to make the exact data object we want</span></span>
 <span><span class="va">bull_trout_dist_phenology</span> <span class="op">&lt;-</span> <span class="va">bull_trout_dist</span> <span class="op">|&gt;</span></span>
@@ -436,25 +387,7 @@ outputted.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bull_trout_all_phenology</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
-<span><span class="co">#&gt;   Date                Phenology     y</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2013-09-01 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2013-09-02 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2013-09-03 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2013-09-03 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2013-09-03 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2013-09-04 <span style="color: #949494;">00:00:00</span> Spawn      <span style="text-decoration: underline;">2</span>013</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">bull_trout_all_phenology</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
-<span><span class="co">#&gt;   Date                Phenology     y</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2015-04-11 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2015-04-13 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2015-04-17 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 2015-04-17 <span style="color: #949494;">00:00:00</span> Emerge     <span style="text-decoration: underline;">2</span>015</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">bull_trout_all_phenology</span><span class="op">)</span></span></code></pre></div>
 <p>Before we plot, let’s briefly walk through what we did there. First
 we made our predictions but then only output the start and stop data
 with the <code>map_df("dev.period")</code> command. Next we added a
@@ -467,7 +400,7 @@ emergence across years.</p>
 <p>You can see we also need to cut like we did before to add a
 developmental year and we use <code><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html" class="external-link">geom_blank()</a></code> and custom
 limits to set everything on the same scale.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># before we plot, because we are again plotting across years we need to cut up our data</span></span>
 <span><span class="co"># still need 2012 and 2015 because phenology will leak over</span></span>
 <span><span class="va">cut_ints_1314</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -490,9 +423,6 @@ limits to set everything on the same scale.</p>
 <span><span class="va">bull_trout_dist</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>phen_days <span class="op">=</span> <span class="va">stop</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">phen_days</span><span class="op">)</span> <span class="co"># output max value</span></span>
-<span><span class="co">#&gt;        start       stop phen_days</span></span>
-<span><span class="co">#&gt; 1 2013-09-28 2014-04-30  214 days</span></span>
-<span><span class="co">#&gt; 2 2013-09-28 2014-04-30  214 days</span></span>
 <span></span>
 <span><span class="co"># make custom lims using 30 days before first spawn and 244 days max (214 + 30) from above</span></span>
 <span><span class="co"># makes a 30 day buffer</span></span>
@@ -519,13 +449,12 @@ limits to set everything on the same scale.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, ncol <span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>As you can see, even small differences in thermal regime can make for
 big differences in developmental phenology.</p>
 <p>We could even combine this plot with the plot we made previously to
 show regime and duration along side the distributions. For combining
 plots we highly recommend the <a href="https://patchwork.data-imaginist.com/" class="external-link">patchwork package</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># same plot as before but we'll filter the years to 2013 and 2014</span></span>
 <span></span>
@@ -571,7 +500,6 @@ plots we highly recommend the <a href="https://patchwork.data-imaginist.com/" cl
 <span></span>
 <span><span class="co"># plot the two plots side by side using + operator, you can stack with / operator</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<p><img src="Advanced_plotting_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There are many more ways you can plot your data but we these are
 meant to serve as templates and/or guides around common issues related
 to plotting phenology data.</p>

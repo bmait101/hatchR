@@ -75,7 +75,9 @@ Predict the phenology of fish using the effective value framework.</p>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Model to predict phenology. Use <code><a href="model_select.html">model_select()</a></code> to get model parameterization.</p></dd>
+<dd><p>A data.frame giving model specifications. This must have a
+column providing a model expression. Can be obtained using <code><a href="model_select.html">model_select()</a></code>
+or using you own data to obtain a model expression (see <code>fit_model</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -87,6 +89,7 @@ the dates, temperature, effective values, and cumulative sum of the effective va
 <li><p><code>dev.period</code>: a 1x2 dataframe with the dates corresponding to when your
 fish's parent spawned (input with <code>predict_phenology(spawn.date = ...)</code>)
 and the date when the fish is predicted to hatch or emerge.</p></li>
+<li><p><code>model.specs</code>: A data.frame with the model specifications.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

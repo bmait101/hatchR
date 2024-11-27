@@ -77,29 +77,19 @@ Bryan M. Maitland</h4>
 </h2>
 <p><code>hatchR</code> is an R package designed to allow users to
 leverage daily water temperature records to predict when a fish is
-expected to hatch and/or emerge using statistical models. Specifically,
+expected to hatch and/or emerge using statistical models, as well as
+additional tools to aid in those analyses. Specifically,
 <code>hatchR</code> is intended to bridge the analytic gap of taking
 statistical models developed in hatchery settings <span class="citation">(e.g., Beacham and Murray 1990)</span> and applying
 them to real world temperature data sets using the effective value
 framework developed by <span class="citation">Sparks et al.
 (2019)</span>.</p>
-<p>MORE DETAILS HERE….</p>
-<p>This vignette provides an overview of basic features in
-<code>hatchR</code>. We load <code>hatchR</code> by running</p>
+<p>This vignette describes input data requirements, recommendations for
+importing data, basic data checks, and overview of downstream steps in a
+<code>hatchR</code> workflow that are covered in other vignettes.</p>
+<p>We load <code>hatchR</code> by running</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span></code></pre></div>
-<p>We’ll also load some other packages that we’ll use in this
-vignette:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>  <span class="co"># for working with dates</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span>  <span class="co"># for reading in data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>  <span class="co"># for data manipulation</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span>  <span class="co"># for glimpse(), a cleaner version of str()</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>  <span class="co"># for plotting</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13" class="external-link">nycflights13</a></span><span class="op">)</span>  <span class="co"># for example data to work with dates</span></span></code></pre></div>
-<p>Note: nycflights13 is only installed alongside <code>hatchR</code>
-when <code>dependencies = TRUE</code> in
-<code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code></p>
 <div class="section level3">
 <h3 id="input-data">Input Data<a class="anchor" aria-label="anchor" href="#input-data"></a>
 </h3>
@@ -162,23 +152,28 @@ with dates and times in R, but refer the user to Chapter 17 in <a href="https://
 2023)</span> for a more in-depth discussion.</p>
 <p>We recommend using the <a href="https://lubridate.tidyverse.org/" class="external-link"><code>lubridate</code></a>
 package, which makes it easier to work with dates and times in R, to
-ensure your dates are in the correct format.</p>
+ensure your dates are in the correct format. <code>lubridate</code>
+comes installed with <code>hatchR</code>, and can be loaded with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span></code></pre></div>
 <p>There are three types of date/time data that refer to an instant in
 time:</p>
 <ul>
 <li>A <strong>date</strong>, which Tibbles print as &lt;date&gt;</li>
-<li>A <strong>time</strong>, which Tibbles print as &lt;time&gt;</li>
-<li>A <strong>date-time</strong>, which Tibbles print as
-&lt;dttm&gt;</li>
+<li>A <strong>time</strong> within a day, which Tibbles print as
+&lt;time&gt;</li>
+<li>A <strong>date-time</strong> is a date plus time, which Tibbles
+print as &lt;dttm&gt;. Base R calls these POSIXct, but that’s not a
+helpful name.</li>
 </ul>
 <p>You can use <code><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today()</a></code> or <code><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now()</a></code> from
 <code>lubridate</code> to get the current date or date-time:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-11-26"</span></span>
+<span><span class="co">#&gt; [1] "2024-11-27"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-11-26 22:33:27 UTC"</span></span></code></pre></div>
-<p>In the context of <code>hatchR</code>, the ways you are likley to
+<span><span class="co">#&gt; [1] "2024-11-27 21:30:33 UTC"</span></span></code></pre></div>
+<p>In the context of <code>hatchR</code>, the ways you are likely to
 create a date/time are:</p>
 <ul>
 <li>while reading a file into R with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>
@@ -192,14 +187,17 @@ second)</li>
 <h5 id="reading-in-dates">Reading in dates<a class="anchor" aria-label="anchor" href="#reading-in-dates"></a>
 </h5>
 <p>When reading in a CSV file with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>,
-<code>readr</code> will automatically parse (recognize) dates if they
-are in the form “YYYY-MM-DD” or “YYYY-MM-DD HH:MM:SS”. These are ISO8601
-date or date-time formats. ISO8601 is an international standard for
-writing dates where the components of a date are organized from biggest
-to smallest separated by -. Here is an example of reading in a CSV file
-with dates in the form “YYYY-MM-DD” and “YYYY-MM-DD HH:MM:SS”:</p>
+<code>readr</code> (which also comes installed with <code>hatchR</code>)
+will automatically parse (recognize) dates and date-times if they are in
+the form “YYYY-MM-DD” or “YYYY-MM-DD HH:MM:SS”. These are ISO8601 date
+(&lt;date&gt;) and date-time (&lt;dttm&gt;) formats, respectively.
+ISO8601 is an international standard for writing dates where the
+components of a date are organized from biggest to smallest separated by
+-. Here is an example of reading in a CSV file with dates in the form
+“YYYY-MM-DD” and “YYYY-MM-DD HH:MM:SS”:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
+<span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
 <span><span class="st">  date,datetime</span></span>
 <span><span class="st">  2022-01-02,2022-01-02 05:12</span></span>
 <span><span class="st">"</span></span>
@@ -217,17 +215,17 @@ with dates in the form “YYYY-MM-DD” and “YYYY-MM-DD HH:MM:SS”:</p>
 <div class="section level5">
 <h5 id="from-strings">From strings<a class="anchor" aria-label="anchor" href="#from-strings"></a>
 </h5>
-<p>If you you read in a CSV file using <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code>, date
-columns will be formatted as a characters (&lt;char&gt;; e.g.,
+<p>If you you read in a CSV file using <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code> from base
+R, date columns will be formatted as a characters (&lt;char&gt;; e.g.,
 <code>"2000-09-01"</code> or <code>"2000-09-01 12:00:00"</code>). You
 will have convert to this column to a &lt;date&gt; or &lt;dttm&gt;.
 lubridate’s helpers attempt to automatically determine the format once
 you specify the order of the component. To use them, identify the order
 in which year, month, and day appear in your dates, then arrange “y”,
-“m”, and “d” in the same order. That gives you the name of the lubridate
-function that will parse your date. For date-time, add an underscore and
-one or more of “h”, “m”, and “s” to the name of the parsing
-function.</p>
+“m”, and “d” in the same order. That gives you the name of the
+<code>lubridate</code> function that will parse your date. For
+date-time, add an underscore and one or more of “h”, “m”, and “s” to the
+name of the parsing function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2017-01-31"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2017-01-31"</span></span>
@@ -246,10 +244,16 @@ function.</p>
 <p>Sometimes you have the components of a date in separate columns. You
 can use <code><a href="https://lubridate.tidyverse.org/reference/make_datetime.html" class="external-link">make_date()</a></code> or <code><a href="https://lubridate.tidyverse.org/reference/make_datetime.html" class="external-link">make_datetime()</a></code> to
 combine them into a date or date-time. To show this, we’ll use the
-<code>flights</code> dataset that comes with
-<code>nycflights13</code>.</p>
+<code>flights</code> dataset that comes with <code>nycflights13</code>,
+which is only installed alongside <code>hatchR</code> when
+<code>dependencies = TRUE</code> in <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code>. We
+also make use of helper functions from dplyr to select and mutate
+columns.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13" class="external-link">nycflights13</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">hour</span>, <span class="va">minute</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 336,776 × 5</span></span></span>
 <span><span class="co">#&gt;     year month   day  hour minute</span></span>
@@ -311,7 +315,7 @@ combine them into a date or date-time. To show this, we’ll use the
 <p>Because <code>hatchR</code> uses daily water temperature records to
 predict fish developmental phenology, we enforce a (&lt;date&gt;) class
 for date fields. This is also convenient because <code>ggplot2</code>
-handles &lt;date&gt; and &lt;dttm&gt; vector classes well without
+handles &lt;date&gt; (and &lt;dttm&gt;) vector classes well without
 significant need for change when doing visualizations of data and model
 outputs.</p>
 <p>In this and other vignettes, we will use two datasets that come
@@ -329,9 +333,9 @@ We may store the file paths to example data:</p>
 <div class="section level3">
 <h3 id="using-readrread_csv">Using <code>readr::read_csv()</code><a class="anchor" aria-label="anchor" href="#using-readrread_csv"></a>
 </h3>
-<p>As noted in <strong>prereq section</strong>, we recommend loading
-your data into R using <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>. We can load readr
-using:</p>
+<p>As noted in <strong>prerequisite section</strong>, we recommend
+loading your data into R using <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>. We can
+load readr using:</p>
 <p>After specifying <code>path_*</code> (using
 <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code>), we load the example dataset into R:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -341,12 +345,15 @@ using:</p>
 <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> or <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">tibble::glimpse()</a></code> to see the
 structure of the data. <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> is a little like
 <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> applied to a data frame, but it tries to show you as
-much data as possible. We prefer <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code> because it is
-more compact and easier to read.</p>
+much data as possible. We prefer <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">tibble::glimpse()</a></code> because
+it is more compact and easier to read. <code>tibble</code> also comes
+installed with <code>hatchR</code>.</p>
 <p>Now we can check the structure of the <code>crooked_river</code>
 dataset:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 3,367</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
 <span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2011-09-09, 2011-09-10, 2011-09-11, 2011-09-12, 2011-09-13, 20…</span></span>
@@ -444,7 +451,9 @@ are set at 0 and 25 C). Here is an example using the built-in dataset
 <p><img src="Introduction_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>You can replicate the above plot using <code>ggplot</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">crooked_river</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">crooked_river</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span>  <span class="va">temp_c</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -459,20 +468,6 @@ are set at 0 and 25 C). Here is an example using the built-in dataset
 <p><img src="Introduction_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
-<h3 id="check-for-continuous-data">Check for continuous data<a class="anchor" aria-label="anchor" href="#check-for-continuous-data"></a>
-</h3>
-<p>At present, <code>hatchR</code> only uses continuous data. Therefore,
-your data is expected to be continuous and complete.</p>
-<p>You can check whether your data is complete and continuous using the
-<code><a href="../reference/check_continuous.html">check_continuous()</a></code> function. This function will return a
-message if the data is not continuous or complete.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  376  732 1473 1542</span></span></code></pre></div>
-<p>If you have days of missing data, you could impute them using rolling
-means or other approaches.</p>
-</div>
-<div class="section level3">
 <h3 id="summarize-data">Summarize Data<a class="anchor" aria-label="anchor" href="#summarize-data"></a>
 </h3>
 <p>If you imported raw data with multiple recordings per day,
@@ -480,7 +475,7 @@ means or other approaches.</p>
 daily average mean called <code><a href="../reference/summarize_temp.html">summarize_temp()</a></code>. The output of
 the function is a tibble with mean daily temperature and its
 corresponding day.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create date object for a year with 30 min temperature measurement intervals</span></span>
 <span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span></span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="st">"2000-01-01 00:00:00"</span><span class="op">)</span>,</span>
@@ -519,14 +514,28 @@ corresponding day.</p>
 <span><span class="co">#&gt; [1] 366</span></span></code></pre></div>
 <p>We again recommend, at a minimum, visually checking your data once it
 has been summarized.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># note we are now using crooked_river_sum instead of crooked_river</span></span>
 <span><span class="fu"><a href="../reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temp.test_sum</span>, </span>
 <span>                dates <span class="op">=</span> <span class="va">date</span>, </span>
 <span>                temperature <span class="op">=</span> <span class="va">daily_temp</span>, </span>
 <span>                temp_min <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                temp_max <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Introduction_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="check-for-continuous-data">Check for continuous data<a class="anchor" aria-label="anchor" href="#check-for-continuous-data"></a>
+</h3>
+<p>At present, <code>hatchR</code> only uses continuous data. Therefore,
+your data is expected to be continuous and complete.</p>
+<p>You can check whether your data is complete and continuous using the
+<code><a href="../reference/check_continuous.html">check_continuous()</a></code> function. This function will return a
+message if the data is not continuous or complete.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  376  732 1473 1542</span></span></code></pre></div>
+<p>If you have days of missing data, you could impute them using rolling
+means or other approaches.</p>
 </div>
 </div>
 <div class="section level2">

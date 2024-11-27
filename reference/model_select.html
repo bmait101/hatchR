@@ -88,7 +88,7 @@ string and parses it to be usable in <code>hatchR</code> model.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An expression of length 1 giving the selected model structure to be run with <code><a href="predict_phenology.html">predict_phenology()</a></code>.</p>
+    <p>A data.frame giving model specifications to be passed to <code><a href="predict_phenology.html">predict_phenology()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -104,7 +104,10 @@ string and parses it to be usable in <code>hatchR</code> model.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># print</span></span></span>
 <span class="r-in"><span><span class="va">sockeye_hatch_mod</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> expression(1/exp(6.727 - log(x + 2.394)))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   author                  species model dev.type func                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394))</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
