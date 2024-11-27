@@ -30,7 +30,18 @@
 #' days_to_hatch <- c(194, 87, 54, 35, 28)
 #' quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
 #' bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
-fit_model <- function(df, temp, days) {
+fit_model <- function(df, temp, days, species = NULL, dev.type = NULL) {
+
+  # check if species is NULL
+  if (is.null(species)) {
+    stop("Please provide a species name.")
+  }
+
+  # check if dev.type is NULL
+  if (is.null(dev.type)) {
+    stop("Please provide a valid development type: 'hatch' or 'emerge'.")
+  }
+
   # fit linear model to log data
   m1 <- stats::lm(log(days) ~ log(temp), data = df)
   summary(m1)
@@ -47,9 +58,14 @@ fit_model <- function(df, temp, days) {
   m2_a <- log(stats::coef(m2)[1])
   m2_b <- stats::coef(m2)[2]
 
-  # model expression for hatch function
-  mod <- paste("1 / exp(", m2_a, " - log(x + ", m2_b * -1, "))", sep = "") # is *-1 correct?
-  mod <- parse(text = mod)
+  # model specs for hatch function
+  func <- paste("1 / exp(", m2_a, " - log(x + ", m2_b * -1, "))", sep = "") # is *-1 correct?
+  func <- tibble::tibble(
+    species = species,
+    dev.type = dev.type,
+    func = func
+    )
+  # mod <- parse(text = mod)  # no longer parsing until predict_phenology()
 
   # plot predictions and data --------------------------
 
@@ -91,7 +107,7 @@ fit_model <- function(df, temp, days) {
     model = m2,
     m2_a = m2_a,
     m2_b = m2_b,
-    mod = mod,
+    func = func,
     pred_plot = p_pred,
     r_squared = r_squared,
     mse = mse,
