@@ -12,7 +12,8 @@ check_continuous(data, dates)
 \item{dates}{Column representing the date of the temperature measurements.}
 }
 \value{
-A message indicating if the dates are continuous or if there are breaks.
+A message indicating if the dates are continuous or if there are breaks. If
+there are breaks, a vector of row numbers where the breaks occur is returned.
 }
 \description{
 Check if the dates in a data frame are continuous.

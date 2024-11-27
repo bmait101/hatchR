@@ -31,13 +31,12 @@ plot_check_temp <- function(data,
                             temp_min = 0,
                             temp_max = 25) {
 
-  # check if dates are a character vector
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
-    stop(
-      "Date column is character vector; convert to date or date-time class.",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+            "You've supplied dates as a {.cls character} vector.",
+      "i" = "Use {.fn lubridate::ymd} to convert to {.cls date} or {.cls dttm} vector."
+    ))
   }
 
   # plotting parameters
