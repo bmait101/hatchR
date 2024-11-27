@@ -17,8 +17,11 @@
 #' @param df Data.frame with new data
 #' @param temp Column with temperature measurement
 #' @param days Column with day of temperature measurement
+#' @param species Character string of species name (e.g., "sockeye")
+#' @param dev.type Character string of development type: "hatch" or "emerge"
 #'
-#' @return List with model object, coefficients, model expression, and plot
+#' @return List with fit model object, model coefficients, model specifications
+#' data.frame, and plot of observations and model fit.
 #'
 #' @export
 #'
@@ -29,7 +32,8 @@
 #' # vector of days to hatch
 #' days_to_hatch <- c(194, 87, 54, 35, 28)
 #' quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
-#' bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature, days = days_to_hatch)
+#' bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature,
+#' days = days_to_hatch, species = "sockeye", dev.type = "hatch")
 fit_model <- function(df, temp, days, species = NULL, dev.type = NULL) {
 
   # check if species is NULL
