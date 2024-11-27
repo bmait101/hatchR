@@ -16,7 +16,7 @@ check_continuous <- function(data, dates) {
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
     cli::cli_abort(c(
-      "You've supplied dates as a {.cls character} vector.",
+      "`dates` must be a vector of class {.cls date} or {.cls dttm}, not a {.cls character} vector.",
       "i" = "Use {.fn lubridate::ymd} to convert to {.cls date} or {.cls dttm} vector."
     ))
   }

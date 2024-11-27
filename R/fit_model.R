@@ -38,12 +38,18 @@ fit_model <- function(df, temp, days, species = NULL, dev.type = NULL) {
 
   # check if species is NULL
   if (is.null(species)) {
-    stop("Please provide a species name.")
+    cli::cli_abort(c(
+            "`species` cannot be NULL.",
+      "i" = "Provide a species name using `species = 'your_species'`."
+      ))
   }
 
   # check if dev.type is NULL
   if (is.null(dev.type)) {
-    stop("Please provide a valid development type: 'hatch' or 'emerge'.")
+    cli::cli_abort(c(
+            "`dev.type` cannot be NULL",
+      "i" = "Provide a dev.type name using `dev.type = 'hatch' or `dev.type = 'emerge'`."
+    ))
   }
 
   # fit linear model to log data

@@ -24,13 +24,13 @@
 summarize_temp <- function(data,
                            dates,
                            temperature) {
-  # check if dates are a character vector
+
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
-    stop(
-      "Date column is character vector; convert to date or date-time class.",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "`dates` must be a vector of class {.cls date} or {.cls dttm}, not a {.cls character} vector.",
+      "i" = "Use {.fn lubridate::ymd} to convert to {.cls date} or {.cls dttm} vector."
+    ))
   }
 
   sum_dat <- data |>
