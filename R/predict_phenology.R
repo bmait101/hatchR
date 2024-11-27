@@ -81,11 +81,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   spawn.period <- dat[spawn.position:c(nrow(dat)), ]
 
   # bring in model df and extract the expression
-
-  model.df <- model %>%
+  model.df <- model |>
     dplyr::pull("func")
 
-  model.expression <- parse(text=model.df)
+  model.expression <- parse(text = model.df)
 
   # effective value function
   Ef <- model.expression
