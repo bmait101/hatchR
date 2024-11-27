@@ -131,7 +131,9 @@ We can now use `fit_model()` to create our custom parameterization from our data
 # brown trout hatch mod
 bt_hatch_mod <- fit_model(df = quinn_bt_hatch, 
                           temp = temperature, 
-                          days = days_to_hatch)
+                          days = days_to_hatch, 
+                          species = "bull_trout", 
+                          dev.type = "hatch")
 ```
 
 The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using
@@ -148,9 +150,9 @@ bt_hatch_mod$pred_plot
 
 The vast majority of the time, what you will want is the actual expression which you will pass to `predict_phenology()` in the `model = ...` argument of that function, which you can either pass directly with the `$` operator by calling `$mod` element of the list (e.g., `model = bt_hatch_mod$mod)`) or set as an object to pass. Like so
 
-```{r}
+```{r, eval=FALSE}
 # creae an object with the model expression to pass to predict_phenology()
-bt_hatch_exp <- bt_hatch_mod$mod
+bt_hatch_exp <- bt_hatch_mod$func
 ```
 
 ### Important considerations for your custom models

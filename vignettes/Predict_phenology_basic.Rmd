@@ -37,6 +37,7 @@ To demonstrate the full workflow for **hatchR**, we will recreate part of the an
 library(hatchR)  # for data and phenology modeling
 library(ggplot2)  # for additional plotting options
 library(lubridate)  # for date manipulation
+library(tibble)  # for data manipulation
 ```
 
 ## Data checks
@@ -108,7 +109,6 @@ sockeye_emerge_mod <- model_select(
 
 ```
 
-
 Let's look at the expressions for the two different models we've selected:
 
 ```{r}
@@ -131,7 +131,7 @@ WI_hatch <- predict_phenology(
   )
 ```
 
-And then look inside the returned object (see @sec-results for additional context) to see days to hatch and development period:
+And then look inside the returned object (see [Understanding your results](#results) for additional context) to see days to hatch and development period:
 
 ```{r}
 WI_hatch$days2done
@@ -154,7 +154,7 @@ WI_emerge$days2done
 WI_emerge$dev.period
 ```
 
-## Understanding your results {#sec-results}
+## Understanding your results {#results}
 
 The output from `predict_phenology()` includes a lot of information.
 
@@ -214,7 +214,7 @@ x
 
 # get effective values for those temperatures
 # You can see the NaN warning that shows up in our past applications
-demo_ef_vals <- eval(sockeye_hatch_mod)
+demo_ef_vals <- eval(parse(text = sockeye_hatch_mod$func))
 demo_ef_vals
 
 # bring together as a tibble
@@ -234,9 +234,9 @@ demo |>
   theme_classic()
 ```
 
-
 # References {.unnumbered}
 
 ::: {#refs}
 :::
+
 :::::::
