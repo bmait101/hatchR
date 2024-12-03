@@ -13,10 +13,10 @@ vignette: >
 # rmd style
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", 
-  warning = FALSE, 
-  message = FALSE, 
-  fig.align = 'center',
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
   fig.width = 6
 )
 
@@ -34,10 +34,11 @@ Now that we've checked and pre-processed our data, and know how to select model 
 To demonstrate the full workflow for **hatchR**, we will recreate part of the analysis from @sparks2019 and use data from Woody Island from Lake Iliamna, Alaska. The data comes installed with the package and is called `woody_island`. First, we load packages:
 
 ```{r, eval = FALSE}
-library(hatchR)  # for data and phenology modeling
-library(ggplot2)  # for additional plotting options
-library(lubridate)  # for date manipulation
-library(tibble)  # for data manipulation
+library(hatchR) # for data and phenology modeling
+library(ggplot2) # for additional plotting options
+library(lubridate) # for date manipulation
+library(tibble) # for data manipulation
+library(dplyr) # for data manipulation
 ```
 
 ## Data checks
@@ -48,7 +49,7 @@ First, let's check the data to make sure it's in the right format. We'll use `he
 # print data
 head(woody_island)
 
-#summarize data
+# summarize data
 summary(woody_island)
 ```
 
@@ -57,9 +58,9 @@ You can see that each day already is summarized as a mean temperature. You can a
 ```{r}
 plot_check_temp(
   data = woody_island,
-  dates = date, 
+  dates = date,
   temperature = temp_c
-  )
+)
 ```
 
 There appear to be outliers in the data, specifically in the very beginning and end of the period of record, and right in the middle. The loggers look to have been recording observations outside of the water and then in the middle where the water level may have dropped and exposed it to the air.
@@ -69,24 +70,32 @@ However, spawning in this system typically peaks around August 18 and hatching a
 ```{r}
 p <- plot_check_temp(
   data = woody_island,
-  dates = date, 
+  dates = date,
   temperature = temp_c
-  ) + 
+) +
   labs(title = "Temperature data from Woody Island, Lake Iliamna, Alaska")
 
-p + 
+p +
   geom_rect(
     aes(
-      xmin = ymd("1990-08-18"),  # spawn date
-      xmax = ymd("1991-04-01"),  # approx phenology window end
-      ymin = -10,  # lower bound
-      ymax = 25),  # upper bound
-    fill = "darkgreen",  # color rectangle dark green
-    alpha = 0.01  # make rectangle semi-transparent
-    ) 
+      xmin = ymd("1990-08-18"), # spawn date
+      xmax = ymd("1991-04-01"), # approx phenology window end
+      ymin = -10, # lower bound
+      ymax = 25
+    ), # upper bound
+    fill = "darkgreen", # color rectangle dark green
+    alpha = 0.01 # make rectangle semi-transparent
+  )
 ```
 
 If we just apply the model within the green polygon we've drawn, the model should work just fine.
+
+```{r}
+woody_island_sub <- woody_island  |> 
+  filter(date >= "1990-08-18" & date <= "1991-04-01")
+```
+
+
 
 ## Model select
 
@@ -94,25 +103,25 @@ Now that our temperature data is usable we can select our models. We'll predict 
 
 ```{r}
 sockeye_hatch_mod <- model_select(
-  author = "Beacham and Murray 1990", 
-  species = "sockeye", 
-  model = 2, 
+  author = "Beacham and Murray 1990",
+  species = "sockeye",
+  model = 2,
   dev.type = "hatch"
-  )
+)
 
 sockeye_emerge_mod <- model_select(
-  author = "Beacham and Murray 1990", 
-  species = "sockeye", 
-  model = 2, 
+  author = "Beacham and Murray 1990",
+  species = "sockeye",
+  model = 2,
   dev.type = "emerge"
-  )
-
+)
 ```
 
 Let's look at the expressions for the two different models we've selected:
 
 ```{r}
-sockeye_hatch_mod ; sockeye_emerge_mod
+sockeye_hatch_mod
+sockeye_emerge_mod
 ```
 
 You can see they are parameterized slightly differently to account for the differences between hatch and emergence timing.
@@ -123,12 +132,12 @@ We can now use our model expressions to predict when sockeye would hatch and eme
 
 ```{r}
 WI_hatch <- predict_phenology(
-  data = woody_island,
+  data = woody_island_sub,
   dates = date,
   temperature = temp_c,
   spawn.date = "1990-08-18",
   model = sockeye_hatch_mod
-  )
+)
 ```
 
 And then look inside the returned object (see [Understanding your results](#results) for additional context) to see days to hatch and development period:
@@ -142,12 +151,12 @@ We can also do the same with emergence:
 
 ```{r}
 WI_emerge <- predict_phenology(
-  data = woody_island,
+  data = woody_island_sub,
   dates = date,
   temperature = temp_c,
   spawn.date = "1990-08-18",
-  model = sockeye_emerge_mod   # notice we're using emerge model expression here
-  )
+  model = sockeye_emerge_mod # notice we're using emerge model expression here
+)
 
 # see days to hatch and development period
 WI_emerge$days2done
@@ -193,12 +202,15 @@ plot_phenology(WI_hatch)
 You can turn of labeling or plot specific values using the function arguments `style` and `labels`, for example (plots not rendered):
 
 ```{r, eval=FALSE}
-plot_phenology(WI_hatch, 
-               style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
-plot_phenology(WI_hatch, 
-               style = "ef_daily") # shows a plot with just the ef daily values
-plot_phenology(WI_hatch, 
-               labels = FALSE) # turns off the labeling for a cleaner figure
+plot_phenology(WI_hatch,
+  style = "ef_cumsum"
+) # shows a plot with just the ef cumulative sum values
+plot_phenology(WI_hatch,
+  style = "ef_daily"
+) # shows a plot with just the ef daily values
+plot_phenology(WI_hatch,
+  labels = FALSE
+) # turns off the labeling for a cleaner figure
 ```
 
 ## A note about negative temperatures
@@ -223,11 +235,15 @@ demo
 
 # plot (note NaNs are removed from figure)
 # rectangle added to highlight the approximate temperatures of interest
-demo |> 
+demo |>
   ggplot(aes(x = x, y = demo_ef_vals)) +
-  geom_rect(aes(ymin = 0, ymax  = 0.005, 
-                xmin = -5, xmax = 2), 
-            fill = "dodgerblue", alpha = 0.25) +
+  geom_rect(
+    aes(
+      ymin = 0, ymax = 0.005,
+      xmin = -5, xmax = 2
+    ),
+    fill = "dodgerblue", alpha = 0.25
+  ) +
   geom_point() +
   geom_line() +
   labs(x = "Temperature (C)", y = "Effective Value") +
