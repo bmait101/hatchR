@@ -12,7 +12,7 @@ articles:
     - Predict_phenology_basic
 
   - title: "Advanced hatchR"
-    navebar: "Advanced hatchR"
+    navbar: "Advanced hatchR"
     contents:
     - Predict_phenology_advanced
     - Predict_phenology_nested
