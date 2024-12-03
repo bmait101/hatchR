@@ -2,7 +2,7 @@ test_that("fit_model works", {
   temp <- c(2, 5, 8, 11, 14)
   days <- c(194, 87, 54, 35, 28)
   df <- tibble::tibble(temp, days)
-  m <- fit_model(df = df, temp = temp, days = days, species = "sockeye", dev.type = "hatch")
+  m <- fit_model(temp = temp, days = days, species = "sockeye", dev.type = "hatch")
 
   expect_type(m, "list")
 
