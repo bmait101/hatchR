@@ -69,7 +69,7 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
 
   # check if spawn.date is formatted as a character
   if (lubridate::is.timepoint(spawn.date) == TRUE ||
-    lubridate::is.Date(spawn.date) == TRUE) {
+      lubridate::is.Date(spawn.date) == TRUE) {
     stop("Your spawn.date is formatted as a Date but needs to
          be formatted as a character string (e.g. '09-15-2000')")
   }
@@ -95,12 +95,43 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   # vector of temps for Ef to evaluate
   x <- spawn.period |> dplyr::pull({{ temperature }})
 
+  #vector of effective values to catch NaNs
+  efs <- eval(Ef)
+
   # walk along temps and sum Ef to 1 and count how many days it takes
   D_Ef <- min(which(cumsum(eval(Ef)) >= 1))
   # If fish doesn't hatch value returns Inf
 
   # output results
-  if (D_Ef == Inf) {
+  if(NaN %in% efs) {
+
+    ef.df <- spawn.period
+    x <- ef.df |> dplyr::pull({{ temperature }})
+    ef.df$ef_vals <- eval(Ef)
+    ef.df$ef_cumsum <- cumsum(ef.df$ef_vals)
+    colnames(ef.df)[1:2] <- c("dates", "temperature")
+
+    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev.period) <- c("start", "stop")
+    dev.period$start <- min(ef.df$dates)
+    dev.period$stop <- lubridate::as_date(NA)
+
+    ef.results <- list(days2done=as.numeric(NA),
+                       dev.period=dev.period,
+                       ef.vals = ef.df$ef_vals,
+                       ef.tibble = ef.df,
+                       model.specs=model)
+
+    ef_nans <-ef.df[which(is.na(ef.df$ef_vals)),"dates"]
+    ef_nans <-as.character(ef_nans$dates)
+
+
+    stop(
+      "Temperatures are too cold for model. Check date/s ",
+      ef_nans,
+      ". Model didn't work for spawn date ", spawn.date, "."
+    )
+  } else if (D_Ef == Inf) {
 
     ef.df <- spawn.period
     x <- ef.df |> dplyr::pull({{ temperature }})
