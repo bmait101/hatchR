@@ -129,31 +129,28 @@ We can now use `fit_model()` to create our custom parameterization from our data
 
 ```{r}
 # brown trout hatch mod
-bt_hatch_mod <- fit_model(df = quinn_bt_hatch, 
-                          temp = temperature, 
+bt_hatch_mod <- fit_model(temp = temperature, 
                           days = days_to_hatch, 
-                          species = "bull_trout", 
+                          species = "brown_trout", 
                           dev.type = "hatch")
 ```
 
-The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using
+The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using:
 
-```{r, eval=FALSE}
+```{r}
 bt_hatch_mod
 ```
 
-We can inspect a plot of predicted versus observed data, which looks good. 
+The vast majority of the time, what you will want is the actual expression for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `func` element of the list, which is a tibble giving the species, development type, and the model expression. 
 
-```{r}
-bt_hatch_mod$pred_plot
-```
-
-The vast majority of the time, what you will want is the actual expression which you will pass to `predict_phenology()` in the `model = ...` argument of that function, which you can either pass directly with the `$` operator by calling `$mod` element of the list (e.g., `model = bt_hatch_mod$mod)`) or set as an object to pass. Like so
+You can either pass this object directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_hatch_mod$func)`) or set as an object to pass, like so
 
 ```{r, eval=FALSE}
-# creae an object with the model expression to pass to predict_phenology()
 bt_hatch_exp <- bt_hatch_mod$func
+bt_hatch_exp
 ```
+
+`predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the **Predicting Phenology** vignettes.
 
 ### Important considerations for your custom models
 
