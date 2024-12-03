@@ -4,14 +4,12 @@
 \alias{fit_model}
 \title{Fit B&M model 2 to new data using \code{stats::nls()}}
 \usage{
-fit_model(df, temp, days, species = NULL, dev.type = NULL)
+fit_model(temp, days, species = NULL, dev.type = NULL)
 }
 \arguments{
-\item{df}{Data.frame with new data}
+\item{temp}{Numeric vector of temperatures}
 
-\item{temp}{Column with temperature measurement}
-
-\item{days}{Column with day of temperature measurement}
+\item{days}{Numeric vector of days to hatch or emerge}
 
 \item{species}{Character string of species name (e.g., "sockeye")}
 
@@ -41,7 +39,6 @@ library(hatchR)
 temperature <- c(2, 5, 8, 11, 14)
 # vector of days to hatch
 days_to_hatch <- c(194, 87, 54, 35, 28)
-quinn_bt_hatch <- tibble::tibble(temperature, days_to_hatch)
-bt_hatch_mod <- fit_model(df = quinn_bt_hatch, temp = temperature,
+bt_hatch_mod <- fit_model(temp = temperature,
 days = days_to_hatch, species = "sockeye", dev.type = "hatch")
 }
