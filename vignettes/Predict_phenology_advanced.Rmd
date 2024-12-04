@@ -72,8 +72,8 @@ We will show an example of how to set up a `for` loop to run through each elemen
 
 ```{r}
 ### Loop storage objects
-OUT_loop_all <- NULL # empty object to store output in
-OUT_loop_d2h <- NULL # empty object for days to hatch ( if we just wanted to output these data)
+OUT_loop_all <- NULL 
+OUT_loop_d2h <- NULL 
 
 ### Loop body
 for (d in 1:length(WI_spawn_dates)) { # d will be our numerical iterator
