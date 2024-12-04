@@ -13,7 +13,8 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 
 \item{temperature}{Temperature measurements.}
 
-\item{spawn.date}{Date of spawning, given as a character string (e.g., "1990-08-18")}
+\item{spawn.date}{Date of spawning, given as a character string
+(e.g., "1990-08-18")}
 
 \item{model}{A data.frame giving model specifications. This must have a
 column providing a model expression. Can be obtained using \code{model_select()}
@@ -22,7 +23,6 @@ or using you own data to obtain a model expression (see \code{fit_model}).}
 \value{
 A list with the following elements:
 \itemize{
-\item \code{ef.vals}: A numeric vector of each day's effective value.
 \item \code{days2done}: A numeric vector of length 1; number of predicted days to hatch or emerge.
 \item \code{ef.tibble}: An n x 4 tibble (n = number of days to hatch or emerge) with
 the dates, temperature, effective values, and cumulative sum of the effective values.
