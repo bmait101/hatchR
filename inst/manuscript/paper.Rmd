@@ -89,6 +89,10 @@ model_table and fit_model
 fit_model for three non-salmonid species
 
 ```{r, eval=FALSE}
+#### temp regime
+set.seed(1234)
+temps <- sort(rnorm(n =30, mean = 20, sd = 1), decreasing = TRUE)
+
 smallmouth <- matrix(NA, 10, 2) |> tibble()
 colnames(smallmouth) <- c("hours", "temp_F")
 smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
@@ -98,11 +102,28 @@ smallmouth <- smallmouth |>
   mutate(days = ceiling(hours/24),
          temp_C = (temp_F -32) * (5/9))
 
-plot(smallmouth$days~smallmouth$temp_C)
+plot(smallmouth$hours~smallmouth$temp_C)
 
 smb_mod <- fit_model(smallmouth,
                      temp = smallmouth$temp_C,
-                     days = smallmouth$hours)
+                     days = smallmouth$days,
+                     species = "smb",
+                     dev.type = "hatch")
+
+### catfish example from Small and Bates 2001
+### Effect of Low-Temperature Incubation of Channel Catfish Ictalarus punctatus
+### Eggs on Development, Survival, and Growth
+### Journal of the World Aquaculture Society
+catfish <- matrix(NA, 3, 2) |> tibble()
+colnames(catfish) <- c("days", "temp_C")
+catfish$days <- c(16,21,26)
+catfish$temp_C <- c(22,10,7)
+
+cat_mod <- fit_model(catfish,
+                     temp = catfish$temp_C,
+                     days = catfish$days,
+                     species = "catfish",
+                     dev.type = "hatch")
 
 ```
 
