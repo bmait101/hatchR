@@ -1,6 +1,9 @@
-library(readr)
-
-woody_island <- read_csv("data-raw/woody_island.csv")
-woody_island$date <- as.Date(woody_island$date, format = "%m/%d/%Y")
+woody_island <- readr::read_csv(
+  "data-raw/woody_island.csv",
+  col_types = readr::cols(
+    date = readr::col_date(format = "%m/%d/%Y"),
+    temp_c = readr::col_double()
+  )
+)
 
 usethis::use_data(woody_island, overwrite = TRUE)
