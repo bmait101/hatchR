@@ -173,9 +173,9 @@ helpful name.</li>
 <code>lubridate</code> to get the current date or date-time:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-12-03"</span></span>
+<span><span class="co">#&gt; [1] "2024-12-04"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-12-03 21:04:54 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2024-12-04 23:39:20 UTC"</span></span></code></pre></div>
 <p>In the context of <code>hatchR</code>, the ways you are likely to
 create a date/time are:</p>
 <ul>
@@ -362,7 +362,7 @@ dataset:</p>
 <span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2011-09-09, 2011-09-10, 2011-09-11, 2011-09-12, 2011-09-13, 20…</span></span>
 <span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.57, 7.39, 7.19, 7.24, 7.59, 7.68, 7.51, 7.41, 6.19, 6.65, 6.7…</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 739</span></span>
+<span><span class="co">#&gt; Rows: 735</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
 <span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8/11/1990", "8/12/1990", "8/13/1990", "8/14/1990", "8/15/1990"…</span></span>
 <span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>
@@ -394,7 +394,7 @@ do this:</p>
 <span><span class="co">#&gt;  $ date  : chr  "2011-09-09T00:00:00Z" "2011-09-10T00:00:00Z" "2011-09-11T00:00:00Z" "2011-09-12T00:00:00Z" ...</span></span>
 <span><span class="co">#&gt;  $ temp_c: num  7.57 7.39 7.19 7.24 7.59 7.68 7.51 7.41 6.19 6.65 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span> <span class="co"># note date column is imported as a character (&lt;chr&gt;)</span></span>
-<span><span class="co">#&gt; 'data.frame':    739 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    735 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;  $ date  : chr  "8/11/1990" "8/12/1990" "8/13/1990" "8/14/1990" ...</span></span>
 <span><span class="co">#&gt;  $ temp_c: num  25.9 23.3 18.5 15.3 14 ...</span></span>
 <span></span>
@@ -413,7 +413,7 @@ do this:</p>
 <span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2011-09-09, 2011-09-10, 2011-09-11, 2011-09-12, 2011-09-13, 20…</span></span>
 <span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.57, 7.39, 7.19, 7.24, 7.59, 7.68, 7.51, 7.41, 6.19, 6.65, 6.7…</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 739</span></span>
+<span><span class="co">#&gt; Rows: 735</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
 <span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-08-11, 1990-08-12, 1990-08-13, 1990-08-14, 1990-08-15, 19…</span></span>
 <span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>

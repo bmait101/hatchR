@@ -225,34 +225,69 @@ First load the package:</p>
 parameterization from our data.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># brown trout hatch mod</span></span>
-<span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">quinn_bt_hatch</span>, </span>
-<span>                          temp <span class="op">=</span> <span class="va">temperature</span>, </span>
+<span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">temperature</span>, </span>
 <span>                          days <span class="op">=</span> <span class="va">days_to_hatch</span>, </span>
-<span>                          species <span class="op">=</span> <span class="st">"bull_trout"</span>, </span>
+<span>                          species <span class="op">=</span> <span class="st">"brown_trout"</span>, </span>
 <span>                          dev.type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
 <p>The output of <code><a href="../reference/fit_model.html">fit_model()</a></code> is a list with numerous
 elements, including the full model, coefficients for
 <em>log<sub>e</sub>a</em> and <em>b</em>, the expression you will pass
 to <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, a plot to see your fit for your
 data, and some diagnostic variables. You can see the full extent
-using</p>
+using:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bt_hatch_mod</span></span></code></pre></div>
-<p>We can inspect a plot of predicted versus observed data, which looks
-good.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">pred_plot</span></span></code></pre></div>
-<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="va">bt_hatch_mod</span></span>
+<span><span class="co">#&gt; $model</span></span>
+<span><span class="co">#&gt; Nonlinear regression model</span></span>
+<span><span class="co">#&gt;   model: y ~ a/(x - b)</span></span>
+<span><span class="co">#&gt;    data: df</span></span>
+<span><span class="co">#&gt;        a        b </span></span>
+<span><span class="co">#&gt; 439.1634  -0.2582 </span></span>
+<span><span class="co">#&gt;  residual sum-of-squares: 36.92</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of iterations to convergence: 5 </span></span>
+<span><span class="co">#&gt; Achieved convergence tolerance: 2.062e-07</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $m2_a</span></span>
+<span><span class="co">#&gt;        a </span></span>
+<span><span class="co">#&gt; 6.084872 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $m2_b</span></span>
+<span><span class="co">#&gt;          b </span></span>
+<span><span class="co">#&gt; -0.2582361 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $func</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">#&gt;   species     dev.type func                                                  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brown_trout hatch    1 / exp(6.08487164651134 - log(x + 0.258236059077016))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $pred_plot</span></span></code></pre></div>
+<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $r_squared</span></span>
+<span><span class="co">#&gt; [1] 0.9979987</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mse</span></span>
+<span><span class="co">#&gt; [1] 7.38454</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $rmse</span></span>
+<span><span class="co">#&gt; [1] 2.717451</span></span></code></pre>
 <p>The vast majority of the time, what you will want is the actual
-expression which you will pass to <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> in
-the <code>model = ...</code> argument of that function, which you can
-either pass directly with the <code>$</code> operator by calling
-<code>$mod</code> element of the list (e.g.,
-<code>model = bt_hatch_mod$mod)</code>) or set as an object to pass.
-Like so</p>
+expression for use in the <code>model = ...</code> argument of
+<code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>. This is stored in the
+<code>func</code> element of the list, which is a tibble giving the
+species, development type, and the model expression.</p>
+<p>You can either pass this object directly with the <code>$</code>
+operator by calling <code>$func</code> element of the list (e.g.,
+<code>model = bt_hatch_mod$func)</code>) or set as an object to pass,
+like so</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># creae an object with the model expression to pass to predict_phenology()</span></span>
-<span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">func</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">func</span></span>
+<span><span class="va">bt_hatch_exp</span></span></code></pre></div>
+<p><code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> will extract the expression from the
+object and use it to predict phenology. We will demonstrate this in the
+<strong>Predicting Phenology</strong> vignettes.</p>
 <div class="section level4">
 <h4 id="important-considerations-for-your-custom-models">Important considerations for your custom models<a class="anchor" aria-label="anchor" href="#important-considerations-for-your-custom-models"></a>
 </h4>

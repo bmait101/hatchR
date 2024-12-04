@@ -74,7 +74,8 @@ Predict the phenology of fish using the effective value framework.</p>
 
 
 <dt id="arg-spawn-date">spawn.date<a class="anchor" aria-label="anchor" href="#arg-spawn-date"></a></dt>
-<dd><p>Date of spawning, given as a character string (e.g., "1990-08-18")</p></dd>
+<dd><p>Date of spawning, given as a character string
+(e.g., "1990-08-18")</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -85,8 +86,7 @@ or using you own data to obtain a model expression (see <code>fit_model</code>).
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following elements:</p><ul><li><p><code>ef.vals</code>: A numeric vector of each day's effective value.</p></li>
-<li><p><code>days2done</code>: A numeric vector of length 1; number of predicted days to hatch or emerge.</p></li>
+    <p>A list with the following elements:</p><ul><li><p><code>days2done</code>: A numeric vector of length 1; number of predicted days to hatch or emerge.</p></li>
 <li><p><code>ef.tibble</code>: An n x 4 tibble (n = number of days to hatch or emerge) with
 the dates, temperature, effective values, and cumulative sum of the effective values.</p></li>
 <li><p><code>dev.period</code>: a 1x2 dataframe with the dates corresponding to when your
@@ -127,7 +127,10 @@ Alaska sockeye salmon.
 <span class="r-in"><span>  spawn.date <span class="op">=</span> <span class="st">"1990-08-18"</span>,</span></span>
 <span class="r-in"><span>  model <span class="op">=</span> <span class="va">sockeye_hatch_mod</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NaNs produced</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Fish developed, but negative temperature values resulted in NaNs after</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   development.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Check date(s): 1991-08-12</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fish spawn date was: 1990-08-18</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
