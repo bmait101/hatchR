@@ -90,13 +90,6 @@ p +
 
 If we just apply the model within the green polygon we've drawn, the model should work just fine.
 
-```{r}
-woody_island_sub <- woody_island  |> 
-  filter(date >= "1990-08-18" & date <= "1991-04-01")
-```
-
-
-
 ## Model select
 
 Now that our temperature data is usable we can select our models. We'll predict both hatching and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `dev.type`, which can be either "hatch" or "emerge".
@@ -132,7 +125,7 @@ We can now use our model expressions to predict when sockeye would hatch and eme
 
 ```{r}
 WI_hatch <- predict_phenology(
-  data = woody_island_sub,
+  data = woody_island,
   dates = date,
   temperature = temp_c,
   spawn.date = "1990-08-18",
@@ -151,7 +144,7 @@ We can also do the same with emergence:
 
 ```{r}
 WI_emerge <- predict_phenology(
-  data = woody_island_sub,
+  data = woody_island,
   dates = date,
   temperature = temp_c,
   spawn.date = "1990-08-18",
