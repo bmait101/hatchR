@@ -57,7 +57,6 @@ To widen the user application of these methods, we distribute two user-interface
 knitr::include_graphics("flowchart.png")
 ```
 
-
 ## Effective value models
 
 Effective value models were created by @sparks2019 to implement developmental models in wild environments for Sockeye Salmon (*O. nerka*). The need for change arose because historic models, specifically those in @beacham1990, only considered the average incubation temperature during development and, for wild fishes, average incubation temperature was impossible to estimate because it was unknown when fish hatched even if adult spawn timing was known. To address this, @sparks2019 used the reciprocal of the formulation of model 2 from @beacham1990 and assigned an effective value for every day of development using the daily average temperature.
@@ -91,8 +90,14 @@ fit_model for three non-salmonid species
 ```{r, eval=FALSE}
 #### temp regime
 set.seed(1234)
-temps <- sort(rnorm(n =30, mean = 20, sd = 1), decreasing = TRUE)
+# create random temps and corresponding dates
+temps_sim <- sort(rnorm(n =30, mean = 16, sd = 1), decreasing = TRUE)
+dates_sim <-  seq(from = ymd("2000-07-01"),
+             to = ymd("2000-07-31"), length.out = 30)
 
+data_sim <- cbind (dates_sim, temps_sim) |> data.frame()
+
+### smallmouth
 smallmouth <- matrix(NA, 10, 2) |> tibble()
 colnames(smallmouth) <- c("hours", "temp_F")
 smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
@@ -102,7 +107,6 @@ smallmouth <- smallmouth |>
   mutate(days = ceiling(hours/24),
          temp_C = (temp_F -32) * (5/9))
 
-plot(smallmouth$hours~smallmouth$temp_C)
 
 smb_mod <- fit_model(smallmouth,
                      temp = smallmouth$temp_C,
@@ -110,10 +114,12 @@ smb_mod <- fit_model(smallmouth,
                      species = "smb",
                      dev.type = "hatch")
 
+
 ### catfish example from Small and Bates 2001
 ### Effect of Low-Temperature Incubation of Channel Catfish Ictalarus punctatus
 ### Eggs on Development, Survival, and Growth
 ### Journal of the World Aquaculture Society
+
 catfish <- matrix(NA, 3, 2) |> tibble()
 colnames(catfish) <- c("days", "temp_C")
 catfish$days <- c(16,21,26)
@@ -125,11 +131,50 @@ cat_mod <- fit_model(catfish,
                      species = "catfish",
                      dev.type = "hatch")
 
+### lake sturgeon mod
+### Smith and King 2005
+### Dynamics and extent of larval lake sturgeon Acipenser fulvescens drift in the 
+### Upper Black River, Michigan
+### Journal of Applied Ecology 
+
+sturgeon <-  matrix(NA, 7, 2) |> tibble()
+colnames(sturgeon) <- c("days", "CTU")
+sturgeon$days <- c(7,5,6,6,5,11,7)
+sturgeon$CTU <- c(58.1, 62.2, 61.1, 57.5, 58.1, 71.4, 54.7)
+
+sturgeon <- sturgeon |> 
+  mutate(temp_C = CTU/days)
+
+plot(sturgeon$days ~ sturgeon$temp_C)
+
+
+sturgeon_mod <- fit_model(df = sturgeon,
+                          days = sturgeon$days,
+                          temp = sturgeon$temp_C,
+                          species = "sturgeon",
+                          dev.type = "hatch")
+
+### predict_phenology
+
+catfish_res <- predict_phenology(data = data_sim,
+                  dates = dates_sim,
+                  temperature = temps_sim,
+                  spawn.date = "2000-07-01",
+                  model = cat_mod$func)
+
+# note that 16 C is pretty far out of range of temps for model fit, not best practice
+sturgeon_res <- predict_phenology(data = data_sim,
+                  dates = dates_sim,
+                  temperature = temps_sim,
+                  spawn.date = "2000-07-01",
+                  model = sturgeon_mod$func)
+
+catfish_res$days2done; sturgeon_res$days2done
 ```
 
 ## Predicting Phenology and Output
 
-Use woody \_example from website
+Use woody example from website
 
 show predict_phenology output slots
 
