@@ -18,13 +18,15 @@
 #'
 #' @return
 #' A list with the following elements:
-#' * `days2done`: A numeric vector of length 1; number of predicted days to hatch or emerge.
+#' * `days2done`: A numeric vector of length 1; number of predicted
+#'    days to hatch or emerge.
 #' * `ef.tibble`: An n x 4 tibble (n = number of days to hatch or emerge) with
-#'  the dates, temperature, effective values, and cumulative sum of the effective values.
+#'    the dates, temperature, effective values, and cumulative sum of the
+#'    effective values.
 #' * `dev.period`: a 1x2 dataframe with the dates corresponding to when your
-#'  fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
-#'  and the date when the fish is predicted to hatch or emerge.
-#'  * `model.specs`: A data.frame with the model specifications.
+#'    fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
+#'    and the date when the fish is predicted to hatch or emerge.
+#' * `model.specs`: A data.frame with the model specifications.
 #'
 #' @export
 #'
