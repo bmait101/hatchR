@@ -28,7 +28,7 @@ library(ggplot2)
 
 ## Overview
 
-This vignette describes the process of parameterizing models for predicting fish phenology using **hatchR**. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. We will cover both options in this vignette. First, we load `hatchR`:
+This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. First, we load `hatchR`:
 
 ```{r, eval = FALSE}
 library(hatchR)
