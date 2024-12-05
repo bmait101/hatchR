@@ -82,7 +82,8 @@ Bryan M. Maitland</h4>
 predicting fish phenology using <code>hatchR</code>. The package
 provides two options for choosing phenological models. One is to use
 model parameterizations installed the package and the other is to create
-your own using data you import. First, we load <code>hatchR</code>:</p>
+your own using data you import.</p>
+<p>First, we load <code>hatchR</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -135,7 +136,7 @@ hatch or emerge)</li>
 functions.</p>
 <p>For instance, if you wanted to access the parameterization for
 sockeye hatching using model #2 from <span class="citation">Beacham and
-Murray (1990)</span> you would run:</p>
+Murray (1990)</span>, you would run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>, </span>
@@ -144,7 +145,6 @@ Murray (1990)</span> you would run:</p>
 <span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="co">#print out the expression to check</span></span>
 <span><span class="va">sockeye_hatch_mod</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
 <span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
@@ -153,8 +153,8 @@ Murray (1990)</span> you would run:</p>
 <p>Note, that the above arguments are equivalent to the first line and
 four columns from <code>model_table</code>. Your model function
 object—in this case <code>sockeye_hatch_mod</code>—can then be passed to
-<code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, which we will demonstrate in the
-<strong>Predicting Phenology</strong> vignettes.</p>
+<code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, which we will demonstrate in the <a href="https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html">Predict
+Phenology: Basic</a> vignette.</p>
 <p>To see all available characterizations use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">model_table</span><span class="op">)</span></span></code></pre></div>
