@@ -1,7 +1,7 @@
 ---
 title: "Advanced plotting"
 author: "Morgan Sparks, Bryan M. Maitland"
-bibliography: '`r system.file("references.bib", package="hatchR")`'
+bibliography: '`r system.file("REFERENCES.bib", package="hatchR")`'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Advanced plotting}
