@@ -14,8 +14,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>", 
-  warning = FALSE, 
-  message = FALSE, 
+  warning = FALSE,
+  message = FALSE,
   fig.align = 'center',
   fig.width = 6
 )
@@ -295,7 +295,7 @@ At present, `hatchR` only uses continuous data. Therefore, your data is expected
 
 You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is not continuous or complete. 
 
-```{r}
+```{r, warning=TRUE, message=TRUE}
 check_continuous(data = crooked_river, dates = date)
 ```
 
