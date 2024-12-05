@@ -62,5 +62,10 @@ sockeye_hatch <- predict_phenology(
 
 }
 \references{
-\insertRef{beacham1990}{hatchR}
+Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
+Schindler, D.E. (2019). Influences of spawning timing, water temperature,
+and climatic warming on early life history phenology in western
+Alaska sockeye salmon.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences},
+\bold{76(1)}, 123--135.
 }

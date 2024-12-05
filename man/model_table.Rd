@@ -27,10 +27,23 @@ Description to come...
 model_table
 }
 \references{
-\insertRef{beacham1990}{hatchR}
+Beacham, T.D., Murray, C.B. (1990). Temperature, egg size, and development
+of embryos and alevins of five species of Pacific salmon: a comparative
+analysis.
+\emph{Canadian Journal of Zoology},
+\bold{68}, 1931--1940.
 
-\insertRef{austin2019}{hatchR}
+Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
+Schindler, D.E. (2019). Influences of spawning timing, water temperature,
+and climatic warming on early life history phenology in western
+Alaska sockeye salmon.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences},
+\bold{76(1)}, 123--135.
 
-\insertRef{sparks2019}{hatchR}
+Austin, C.C., Essington, T.E., Quinn, T.A. (2019). Spawning and emergence
+phenology of bull trout \emph{Salvelinus confluentus} under differing
+thermal regimes.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences},
+\bold{94(1)}, 191--195.
 }
 \keyword{datasets}
