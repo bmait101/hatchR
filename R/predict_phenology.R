@@ -50,7 +50,7 @@
 #' )
 #'
 #' @references
-#' \insertRef{beacham1990}{hatchR}
+
 
 predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   # assign data and arrange data by dates

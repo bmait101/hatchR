@@ -14,10 +14,6 @@
 #' @examples
 #' model_table
 #' @references
-#' \insertRef{beacham1990}{hatchR}
-#'
-#' \insertRef{austin2019}{hatchR}
-#'
-#' \insertRef{sparks2019}{hatchR}
+
 
 "model_table"

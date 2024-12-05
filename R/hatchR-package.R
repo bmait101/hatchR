@@ -5,7 +5,6 @@ utils::globalVariables(c("model_table", "woody_island"))
 
 ## usethis namespace: start
 #' @importFrom lifecycle deprecated
-#' @importFrom Rdpack reprompt
 #' @importFrom rlang .data
 #' @importFrom utils globalVariables
 ## usethis namespace: end
