@@ -24,7 +24,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Morgan Sparks \email{morgan.sparks@usda.gov}
+  \item Morgan Sparks \email{morgan.sparks@usda.gov} (\href{https://orcid.org/0000-0003-0787-2218}{ORCID})
+  \item Eli Felts \email{eli_felts@fws.gov} (\href{https://orcid.org/0000-0002-5888-9266}{ORCID})
 }
 
 }
