@@ -291,7 +291,7 @@ plot_check_temp(data = temp.test_sum,
 
 ## Check for continuous data
 
-At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete. 
+At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete.  
 
 You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is not continuous or complete. 
 
@@ -303,9 +303,7 @@ If you have days of missing data, you could impute them using rolling means or o
 
 # Workflow
 
-After importing, wrangling, and checking your temperature data, there are a number of different actions you can take. 
-
-These steps are laid out in subsequent vignettes: [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html), [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html), [Predict phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html), [Predict phenology: nested](https://bmait101.github.io/hatchR/articles/Predict_phenology_nested.html), and [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html).
+After importing, wrangling, and checking your temperature data, there are a number of different actions you can take.  These steps are laid out in subsequent vignettes: [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html), [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html), [Predict phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html), [Predict phenology: nested](https://bmait101.github.io/hatchR/articles/Predict_phenology_nested.html), and [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html).
 
 The generalized workflow for `hatchR`, including the above and subsequent steps, is shown below.
 
