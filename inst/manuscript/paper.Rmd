@@ -49,6 +49,11 @@ To bridge the gap between the application of one-off effective value model appli
 
 To widen the user application of these methods, we distribute two user-interfaces for `hatchR`. The first is a R package distributed via CRAN that allows users the most customizable application of these methods. The R package is especially powerful as it allows users to automate their analyses over multiple variables such as phenology type, multiple spawn dates, or different habitats with varying thermal regimes. These variable approaches are outlined in the package documentation on `hatchR`'s website. Alternatively, we also distribute a Shiny application in the form of an HTML-based web tool to interact with many of `hatchR`'s functions in a graphical-user-interface. The Shiny form trades-off some of automative power for user simplicity, while still allowing users to leverage much of the functionality of `hatchR`'s R package. Below, we present the basic overview of the software and multiple case studies of how it may be applied.
 
+```{r echo=FALSE}
+### 
+library(tidyverse); library(hatchR)
+```
+
 # Package Overview
 
 `hatchR` is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice.
@@ -77,7 +82,68 @@ The effective value model framework is the basis for the phenological models in 
 
 `hatchR` is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and `hatchR` includes functionality to summarize those data into a format that is usable, as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
 
-summarize_temp, check_continuous and plot_check_temp
+We demonstrate the utility of the check summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year long dataset with temperature readings every thirty minutes.
+
+```{r}
+# create date object for a year with 30 min reading intervals
+dates <- seq(from = ymd_hms("2000-07-01 00:00:00"),
+             to = ymd_hms("2001-07-30 23:59:59"), length.out = 17568) 
+# create empty dataframe
+year_sim <- data.frame(matrix(NA, nrow = length(dates), ncol = 1)) 
+
+# date column
+colnames(year_sim)[1] <- "date" 
+
+# add dates vector to date column
+year_sim[1] <- dates 
+
+#random seed
+set.seed(123)
+
+# take temps from a random normal dist with mean 10 sd 3 for every date time combo in dates and append to column (temp) in year_sim
+year_sim$temp <- rnorm(n = length(dates), mean = 10, sd = 3) %>%
+  abs() 
+
+dim(year_sim)
+
+
+```
+
+First, we recommend checking import data for any outliers or strange inputs using `plot_check_temp()`
+
+```{r}
+plot_check_temp(data = year_sim,
+                dates = date,
+                temperature = temp,
+                temp_min = 0, # temp_min and max lines are user customizable
+                temp_max = 25)
+```
+
+It appears there are no outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data.
+
+```{r}
+# summarize
+year_sim_summ <- summarize_temp(data = year_sim,
+                                dates = date,
+                                temperature = temp)
+
+dim(year_sim_summ)
+
+# check continuous
+check_continuous(data = year_sim_summ,
+                 dates = date)
+
+# we can demonstrate an error by removing the Oct 8 (100th day)
+check_continuous(data = year_sim_summ[-100,],
+                 dates = date)
+
+# it is useful to plot again to check your summarized data
+plot_check_temp(data = year_sim_summ,
+                dates = date,
+                temperature = daily_temp,
+                temp_min = 0, # temp_min and max lines are user customizable
+                temp_max = 15)
+```
 
 ## Model Selection
 
@@ -85,58 +151,52 @@ talk about using nls for fit_model
 
 model_table and fit_model
 
-fit_model for three non-salmonid species
+fit_model for three non-salmonid specieslib
+
+Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. Furthermore, we include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for species beyond the original scope of the original effective value approach. We demonstrate parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+
+We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime.
 
 ```{r, eval=FALSE}
-#### temp regime
+###  make temp regime
 set.seed(1234)
 # create random temps and corresponding dates
-temps_sim <- sort(rnorm(n =30, mean = 16, sd = 1), decreasing = TRUE)
+temps_sim <- sort(rnorm(n =30, mean = 16, sd = 1), decreasing = FALSE)
 dates_sim <-  seq(from = ymd("2000-07-01"),
              to = ymd("2000-07-31"), length.out = 30)
 
 data_sim <- cbind (dates_sim, temps_sim) |> data.frame()
 
-### smallmouth
+### smallmouth mod
 smallmouth <- matrix(NA, 10, 2) |> tibble()
 colnames(smallmouth) <- c("hours", "temp_F")
 smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
 smallmouth$temp_F <- c(77, 75, 71, 70, 67, 65, 60, 59, 55, 55)
 
+# change F to C and hours to days
 smallmouth <- smallmouth |> 
   mutate(days = ceiling(hours/24),
          temp_C = (temp_F -32) * (5/9))
 
 
-smb_mod <- fit_model(smallmouth,
-                     temp = smallmouth$temp_C,
+smb_mod <- fit_model(temp = smallmouth$temp_C,
                      days = smallmouth$days,
                      species = "smb",
                      dev.type = "hatch")
 
 
-### catfish example from Small and Bates 2001
-### Effect of Low-Temperature Incubation of Channel Catfish Ictalarus punctatus
-### Eggs on Development, Survival, and Growth
-### Journal of the World Aquaculture Society
-
+### catfish mod
 catfish <- matrix(NA, 3, 2) |> tibble()
 colnames(catfish) <- c("days", "temp_C")
 catfish$days <- c(16,21,26)
 catfish$temp_C <- c(22,10,7)
 
-cat_mod <- fit_model(catfish,
-                     temp = catfish$temp_C,
+cat_mod <- fit_model(temp = catfish$temp_C,
                      days = catfish$days,
                      species = "catfish",
                      dev.type = "hatch")
 
 ### lake sturgeon mod
-### Smith and King 2005
-### Dynamics and extent of larval lake sturgeon Acipenser fulvescens drift in the 
-### Upper Black River, Michigan
-### Journal of Applied Ecology 
-
 sturgeon <-  matrix(NA, 7, 2) |> tibble()
 colnames(sturgeon) <- c("days", "CTU")
 sturgeon$days <- c(7,5,6,6,5,11,7)
@@ -148,20 +208,28 @@ sturgeon <- sturgeon |>
 plot(sturgeon$days ~ sturgeon$temp_C)
 
 
-sturgeon_mod <- fit_model(df = sturgeon,
-                          days = sturgeon$days,
+sturgeon_mod <- fit_model(days = sturgeon$days,
                           temp = sturgeon$temp_C,
                           species = "sturgeon",
                           dev.type = "hatch")
 
 ### predict_phenology
 
+#smallmouth bass
+smb_res <- predict_phenology(data = data_sim,
+                  dates = dates_sim,
+                  temperature = temps_sim,
+                  spawn.date = "2000-07-01",
+                  model = smb_mod$func)
+
+# catfish
 catfish_res <- predict_phenology(data = data_sim,
                   dates = dates_sim,
                   temperature = temps_sim,
                   spawn.date = "2000-07-01",
                   model = cat_mod$func)
 
+# sturgeon
 # note that 16 C is pretty far out of range of temps for model fit, not best practice
 sturgeon_res <- predict_phenology(data = data_sim,
                   dates = dates_sim,
@@ -169,7 +237,20 @@ sturgeon_res <- predict_phenology(data = data_sim,
                   spawn.date = "2000-07-01",
                   model = sturgeon_mod$func)
 
-catfish_res$days2done; sturgeon_res$days2done
+
+```
+
+```{r, echo=FALSE}
+# summary for all species
+all_res <- data.frame(matrix(NA, 3, 2))
+colnames(all_res) <- c("start", "stop")
+all_res[1,] <- smb_res$dev.period
+all_res[2,] <- catfish_res$dev.period
+all_res[3,] <- sturgeon_res$dev.period
+
+all_res <- all_res |> 
+  mutate(days = stop-start)
+all_res$Species <- c("Smallmouth Bass", "Channel Catfish", "Lake Sturgeon")
 ```
 
 ## Predicting Phenology and Output
