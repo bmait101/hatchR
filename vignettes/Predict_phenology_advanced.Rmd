@@ -125,7 +125,7 @@ If you don't want the full output of each run of `predict_phenolgy()` and you ju
 
 **Mapping:**
 
-Vectorizing, while historically about prioritizing speed, is now more about making your code more readable (see sections in [r4ds](https://r4ds.had.co.nz/iteration.html#for-loops-vs.-functionals) and [Advanced R](https://adv-r.hadley.nz/functionals.html)). We'll demonstrate using `map()` from the `purrr` package. If you are unfamiliar with mapping but want to learn more about how it works and it's power, we highly recommend the linked chapters from R for Data Science (@grolemund) and Advanced R (@9functi) shown above.
+Vectorizing, while historically about prioritizing speed, is now more about making your code more readable (see Chapter 26 in [R for Data Science](https://r4ds.hadley.nz/iteration) and [Advanced R](https://adv-r.hadley.nz/functionals.html)). We'll demonstrate using `map()` from the `purrr` package. If you are unfamiliar with mapping but want to learn more about how it works and it's power, we highly recommend the linked chapters from R for Data Science and Advanced R.
 
 ```{r}
 # map works by applying a function over a list (our vector is a very simple list)
