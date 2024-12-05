@@ -9,7 +9,7 @@ bibentry(
                  person(given  = "Eli",
                         family = "Felts",
                         email = "eli_felts@fws.gov")
-                        )
+                        ),
   year       = "2024",
   note       = "In preparation"
 )
