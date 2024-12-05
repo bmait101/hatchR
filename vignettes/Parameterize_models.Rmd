@@ -28,7 +28,9 @@ library(ggplot2)
 
 ## Overview
 
-This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. First, we load `hatchR`:
+This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. 
+
+First, we load `hatchR`:
 
 ```{r, eval = FALSE}
 library(hatchR)
@@ -55,7 +57,7 @@ We see that `model_table` is a tbble with 51 rows and 5 columns:
 
 You will use `author`, `species`, `model`, and `dev.type` to select model functions.
 
-For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990 you would run:
+For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990, you would run:
 
 ```{r}
 sockeye_hatch_mod <- model_select(
@@ -65,11 +67,10 @@ sockeye_hatch_mod <- model_select(
   dev.type = "hatch"
   )
 
-#print out the expression to check
 sockeye_hatch_mod
 ```
 
-Note, that the above arguments are equivalent to the first line and four columns from `model_table`. Your model function object---in this case `sockeye_hatch_mod`---can then be passed to `predict_phenology()`, which we will demonstrate in the **Predicting Phenology** vignettes.
+Note, that the above arguments are equivalent to the first line and four columns from `model_table`. Your model function object---in this case `sockeye_hatch_mod`---can then be passed to `predict_phenology()`, which we will demonstrate in the [Predict Phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
 
 To see all available characterizations use:
 
