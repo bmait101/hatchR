@@ -50,12 +50,8 @@
 #' )
 #'
 #' @references
-#' Sparks, M.M., Falke, J.A., Quinn, T.P., Adkinson, M.D., Schindler, D.E.
-#' (2017). Influences of spawning timing, water temperature, and
-#'   climatic warming on early life history phenology in western
-#'   Alaska sockeye salmon.
-#'   \emph{Canadian Journal of Fisheries and Aquatic Sciences},
-#'   \bold{76(1)}, 123--135
+#' \insertRef{beacham1990}{hatchR}
+
 predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   # assign data and arrange data by dates
   dat <- data |>
