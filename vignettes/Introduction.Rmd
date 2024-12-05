@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   fig.align = 'center',
   fig.width = 6
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 
 # load packages
 library(hatchR)
@@ -30,7 +31,7 @@ library(tibble)
 library(ggplot2)
 ```
 
-# Overview
+# Overview {#overview}
 
 `hatchR` is an R package that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. `hatchR` is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [e.g., @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019. 
 
@@ -41,7 +42,7 @@ This vignette:
 * explains basic data checks,  
 * provides an overview of downstream steps in a `hatchR` workflow that are covered in other vignettes. 
 
-## Input Data
+## Input Data Requirements {#inputs}
 
 Water temperature datasets found in the wild are often either (1) already summarized by day (i.e., mean daily temperature) or, 2) in a raw format from something like a HOBO TidbiT data logger where readings are taken multiple times per day, which can be summarized into a mean daily temperatures. Alternatively, daily water temperature predictions from novel statistical models [e.g., @siegel2023] could be similarly implemented.
 
@@ -62,9 +63,9 @@ Fundamentally, `hatchR` assumes you have input data with two columns: a date col
 
 ### Prerequisites: Dates and Times {#prereqs}
 
-Numeric temperature values are simple to work with in R, but dates and time can be tricky. Here we provide a brief overview of how to work with dates and times in R, but refer the user to [Chapter 17](https://r4ds.hadley.nz/datetimes.html) in R4DS [@wickham_r_2023] for a more in-depth discussion.
+Numeric temperature values are simple to work with in R, but dates and time can be tricky. Here we provide a brief overview of how to work with dates and times in R, but refer the user to [Chapter 17](https://r4ds.hadley.nz/datetimes.html) in R for Data Science [@wickham2023] for a more in-depth discussion.
 
-The [`lubridate`](https://lubridate.tidyverse.org/) package makes it easier to work with dates and times in R, comes installed with `hatchR`, and can be loaded with:
+The [`lubridate`](https://lubridate.tidyverse.org/) package makes it easier to work with dates and times in R. It comes installed with `hatchR`, and can be loaded with:
 
 ```{r, eval = FALSE}
 library(lubridate)
@@ -131,9 +132,6 @@ library(dplyr)
 
 ```{r}
 flights |> 
-  select(year, month, day, hour, minute)
-
-flights |> 
   select(year, month, day) |>
   mutate(date = make_date(year, month, day))
 
@@ -194,17 +192,21 @@ glimpse(your_data)
 
 ## Using `read.csv()`
 
-If you import your data in with functions like `read.csv()` or `read.table()`, date columns will be formatted as a characters (\<chr\>). You will have convert to this column to a \<date\> or \<dttm\> type, and we recommend you do this using [\`lubridate\`](https://lubridate.tidyverse.org/), which makes dealing with date a litter easier. Here is an example of how you might do this:
+If you import your data in with functions like `read.csv()` or `read.table()`, date columns will be formatted as a characters (\<chr\>). You will have convert to this column to a \<date\> or \<dttm\> type, and we recommend you do this using [\`lubridate\`](https://lubridate.tidyverse.org/), which makes dealing with date a litter easier. 
+
+Below is an example of how you might do this. First, we check the structure of the `crooked_river` and `woody_island` datasets:
 
 ```{r}
 crooked_river <- read.csv(path_cr)
 woody_island <- read.csv(path_wi)
 
-str(crooked_river) # note date column is imported as a character (<chr>)
-str(woody_island) # note date column is imported as a character (<chr>)
+glimpse(crooked_river) # note date column is imported as a character (<chr>)
+glimpse(woody_island) # note date column is imported as a character (<chr>)
+```
 
-# convert using lubridate functions ------
+Then, we convert the date columns using `lubridate`:
 
+```{r}
 # if your date is in the form "2000-09-01 12:00:00"
 crooked_river$date <- lubridate::ymd_hms(crooked_river$date)
 
@@ -217,19 +219,20 @@ glimpse(woody_island)
 ```
 
 
-# Data Checks
+# Data Checks {#data-checks}
 
 After data are loaded and dates are formatted correctly, we can complete a series of checks to ensure that the temperature data is in the correct format and that there are no missing values. 
 
-`hatchR` provides a series of functions to help with this process. 
+`hatchR` provides several helper functions to assist with this process.
+
 ```{r, eval = FALSE}
 library(hatchR)
 ```
 
 
-## Vizualize your data
+## Vizualize your data {#viz-data}
 
-It is best practice to visualize your data. To aid users, `hatchR` comes with wrapper function `plot_check_temp()` to visualize your imported data and verify nothing strange happened during your import process. The function outputs a `ggplot2` object which can be subsequently modified by the user. The arguments `temp_min =` and `temp_max =` can be used to custom set thresholds for expected temperature ranges (defaults are set at 0 and 25 C). Here is an example using the built-in dataset `crooked_river`:
+`hatchR` comes with the function `plot_check_temp()` to visualize your imported data and verify nothing strange happened during your import process. The function outputs a `ggplot2` object which can be subsequently modified by the user. The arguments `temp_min =` and `temp_max =` can be used to custom set thresholds for expected temperature ranges (defaults are set at 0 and 25 C). Here is an example using the built-in dataset `crooked_river`:
 
 ```{r}
 plot_check_temp(data = crooked_river, 
@@ -240,48 +243,51 @@ plot_check_temp(data = crooked_river,
 ```
 
 
-## Summarize Data
+## Summarize Data {#summarize-data}
 
-If you imported raw data with multiple recordings per day, `hatchR` has a built in function to summarize those data to a daily average mean called `summarize_temp()`. The output of the function is a tibble with mean daily temperature and its corresponding day.
+If you imported raw data with multiple recordings per day, `hatchR` has a built in function to summarize those data to a daily average mean called `summarize_temp()`. The output of the function is a tibble with mean daily temperature and its corresponding. 
+
+Below, we simulate a dataset with 30 minute temperature recordings for a year and summarize the data to daily means. 
 
 ```{r}
-# create date object for a year with 30 min temperature measurement intervals
-dates <- seq(
-  from = ymd_hms("2000-01-01 00:00:00"),
-  to = ymd_hms("2000-12-31 23:59:59"), 
-  length.out = 17568
-  ) 
-
-# create empty dataframe
-temp.test <- data.frame(matrix(NA, nrow = length(dates), ncol = 1)) 
-colnames(temp.test)[1] <- "date" # date column
-
-# add dates vector to date columns
-temp.test[1] <- dates 
-
+# set seed for reproducibility
 set.seed(123)
 
-# simulate temps from a random normal dist with mean 10 sd 3 for every date time combo in dates and append to column (temp) in temp.test
-temp.test$temp <- rnorm(n = length(dates), mean = 10, sd = 3) |> abs() 
+# create vector of date-times for a year at 30 minute intervals
+dates <- seq(
+  from = lubridate::ymd_hms("2000-01-01 00:00:00"),
+  to = lubridate::ymd_hms("2000-12-31 23:59:59"), 
+  by = "30 min"
+  )
 
-glimpse(temp.test) # info about temp.test
+# simualte temperature data
+fake_data <- tibble::tibble(
+  date = dates,
+  temp = rnorm(n = length(dates), mean = 10, sd = 3) |> abs()
+)
 
-# check how many rows in raw data
-nrow(temp.test) #17568 records
+# check it
+tibble::glimpse(fake_data) # info about temp.test
+nrow(fake_data) #17568 records
 
-# summarized data
-temp.test_sum <- summarize_temp(data = temp.test,
+```
+
+Now we can summarize the data to daily means using `summarize_temp()`:
+
+```{r}
+fake_data_sum <- summarize_temp(data = fake_data,
                                 temperature = temp,
                                 dates = date)
 
-nrow(temp.test_sum) #365 records
+nrow(fake_data_sum) #366 records; 2000 was a leap year :)
 ```
+
 
 We again recommend, at a minimum, visually checking your data once it has been summarized.
 
 ```{r}
-# note we are now using crooked_river_sum instead of crooked_river
-plot_check_temp(data = temp.test_sum, 
+# note we use fake_data_sum instead of fake_data
+plot_check_temp(data = fake_data_sum, 
                 dates = date, 
                 temperature = daily_temp, 
                 temp_min = 5,
@@ -289,11 +295,11 @@ plot_check_temp(data = temp.test_sum,
 ```
 
 
-## Check for continuous data
+## Check for continuous data {#check-continuous}
 
 At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete.  
 
-You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is not continuous or complete. 
+You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is or is not continuous or complete. 
 
 ```{r, warning=TRUE, message=TRUE}
 check_continuous(data = crooked_river, dates = date)
@@ -301,9 +307,15 @@ check_continuous(data = crooked_river, dates = date)
 
 If you have days of missing data, you could impute them using rolling means or other approaches. 
 
-# Workflow
+# Workflow {#workflow}
 
-After importing, wrangling, and checking your temperature data, there are a number of different actions you can take.  These steps are laid out in subsequent vignettes: [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html), [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html), [Predict phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html), [Predict phenology: nested](https://bmait101.github.io/hatchR/articles/Predict_phenology_nested.html), and [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html).
+After importing, wrangling, and checking your temperature data, there are a number of different actions you can take.  These steps are laid out in subsequent vignettes:
+
+* [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html)
+* [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html)
+* [Predict phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html)
+* [Predict phenology: nested](https://bmait101.github.io/hatchR/articles/Predict_phenology_nested.html) 
+* [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html).
 
 The generalized workflow for `hatchR`, including the above and subsequent steps, is shown below.
 
