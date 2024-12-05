@@ -27,10 +27,10 @@ check_continuous <- function(data, dates) {
 
   if (length(check_out) > 0) {
     cli::cli_warn(c(
-      "!" = "Breaks at the following rows were found:",
+      "!" = "Data not continuous",
+      "i" = "Breaks found at rows:",
       "i" = paste(check_out, collapse = ", ")
       ))
-    check_out
   } else {
     cli::cli_inform(c("i" = "No breaks were found. All clear!"))
   }
