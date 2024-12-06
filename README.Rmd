@@ -16,20 +16,21 @@ knitr::opts_chunk$set(
 options(tibble.print_min = 5, tibble.print_max = 5)
 ```
 
-# hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
+# hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" alt="hatchR website" align="right" height="139"/></a>
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
-**IN DEVELOPMENT**
-
-**hatchR** is an R package for predicting fish developmental phenology using statistical models. It is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (e.g., Beacham and Murray 1990) and applying them to real world temperature data sets using the effective value framework developed by Sparks et al. (2019).
+**hatchR** is an R package for predicting fish developmental phenology using statistical models. It is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (*e.g.*, Beacham and Murray 1990) and applying them to real world temperature data sets using the effective value framework developed by Sparks et al. (2019).
 
 ## Citation
 
 If you use **hatchR** in a formal publication or report, please cite it. Citing **hatchR** lets us devote more resources to it in the future. View the **hatchR** citation by running
-```r
+
+```{r}
 citation(package = "hatchR")
 ```
 
@@ -37,7 +38,7 @@ citation(package = "hatchR")
 
 You can install the development version of **hatchR** from [GitHub](https://github.com/) with:
 
-``` r
+```{r}
 # install.packages("pak")
 pak::pak("bmait101/hatchR")
 ```
@@ -50,9 +51,9 @@ We encourage users to report bugs and/or contribute to **hatchR**. For more deta
 
 There are several ways to get help with **hatchR**:
 
-1. Open a GitHub issue [link here](https://github.com/bmait101/hatchR/issues).
-2. Email the hatchR support team ([Morgan Sparks](morgan.sparks@usda.gov), [Bryan Maitland](bryan.maitland@usda.gov))
-3. Post on a support website like Stack Overflow or Cross Validated. 
+1.  Open a GitHub issue [link here](https://github.com/bmait101/hatchR/issues).
+2.  Email the **hatchR** support team ([Morgan Sparks](morgan.sparks@usda.gov), [Bryan Maitland](bryan.maitland@usda.gov))
+3.  Post on a support website like Stack Overflow or Cross Validated.
 
 ## Example Usage
 
@@ -66,29 +67,22 @@ library(ggplot2)  # for additional plotting options
 library(lubridate)  # for working with dates
 ```
 
-The example `woody_island` dataset is included in **hatchR** and contains temperature data from Woody Island, Lake Iliamna, Alaska. It includes daily water temperature data from 1990-1992. We can use `plot_check_temp()` to visually check the data:
+The example `woody_island` dataset is included in **hatchR** and contains temperature data from Woody Island, Lake Iliamna, Alaska. It includes daily water temperature data from 1990-1992. We can use `plot_check_temp()` to visually check the data. Spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` returns a **ggplot2** object, we can add additional **ggplot2** elements to customize the plots.
 
 ```{r}
-p <- plot_check_temp(
+plot_check_temp(
   data = woody_island,
   dates = date, 
   temperature = temp_c
-  )
-p
-```
-
-Spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. 
-
-```{r}
-p + 
+  ) +  # additional ggplot2 elements below this `+`
   geom_rect(
     aes(
       xmin = ymd("1990-08-18"),  # spawn date
       xmax = ymd("1991-04-01"),  # approx phenology window end
       ymin = -10,  # lower bound
       ymax = 25),  # upper bound
-    fill = "darkgreen",  # color rectangle dark green
-    alpha = 0.01  # make rectangle semi-transparent
+    fill = "grey",
+    alpha = 0.01
     ) 
 ```
 
@@ -130,27 +124,34 @@ Finally, we can visualize the predicted phenology using `plot_phenology()`:
 plot_phenology(WI_hatch)
 ```
 
-
 ## Imported Packages
 
 `hacthR` imports the following **R** packages:
 
-* dplyr: For data manipulation.
-* ggplot2: For vignette visualizations.
-* lubridate: For working with dates.
-* tibble: For creating tibbles as output for various functions.
-* rlang: For `.data` usage.
-* stats: For various modeling functions (e.g., `confint()`).
-* utils: For various utility functions.
+-   dplyr: For data manipulation.
+-   ggplot2: For vignette visualizations.
+-   lubridate: For working with dates.
+-   tibble: For creating tibbles as output for various functions.
+-   rlang: For `.data` usage.
+-   stats: For various modeling functions (e.g., `confint()`).
+-   lifecycle: for function lifecycle badges.
+-   utils: For various utility functions.
 
 ## Suggested Packages
 
 **hatchR** suggests the following **R** packages:
 
-* knitr: For vignette building.
-* readr: For reading in data.
-* rmarkdown: For vignette building.
-* testthat: For unit testing.
+-   knitr: For vignette building.
+-   readr: For reading in data.
+-   purrr: For iteration in vignettes.
+-   rmarkdown: For vignette building.
+-   nycflights13: For example data.
+-   tidyr: For vignette building.
+-   stringr: For vignette building.
+-   ggridges: For vignette building.
+-   patchwork: For vignette building.
+-   cli: For better messages.
+-   testthat: For unit testing.
 
 ## License
 
@@ -158,4 +159,4 @@ This project is licensed under the GNU General Public License, [GPL-3](https://c
 
 ## USDA Disclaimer
 
-**hatchR** project code is provided on an "as is" basis and the user assumes responsibility for its use. USDA Forest Service has relinquished control of the information and no longer has responsibility to protect the integrity , confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by USDA Forest Service. 
+**hatchR** project code is provided on an "as is" basis and the user assumes responsibility for its use. USDA Forest Service has relinquished control of the information and no longer has responsibility to protect the integrity , confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by USDA Forest Service.

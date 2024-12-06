@@ -1,29 +1,42 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
+# hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" alt="hatchR website" align="right" height="139"/></a>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
 
-**IN DEVELOPMENT**
+<!-- badges: end -->
 
 **hatchR** is an R package for predicting fish developmental phenology
 using statistical models. It is intended to bridge the analytic gap of
-taking statistical models developed in hatchery settings (e.g., Beacham
-and Murray 1990) and applying them to real world temperature data sets
-using the effective value framework developed by Sparks et al. (2019).
+taking statistical models developed in hatchery settings (*e.g.*,
+Beacham and Murray 1990) and applying them to real world temperature
+data sets using the effective value framework developed by Sparks et
+al. (2019).
 
 ## Citation
 
 If you use **hatchR** in a formal publication or report, please cite it.
-Citing **hatchR** lets us devote more resources to it in the future. View
-the **hatchR** citation by running
+Citing **hatchR** lets us devote more resources to it in the future.
+View the **hatchR** citation by running
 
 ``` r
 citation(package = "hatchR")
+#> To cite package 'hatchR' in publications use:
+#> 
+#>   Maitland B, Sparks M, Felts E (2024). "hatchR: predicting fish
+#>   developmental phenology." In preparation.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Unpublished{,
+#>     title = {{hatchR}: predicting fish developmental phenology},
+#>     author = {Bryan M. Maitland and Morgan R. Sparks and Eli Felts},
+#>     year = {2024},
+#>     note = {In preparation},
+#>   }
 ```
 
 ## Installation Instructions
@@ -48,7 +61,7 @@ There are several ways to get help with **hatchR**:
 
 1.  Open a GitHub issue [link
     here](https://github.com/bmait101/hatchR/issues).
-2.  Email the hatchR support team ([Morgan
+2.  Email the **hatchR** support team ([Morgan
     Sparks](morgan.sparks@usda.gov), [Bryan
     Maitland](bryan.maitland@usda.gov))
 3.  Post on a support website like Stack Overflow or Cross Validated.
@@ -71,40 +84,34 @@ library(ggplot2)  # for additional plotting options
 library(lubridate)  # for working with dates
 ```
 
-The example `woody_island` dataset is included in **hatchR** and contains
-temperature data from Woody Island, Lake Iliamna, Alaska. It includes
-daily water temperature data from 1990-1992. We can use
-`plot_check_temp()` to visually check the data:
+The example `woody_island` dataset is included in **hatchR** and
+contains temperature data from Woody Island, Lake Iliamna, Alaska. It
+includes daily water temperature data from 1990-1992. We can use
+`plot_check_temp()` to visually check the data. Spawning in this system
+typically peaks around August 18 and hatching and emergence are done
+before the start of the following spawning season, so we can predict
+phenology within a subset of a year. Because `plot_check_temp()` returns
+a **ggplot2** object, we can add additional **ggplot2** elements to
+customize the plots.
 
 ``` r
-p <- plot_check_temp(
+plot_check_temp(
   data = woody_island,
   dates = date, 
   temperature = temp_c
-  )
-p
-```
-
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
-
-Spawning in this system typically peaks around August 18 and hatching
-and emergence are done before the start of the following spawning
-season, so we can predict phenology within a subset of a year.
-
-``` r
-p + 
+  ) +  # additional ggplot2 elements below this `+`
   geom_rect(
     aes(
       xmin = ymd("1990-08-18"),  # spawn date
       xmax = ymd("1991-04-01"),  # approx phenology window end
       ymin = -10,  # lower bound
       ymax = 25),  # upper bound
-    fill = "darkgreen",  # color rectangle dark green
-    alpha = 0.01  # make rectangle semi-transparent
+    fill = "grey",
+    alpha = 0.01
     ) 
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Next, select hatch and emerge models we want to use to predict
 phenology:
@@ -150,7 +157,7 @@ Finally, we can visualize the predicted phenology using
 plot_phenology(WI_hatch)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ## Imported Packages
 
@@ -162,6 +169,7 @@ plot_phenology(WI_hatch)
 - tibble: For creating tibbles as output for various functions.
 - rlang: For `.data` usage.
 - stats: For various modeling functions (e.g., `confint()`).
+- lifecycle: for function lifecycle badges.
 - utils: For various utility functions.
 
 ## Suggested Packages
@@ -170,7 +178,14 @@ plot_phenology(WI_hatch)
 
 - knitr: For vignette building.
 - readr: For reading in data.
+- purrr: For iteration in vignettes.
 - rmarkdown: For vignette building.
+- nycflights13: For example data.
+- tidyr: For vignette building.
+- stringr: For vignette building.
+- ggridges: For vignette building.
+- patchwork: For vignette building.
+- cli: For better messages.
 - testthat: For unit testing.
 
 ## License
