@@ -126,7 +126,7 @@ use <code><a href="../reference/plot_check_temp.html">plot_check_temp()</a></cod
 <span>  data <span class="op">=</span> <span class="va">woody_island</span>,</span>
 <span>  dates <span class="op">=</span> <span class="va">date</span>,</span>
 <span>  temperature <span class="op">=</span> <span class="va">temp_c</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There appear to be outliers in the data, specifically in the very
@@ -137,29 +137,30 @@ exposed it to the air.</p>
 <p>However, spawning in this system typically peaks around August 18 and
 hatching and emergence are done before the start of the following
 spawning season, so we can predict phenology within a subset of a year.
-Because <code><a href="../reference/plot_check_temp.html">plot_check_temp()</a></code> is a ggplot object, we can add
-geoms to the plot to represent the approximate phenology window:</p>
+Because <code><a href="../reference/plot_check_temp.html">plot_check_temp()</a></code> is a <strong>ggplot2</strong>
+object, we can add additional plotting elements to the graph to
+represent the approximate phenology window:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>      xmin <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"1990-08-18"</span><span class="op">)</span>, <span class="co"># spawn date</span></span>
-<span>      xmax <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"1991-04-01"</span><span class="op">)</span>, <span class="co"># approx phenology window end</span></span>
-<span>      ymin <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, <span class="co"># lower bound</span></span>
+<span>      xmin <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"1990-08-18"</span><span class="op">)</span>,</span>
+<span>      xmax <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"1991-04-01"</span><span class="op">)</span>,</span>
+<span>      ymin <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, </span>
 <span>      ymax <span class="op">=</span> <span class="fl">25</span></span>
-<span>    <span class="op">)</span>, <span class="co"># upper bound</span></span>
-<span>    fill <span class="op">=</span> <span class="st">"darkgreen"</span>, <span class="co"># color rectangle dark green</span></span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.01</span> <span class="co"># make rectangle semi-transparent</span></span>
+<span>    <span class="op">)</span>, </span>
+<span>    fill <span class="op">=</span> <span class="st">"gray"</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.01</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>If we just apply the model within the green polygon we’ve drawn, the
+<p>If we just apply the model within the gray polygon we’ve drawn, the
 model should work just fine.</p>
 </div>
 <div class="section level3">
 <h3 id="model-select">Model select<a class="anchor" aria-label="anchor" href="#model-select"></a>
 </h3>
 <p>Now that our temperature data is usable we can select our models.
-We’ll predict both hatching and emergence, so we will obtain a model
+We’ll predict both hatch and emergence, so we will obtain a model
 expression for each using <code><a href="../reference/model_select.html">model_select()</a></code>. The only argument
 in <code><a href="../reference/model_select.html">model_select()</a></code> that must be changed in this case is
 <code>dev.type</code>, which can be either “hatch” or “emerge”.</p>
@@ -177,8 +178,8 @@ in <code><a href="../reference/model_select.html">model_select()</a></code> that
 <span>  model <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  dev.type <span class="op">=</span> <span class="st">"emerge"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Let’s look at the expressions for the two different models we’ve
-selected:</p>
+<p>Let’s look at the model specifications for the two different
+parameterizations we’ve selected:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
@@ -190,8 +191,8 @@ selected:</p>
 <span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     emerge   1 / exp(7.227 - log(x + 2.56))</span></span></code></pre></div>
-<p>You can see they are parameterized slightly differently to account
-for the differences between hatch and emergence timing.</p>
+<p>You can see they are parameterized slightly different to account for
+the differences between hatch and emergence timing.</p>
 </div>
 <div class="section level3">
 <h3 id="predict-phenology">Predict phenology<a class="anchor" aria-label="anchor" href="#predict-phenology"></a>
@@ -213,9 +214,10 @@ using <code><a href="../reference/predict_phenology.html">predict_phenology()</a
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fish spawn date was: 1990-08-18</span></span></code></pre></div>
 <blockquote>
 <p>Note the warning message that appears when you run this code for
-<code>woody_island</code>. It reveals that while the fish develoeped,
-negative temperature values resulted in NaNs after development. More on
-this in the <span id="neg_temp">Negative Temperature</span> section.</p>
+<code>woody_island</code>. It reveals that while the fish developed,
+negative temperature values resulted in <code>NaN</code>s after
+development. More on this in the <span id="neg_temp">Negative
+Temperature</span> section.</p>
 </blockquote>
 <p>Next, look inside the returned object to see days to hatch and
 development period (more on this in the <a href="#results">Understanding
@@ -250,46 +252,15 @@ your results</a> section)</p>
 <h3 id="results">Understanding your results<a class="anchor" aria-label="anchor" href="#results"></a>
 </h3>
 <p>The output from <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> includes a lot of
-information.</p>
+information. Here is a summary of the elements in the output list.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">WI_hatch</span><span class="op">)</span></span>
-<span><span class="co">#&gt; List of 4</span></span>
-<span><span class="co">#&gt;  $ days2done  : int 74</span></span>
-<span><span class="co">#&gt;  $ dev.period :'data.frame': 1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   ..$ start: Date[1:1], format: "1990-08-18"</span></span>
-<span><span class="co">#&gt;   ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;  $ ef.tibble  : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ index      : num [1:74] 8 9 10 11 12 13 14 15 16 17 ...</span></span>
-<span><span class="co">#&gt;   ..$ dates      : Date[1:74], format: "1990-08-18" "1990-08-19" ...</span></span>
-<span><span class="co">#&gt;   ..$ temperature: num [1:74] 9.84 10.55 10.68 11.45 11.69 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef_vals    : num [1:74] 0.0147 0.0155 0.0157 0.0166 0.0169 ...</span></span>
-<span><span class="co">#&gt;   ..$ ef_cumsum  : num [1:74] 0.0147 0.0302 0.0458 0.0624 0.0793 ...</span></span>
-<span><span class="co">#&gt;  $ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ author  : chr "Beacham and Murray 1990"</span></span>
-<span><span class="co">#&gt;   ..$ species : chr "sockeye"</span></span>
-<span><span class="co">#&gt;   ..$ model   : chr "2"</span></span>
-<span><span class="co">#&gt;   ..$ dev.type: chr "hatch"</span></span>
-<span><span class="co">#&gt;   ..$ func    : chr "1 /exp(6.727 - log(x + 2.394))"</span></span>
-<span><span class="co">#&gt;   ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. ..$ cols   :List of 5</span></span>
-<span><span class="co">#&gt;   .. .. ..$ author  : list()</span></span>
-<span><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"</span></span>
-<span><span class="co">#&gt;   .. .. ..$ species : list()</span></span>
-<span><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"</span></span>
-<span><span class="co">#&gt;   .. .. ..$ model   : list()</span></span>
-<span><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"</span></span>
-<span><span class="co">#&gt;   .. .. ..$ dev.type: list()</span></span>
-<span><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"</span></span>
-<span><span class="co">#&gt;   .. .. ..$ func    : list()</span></span>
-<span><span class="co">#&gt;   .. .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"</span></span>
-<span><span class="co">#&gt;   .. ..$ default: list()</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr [1:2] "collector_guess" "collector"</span></span>
-<span><span class="co">#&gt;   .. ..$ delim  : chr ","</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
-<p>If we look at our <code>WI_hatch</code> object we see there are
-multiple elements stored in a list which can be accessed using the
-<code>$</code> operator.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">WI_hatch</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             Length Class       Mode   </span></span>
+<span><span class="co">#&gt; days2done   1      -none-      numeric</span></span>
+<span><span class="co">#&gt; dev.period  2      data.frame  list   </span></span>
+<span><span class="co">#&gt; ef.tibble   5      tbl_df      list   </span></span>
+<span><span class="co">#&gt; model.specs 5      spec_tbl_df list</span></span></code></pre></div>
+<p>We can access each element using the <code>$</code> operator:</p>
 <ul>
 <li><p><code>WI_hatch$days2done</code> outputs the predicted days to
 hatch or emerge.</p></li>
@@ -297,8 +268,6 @@ hatch or emerge.</p></li>
 dates corresponding to when your fish’s parent spawned (which you input
 with <code>predict_phenology(spawn.date = ...)</code>) and the date when
 the fish is predicted to hatch or emerge.</p></li>
-<li><p><code>WI_hatch$ef.vals</code> is a vector of each day’s effective
-value as evaluated using whatever model is chosen.</p></li>
 <li><p><code>WI_hatch$ef.tibble</code> is a <em>n</em> x 5 tibble
 (<em>n</em> = number of days to hatch or emerge) and the columns are a
 row index, the date, each day’s temperature, effective value, and the
@@ -306,12 +275,12 @@ cumulative sum of the effective values to that date. The
 <code>ef.tibble</code> object is meant to serve as the basis for users
 to make custom figures for their data beyond the functionality we
 discuss below.</p></li>
-<li><p><code>WI_hatch$model</code> is a tibble showing the model
+<li><p><code>WI_hatch$model.specs</code> is a tibble showing the model
 specifications used to predict the phenology.</p></li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="vizualizing-phenology">Vizualizing phenology<a class="anchor" aria-label="anchor" href="#vizualizing-phenology"></a>
+<h3 id="visualizing-phenology">Visualizing phenology<a class="anchor" aria-label="anchor" href="#visualizing-phenology"></a>
 </h3>
 <p><strong>hatchR</strong> has a built in function,
 <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code>, that allows users to visualize their
@@ -338,15 +307,12 @@ information:</p>
 arguments <code>style</code> and <code>labels</code>, for example (plots
 not rendered):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>,</span>
-<span>  style <span class="op">=</span> <span class="st">"ef_cumsum"</span></span>
-<span><span class="op">)</span> <span class="co"># shows a plot with just the ef cumulative sum values</span></span>
-<span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>,</span>
-<span>  style <span class="op">=</span> <span class="st">"ef_daily"</span></span>
-<span><span class="op">)</span> <span class="co"># shows a plot with just the ef daily values</span></span>
-<span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>,</span>
-<span>  labels <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span> <span class="co"># turns off the labeling for a cleaner figure</span></span></code></pre></div>
+<code class="sourceCode R"><span> <span class="co"># shows a plot with just the ef cumulative sum values</span></span>
+<span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>, style <span class="op">=</span> <span class="st">"ef_cumsum"</span><span class="op">)</span></span>
+<span><span class="co"># shows a plot with just the ef daily values</span></span>
+<span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>, style <span class="op">=</span> <span class="st">"ef_daily"</span><span class="op">)</span> </span>
+<span><span class="co"># turns off the labeling for a cleaner figure</span></span>
+<span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="negtemps">A note about negative temperatures<a class="anchor" aria-label="anchor" href="#negtemps"></a>
@@ -354,14 +320,14 @@ not rendered):</p>
 <p>Occasionally, temperature data sets will have a few negative values
 or values very close to 0. Negative numbers below a certain threshold
 will output “not a number” (<code>NaN</code>) effective values because
-they are undefined in the model expression. Similarly, even negative
-values above that threshold will produce very small effective values.
-Because these values are so small, we allow the model to accumulate them
-even though development below 0 is biologically unlikely. We
-<strong>assume</strong> your data set has been checked for these values
-and doesn’t include long periods of freezing, however the model allows
-for the occasional dip below freezing because the effect is so
-negligible toward development over incubation.</p>
+they are undefined in the model expression and will break the function.
+Similarly, even negative values above that threshold will produce very
+small effective values. Because these values are so small, we allow the
+model to accumulate them even though development below 0 is biologically
+unlikely. We <strong>assume</strong> your data set has been checked for
+these values and doesn’t include long periods of freezing, however the
+model allows for the occasional dip below freezing because the effect is
+so negligible toward development over incubation.</p>
 <p>A toy example of this phenomenon is shown below.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># vector of temps from -5 to 15 by 0.5</span></span>
