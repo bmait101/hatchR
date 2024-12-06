@@ -87,7 +87,7 @@ We demonstrate the utility of the check summary and check functions `summarize_t
 ```{r}
 # create date object for a year with 30 min reading intervals
 dates <- seq(from = ymd_hms("2000-07-01 00:00:00"),
-             to = ymd_hms("2001-07-30 23:59:59"), length.out = 17568) 
+             to = ymd_hms("2001-06-30 23:59:59"), length.out = 17568) 
 # create empty dataframe
 year_sim <- data.frame(matrix(NA, nrow = length(dates), ncol = 1)) 
 
@@ -119,7 +119,7 @@ plot_check_temp(data = year_sim,
                 temp_max = 25)
 ```
 
-It appears there are no outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data.
+There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data.
 
 ```{r}
 # summarize
@@ -153,22 +153,24 @@ model_table and fit_model
 
 fit_model for three non-salmonid specieslib
 
-Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. Furthermore, we include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for species beyond the original scope of the original effective value approach. We demonstrate parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for species beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
 
 We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime.
 
 ```{r, eval=FALSE}
 ###  make temp regime
-set.seed(1234)
+set.seed(123)
 # create random temps and corresponding dates
 temps_sim <- sort(rnorm(n =30, mean = 16, sd = 1), decreasing = FALSE)
 dates_sim <-  seq(from = ymd("2000-07-01"),
              to = ymd("2000-07-31"), length.out = 30)
 
-data_sim <- cbind (dates_sim, temps_sim) |> data.frame()
+data_sim <- matrix(NA, 1, 2) |> data.frame()
+data_sim[,1] <- temps_sim
+data_sim[,2] <- dates_sim
 
 ### smallmouth mod
-smallmouth <- matrix(NA, 10, 2) |> tibble()
+smallmouth <- matrix(NA, 10, 2) |> data.frame()
 colnames(smallmouth) <- c("hours", "temp_F")
 smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
 smallmouth$temp_F <- c(77, 75, 71, 70, 67, 65, 60, 59, 55, 55)
@@ -186,7 +188,7 @@ smb_mod <- fit_model(temp = smallmouth$temp_C,
 
 
 ### catfish mod
-catfish <- matrix(NA, 3, 2) |> tibble()
+catfish <- matrix(NA, 3, 2) |> data.frame()
 colnames(catfish) <- c("days", "temp_C")
 catfish$days <- c(16,21,26)
 catfish$temp_C <- c(22,10,7)
@@ -197,16 +199,13 @@ cat_mod <- fit_model(temp = catfish$temp_C,
                      dev.type = "hatch")
 
 ### lake sturgeon mod
-sturgeon <-  matrix(NA, 7, 2) |> tibble()
+sturgeon <-  matrix(NA, 7, 2) |> data.frame()
 colnames(sturgeon) <- c("days", "CTU")
 sturgeon$days <- c(7,5,6,6,5,11,7)
 sturgeon$CTU <- c(58.1, 62.2, 61.1, 57.5, 58.1, 71.4, 54.7)
 
 sturgeon <- sturgeon |> 
-  mutate(temp_C = CTU/days)
-
-plot(sturgeon$days ~ sturgeon$temp_C)
-
+  mutate(temp_C = CTU/days) # change CTUs to average temp and add column
 
 sturgeon_mod <- fit_model(days = sturgeon$days,
                           temp = sturgeon$temp_C,
@@ -265,9 +264,11 @@ show plot_phenology
 
 A common management scenario where developmental phenology might be useful would be trying to understand if fish might be free-moving before some management action. For instance, will have fish have emerged from redds when a stream section has been opened to grazing or bridge decommissioning will commence?
 
-In this scenario, we will consider the grazing example and Bull Trout, a threatened fish in the united states under the Endangered Species Act [@nolfi2024], and the East Fork Salmon River, a key Bull Trout population in the upper Salmon River watershed. The fisheries manager there wants to know if fish will likely be out of the gravel and free-swimming by June 1st. In this system, it is expected that Bull Trout will be done spawning by the end of September, so we'll consider the last possible spawn date as September 30th.
+In this scenario, we will consider the grazing example and Bull Trout, a threatened fish in the United States under the Endangered Species Act [@nolfi2024], and the East Fork Salmon River, a key Bull Trout population in the upper Salmon River watershed. The fisheries manager there wants to know if fish will likely be out of the gravel and free-swimming by June 1st. In this system, it is expected that Bull Trout will be done spawning by the end of September, so we'll consider the last possible spawn date as September 30th.
 
-```{r}
+We demonstrate this first case study using the graphical user interface portion of the `hatchR` ecosystem found at <https://elifelts.shinyapps.io/hatchR/>. Users will first upload their data with the `Import Data` window, which requires them to select their file on their personal computer, provide the program with the columns corresponding for dates and temperatures, and then provide the format in which dates are coded (*e.g.*, year-month-day or day-month-year). Once data is uploaded the program automatically plots the user's data using `plot_check_temp()` in the background and provides them the outputted graphical check. After uploading and checking data, the user switches to the `Model Phenology` window. In this circumstance, we use the preloaded parameterization for bull trout from @austin2019 with the `Existing` button for model selection, which the user selects with the various drop down options in the menu. After the model is selected, the user can choose multiple spawn dates from the interactive calendar provided. We show results for spawning for September 30th as indicated in the example above. Once dates are chosen, a table entry for each spawn date is outputted in the `Phenology Summaries` tab and corresponding plot with data from each spawn date in the `Timeline Plot` tab. Output from predicting phenology and the resulting figure are downloadable from their respective tabs. The process is demonstrated in full in Figure XXX, but the interface is described more completely in the Articles on `hatchR`'s website <https://bmait101.github.io/hatchR/>.
+
+```{r, eval=FALSE, echo=FALSE}
 
 ### read in EFS data
 
@@ -308,8 +309,6 @@ talk about how these models also represent local adaptation and heritable plasti
 talk about how these models represent point estimates and that emergence and hatch will take the form of a distribution
 
 # Acknowledgements
-
-We would like to sincerely thank the editor and reviewers for all of their helpful feedback which greatly improved both the software and the manuscript.
 
 The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS or USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government, USFS, or USFWS. USFS and USFWS do not endorse any commercial products, services or enterprises.
 
