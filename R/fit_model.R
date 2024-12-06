@@ -52,26 +52,26 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
   }
 
 
-  # fit linear model to log data
+  # fit linear model to estimate starting values for nls
   m1 <- stats::lm(log(y) ~ x, data = df)
   # summary(m1)
 
-  # estimate starting values for nls
+  # pull out starting values
   st <- list(
     a = exp(stats::coef(m1)[1]),
     b = stats::coef(m1)[2]
     )
 
-  # fit model 2 from Beacham & Murray (1990) to data
+  # fit model 2 from Beacham & Murray (1990) to data using nls
   m2 <- stats::nls(y ~ a / (x - b), data = df, start = st)
   # summary(m2)
 
   # get coefficients
-  m2_a <- log(stats::coef(m2)[1])
-  m2_b <- stats::coef(m2)[2]
+  log_a <- log(stats::coef(m2)[1])
+  b <- stats::coef(m2)[2]
 
-  # model specs for hatch function
-  func <- paste("1 / exp(", m2_a, " - log(x + ", m2_b * -1, "))", sep = "") # is *-1 correct?
+  # model expression and specs for predict_phenology()
+  func <- paste("1 / exp(", log_a, " - log(x + ", b * -1, "))", sep = "")
   func <- tibble::tibble(
     species = species,
     dev.type = dev.type,
@@ -116,8 +116,8 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
   # list of outputs ----------------------
   out <- list(
     model = m2,
-    m2_a = m2_a,
-    m2_b = m2_b,
+    log_a = log_a[[1]],
+    b = b[[1]],
     mse = mse,
     rmse = rmse,
     r_squared = r_squared,
