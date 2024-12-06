@@ -35,18 +35,25 @@ library(ggplot2)
 
 `hatchR` is an R package that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. `hatchR` is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [e.g., @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019. 
 
-This vignette:
+In this vignette, we:
 
-* describes input data requirements, 
-* provides recommendations for importing data, 
-* explains basic data checks,  
-* provides an overview of downstream steps in a `hatchR` workflow that are covered in other vignettes. 
+* describes input data requirements
+* provide recommendations for importing data
+* review basic data checks
+* preview the full `hatchR` workflow covered in other vignettes
 
 ## Input Data Requirements {#inputs}
 
 Water temperature datasets found in the wild are often either (1) already summarized by day (i.e., mean daily temperature) or, 2) in a raw format from something like a HOBO TidbiT data logger where readings are taken multiple times per day, which can be summarized into a mean daily temperatures. Alternatively, daily water temperature predictions from novel statistical models [e.g., @siegel2023] could be similarly implemented.
 
-Fundamentally, `hatchR` assumes you have input data with two columns: a date column, giving the date (and often time) of a temperature measurement, and a temperature column, giving the associated temperature measurement (in centigrade). Other columns are okay to include, but these two columns (with any column name---just *without* spaces) are required. We expect your data to look something like this:
+Fundamentally, `hatchR` assumes you have input data with two columns: 
+
+1. date: a vector of dates (and often times) of a temperature measurement (must be class `Date` or `POSIXct`, which Tibbles print as \<date\> and \<dttm>\, respectively). 
+2. temperature: a vector of associated temperature measurement (in centigrade). 
+
+Additional columns are allowed, but these are required.
+
+We expect your data to look something like this:
 
 | date       | temperature |
 |------------|-------------|
@@ -55,7 +62,6 @@ Fundamentally, `hatchR` assumes you have input data with two columns: a date col
 | 2000-07-01 | 16.32       |
 | ...        | ...         |
 | 2000-12-31 | 3.13        |
-
 
 `hatchR` assumes you've checked for missing records or errors in your data as it can not function with gaps, so it's important to go through the data checks discussed below, as well as your own sanity checks.
 
@@ -114,9 +120,8 @@ If you you read in a CSV file using `read.csv()` from base R, date columns will 
 ```{r}
 ymd("2017-01-31")
 mdy("January 31st, 2017")
-dmy("31-Jan-2017")
-ymd_hms("2017-01-31 20:11:59")
 mdy_hm("01/31/2017 08:01")
+ymd_hms("2017-01-31 20:11:59")
 ```
 
 #### From individual components
@@ -143,8 +148,6 @@ flights |>
 
 # Importing your data {#data-in}
 
-Because `hatchR` uses daily water temperature records to predict fish developmental phenology, we enforce a (\<date\>) class for date fields. 
-
 ## Using `readr::read_csv()`
 
 As noted in [the prerequisites section]{#prereqs}, we recommend loading your data into R using `readr::read_csv()`. We can load readr using:
@@ -159,7 +162,6 @@ In this and other vignettes, we will use two datasets that come installed with t
 path_cr <- system.file("extdata/crooked_river.csv", package = "hatchR")
 path_wi <- system.file("extdata/woody_island.csv", package = "hatchR")
 ```
-
 
 After specifying `path_*` (using `system.file()`), we load the example dataset into R:
 
@@ -213,7 +215,6 @@ crooked_river$date <- lubridate::ymd_hms(crooked_river$date)
 # if your date is in the form "2000-09-01"
 woody_island$date <- lubridate::mdy(woody_island$date) 
 
-# check
 glimpse(crooked_river)
 glimpse(woody_island)
 ```
@@ -267,9 +268,7 @@ fake_data <- tibble::tibble(
 )
 
 # check it
-tibble::glimpse(fake_data) # info about temp.test
-nrow(fake_data) #17568 records
-
+tibble::glimpse(fake_data)
 ```
 
 Now we can summarize the data to daily means using `summarize_temp()`:
@@ -279,6 +278,7 @@ fake_data_sum <- summarize_temp(data = fake_data,
                                 temperature = temp,
                                 dates = date)
 
+nrow(fake_data) #17568 records
 nrow(fake_data_sum) #366 records; 2000 was a leap year :)
 ```
 
@@ -299,10 +299,11 @@ plot_check_temp(data = fake_data_sum,
 
 At present, `hatchR` only uses continuous data. Therefore, your data is expected to be continuous and complete.  
 
-You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is or is not continuous or complete. 
+You can check whether your data is complete and continuous using the `check_continuous()` function. This function will return a message if the data is or is not continuous or complete.
 
 ```{r, warning=TRUE, message=TRUE}
 check_continuous(data = crooked_river, dates = date)
+check_continuous(data = woody_island, dates = date)
 ```
 
 If you have days of missing data, you could impute them using rolling means or other approaches. 
