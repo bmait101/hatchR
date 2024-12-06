@@ -118,11 +118,11 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
     model = m2,
     m2_a = m2_a,
     m2_b = m2_b,
-    func = func,
-    pred_plot = p_pred,
-    r_squared = r_squared,
     mse = mse,
-    rmse = rmse
+    rmse = rmse,
+    r_squared = r_squared,
+    func = func,
+    pred_plot = p_pred
   )
 
   return(out)
