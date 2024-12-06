@@ -16,8 +16,8 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 \item{spawn.date}{Date of spawning, given as a character string
 (e.g., "1990-08-18")}
 
-\item{model}{A data.frame giving model specifications. This must have a
-column providing a model expression. Can be obtained using \code{model_select()}
+\item{model}{A data.frame with a column named "func" or a character vector
+giving model specifications. Can be obtained using \code{model_select()}
 or using you own data to obtain a model expression (see \code{fit_model}).}
 }
 \value{
