@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   fig.width = 6
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 
 # load packages
 library(hatchR)
@@ -29,52 +30,45 @@ library(lubridate)
 
 ## Overview
 
-Now that we've checked and pre-processed our data, and know how to select model parameterizations, we're ready to predict the developmental phenology of the fish species we're interested in.
+This vignette demonstrates a complete and simple **hatchR** workflow. We will use data installed with the package from Woody Island in Lake Iliamna, Alaska [@sparks2019], to predict the hatch and emergence timing of sockeye salmon (*Oncorhynchus nerka*).
 
-To demonstrate the full workflow for **hatchR**, we will recreate part of the analysis from @sparks2019 and use data from Woody Island from Lake Iliamna, Alaska. The data comes installed with the package and is called `woody_island`. First, we load packages:
+If you have not already done so, see the vignettes on [data checks](https://bmait101.github.io/hatchR/articles/Introduction.html) and [model parameterization](https://bmait101.github.io/hatchR/articles/Parameterize_models.html).
+
+First, we load needed packages:
 
 ```{r, eval = FALSE}
-library(hatchR) # for data and phenology modeling
-library(ggplot2) # for additional plotting options
+library(hatchR)    # for phenology modeling
+library(ggplot2)   # for additional plotting options
 library(lubridate) # for date manipulation
-library(tibble) # for data manipulation
-library(dplyr) # for data manipulation
+library(tibble)    # for tidy tibbles and data manipulation
+library(dplyr)     # for data manipulation
 ```
 
 ## Data checks
 
-First, let's check the data to make sure it's in the right format. We'll use `head()` to print the first few rows and `summary()` to get a sense of the data:
+First, let's check the data to make sure it's in the right format. We'll print the first few rows and `summary()` to get a sense of the data:
 
 ```{r}
-# print data
-head(woody_island)
-
-# summarize data
+woody_island
 summary(woody_island)
 ```
 
 You can see that each day already is summarized as a mean temperature. You can also see that the data spans multiple years. We'll use `plot_check_temp()` to make visually check the data:
 
 ```{r}
-plot_check_temp(
-  data = woody_island,
-  dates = date,
-  temperature = temp_c
-)
-```
-
-There appear to be outliers in the data, specifically in the very beginning and end of the period of record, and right in the middle. The loggers look to have been recording observations outside of the water and then in the middle where the water level may have dropped and exposed it to the air.
-
-However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Becuase `plot_check_temp()` is a ggplot object, we can add geoms to the plot to represent the approximate phenology window:
-
-```{r}
 p <- plot_check_temp(
   data = woody_island,
   dates = date,
   temperature = temp_c
-) +
-  labs(title = "Temperature data from Woody Island, Lake Iliamna, Alaska")
+)
+p
+```
 
+There appear to be outliers in the data, specifically in the very beginning and end of the period of record, and right in the middle. The loggers look to have been recording observations outside of the water and then in the middle where the water level may have dropped and exposed it to the air.
+
+However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` is a ggplot object, we can add geoms to the plot to represent the approximate phenology window:
+
+```{r}
 p +
   geom_rect(
     aes(
@@ -123,7 +117,7 @@ You can see they are parameterized slightly differently to account for the diffe
 
 We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
 
-```{r}
+```{r, warning=TRUE}
 WI_hatch <- predict_phenology(
   data = woody_island,
   dates = date,
@@ -133,7 +127,9 @@ WI_hatch <- predict_phenology(
 )
 ```
 
-And then look inside the returned object (see [Understanding your results](#results) for additional context) to see days to hatch and development period:
+> Note the warning message that appears when you run this code for `woody_island`. It reveals that while the fish develoeped, negative temperature values resulted in NaNs after development. More on this in the [Negative Temperature]{#neg_temp} section.
+
+Next, look inside the returned object to see days to hatch and development period (more on this in the [Understanding your results](#results) section)
 
 ```{r}
 WI_hatch$days2done
@@ -142,7 +138,7 @@ WI_hatch$dev.period
 
 We can also do the same with emergence:
 
-```{r}
+```{r, warning=TRUE}
 WI_emerge <- predict_phenology(
   data = woody_island,
   dates = date,
@@ -151,7 +147,6 @@ WI_emerge <- predict_phenology(
   model = sockeye_emerge_mod # notice we're using emerge model expression here
 )
 
-# see days to hatch and development period
 WI_emerge$days2done
 WI_emerge$dev.period
 ```
@@ -160,21 +155,23 @@ WI_emerge$dev.period
 
 The output from `predict_phenology()` includes a lot of information.
 
-If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
-
 ```{r}
 str(WI_hatch)
 ```
 
-`WI_hatch$days2done` outputs the predicted days to hatch or emerge.
+If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
 
-`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
+-   `WI_hatch$days2done` outputs the predicted days to hatch or emerge.
 
-`WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
+-   `WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
 
-`WI_hatch$ef.tibble` is a *n* x 4 tibble (*n* = number of days to hatch or emerge) and the columns are the date, each day's temperature and effective value, and the cumulative sum of the effective values. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+-   `WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
 
-## Plotting phenology
+-   `WI_hatch$ef.tibble` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature, effective value, and the cumulative sum of the effective values to that date. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+
+-   `WI_hatch$model` is a tibble showing the model specifications used to predict the phenology.
+
+## Vizualizing phenology
 
 **hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results. The plot visualizes three specific components:
 
@@ -206,7 +203,7 @@ plot_phenology(WI_hatch,
 ) # turns off the labeling for a cleaner figure
 ```
 
-## A note about negative temperatures
+## A note about negative temperatures {#negtemps}
 
 Occasionally, temperature data sets will have a few negative values or values very close to 0. Negative numbers below a certain threshold will output "not a number" (`NaN`) effective values because they are undefined in the model expression. Similarly, even negative values above that threshold will produce very small effective values. Because these values are so small, we allow the model to accumulate them even though development below 0 is biologically unlikely. We **assume** your data set has been checked for these values and doesn't include long periods of freezing, however the model allows for the occasional dip below freezing because the effect is so negligible toward development over incubation.
 
@@ -244,8 +241,3 @@ demo |>
 ```
 
 # References {.unnumbered}
-
-::: {#refs}
-:::
-
-:::::::
