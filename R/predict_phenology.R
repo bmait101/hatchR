@@ -9,8 +9,8 @@
 #' @param temperature Temperature measurements.
 #' @param spawn.date Date of spawning, given as a character string
 #' (e.g., "1990-08-18")
-#' @param model A data.frame giving model specifications. This must have a
-#' column providing a model expression. Can be obtained using `model_select()`
+#' @param model A data.frame with a column named "func" or a character vector
+#' giving model specifications. Can be obtained using `model_select()`
 #' or using you own data to obtain a model expression (see `fit_model`).
 #'
 #' @details
@@ -89,11 +89,24 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dplyr::pull("index")
   dat_spawn <- dat[spawn.index:c(nrow(dat)), ]
 
+  # model prep
+  if (is.null(model)) {
+    cli::cli_abort("You must provide a model specification.")
+  } else if (is.data.frame(model) & !"func" %in% colnames(model)) {
+    cli::cli_abort("Model object must have a column named 'func'.")
+  } else if (is.data.frame(model) & "func" %in% colnames(model)) {
+    mod.exp <- model |> dplyr::pull("func")
+  } else if (is.character(model)) {
+    mod.exp <- model
+  } else {
+    cli::cli_abort("Model object must be a data.frame or character string.")
+  }
+
   # bring in model df and extract the expression
-  model.df <- model |> dplyr::pull("func")
+  # mod.exp <- model |> dplyr::pull("func")
 
   # Parse model expression to get effective value function
-  Ef <- parse(text = model.df)
+  Ef <- parse(text = mod.exp)
 
   # Vector of temps for Ef to evaluate
   x <- dat_spawn |> dplyr::pull({{ temperature }})
