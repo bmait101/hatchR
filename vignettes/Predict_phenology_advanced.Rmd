@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   fig.width = 6
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 
 # load packages
 library(hatchR)
@@ -32,16 +33,16 @@ library(tidyr)
 
 ## Overview
 
-The function predict_phenolgy() is purposefully kept fairly simple so it can be expanded to automate across datasets. Typically, this will take the form of loops or vectorizing in R (functions of the map() and apply() families). There are many reasons why you might want to automate your ability to predict including predicting over multiple years, multiple sites, predicting hatch or emergence, or even using multiple potential spawn dates. We'll show some examples below (moving from less to more complicated). First, we load packages:
+The function `predict_phenolgy()` is purposefully kept fairly simple so it can be expanded to iterate across datasets. Typically, this will take the form of loops or vectorizing in R (functions of the `map()` famimy from **purrr** and `apply()` family from **base**). There are many reasons why you might want to iterate, including predicting over multiple years, multiple sites, predicting hatch or emergence simultaneously, or even using multiple potential spawn dates. We'll show some examples below (moving from less to more complicated). First, we load packages:
 
 ```{r}
 library(hatchR) # for data and phenology modeling
 library(ggplot2) # for additional plotting options
-library(purrr) # for vectorizing
+library(purrr) # for iteration
+library(lubridate) # for date manipulation
 library(tibble) # for data manipulation
 library(dplyr) # for data manipulation
-library(lubridate)  # for date manipulation
-library(tidyr)  # for data manipulation
+library(tidyr) # for data manipulation
 ```
 
 
@@ -71,14 +72,15 @@ Now we can automate the model. We'll demonstrate two ways---a loop and a vectori
 We will show an example of how to set up a `for` loop to run through each element of the `woody_island` dataset. 
 
 ```{r}
-### Loop storage objects
-OUT_loop_all <- NULL 
-OUT_loop_d2h <- NULL 
+# Loop storage objects
+OUT_loop_all <- NULL
+OUT_loop_d2h <- NULL
 
-### Loop body
+# Loop body
 for (d in 1:length(WI_spawn_dates)) { # d will be our numerical iterator
 
-  WI_spawn <- WI_spawn_dates[d] # subset the element d of the vector and assign to object
+  # subset the element d of the vector and assign to object
+  WI_spawn <- WI_spawn_dates[d]
 
   # predict phenology
   WI_hatch <- predict_phenology(
@@ -90,32 +92,28 @@ for (d in 1:length(WI_spawn_dates)) { # d will be our numerical iterator
   )
 
   ### ALL output ###
-
   # do this if we want to maintain all info predict_phenology
-  OUT_loop_all[[d]] <- WI_hatch # store list into the dth list element of the OUT_loop object
+  OUT_loop_all[[d]] <- WI_hatch
 
   ### A single element of output ###
-
-  # alternatively, if you know you just want something like days to hatch you can access
-  # that part of the list and just store it as object
-
+  # alternatively, subsets out output
   temp <- tibble(matrix(data = NA, ncol = 2, nrow = 1)) # empty dataframe to add in data
-
   colnames(temp) <- c("spawn_date", "days_2_hatch") # change column names
-
   temp$spawn_date <- WI_spawn # assign spawn date
   temp$days_2_hatch <- WI_hatch$days2done # assign days to hathc
-
   OUT_loop_d2h <- rbind(OUT_loop_d2h, temp) # row bind temp object and OUT object
 }
+```
 
-### Loop output (note: we iteratively add to the NULL objects we make at the beginning)
+Inspect the loop output:
 
-# you can see OUT_loop is a list of lists with three lists each with four elements
-# (i.e., the four outputs of predict_phenology())
+```{r}
 glimpse(OUT_loop_all)
+```
 
-# you can also see we made a tibble of dates and predicted days to hatch
+You can also see we made a tibble of dates and predicted days to hatch:
+
+```{r}
 OUT_loop_d2h
 ```
 
@@ -123,9 +121,11 @@ If you don't want the full output of each run of `predict_phenolgy()` and you ju
 
 ### Vectorizing
 
-**Mapping:**
+#### Mapping
 
-Vectorizing, while historically about prioritizing speed, is now more about making your code more readable (see Chapter 26 in [R for Data Science](https://r4ds.hadley.nz/iteration) and [Advanced R](https://adv-r.hadley.nz/functionals.html)). We'll demonstrate using `map()` from the `purrr` package. If you are unfamiliar with mapping but want to learn more about how it works and it's power, we highly recommend the linked chapters from R for Data Science and Advanced R.
+Vectorizing, while historically about prioritizing speed, is now more about making your code more readable (see Chapter 26 in [R for Data Science](https://r4ds.hadley.nz/iteration) and chapter 9 in [Advanced R](https://adv-r.hadley.nz/functionals.html)). 
+
+We'll demonstrate using `purrr::map()`. If you are unfamiliar with mapping but want to learn more about how it works and it's power, we highly recommend the linked chapters from R for Data Science and Advanced R.
 
 ```{r}
 # map works by applying a function over a list (our vector is a very simple list)
@@ -144,13 +144,12 @@ results_map <- map(
 glimpse(results_map)
 
 # we can then access days to hatch easily as such
-results_map |>
-  map_dbl("days2done")
+results_map |> map_dbl("days2done")
 ```
 
-**Apply:**
+#### Apply
 
-While tidyverse and associated packages have become quite popular in the world of R, the base functionality of R has long had a set of functions to do similar things as map. They are called the apply family. Because `hatchR` is built using much of the functionality of the tidyverse we opt for using `map()` over apply functions, however we will demonstrate a similar workflow as above using the apply family.
+While **tidyverse** packages like **purrr** have become quite popular, the base functionality of R has long had a set of functions to do similar things as map. They are called the apply family. Because `hatchR` is built using much of the functionality of the tidyverse we opt for using `purrr:::map()` over `apply()` functions, however we will demonstrate a similar workflow as above using the apply family.
 
 ```{r}
 # lapply() is the equivalent function as map() in the apply family
@@ -163,8 +162,11 @@ results_lapply <- lapply(WI_spawn_dates, # vector we are mapping over
   temperature = temp_c,
   model = sockeye_hatch_mod
 )
+```
 
-# you can see that lapply and map output the same results
+You can see that `lapply()` and `purrr::map()` output the same results:
+
+```{r}
 glimpse(results_lapply)
 ```
 
@@ -186,13 +188,15 @@ plot_check_temp(
   temp_min = 0,
   temp_max = 12
 )
+```
 
-# we can use some functions from tidyverse to do a datacheck
-# this shows the number of observations per year
+We can use the functionality of **dplyr** to do a datacheck that shows the number of observations per year:
+
+```{r}
 crooked_river |>
-  mutate(year = year(date)) |> # add a column converting the date to year
+  mutate(year = lubridate::year(date)) |>
   group_by(year) |>
-  tally() # count observations/year
+  tally()
 ```
 
 We see we have 5 full years of data to use. For the sake of this exercise, let's assume bull trout spawning in this system starts September 1st, peaks September 15th, and is mostly done by September 30th.
@@ -201,32 +205,27 @@ Remember, our data starts just barely in 2010, so our spawning years would be 20
 
 First let's just check to see if fish spawning in 2015 would have enough data to hatch and emerge.
 
-```{r}
-### set up our bull trout hatch and emergence models
+```{r, warning=TRUE}
+# select bull trout hatch and emergence models
 bull_hatch_mod <- model_select(
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM",
-  dev.type = "hatch"
+  dev.type = "hatch" # note we are using hatch model here
 )
 
 bull_emerge_mod <- model_select(
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM",
-  dev.type = "emerge"
+  dev.type = "emerge" # note we are using emerge model here
 )
 
-# models are different
-bull_hatch_mod
-bull_emerge_mod
-
-### check 2015 dates
-
+# set spawning dates in 2015
 dates_2015 <- c("2015-09-01", "2015-09-15", "2015-09-30")
 
 ## hatch first
-hatch_2015 <- map(dates_2015,
+hatch_2015 <- dates_2015 |> purrr::map(
   predict_phenology,
   data = crooked_river,
   dates = date,
@@ -235,7 +234,7 @@ hatch_2015 <- map(dates_2015,
 )
 ```
 
-See how we receive a warning "Fish did not develop, did not accrue enough effective units. Spawn date =2015-09-15. Did your fish spawn too close to the end of your data?" It tells us the spawn date we used so we can reference which date isn't working if we use an string of multiple dates to predict over.
+See how we receive 2 seperate warning messages saying: "FFish did not accrue enough effective units to develop. Did your fish spawn too close to the end of your data? Spawn date is _____". It tells us the spawn date we used so we can reference which date isn't working if we use an string of multiple dates to predict over.
 
 If fish aren't hatching they definitely are not going to emerge, so we won't use 2015.
 
@@ -243,21 +242,15 @@ If fish aren't hatching they definitely are not going to emerge, so we won't use
 
 We will build a nested loop to automate over model selection variables and then over the dates. So the order of applying the `predict_phenology()` function in the loop example below is as follows:
 
--   Predict hatch
+- Predict hatch
+    - 2011 spawn dates
+    - ...
+    - 2014 spawn dates
 
-    1.  2011 spawn dates
-
-    2.  ...
-
-    3.  2014 spawn dates
-
--   Predict emergence
-
-    1.  2011 spawn dates
-
-    2.  ...
-
-    3.  2014 spawn dates
+- Predict emergence
+    - 2011 spawn dates
+    - ...
+    - 2014 spawn dates
 
 ```{r}
 ## mini loop to make vector of dates
@@ -304,48 +297,46 @@ for (mod in c("hatch", "emerge")) { # loop for hatch and emerge
     i <- i + 1 # add to your counter
   }
 }
-
-# look at results
-glimpse(OUT)
 ```
 
-The output of this loop is again a list of lists. This time 24 lists that comprise the elements of each `predict_phenology()` iteration. Simply, the loop selects the hatch model, runs it for every date in our vector (`spawn_dates`) and then switches over to an emerge model and does the same thing. The point of having an iterator (`i`) is that we can make a new list addition to OUT for every combination of the `dev_mod` (hatch and emerge) and the 12 dates we want to run---resulting in 24 total individual lists that are appended to our OUT list of lists as we walk through each iteration of the for loop.
+The output of this loop is again a list of lists. This time 24 lists that comprise the elements of each `predict_phenology()` iteration. Simply, the loop selects the hatch model, runs it for every date in our vector (`spawn_dates`) and then switches over to an emerge model and does the same thing. The point of having an iterator (`i`) is that we can make a new list addition to `OUT` for every combination of the `dev_mod` (hatch and emerge) and the 12 dates we want to run---resulting in 24 total individual lists that are appended to our `OUT` list of lists as we walk through each iteration of the for loop.
 
 If that sounds a bit complicated, it's because it is. And this is where the vectorized approaches really shine.
 
 A quick note about accessing lists. Even if you want to write loops instead of vectorizing, we do recommend accessing those results via a vectorized approach. It's hard to pull out a lot of information from from very large nested loops. You would probably write a custom loop to do so. However, those results are easily accessed by map, like so:
 
 ```{r}
-mapped_results <- OUT |>
-  map_df("ef.tibble")
+mapped_results <- OUT |> purrr:::map_df("ef.tibble")
+mapped_results
 ```
 
-The above code outputs the `ef.tibble` element from every one of your lists from each combination of spawn date and phenology type into a dataframe like object which can then easily be plotted. Notice, we now use `map_df()` because we know the list element we are accessing is in the format of a dataframe type object (a tibble).
+The above code outputs the `ef.tibble` element from every one of your lists from each combination of spawn date and phenology type into a dataframe like object which can then easily be plotted. Notice, we now use `purrr::map_df()` because we know the list element we are accessing is in the format of a dataframe type object (a tibble).
 
 ### Vectorizing
 
-We'll use the purrr function `pmap()` to vectorize our multiple-input map function. Let's again set up our iterative variables. We'll do the same workflow as the past example but now exclusively with mapping.
+We'll use the purrr function `purrr::pmap()` to vectorize our multiple-input map function. Let's again set up our iterative variables. We'll do the same workflow as the past example but now exclusively with mapping.
 
 ```{r}
 # slightly cleaner spawn dates with map output is a list of vectors
 spawn_dates <- map(
   c(2011:2014), # year vector to map for custom function
-  function(year) { # custom paste function
+  function(year) { # custom function to make dates
     c(
       paste0(year, "-09-01"),
       paste0(year, "-09-15"),
       paste0(year, "-09-30")
     )
-  }
-) |> # pipe to unlist() to make a vector
+    }
+  ) |> 
   unlist()
 
-dev_mods <- map(c("hatch", "emerge"),
+dev_mods <- map(
+  c("hatch", "emerge"),
   model_select,
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM"
-)
+  )
 
 # we then set up a variable grid for all combinations of our models and dates
 # it is very important to make the names of the columns in var_grid to match the
@@ -354,7 +345,7 @@ dev_mods <- map(c("hatch", "emerge"),
 var_grid <- expand_grid(model = dev_mods, spawn.date = spawn_dates)
 head(var_grid)
 
-### mutliple input mapping
+### multiple input mapping
 
 crooked_predictions <- pmap(var_grid, # combos of variables to iterate over
   predict_phenology, # function
@@ -431,7 +422,7 @@ ggplot(data = crooked_river_11_15, aes(x = date, y = temp_c)) +
   theme_classic()
 ```
 
-Not the best looking plot, but a good example of how to translate output to a visual representation. For better looking plots, please see the **Plotting your data** vignette.
+Not the best looking plot, but a good example of how to translate output to a visual representation. For better looking plots, please see the [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html) vignette.
 
 Other data types you might want might include the tibble with dates, temperature, and values and cumulative sums of effective values or the, alternatively, the developmental period.
 
@@ -449,11 +440,10 @@ head(development_period)
 
 ### Naming your lists
 
-A problem with this approach is that you end up with very large lists of lists without labels which require you to remember the data structure you feed to your mapping function. However, purrr does have a method to get around this which is the `set_names()` function which you would pipe into your mapping function.
+A problem with this approach is that you end up with very large lists of lists without labels which require you to remember the data structure you feed to your mapping function. However, purrr does have a method to get around this which is the `purrr::set_names()` function which you would pipe into your mapping function.
 
 ```{r}
 # to use the simple Iliamna Lake example within a single season
-
 WI_named_list <- WI_spawn_dates |>
   set_names() |>
   map(predict_phenology, # note we leave out the input row (WI_spawn_dates) because we are piping it in as input
@@ -472,11 +462,7 @@ glimpse(WI_named_list)
 WI_named_list$`1990-08-18`$dev.period
 ```
 
-This approach works well for the example above, but not so well with our examples with `pmap()` because the variable grid we create has a bunch of expressions which don't work for naming lists. However, if we were to do a `pmap()` example where it was a site x dates combination, that still work and would name the lists according to their site and then the date used to predict phenology (e.g. `` named_list$site1$`date`$dev.period ``)
+This approach works well for the example above, but not so well with our examples with `purrr::pmap()` because the variable grid we create has a bunch of expressions which don't work for naming lists. However, if we were to do a `purrr::pmap()` example where it was a site x dates combination, that still work and would name the lists according to their site and then the date used to predict phenology (e.g. `` named_list$site1$`date`$dev.period ``)
 
 
 # References {.unnumbered}
-
-::: {#refs}
-:::
-:::::::
