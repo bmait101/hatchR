@@ -106,7 +106,7 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
 
   # Walk along temps and sum Ef to 1 and count how many days it takes
   #     If fish doesn't hatch value returns Inf
-  Ef.days <- min(which(Ef.cumsum >= 1))
+  Ef.days <- suppressWarnings(min(which(Ef.cumsum >= 1)))
 
   # Table of outs
   dat_out <- tibble::tibble(
