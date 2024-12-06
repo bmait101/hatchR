@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   fig.align = 'center',
   fig.width = 6
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 
 # load packages
 library(hatchR)
@@ -26,9 +27,12 @@ library(tibble)
 library(ggplot2)
 ```
 
-## Overview
+# Overview
 
-This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models. One is to use model parameterizations installed the package and the other is to create your own using data you import. 
+This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models:
+
+1.  use model parameterizations included in the package
+2.  create custom parameterizations using your own data
 
 First, we load `hatchR`:
 
@@ -36,28 +40,27 @@ First, we load `hatchR`:
 library(hatchR)
 ```
 
+# Built-in parameterizations
 
-## Built-in parameterizations
+`hatchR` ships with built-in model parameterizations, which are included in the `model_table` object. This table includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], which can be selected using `model_select()`.
 
-The simplest way to get started is to use built-in parameterizations, which are included in the `model_table`. This table includes parameterizations for several salmonid species relating temperature to hatch and emergence timing, and can be selected using `model_select()`.
+## `model_table`
 
-Let get a sense of the table, which comes installed with `hatchR`:
+`model_table` is loaded with `hatchR`, and is a tibble with 51 rows and 5 columns:
 
 ```{r}
 model_table
 ```
 
-We see that `model_table` is a tbble with 51 rows and 5 columns:
+-   `author`: the author(s) and year of publication for the model
+-   `species`: the species the model is parameterized for
+-   `model`: the model number (specific to @beacham1990 who created several models)
+-   `dev.type`: he phenological development type (i.e., hatch or emerge)
+-   `func`: a character string defining the model parameterization
 
-* `author`: The author(s) and year of publication for the model
-* `species`: The species the model is parameterized for
-* `model`: The model number (specific to @beacham1990 who created several models)
-* `dev.type`: The phenological development type (i.e., hatch or emerge)
-* `func`: The model expression / parameterization
+## `model_select()`
 
-You will use `author`, `species`, `model`, and `dev.type` to select model functions.
-
-For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990, you would run:
+You will use `author`, `species`, `model`, and `dev.type` to select model functions. For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990, you would run:
 
 ```{r}
 sockeye_hatch_mod <- model_select(
@@ -78,9 +81,9 @@ To see all available characterizations use:
 View(model_table)
 ```
 
-## Creating custom models
+# Creating custom models
 
-`hatchR` also includes functionality to generate your own custom model parameterizations for predicting hatching and emergence phenology. **Importantly**, the custom parameterization relies on the model format developed from ***model 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
+`hatchR` also includes basic functionality to generate your own model parameterizations for predicting hatching and emergence phenology using your own data. **Importantly**, the this functionality implements ***model 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
 
 The model follows the general format of:
 
@@ -90,29 +93,24 @@ $$
 
 Where *i* is the daily value and a fish hatches or emerges when the cumulative sum or $$\sum_{i =1}^nEffectiveValue_i = 1$$
 
-The function `fit_model()` uses data where average incubation temperature (°C) and days to phenological event are the inputs and parameterizes the above model for *log~e~a* and *b*. So, for example, to borrow data from Table 8.1 (pg. 183) from @quinn2018, we can generate a custom hatch parameterization for brown trout.
+## `fit_model()`
 
-You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble()` to create the data, which in installed with `hatchR` and loaded using:
+The function `fit_model()` uses data where average incubation temperature (°C) and days to phenological event are the inputs and parameterizes the above model for *log~e~a* and *b*.
 
-```{r, eval=FALSE}
-library(tibble)
-```
+Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout *Salmo trutta*.
 
-We can now create the data object:
+You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble::tibble()` to create the data (which in installed with `hatchR`).
 
 ```{r}
-# vector of temperatures
-temperature <- c(2,5,8,11,14)
-
-#vector of days to hatch
-days_to_hatch <- c(194,87,54,35,28)
-
-#make a tibble of the two vectors
-quinn_bt_hatch <- tibble(temperature, days_to_hatch)
-quinn_bt_hatch
+# make a tibble of the two vectors
+bt_data <- tibble::tibble(
+  temperature = c(2,5,8,11,14), 
+  days_to_hatch = c(194,87,54,35,28)
+  )
+bt_data
 ```
 
-We can plot our data for a sanity check using `ggplot2`. First load the package:
+We can plot our data for a sanity check using `ggplot2` (installed with `hatchR`). First load the package:
 
 ```{r, eval=FALSE}
 library(ggplot2)
@@ -121,7 +119,7 @@ library(ggplot2)
 Now plot the data:
 
 ```{r}
-ggplot(quinn_bt_hatch, aes(x = temperature, y = days_to_hatch)) +
+ggplot(bt_data, aes(x = temperature, y = days_to_hatch)) +
   geom_point() +
   theme_classic()
 ```
@@ -130,8 +128,8 @@ We can now use `fit_model()` to create our custom parameterization from our data
 
 ```{r}
 # brown trout hatch mod
-bt_hatch_mod <- fit_model(temp = temperature, 
-                          days = days_to_hatch, 
+bt_fit <- fit_model(temp = bt_data$temperature, 
+                          days = bt_data$days_to_hatch, 
                           species = "brown_trout", 
                           dev.type = "hatch")
 ```
@@ -139,39 +137,35 @@ bt_hatch_mod <- fit_model(temp = temperature,
 The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using:
 
 ```{r}
-bt_hatch_mod
+bt_fit
 ```
 
-The vast majority of the time, what you will want is the actual expression for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `func` element of the list, which is a tibble giving the species, development type, and the model expression. 
+The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `func` element of the list, which is a tibble giving the species, development type, and the parameterized model expression.
 
-You can either pass this object directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_hatch_mod$func)`) or set as an object to pass, like so
+You can either pass this object directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_fit$func)`) or set as an object to pass, like so
 
 ```{r, eval=FALSE}
-bt_hatch_exp <- bt_hatch_mod$func
+bt_hatch_exp <- bt_fit$func
 bt_hatch_exp
 ```
 
-`predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the **Predicting Phenology** vignettes.
+`predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the [Predict phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
 
-### Important considerations for your custom models
+# Important considerations
 
-***Your model fits will only be as good as the data they are generated from***. Here are some important considerations:
+Here are some important considerations:
+
+> *Your model fits will only be as good as the data they are generated from*.
 
 1.  We recommend a minimum of four temperature x hatch/emerge data points.
 
 2.  Data should be spread across temperatures as much as possible.
 
     -   It's much better to have a fit derived from data for temperatures such as 3, 7, 10, 14 °C than it is 8, 9, 10, 11 °C.
-
     -   The behavior of the model function around the tails of very cold or warm temperatures (relative to the fish species) drive the fit of the function, so more extreme temperatures are helpful.
 
 3.  Think hard about whether the data you are generating your parameterization from match the data from which you are trying to predict or if you are extrapolating beyond what is sensible for the model.
 
 4.  Understand your response variable, most models are fit to 50% hatch or emergence for a family group or population. However, your data may be different and you should interpret your results accordingly (e.g. comparisons between 50% hatch from population A to 95% hatch of population B may not be reasonable).
 
-
 # References {.unnumbered}
-
-::: {#refs}
-:::
-:::::::
