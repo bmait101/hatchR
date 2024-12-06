@@ -114,13 +114,14 @@ First, we recommend checking import data for any outliers or strange inputs usin
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
-                temp_min = 0, # temp_min and max lines are user customizable
+                temp_min = 0, # temp_min and max lines are 
+                              # user customizable
                 temp_max = 25)
 ```
 
 ![](paper_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
 
-There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data.
+There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data (though leave out the resulting plot for space efficiency in this manuscript).
 
 
 ```r
@@ -129,6 +130,7 @@ year_sim_summ <- summarize_temp(data = year_sim,
                                 dates = date,
                                 temperature = temp)
 
+# now a year's worth of single-day data
 dim(year_sim_summ)
 ```
 
@@ -137,7 +139,7 @@ dim(year_sim_summ)
 ```
 
 ```r
-# check continuous
+# check continuous (no errors)
 check_continuous(data = year_sim_summ,
                  dates = date)
 ```
@@ -147,7 +149,7 @@ check_continuous(data = year_sim_summ,
 ```
 
 ```r
-# we can demonstrate an error by removing the Oct 8 (100th day)
+# we can demonstrate an error by removing Oct. 8 (100th day)
 check_continuous(data = year_sim_summ[-100,],
                  dates = date)
 ```
@@ -161,6 +163,7 @@ check_continuous(data = year_sim_summ[-100,],
 ## [1] 100
 ```
 
+
 ```r
 # it is useful to plot again to check your summarized data
 plot_check_temp(data = year_sim_summ,
@@ -170,8 +173,6 @@ plot_check_temp(data = year_sim_summ,
                               # user customizable
                 temp_max = 15)
 ```
-
-![](paper_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
 
 ## Model Selection
 
@@ -267,7 +268,7 @@ smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
 
 We additionally provide the model estimates for hatch timing for each of the three species used to generate custom models in Figure XXX.
 
-![](paper_files/figure-latex/unnamed-chunk-9-1.pdf)<!-- --> 
+![](paper_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
 
 ## Predicting Phenology and Output
 
