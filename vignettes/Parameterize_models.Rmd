@@ -54,8 +54,8 @@ model_table
 
 -   `author`: the author(s) and year of publication for the model
 -   `species`: the species the model is parameterized for
--   `model`: the model number (specific to @beacham1990 who created several models)
--   `dev.type`: he phenological development type (i.e., hatch or emerge)
+-   `model`: the model ID (if multiple model parameterizations were built (*e.g.*, @beacham1990))
+-   `dev.type`: the phenological development type (*i.e.*, hatch or emerge)
 -   `func`: a character string defining the model parameterization
 
 ## `model_select()`
@@ -83,7 +83,7 @@ View(model_table)
 
 # Creating custom models
 
-**hatchR** also includes basic functionality to generate your own model parameterizations for predicting hatching and emergence phenology using your own data. **Importantly**, the this functionality implements ***model 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
+**hatchR** also includes basic functionality to generate your own model parameterizations for predicting hatching and emergence phenology using your own data. **Importantly**, the this functionality implements ***model form 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
 
 The model follows the general format of:
 
@@ -91,26 +91,25 @@ $$
 Effective Value_i = 1/exp(log_ea - log_e(Temperature_i - b))
 $$
 
-Where *i* is the daily value and a fish hatches or emerges when the cumulative sum or $$\sum_{i =1}^nEffectiveValue_i = 1$$
+Where *i* is the daily value and a fish hatches or emerges when the cumulative sum reaches one: $$\sum_{i =1}^nEffectiveValue_i = 1$$
 
 ## `fit_model()`
 
-The function `fit_model()` uses data where average incubation temperature (°C) and days to phenological event are the inputs and parameterizes the above model for *log~e~a* and *b*.
+The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event are the inputs and parameterizes the above model for *log~e~a* and *b*.
 
-Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout *Salmo trutta*.
+Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout (*Salmo trutta*).
 
-You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble::tibble()` to create the data (which in installed with **hatchR**).
+You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble::tibble()` to create the data.
 
 ```{r}
-# make a tibble of the two vectors
-bt_data <- tibble::tibble(
+bt_data <- tibble(
   temperature = c(2,5,8,11,14), 
   days_to_hatch = c(194,87,54,35,28)
   )
 bt_data
 ```
 
-We can plot our data for a sanity check using `ggplot2` (installed with **hatchR**). First load the package:
+We can plot our data for a validity check using **ggplot2** (installed with **hatchR**). First load the package:
 
 ```{r, eval=FALSE}
 library(ggplot2)
@@ -119,19 +118,19 @@ library(ggplot2)
 Now plot the data:
 
 ```{r}
-ggplot(bt_data, aes(x = temperature, y = days_to_hatch)) +
+bt_data |> 
+  ggplot(aes(x = temperature, y = days_to_hatch)) +
   geom_point() +
   theme_classic()
 ```
 
-We can now use `fit_model()` to create our custom parameterization from our data.
+We can now use `fit_model()` to create our custom parameterization from our data. You must specify a species and a development type, information which is carried forward in subsequent functions in **hatchR**.
 
 ```{r}
-# brown trout hatch mod
 bt_fit <- fit_model(temp = bt_data$temperature, 
-                          days = bt_data$days_to_hatch, 
-                          species = "brown_trout", 
-                          dev.type = "hatch")
+                    days = bt_data$days_to_hatch, 
+                    species = "brown_trout", 
+                    dev.type = "hatch")
 ```
 
 The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using:
@@ -142,7 +141,7 @@ bt_fit
 
 The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `func` element of the list, which is a tibble giving the species, development type, and the parameterized model expression.
 
-You can either pass this object directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_fit$func)`) or set as an object to pass, like so
+You can either pass this tibble directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_fit$func`) or set as an object to pass, like so:
 
 ```{r, eval=FALSE}
 bt_hatch_exp <- bt_fit$func
@@ -150,6 +149,10 @@ bt_hatch_exp
 ```
 
 `predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the [Predict phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
+
+## `fit_model()` details
+
+FORTHCOMING.
 
 # Important considerations
 
