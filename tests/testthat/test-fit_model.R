@@ -9,8 +9,8 @@ test_that("fit_model works", {
   expect_s3_class(m$func, "data.frame")
   # expect_length(m$func, 1)
 
-  expect_type(m$m2_b, "double")
-  expect_type(m$m2_a, "double")
+  expect_type(m$log_a , "double")
+  expect_type(m$b, "double")
   expect_type(m$r_squared, "double")
   expect_type(m$mse, "double")
   expect_type(m$rmse, "double")
