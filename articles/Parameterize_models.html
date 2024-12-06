@@ -75,68 +75,72 @@ Bryan M. Maitland</h4>
 
     
     
-<div class="section level3">
-<h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h3>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>This vignette describes the process of parameterizing models for
 predicting fish phenology using <code>hatchR</code>. The package
-provides two options for choosing phenological models. One is to use
-model parameterizations installed the package and the other is to create
-your own using data you import.</p>
+provides two options for choosing phenological models:</p>
+<ol style="list-style-type: decimal">
+<li>use model parameterizations included in the package</li>
+<li>create custom parameterizations using your own data</li>
+</ol>
 <p>First, we load <code>hatchR</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="built-in-parameterizations">Built-in parameterizations<a class="anchor" aria-label="anchor" href="#built-in-parameterizations"></a>
+</h2>
+<p><code>hatchR</code> ships with built-in model parameterizations,
+which are included in the <code>model_table</code> object. This table
+includes parameterizations for several salmonid species from hatchery
+studies relating temperature to hatch and emergence timing <span class="citation">Sparks et al. (2019)</span>, which can be selected
+using <code><a href="../reference/model_select.html">model_select()</a></code>.</p>
 <div class="section level3">
-<h3 id="built-in-parameterizations">Built-in parameterizations<a class="anchor" aria-label="anchor" href="#built-in-parameterizations"></a>
+<h3 id="model_table">
+<code>model_table</code><a class="anchor" aria-label="anchor" href="#model_table"></a>
 </h3>
-<p>The simplest way to get started is to use built-in parameterizations,
-which are included in the <code>model_table</code>. This table includes
-parameterizations for several salmonid species relating temperature to
-hatch and emergence timing, and can be selected using
-<code><a href="../reference/model_select.html">model_select()</a></code>.</p>
-<p>Let get a sense of the table, which comes installed with
-<code>hatchR</code>:</p>
+<p><code>model_table</code> is loaded with <code>hatchR</code>, and is a
+tibble with 51 rows and 5 columns:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_table</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 51 × 5</span></span></span>
-<span><span class="co">#&gt;    author                  species  model dev.type func                         </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Beacham and Murray 1990 sockeye  2     hatch    1 /exp(6.727 - log(x + 2.394…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Beacham and Murray 1990 sockeye  4     hatch    1/exp(8.734 + (-1.589*log(x …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Beacham and Murray 1990 sockeye  5     hatch    1/exp(9.848 + (-1.583*log(x …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Beacham and Murray 1990 sockeye  7     hatch    1/exp(5.379 + (-0.076*log(x)…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Beacham and Murray 1990 sockeye  2     emerge   1 / exp(7.227 - log(x + 2.56…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Beacham and Murray 1990 sockeye  4     emerge   1/exp(7.647 + (-1.134*log(x …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Beacham and Murray 1990 sockeye  5     emerge   1/exp(9.404 + (-1.169*log(x …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Beacham and Murray 1990 sockeye  7     emerge   1/exp(5.97 + (-0.276*log(x))…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Beacham and Murray 1990 pink odd 2     hatch    1 / exp(6.663 - log(x + 2.55…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Beacham and Murray 1990 pink odd 4     hatch    1/exp(7.962 + (-1.382*log(x …</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more rows</span></span></span></code></pre></div>
-<p>We see that <code>model_table</code> is a tbble with 51 rows and 5
-columns:</p>
+<span><span class="co">#&gt;   author                  species model dev.type func                           </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394)) </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Beacham and Murray 1990 sockeye 4     hatch    1/exp(8.734 + (-1.589*log(x + …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Beacham and Murray 1990 sockeye 5     hatch    1/exp(9.848 + (-1.583*log(x + …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Beacham and Murray 1990 sockeye 7     hatch    1/exp(5.379 + (-0.076*log(x)) …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Beacham and Murray 1990 sockeye 2     emerge   1 / exp(7.227 - log(x + 2.56)) </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 46 more rows</span></span></span></code></pre></div>
 <ul>
 <li>
-<code>author</code>: The author(s) and year of publication for the
+<code>author</code>: the author(s) and year of publication for the
 model</li>
 <li>
-<code>species</code>: The species the model is parameterized
+<code>species</code>: the species the model is parameterized
 for</li>
 <li>
-<code>model</code>: The model number (specific to <span class="citation">Beacham and Murray (1990)</span> who created several
+<code>model</code>: the model number (specific to <span class="citation">Beacham and Murray (1990)</span> who created several
 models)</li>
 <li>
-<code>dev.type</code>: The phenological development type (i.e.,
-hatch or emerge)</li>
+<code>dev.type</code>: he phenological development type (i.e., hatch
+or emerge)</li>
 <li>
-<code>func</code>: The model expression / parameterization</li>
+<code>func</code>: a character string defining the model
+parameterization</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="model_select">
+<code>model_select()</code><a class="anchor" aria-label="anchor" href="#model_select"></a>
+</h3>
 <p>You will use <code>author</code>, <code>species</code>,
-<code>model</code>, and <code>dev.type</code> to select model
-functions.</p>
-<p>For instance, if you wanted to access the parameterization for
-sockeye hatching using model #2 from <span class="citation">Beacham and
-Murray (1990)</span>, you would run:</p>
+<code>model</code>, and <code>dev.type</code> to select model functions.
+For instance, if you wanted to access the parameterization for sockeye
+hatching using model #2 from <span class="citation">Beacham and Murray
+(1990)</span>, you would run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>, </span>
@@ -159,19 +163,18 @@ Phenology: Basic</a> vignette.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">model_table</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="creating-custom-models">Creating custom models<a class="anchor" aria-label="anchor" href="#creating-custom-models"></a>
-</h3>
-<p><code>hatchR</code> also includes functionality to generate your own
-custom model parameterizations for predicting hatching and emergence
-phenology. <strong>Importantly</strong>, the custom parameterization
-relies on the model format developed from <strong><em>model
-2</em></strong> of <span class="citation">Beacham and Murray
-(1990)</span>, which we chose because of its overall simplicity and
-negligible loss of accuracy. See <span class="citation">Beacham and
-Murray (1990)</span> and <span class="citation">Sparks et al.
-(2019)</span> for more specific discussion regarding model 2 and the
-development of the effective value approach.</p>
+</div>
+<div class="section level2">
+<h2 id="creating-custom-models">Creating custom models<a class="anchor" aria-label="anchor" href="#creating-custom-models"></a>
+</h2>
+<p><code>hatchR</code> also includes basic functionality to generate
+your own model parameterizations for predicting hatching and emergence
+phenology using your own data. <strong>Importantly</strong>, the this
+functionality implements <strong><em>model 2</em></strong> of <span class="citation">Beacham and Murray (1990)</span>, which we chose
+because of its overall simplicity and negligible loss of accuracy. See
+<span class="citation">Beacham and Murray (1990)</span> and <span class="citation">Sparks et al. (2019)</span> for more specific
+discussion regarding model 2 and the development of the effective value
+approach.</p>
 <p>The model follows the general format of:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>f</mi><mi>f</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mi>V</mi><mi>a</mi><mi>l</mi><mi>u</mi><msub><mi>e</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mi>/</mi><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mi>e</mi></msub><mi>a</mi><mo>−</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mi>e</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mi>e</mi><mi>m</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>u</mi><mi>r</mi><msub><mi>e</mi><mi>i</mi></msub><mo>−</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 Effective Value_i = 1/exp(log_ea - log_e(Temperature_i - b))
@@ -179,29 +182,27 @@ Effective Value_i = 1/exp(log_ea - log_e(Temperature_i - b))
 <p>Where <em>i</em> is the daily value and a fish hatches or emerges
 when the cumulative sum or
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>E</mi><mi>f</mi><mi>f</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mi>V</mi><mi>a</mi><mi>l</mi><mi>u</mi><msub><mi>e</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum_{i =1}^nEffectiveValue_i = 1</annotation></semantics></math></p>
+<div class="section level3">
+<h3 id="fit_model">
+<code>fit_model()</code><a class="anchor" aria-label="anchor" href="#fit_model"></a>
+</h3>
 <p>The function <code><a href="../reference/fit_model.html">fit_model()</a></code> uses data where average
 incubation temperature (°C) and days to phenological event are the
 inputs and parameterizes the above model for <em>log<sub>e</sub>a</em>
-and <em>b</em>. So, for example, to borrow data from Table 8.1 (pg. 183)
-from <span class="citation">Quinn (2018)</span>, we can generate a
-custom hatch parameterization for brown trout.</p>
+and <em>b</em>.</p>
+<p>Here, we borrow data from Table 8.1 (pg. 183) from <span class="citation">Quinn (2018)</span> to generate a custom hatch
+parameterization for brown trout <em>Salmo trutta</em>.</p>
 <p>You could either create a .csv file with those data and import them
 with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code> or alternatively, directly input
-them as an object in R. We’ll use <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> to create the
-data, which in installed with <code>hatchR</code> and loaded using:</p>
+them as an object in R. We’ll use <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code> to
+create the data (which in installed with <code>hatchR</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
-<p>We can now create the data object:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># vector of temperatures</span></span>
-<span><span class="va">temperature</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">8</span>,<span class="fl">11</span>,<span class="fl">14</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#vector of days to hatch</span></span>
-<span><span class="va">days_to_hatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">194</span>,<span class="fl">87</span>,<span class="fl">54</span>,<span class="fl">35</span>,<span class="fl">28</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#make a tibble of the two vectors</span></span>
-<span><span class="va">quinn_bt_hatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="va">temperature</span>, <span class="va">days_to_hatch</span><span class="op">)</span></span>
-<span><span class="va">quinn_bt_hatch</span></span>
+<code class="sourceCode R"><span><span class="co"># make a tibble of the two vectors</span></span>
+<span><span class="va">bt_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  temperature <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">8</span>,<span class="fl">11</span>,<span class="fl">14</span><span class="op">)</span>, </span>
+<span>  days_to_hatch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">194</span>,<span class="fl">87</span>,<span class="fl">54</span>,<span class="fl">35</span>,<span class="fl">28</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">bt_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   temperature days_to_hatch</span></span>
 <span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -210,22 +211,22 @@ data, which in installed with <code>hatchR</code> and loaded using:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>           8            54</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>          11            35</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>          14            28</span></span></code></pre></div>
-<p>We can plot our data for a sanity check using <code>ggplot2</code>.
-First load the package:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>We can plot our data for a sanity check using <code>ggplot2</code>
+(installed with <code>hatchR</code>). First load the package:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <p>Now plot the data:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">quinn_bt_hatch</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temperature</span>, y <span class="op">=</span> <span class="va">days_to_hatch</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">bt_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temperature</span>, y <span class="op">=</span> <span class="va">days_to_hatch</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>We can now use <code><a href="../reference/fit_model.html">fit_model()</a></code> to create our custom
 parameterization from our data.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># brown trout hatch mod</span></span>
-<span><span class="va">bt_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">temperature</span>, </span>
-<span>                          days <span class="op">=</span> <span class="va">days_to_hatch</span>, </span>
+<span><span class="va">bt_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">bt_data</span><span class="op">$</span><span class="va">temperature</span>, </span>
+<span>                          days <span class="op">=</span> <span class="va">bt_data</span><span class="op">$</span><span class="va">days_to_hatch</span>, </span>
 <span>                          species <span class="op">=</span> <span class="st">"brown_trout"</span>, </span>
 <span>                          dev.type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
 <p>The output of <code><a href="../reference/fit_model.html">fit_model()</a></code> is a list with numerous
@@ -234,8 +235,8 @@ elements, including the full model, coefficients for
 to <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, a plot to see your fit for your
 data, and some diagnostic variables. You can see the full extent
 using:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bt_hatch_mod</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bt_fit</span></span>
 <span><span class="co">#&gt; $model</span></span>
 <span><span class="co">#&gt; Nonlinear regression model</span></span>
 <span><span class="co">#&gt;   model: y ~ a/(x - b)</span></span>
@@ -247,13 +248,20 @@ using:</p>
 <span><span class="co">#&gt; Number of iterations to convergence: 5 </span></span>
 <span><span class="co">#&gt; Achieved convergence tolerance: 2.062e-07</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $m2_a</span></span>
-<span><span class="co">#&gt;        a </span></span>
-<span><span class="co">#&gt; 6.084872 </span></span>
+<span><span class="co">#&gt; $log_a</span></span>
+<span><span class="co">#&gt; [1] 6.084872</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $m2_b</span></span>
-<span><span class="co">#&gt;          b </span></span>
-<span><span class="co">#&gt; -0.2582361 </span></span>
+<span><span class="co">#&gt; $b</span></span>
+<span><span class="co">#&gt; [1] -0.2582361</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mse</span></span>
+<span><span class="co">#&gt; [1] 7.38454</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $rmse</span></span>
+<span><span class="co">#&gt; [1] 2.717451</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $r_squared</span></span>
+<span><span class="co">#&gt; [1] 0.9979987</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $func</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
@@ -262,37 +270,34 @@ using:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brown_trout hatch    1 / exp(6.08487164651134 - log(x + 0.258236059077016))</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pred_plot</span></span></code></pre></div>
-<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $r_squared</span></span>
-<span><span class="co">#&gt; [1] 0.9979987</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $mse</span></span>
-<span><span class="co">#&gt; [1] 7.38454</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $rmse</span></span>
-<span><span class="co">#&gt; [1] 2.717451</span></span></code></pre>
+<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The vast majority of the time, what you will want is the actual
-expression for use in the <code>model = ...</code> argument of
-<code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>. This is stored in the
-<code>func</code> element of the list, which is a tibble giving the
-species, development type, and the model expression.</p>
+expression with parameter estimates for use in the
+<code>model = ...</code> argument of <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>.
+This is stored in the <code>func</code> element of the list, which is a
+tibble giving the species, development type, and the parameterized model
+expression.</p>
 <p>You can either pass this object directly with the <code>$</code>
 operator by calling <code>$func</code> element of the list (e.g.,
-<code>model = bt_hatch_mod$func)</code>) or set as an object to pass,
-like so</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_hatch_mod</span><span class="op">$</span><span class="va">func</span></span>
+<code>model = bt_fit$func)</code>) or set as an object to pass, like
+so</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_fit</span><span class="op">$</span><span class="va">func</span></span>
 <span><span class="va">bt_hatch_exp</span></span></code></pre></div>
 <p><code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> will extract the expression from the
 object and use it to predict phenology. We will demonstrate this in the
-<strong>Predicting Phenology</strong> vignettes.</p>
-<div class="section level4">
-<h4 id="important-considerations-for-your-custom-models">Important considerations for your custom models<a class="anchor" aria-label="anchor" href="#important-considerations-for-your-custom-models"></a>
-</h4>
-<p><strong><em>Your model fits will only be as good as the data they are
-generated from</em></strong>. Here are some important
-considerations:</p>
+<a href="https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html">Predict
+phenology: Basic</a> vignette.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="important-considerations">Important considerations<a class="anchor" aria-label="anchor" href="#important-considerations"></a>
+</h2>
+<p>Here are some important considerations:</p>
+<blockquote>
+<p><em>Your model fits will only be as good as the data they are
+generated from</em>.</p>
+</blockquote>
 <ol style="list-style-type: decimal">
 <li><p>We recommend a minimum of four temperature x hatch/emerge data
 points.</p></li>
@@ -300,11 +305,11 @@ points.</p></li>
 <p>Data should be spread across temperatures as much as
 possible.</p>
 <ul>
-<li><p>It’s much better to have a fit derived from data for temperatures
-such as 3, 7, 10, 14 °C than it is 8, 9, 10, 11 °C.</p></li>
-<li><p>The behavior of the model function around the tails of very cold
-or warm temperatures (relative to the fish species) drive the fit of the
-function, so more extreme temperatures are helpful.</p></li>
+<li>It’s much better to have a fit derived from data for temperatures
+such as 3, 7, 10, 14 °C than it is 8, 9, 10, 11 °C.</li>
+<li>The behavior of the model function around the tails of very cold or
+warm temperatures (relative to the fish species) drive the fit of the
+function, so more extreme temperatures are helpful.</li>
 </ul>
 </li>
 <li><p>Think hard about whether the data you are generating your
@@ -318,11 +323,16 @@ may be different and you should interpret your results accordingly
 population B may not be reasonable).</p></li>
 </ol>
 </div>
-</div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-austin2019" class="csl-entry">
+Austin, Catherine S., Timothy E. Essington, and Thomas P. Quinn. 2019.
+<span>“Spawning and Emergence Phenology of Bull Trout (Salvelinus
+Confluentus) Under Differing Thermal Regimes.”</span> <em>Journal of
+Fish Biology</em> 94 (1): 191–95. <a href="https://doi.org/10.1111/jfb.13864" class="external-link">https://doi.org/10.1111/jfb.13864</a>.
+</div>
 <div id="ref-beacham1990" class="csl-entry">
 Beacham, Terry D., and Clyde B. Murray. 1990. <span>“Temperature, Egg
 Size, and Development of Embryos and Alevins of Five Species of Pacific
@@ -342,7 +352,6 @@ Sockeye Salmon.”</span> <em>Canadian Journal of Fisheries and Aquatic
 Sciences</em> 76 (1): 123–35. <a href="https://doi.org/10.1139/cjfas-2017-0468" class="external-link">https://doi.org/10.1139/cjfas-2017-0468</a>.
 </div>
 </div>
-<p>:::::::</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

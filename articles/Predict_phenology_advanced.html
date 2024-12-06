@@ -78,22 +78,24 @@ Bryan M. Maitland</h4>
 <div class="section level3">
 <h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h3>
-<p>The function predict_phenolgy() is purposefully kept fairly simple so
-it can be expanded to automate across datasets. Typically, this will
-take the form of loops or vectorizing in R (functions of the map() and
-apply() families). There are many reasons why you might want to automate
-your ability to predict including predicting over multiple years,
-multiple sites, predicting hatch or emergence, or even using multiple
-potential spawn dates. We’ll show some examples below (moving from less
-to more complicated). First, we load packages:</p>
+<p>The function <code>predict_phenolgy()</code> is purposefully kept
+fairly simple so it can be expanded to iterate across datasets.
+Typically, this will take the form of loops or vectorizing in R
+(functions of the <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> famimy from <strong>purrr</strong>
+and <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code> family from <strong>base</strong>). There are
+many reasons why you might want to iterate, including predicting over
+multiple years, multiple sites, predicting hatch or emergence
+simultaneously, or even using multiple potential spawn dates. We’ll show
+some examples below (moving from less to more complicated). First, we
+load packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span> <span class="co"># for data and phenology modeling</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span> <span class="co"># for additional plotting options</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># for vectorizing</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># for iteration</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span> <span class="co"># for date manipulation</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span> <span class="co"># for data manipulation</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="co"># for data manipulation</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>  <span class="co"># for date manipulation</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>  <span class="co"># for data manipulation</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span> <span class="co"># for data manipulation</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiple-spawn-dates">Multiple spawn dates<a class="anchor" aria-label="anchor" href="#multiple-spawn-dates"></a>
@@ -124,14 +126,15 @@ a vectorized approach.</p>
 <p>We will show an example of how to set up a <code>for</code> loop to
 run through each element of the <code>woody_island</code> dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">### Loop storage objects</span></span>
-<span><span class="va">OUT_loop_all</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> </span>
-<span><span class="va">OUT_loop_d2h</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> </span>
+<code class="sourceCode R"><span><span class="co"># Loop storage objects</span></span>
+<span><span class="va">OUT_loop_all</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">OUT_loop_d2h</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
-<span><span class="co">### Loop body</span></span>
+<span><span class="co"># Loop body</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">d</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">WI_spawn_dates</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span> <span class="co"># d will be our numerical iterator</span></span>
 <span></span>
-<span>  <span class="va">WI_spawn</span> <span class="op">&lt;-</span> <span class="va">WI_spawn_dates</span><span class="op">[</span><span class="va">d</span><span class="op">]</span> <span class="co"># subset the element d of the vector and assign to object</span></span>
+<span>  <span class="co"># subset the element d of the vector and assign to object</span></span>
+<span>  <span class="va">WI_spawn</span> <span class="op">&lt;-</span> <span class="va">WI_spawn_dates</span><span class="op">[</span><span class="va">d</span><span class="op">]</span></span>
 <span></span>
 <span>  <span class="co"># predict phenology</span></span>
 <span>  <span class="va">WI_hatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predict_phenology.html">predict_phenology</a></span><span class="op">(</span></span>
@@ -143,30 +146,20 @@ run through each element of the <code>woody_island</code> dataset.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span>  <span class="co">### ALL output ###</span></span>
-<span></span>
 <span>  <span class="co"># do this if we want to maintain all info predict_phenology</span></span>
-<span>  <span class="va">OUT_loop_all</span><span class="op">[[</span><span class="va">d</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">WI_hatch</span> <span class="co"># store list into the dth list element of the OUT_loop object</span></span>
+<span>  <span class="va">OUT_loop_all</span><span class="op">[[</span><span class="va">d</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">WI_hatch</span></span>
 <span></span>
 <span>  <span class="co">### A single element of output ###</span></span>
-<span></span>
-<span>  <span class="co"># alternatively, if you know you just want something like days to hatch you can access</span></span>
-<span>  <span class="co"># that part of the list and just store it as object</span></span>
-<span></span>
+<span>  <span class="co"># alternatively, subsets out output</span></span>
 <span>  <span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># empty dataframe to add in data</span></span>
-<span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spawn_date"</span>, <span class="st">"days_2_hatch"</span><span class="op">)</span> <span class="co"># change column names</span></span>
-<span></span>
 <span>  <span class="va">temp</span><span class="op">$</span><span class="va">spawn_date</span> <span class="op">&lt;-</span> <span class="va">WI_spawn</span> <span class="co"># assign spawn date</span></span>
 <span>  <span class="va">temp</span><span class="op">$</span><span class="va">days_2_hatch</span> <span class="op">&lt;-</span> <span class="va">WI_hatch</span><span class="op">$</span><span class="va">days2done</span> <span class="co"># assign days to hathc</span></span>
-<span></span>
 <span>  <span class="va">OUT_loop_d2h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">OUT_loop_d2h</span>, <span class="va">temp</span><span class="op">)</span> <span class="co"># row bind temp object and OUT object</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co">### Loop output (note: we iteratively add to the NULL objects we make at the beginning)</span></span>
-<span></span>
-<span><span class="co"># you can see OUT_loop is a list of lists with three lists each with four elements</span></span>
-<span><span class="co"># (i.e., the four outputs of predict_phenology())</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT_loop_all</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Inspect the loop output:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT_loop_all</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
 <span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
@@ -197,10 +190,11 @@ run through each element of the <code>woody_island</code> dataset.</p>
 <span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
-<span></span>
-<span><span class="co"># you can also see we made a tibble of dates and predicted days to hatch</span></span>
-<span><span class="va">OUT_loop_d2h</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
+<p>You can also see we made a tibble of dates and predicted days to
+hatch:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">OUT_loop_d2h</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   spawn_date days_2_hatch</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -216,14 +210,18 @@ section demonstrated in the loop.</p>
 <div class="section level4">
 <h4 id="vectorizing">Vectorizing<a class="anchor" aria-label="anchor" href="#vectorizing"></a>
 </h4>
-<p><strong>Mapping:</strong></p>
+<div class="section level5">
+<h5 id="mapping">Mapping<a class="anchor" aria-label="anchor" href="#mapping"></a>
+</h5>
 <p>Vectorizing, while historically about prioritizing speed, is now more
-about making your code more readable (see Chapter 26 in <a href="https://r4ds.hadley.nz/iteration" class="external-link">R for Data Science</a> and <a href="https://adv-r.hadley.nz/functionals.html" class="external-link">Advanced R</a>). We’ll
-demonstrate using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> from the <code>purrr</code>
-package. If you are unfamiliar with mapping but want to learn more about
-how it works and it’s power, we highly recommend the linked chapters
-from R for Data Science and Advanced R.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+about making your code more readable (see Chapter 26 in <a href="https://r4ds.hadley.nz/iteration" class="external-link">R for Data Science</a> and
+chapter 9 in <a href="https://adv-r.hadley.nz/functionals.html" class="external-link">Advanced
+R</a>).</p>
+<p>We’ll demonstrate using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>. If you are
+unfamiliar with mapping but want to learn more about how it works and
+it’s power, we highly recommend the linked chapters from R for Data
+Science and Advanced R.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># map works by applying a function over a list (our vector is a very simple list)</span></span>
 <span><span class="co"># if you are familiar with apply() functions, map is essentially the same</span></span>
 <span></span>
@@ -271,18 +269,21 @@ from R for Data Science and Advanced R.</p>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
 <span></span>
 <span><span class="co"># we can then access days to hatch easily as such</span></span>
-<span><span class="va">results_map</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
+<span><span class="va">results_map</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1]  71  74 110</span></span></code></pre></div>
-<p><strong>Apply:</strong></p>
-<p>While tidyverse and associated packages have become quite popular in
-the world of R, the base functionality of R has long had a set of
-functions to do similar things as map. They are called the apply family.
-Because <code>hatchR</code> is built using much of the functionality of
-the tidyverse we opt for using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> over apply functions,
-however we will demonstrate a similar workflow as above using the apply
+</div>
+<div class="section level5">
+<h5 id="apply">Apply<a class="anchor" aria-label="anchor" href="#apply"></a>
+</h5>
+<p>While <strong>tidyverse</strong> packages like <strong>purrr</strong>
+have become quite popular, the base functionality of R has long had a
+set of functions to do similar things as map. They are called the apply
+family. Because <code>hatchR</code> is built using much of the
+functionality of the tidyverse we opt for using
+<code>purrr:::map()</code> over <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code> functions, however
+we will demonstrate a similar workflow as above using the apply
 family.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lapply() is the equivalent function as map() in the apply family</span></span>
 <span><span class="co"># they both output lists</span></span>
 <span></span>
@@ -292,10 +293,11 @@ family.</p>
 <span>  dates <span class="op">=</span> <span class="va">date</span>,</span>
 <span>  temperature <span class="op">=</span> <span class="va">temp_c</span>,</span>
 <span>  model <span class="op">=</span> <span class="va">sockeye_hatch_mod</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># you can see that lapply and map output the same results</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_lapply</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>You can see that <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>
+output the same results:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_lapply</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
 <span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
@@ -329,6 +331,7 @@ family.</p>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
 </div>
 </div>
+</div>
 <div class="section level3">
 <h3 id="iterating-over-multiple-variables">Iterating over multiple variables<a class="anchor" aria-label="anchor" href="#iterating-over-multiple-variables"></a>
 </h3>
@@ -341,7 +344,7 @@ cleaner dataset.</p>
 tributary of the Boise River in Idaho, USA, from a reach with known bull
 trout spawning. The dataset is included as
 <code>crooked_river</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># look at data structure</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,826</span></span>
@@ -357,15 +360,14 @@ trout spawning. The dataset is included as
 <span>  temp_min <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  temp_max <span class="op">=</span> <span class="fl">12</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_advanced_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># we can use some functions from tidyverse to do a datacheck</span></span>
-<span><span class="co"># this shows the number of observations per year</span></span>
-<span><span class="va">crooked_river</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add a column converting the date to year</span></span>
+<p><img src="Predict_phenology_advanced_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>We can use the functionality of <strong>dplyr</strong> to do a
+datacheck that shows the number of observations per year:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crooked_river</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">tally</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># count observations/year</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">tally</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
 <span><span class="co">#&gt;    year     n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -374,7 +376,7 @@ trout spawning. The dataset is included as
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>012   366</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013   365</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>014   365</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>015   334</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span></code></pre></div>
 <p>We see we have 5 full years of data to use. For the sake of this
 exercise, let’s assume bull trout spawning in this system starts
 September 1st, peaks September 15th, and is mostly done by September
@@ -384,51 +386,38 @@ would be 2011-2015. However we may not have enough days of record to
 make predictions for 2015 so best to check that first.</p>
 <p>First let’s just check to see if fish spawning in 2015 would have
 enough data to hatch and emerge.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">### set up our bull trout hatch and emergence models</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># select bull trout hatch and emergence models</span></span>
 <span><span class="va">bull_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span></span>
+<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span> <span class="co"># note we are using hatch model here</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bull_emerge_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"emerge"</span></span>
+<span>  dev.type <span class="op">=</span> <span class="st">"emerge"</span> <span class="co"># note we are using emerge model here</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># models are different</span></span>
-<span><span class="va">bull_hatch_mod</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   author             species    model dev.type func                      </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Austin et al. 2017 bull trout MM    hatch    1/exp(5.086 - (x * 0.131))</span></span>
-<span><span class="va">bull_emerge_mod</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   author             species    model dev.type func                       </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Austin et al. 2017 bull trout MM    emerge   1/exp(5.590 - (x  * 0.126))</span></span>
-<span></span>
-<span><span class="co">### check 2015 dates</span></span>
-<span></span>
+<span><span class="co"># set spawning dates in 2015</span></span>
 <span><span class="va">dates_2015</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2015-09-01"</span>, <span class="st">"2015-09-15"</span>, <span class="st">"2015-09-30"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## hatch first</span></span>
-<span><span class="va">hatch_2015</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">dates_2015</span>,</span>
+<span><span class="va">hatch_2015</span> <span class="op">&lt;-</span> <span class="va">dates_2015</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  <span class="va">predict_phenology</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">crooked_river</span>,</span>
 <span>  dates <span class="op">=</span> <span class="va">date</span>,</span>
 <span>  temperature <span class="op">=</span> <span class="va">temp_c</span>,</span>
 <span>  model <span class="op">=</span> <span class="va">bull_hatch_mod</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>See how we receive a warning “Fish did not develop, did not accrue
-enough effective units. Spawn date =2015-09-15. Did your fish spawn too
-close to the end of your data?” It tells us the spawn date we used so we
-can reference which date isn’t working if we use an string of multiple
-dates to predict over.</p>
+<p>See how we receive 2 seperate warning messages saying: “FFish did not
+accrue enough effective units to develop. Did your fish spawn too close
+to the end of your data? Spawn date is _____”. It tells us the spawn
+date we used so we can reference which date isn’t working if we use an
+string of multiple dates to predict over.</p>
 <p>If fish aren’t hatching they definitely are not going to emerge, so
 we won’t use 2015.</p>
 <div class="section level4">
@@ -439,24 +428,22 @@ variables and then over the dates. So the order of applying the
 <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> function in the loop example below is
 as follows:</p>
 <ul>
-<li>
-<p>Predict hatch</p>
-<ol style="list-style-type: decimal">
-<li><p>2011 spawn dates</p></li>
-<li><p>…</p></li>
-<li><p>2014 spawn dates</p></li>
-</ol>
+<li>Predict hatch
+<ul>
+<li>2011 spawn dates</li>
+<li>…</li>
+<li>2014 spawn dates</li>
+</ul>
 </li>
-<li>
-<p>Predict emergence</p>
-<ol style="list-style-type: decimal">
-<li><p>2011 spawn dates</p></li>
-<li><p>…</p></li>
-<li><p>2014 spawn dates</p></li>
-</ol>
+<li>Predict emergence
+<ul>
+<li>2011 spawn dates</li>
+<li>…</li>
+<li>2014 spawn dates</li>
+</ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## mini loop to make vector of dates</span></span>
 <span><span class="va">spawn_dates</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">year</span> <span class="kw">in</span> <span class="fl">2011</span><span class="op">:</span><span class="fl">2014</span><span class="op">)</span> <span class="op">{</span></span>
@@ -502,261 +489,17 @@ as follows:</p>
 <span></span>
 <span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span> <span class="co"># add to your counter</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># look at results</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT</span><span class="op">)</span></span>
-<span><span class="co">#&gt; List of 24</span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 88</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2011-11-27"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [88 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 106</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2011-12-29"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [106 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 124</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-01-31"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [124 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 89</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-11-28"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [89 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 104</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-12-27"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [104 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 122</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-01-29"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [122 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 83</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-11-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [83 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 109</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-01-01"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [109 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 126</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-02-02"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [126 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 83</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-11-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [83 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 94</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-12-17"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [94 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 114</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-01-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [114 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 187</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-03-05"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [187 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 202</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-04-03"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [202 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 215</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2011-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2012-05-01"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [215 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 187</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-03-06"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [187 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 203</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-04-05"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [203 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 217</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2012-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2013-05-04"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [217 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 181</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-02-28"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [181 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 204</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-04-06"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [204 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 216</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2013-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2014-05-03"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [216 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 175</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-01"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-02-22"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [175 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 188</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-15"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-03-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [188 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
-<span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 204</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
-<span><span class="co">#&gt;   .. ..$ start: POSIXct[1:1], format: "2014-09-30"</span></span>
-<span><span class="co">#&gt;   .. ..$ stop : POSIXct[1:1], format: "2015-04-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [204 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
+<span><span class="op">}</span></span></code></pre></div>
 <p>The output of this loop is again a list of lists. This time 24 lists
 that comprise the elements of each <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>
 iteration. Simply, the loop selects the hatch model, runs it for every
 date in our vector (<code>spawn_dates</code>) and then switches over to
 an emerge model and does the same thing. The point of having an iterator
-(<code>i</code>) is that we can make a new list addition to OUT for
-every combination of the <code>dev_mod</code> (hatch and emerge) and the
-12 dates we want to run—resulting in 24 total individual lists that are
-appended to our OUT list of lists as we walk through each iteration of
-the for loop.</p>
+(<code>i</code>) is that we can make a new list addition to
+<code>OUT</code> for every combination of the <code>dev_mod</code>
+(hatch and emerge) and the 12 dates we want to run—resulting in 24 total
+individual lists that are appended to our <code>OUT</code> list of lists
+as we walk through each iteration of the for loop.</p>
 <p>If that sounds a bit complicated, it’s because it is. And this is
 where the vectorized approaches really shine.</p>
 <p>A quick note about accessing lists. Even if you want to write loops
@@ -764,42 +507,53 @@ instead of vectorizing, we do recommend accessing those results via a
 vectorized approach. It’s hard to pull out a lot of information from
 from very large nested loops. You would probably write a custom loop to
 do so. However, those results are easily accessed by map, like so:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mapped_results</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mapped_results</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">:::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span>
+<span><span class="va">mapped_results</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,621 × 5</span></span></span>
+<span><span class="co">#&gt;   index dates               temperature ef_vals ef_cumsum</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   275 2011-09-01 <span style="color: #949494;">00:00:00</span>        6.65  0.014<span style="text-decoration: underline;">8</span>    0.014<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   276 2011-09-02 <span style="color: #949494;">00:00:00</span>        6.45  0.014<span style="text-decoration: underline;">4</span>    0.029<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   277 2011-09-03 <span style="color: #949494;">00:00:00</span>        6.46  0.014<span style="text-decoration: underline;">4</span>    0.043<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   278 2011-09-04 <span style="color: #949494;">00:00:00</span>        6.66  0.014<span style="text-decoration: underline;">8</span>    0.058<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   279 2011-09-05 <span style="color: #949494;">00:00:00</span>        6.88  0.015<span style="text-decoration: underline;">2</span>    0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,616 more rows</span></span></span></code></pre></div>
 <p>The above code outputs the <code>ef.tibble</code> element from every
 one of your lists from each combination of spawn date and phenology type
 into a dataframe like object which can then easily be plotted. Notice,
-we now use <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df()</a></code> because we know the list element we are
-accessing is in the format of a dataframe type object (a tibble).</p>
+we now use <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map_df()</a></code> because we know the list element
+we are accessing is in the format of a dataframe type object (a
+tibble).</p>
 </div>
 <div class="section level4">
 <h4 id="vectorizing-1">Vectorizing<a class="anchor" aria-label="anchor" href="#vectorizing-1"></a>
 </h4>
-<p>We’ll use the purrr function <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap()</a></code> to vectorize our
-multiple-input map function. Let’s again set up our iterative variables.
-We’ll do the same workflow as the past example but now exclusively with
-mapping.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p>We’ll use the purrr function <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> to vectorize
+our multiple-input map function. Let’s again set up our iterative
+variables. We’ll do the same workflow as the past example but now
+exclusively with mapping.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># slightly cleaner spawn dates with map output is a list of vectors</span></span>
 <span><span class="va">spawn_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span><span class="op">:</span><span class="fl">2014</span><span class="op">)</span>, <span class="co"># year vector to map for custom function</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span> <span class="co"># custom paste function</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span> <span class="co"># custom function to make dates</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">year</span>, <span class="st">"-09-01"</span><span class="op">)</span>,</span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">year</span>, <span class="st">"-09-15"</span><span class="op">)</span>,</span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">year</span>, <span class="st">"-09-30"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># pipe to unlist() to make a vector</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dev_mods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hatch"</span>, <span class="st">"emerge"</span><span class="op">)</span>,</span>
+<span><span class="va">dev_mods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hatch"</span>, <span class="st">"emerge"</span><span class="op">)</span>,</span>
 <span>  <span class="va">model_select</span>,</span>
 <span>  author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span></span>
-<span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># we then set up a variable grid for all combinations of our models and dates</span></span>
 <span><span class="co"># it is very important to make the names of the columns in var_grid to match the</span></span>
@@ -815,9 +569,9 @@ mapping.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2011-09-30</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-01</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> <span style="color: #949494;">&lt;spc_tbl_ [1 × 5]&gt;</span> 2012-09-30</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span>
 <span></span>
-<span><span class="co">### mutliple input mapping</span></span>
+<span><span class="co">### multiple input mapping</span></span>
 <span></span>
 <span><span class="va">crooked_predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap</a></span><span class="op">(</span><span class="va">var_grid</span>, <span class="co"># combos of variables to iterate over</span></span>
 <span>  <span class="va">predict_phenology</span>, <span class="co"># function</span></span>
@@ -827,7 +581,7 @@ mapping.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now that we’ve demonstrated both loops and mapping to get at
 iterating over multiple variables, let’s verify our results match.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># loop predictions</span></span>
 <span><span class="va">preds_loop</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
 <span><span class="va">preds_pmap</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
@@ -849,7 +603,7 @@ estimates.</p>
 <p>First we’ll demonstrate an example of how we can take those
 prediction and use them to create an object that’s useful for
 plotting.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get predictions</span></span>
 <span><span class="va">days</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
@@ -873,9 +627,9 @@ plotting.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> hatch     2011-09-30 <span style="color: #949494;">00:00:00</span>   124</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hatch     2012-09-01 <span style="color: #949494;">00:00:00</span>    89</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> hatch     2012-09-15 <span style="color: #949494;">00:00:00</span>   104</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> hatch     2012-09-30 <span style="color: #949494;">00:00:00</span>   122</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span></code></pre></div>
 <p>We could then make a plot with our original data:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># filter crooked_river to correct size</span></span>
 <span><span class="va">crooked_river_11_15</span> <span class="op">&lt;-</span> <span class="va">crooked_river</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&lt;</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="st">"2015-06-01 00:00:00"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -903,14 +657,15 @@ plotting.</p>
 <span>    y <span class="op">=</span> <span class="st">"Temperature"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_advanced_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_advanced_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Not the best looking plot, but a good example of how to translate
 output to a visual representation. For better looking plots, please see
-the <strong>Plotting your data</strong> vignette.</p>
+the <a href="https://bmait101.github.io/hatchR/articles/Advanced_plotting.html">Advanced
+plotting</a> vignette.</p>
 <p>Other data types you might want might include the tibble with dates,
 temperature, and values and cumulative sums of effective values or the,
 alternatively, the developmental period.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the tibble with all temperature and effective values for each phenological period</span></span>
 <span><span class="va">all_data</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span>
@@ -923,7 +678,7 @@ alternatively, the developmental period.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   277 2011-09-03 <span style="color: #949494;">00:00:00</span>        6.46  0.014<span style="text-decoration: underline;">4</span>    0.043<span style="text-decoration: underline;">6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   278 2011-09-04 <span style="color: #949494;">00:00:00</span>        6.66  0.014<span style="text-decoration: underline;">8</span>    0.058<span style="text-decoration: underline;">4</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   279 2011-09-05 <span style="color: #949494;">00:00:00</span>        6.88  0.015<span style="text-decoration: underline;">2</span>    0.073<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   280 2011-09-06 <span style="color: #949494;">00:00:00</span>        7.18  0.015<span style="text-decoration: underline;">8</span>    0.089<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span>
 <span></span>
 <span><span class="co"># the phenological durations for each prediction set</span></span>
 <span><span class="va">development_period</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span></span>
@@ -943,11 +698,10 @@ alternatively, the developmental period.</p>
 <p>A problem with this approach is that you end up with very large lists
 of lists without labels which require you to remember the data structure
 you feed to your mapping function. However, purrr does have a method to
-get around this which is the <code><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">set_names()</a></code> function which you
-would pipe into your mapping function.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+get around this which is the <code><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">purrr::set_names()</a></code> function
+which you would pipe into your mapping function.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># to use the simple Iliamna Lake example within a single season</span></span>
-<span></span>
 <span><span class="va">WI_named_list</span> <span class="op">&lt;-</span> <span class="va">WI_spawn_dates</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">predict_phenology</span>, <span class="co"># note we leave out the input row (WI_spawn_dates) because we are piping it in as input</span></span>
@@ -998,10 +752,10 @@ would pipe into your mapping function.</p>
 <span><span class="co">#&gt;        start       stop</span></span>
 <span><span class="co">#&gt; 1 1990-08-18 1990-10-30</span></span></code></pre></div>
 <p>This approach works well for the example above, but not so well with
-our examples with <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap()</a></code> because the variable grid we
-create has a bunch of expressions which don’t work for naming lists.
-However, if we were to do a <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap()</a></code> example where it was a
-site x dates combination, that still work and would name the lists
+our examples with <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> because the variable grid
+we create has a bunch of expressions which don’t work for naming lists.
+However, if we were to do a <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> example where it
+was a site x dates combination, that still work and would name the lists
 according to their site and then the date used to predict phenology
 (e.g. <code>named_list$site1$`date`$dev.period</code>)</p>
 </div>
@@ -1019,7 +773,6 @@ Sockeye Salmon.”</span> <em>Canadian Journal of Fisheries and Aquatic
 Sciences</em> 76 (1): 123–35. <a href="https://doi.org/10.1139/cjfas-2017-0468" class="external-link">https://doi.org/10.1139/cjfas-2017-0468</a>.
 </div>
 </div>
-<p>:::::::</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

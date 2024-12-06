@@ -86,14 +86,13 @@ analytic gap of taking statistical models developed in hatchery settings
 applying them to real world temperature data sets using the effective
 value framework developed by <span class="citation">Sparks et al.
 (2019)</span>.</p>
-<p>This vignette:</p>
+<p>In this vignette, we:</p>
 <ul>
-<li>describes input data requirements,</li>
-<li>provides recommendations for importing data,</li>
-<li>explains basic data checks,<br>
-</li>
-<li>provides an overview of downstream steps in a <code>hatchR</code>
-workflow that are covered in other vignettes.</li>
+<li>describes input data requirements</li>
+<li>provide recommendations for importing data</li>
+<li>review basic data checks</li>
+<li>preview the full <code>hatchR</code> workflow covered in other
+vignettes</li>
 </ul>
 <div class="section level3">
 <h3 id="inputs">Input Data Requirements<a class="anchor" aria-label="anchor" href="#inputs"></a>
@@ -106,12 +105,17 @@ temperatures. Alternatively, daily water temperature predictions from
 novel statistical models <span class="citation">(e.g., Siegel et al.
 2023)</span> could be similarly implemented.</p>
 <p>Fundamentally, <code>hatchR</code> assumes you have input data with
-two columns: a date column, giving the date (and often time) of a
-temperature measurement, and a temperature column, giving the associated
-temperature measurement (in centigrade). Other columns are okay to
-include, but these two columns (with any column name—just
-<em>without</em> spaces) are required. We expect your data to look
-something like this:</p>
+two columns:</p>
+<ol style="list-style-type: decimal">
+<li>date: a vector of dates (and often times) of a temperature
+measurement (must be class <code>Date</code> or <code>POSIXct</code>,
+which Tibbles print as &lt;date&gt; and &lt;dttm&gt;,
+respectively).</li>
+<li>temperature: a vector of associated temperature measurement (in
+centigrade).</li>
+</ol>
+<p>Additional columns are allowed, but these are required.</p>
+<p>We expect your data to look something like this:</p>
 <table class="table">
 <thead><tr class="header">
 <th>date</th>
@@ -175,9 +179,9 @@ helpful name.</li>
 <code>lubridate</code> to get the current date or date-time:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-12-05"</span></span>
+<span><span class="co">#&gt; [1] "2024-12-06"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-12-05 23:05:51 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2024-12-06 20:31:52 UTC"</span></span></code></pre></div>
 <p>In the context of <code>hatchR</code>, the ways you are likely to
 create a date/time are:</p>
 <ol style="list-style-type: decimal">
@@ -238,12 +242,10 @@ name of the parsing function.</p>
 <span><span class="co">#&gt; [1] "2017-01-31"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="st">"January 31st, 2017"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2017-01-31"</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">dmy</a></span><span class="op">(</span><span class="st">"31-Jan-2017"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2017-01-31"</span></span>
-<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="st">"2017-01-31 20:11:59"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2017-01-31 20:11:59 UTC"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">mdy_hm</a></span><span class="op">(</span><span class="st">"01/31/2017 08:01"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2017-01-31 08:01:00 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2017-01-31 08:01:00 UTC"</span></span>
+<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></span><span class="op">(</span><span class="st">"2017-01-31 20:11:59"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2017-01-31 20:11:59 UTC"</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="from-individual-components">From individual components<a class="anchor" aria-label="anchor" href="#from-individual-components"></a>
@@ -292,9 +294,6 @@ from dplyr to select and mutate columns.</p>
 <div class="section level2">
 <h2 id="data-in">Importing your data<a class="anchor" aria-label="anchor" href="#data-in"></a>
 </h2>
-<p>Because <code>hatchR</code> uses daily water temperature records to
-predict fish developmental phenology, we enforce a (&lt;date&gt;) class
-for date fields.</p>
 <div class="section level3">
 <h3 id="using-readrread_csv">Using <code>readr::read_csv()</code><a class="anchor" aria-label="anchor" href="#using-readrread_csv"></a>
 </h3>
@@ -384,7 +383,6 @@ structure of the <code>crooked_river</code> and
 <span><span class="co"># if your date is in the form "2000-09-01"</span></span>
 <span><span class="va">woody_island</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">$</span><span class="va">date</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># check</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,826</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
@@ -454,13 +452,11 @@ for a year and summarize the data to daily means.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># check it</span></span>
-<span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">fake_data</span><span class="op">)</span> <span class="co"># info about temp.test</span></span>
+<span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">fake_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 17,568</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
 <span><span class="co">#&gt; $ date <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2000-01-01 00:00:00, 2000-01-01 00:30:00, 2000-01-01 01:00:00, 2…</span></span>
-<span><span class="co">#&gt; $ temp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.318573, 9.309468, 14.676125, 10.211525, 10.387863, 15.145195, 1…</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">fake_data</span><span class="op">)</span> <span class="co">#17568 records</span></span>
-<span><span class="co">#&gt; [1] 17568</span></span></code></pre></div>
+<span><span class="co">#&gt; $ temp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.318573, 9.309468, 14.676125, 10.211525, 10.387863, 15.145195, 1…</span></span></code></pre></div>
 <p>Now we can summarize the data to daily means using
 <code><a href="../reference/summarize_temp.html">summarize_temp()</a></code>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -468,6 +464,8 @@ for a year and summarize the data to daily means.</p>
 <span>                                temperature <span class="op">=</span> <span class="va">temp</span>,</span>
 <span>                                dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">fake_data</span><span class="op">)</span> <span class="co">#17568 records</span></span>
+<span><span class="co">#&gt; [1] 17568</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">fake_data_sum</span><span class="op">)</span> <span class="co">#366 records; 2000 was a leap year :)</span></span>
 <span><span class="co">#&gt; [1] 366</span></span></code></pre></div>
 <p>We again recommend, at a minimum, visually checking your data once it
@@ -491,6 +489,8 @@ your data is expected to be continuous and complete.</p>
 message if the data is or is not continuous or complete.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">woody_island</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span></code></pre></div>
 <p>If you have days of missing data, you could impute them using rolling
 means or other approaches.</p>
