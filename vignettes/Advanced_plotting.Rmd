@@ -16,10 +16,11 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE,
   message = FALSE,
-  eval = FALSE,
+  # eval = FALSE,
   fig.align = "center",
   fig.width = 6
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 
 # load packages
 library(hatchR)
@@ -56,19 +57,23 @@ We'll return to our first example with Woody Island to show how you might presen
 
 ```{r}
 # run map to get a vector of models
-WI_mods <- map(c("hatch", "emerge"),
+WI_mods <- map_df(
+  c("hatch", "emerge"),
   model_select,
   author = "Beacham and Murray 1990",
   species = "sockeye",
   model = 2
-) |>
-  unlist()
+  ) |>
+  select(func)
 
 # make vector of spawn dates
 WI_spawn_dates <- c("1990-08-14", "1990-08-18", "1990-09-3")
 
 # make variables grid
-WI_var_grid <- expand_grid(model = WI_mods, spawn.date = WI_spawn_dates)
+WI_var_grid <- expand_grid(model = WI_mods$func, spawn.date = WI_spawn_dates)
+
+
+
 
 # run pmap for all variable combinations
 WI_results <- pmap(WI_var_grid,
@@ -85,29 +90,38 @@ WI_dev.period <- WI_results |>
   mutate(
     phenology = c(rep("hatch", 3), rep("emerge", 3)), # add a phenology column
     days = as.numeric(stop - start), # column of the number of days (same as days2done)
-    index = c(1:3, 5:7)
-  ) # index for plotting later
+    index = c(1:3, 5:7)  # index for plotting later
+  ) 
 ```
 
 Now we'll make a plot with the temperature and rectangles to show duration for the hatch and emergence periods.
 
 ```{r}
-plot1 <- ggplot() +
-  geom_rect(data = WI_dev.period, aes(
-    xmin = start, xmax = stop,
-    ymin = 10 - index, ymax = 10.5 - index, # use index to vertically place rects
-    fill = phenology
-  )) +
-  geom_point(data = woody_island, aes(x = date, y = temp_c), size = 0.25, ) +
-  geom_line(data = woody_island, aes(x = date, y = temp_c)) +
-  lims(
-    x = c(min(WI_dev.period$start), max(WI_dev.period$stop) + days(30)), # borrow min and max from dev.period to add day buffers to set limits
-    y = c(-1, 16)
-  ) +
-  scale_fill_manual(values = c("navyblue", "dodgerblue")) + # custom colors
-  theme_classic() +
-  theme(legend.position.inside = c(0.75, 0.75))
+# min and max for x-axis with 30 day buffer
+x_lims <- c(min(WI_dev.period$start), max(WI_dev.period$stop) + days(30))
+y_lims <- c(-1, 16)
+# filter data for plot
+p_data <- woody_island |> filter(date >= x_lims[1], date <= x_lims[2])
 
+plot1 <- p_data |> 
+  ggplot() +
+  geom_rect(
+    data = WI_dev.period, 
+    aes(
+      xmin = start, xmax = stop,
+      ymin = 10 - index, 
+      ymax = 10.5 - index,
+      fill = phenology
+  )) +
+  geom_point(aes(x = date, y = temp_c), size = 0.25, ) +
+  geom_line(aes(x = date, y = temp_c)) +
+  lims(x = x_lims, y = y_lims) +
+  scale_fill_manual(values = c("navyblue", "dodgerblue")) + 
+  theme_classic() +
+  theme(
+    legend.position = "inside",
+    legend.position.inside = c(0.75, 0.75)
+    )
 plot1
 ```
 
@@ -118,11 +132,12 @@ plot1 +
   geom_label(
     data = WI_dev.period,
     aes(
-      x = start + (stop - start) / 1.25, # find middle of phenology and multiply by number to place proportionally on line
-      y = (10.25 - index), label = days
+      x = start + (stop - start) / 1.25, 
+      y = (10.25 - index), 
+      label = days
     )
-  ) + # place label halfway down bar
-  scale_fill_manual(values = c("navyblue", "dodgerblue"), labels = c("Emerge", "Hatch")) + # this would replae scale_fill_manual in your orginal figure
+  ) +
+  scale_fill_manual(values = c("navyblue", "dodgerblue"), labels = c("Emerge", "Hatch")) + 
   labs(fill = "Phenology", y = "Temperature (C)")
 ```
 
@@ -140,23 +155,25 @@ spawn_dates <- map(
       paste0(year, "-09-20"),
       paste0(year, "-09-30")
     )
-  }
-) |> # pipe to unlist() to make a vector
+    }
+  ) |> 
   unlist()
 
-# mods
-dev_mods <- map(c("hatch", "emerge"),
+# run map to get a vector of models
+dev_mods <- map_df(
+  c("hatch", "emerge"),
   model_select,
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM"
-)
+  ) |> 
+  select(func)
 
 # variable grid
-var_grid <- expand_grid(model = dev_mods, spawn.date = spawn_dates)
+var_grid <- expand_grid(model = dev_mods$func, spawn.date = spawn_dates)
 
 
-### mutliple input mapping
+### multiple input mapping
 
 crooked_predictions <- pmap(var_grid, # combos of variables to iterate over
   predict_phenology, # function
@@ -192,27 +209,32 @@ cut_ints <- ymd(
   tz = "UTC"
 )
 
-# cut acording to our cut intervals and label by developmental year
+# cut to our cut intervals and label by developmental year
 crooked_river_sy <- crooked_river |>
   mutate(year = cut(date,
     breaks = cut_ints,
     labels = c(2010:2015)
   )) |>
-  mutate(year = as.numeric(as.character(year))) |> # cut coerces our labels to factors, this changes them back to numbers
+   # cut coerces our labels to factors, this changes them back to numbers
+  mutate(year = as.numeric(as.character(year))) |>
   filter(year > 2010 & year < 2015) # remove 2010 and 2015
 
 # make plot (facet_wrap by development year)
 ggplot() +
   geom_rect(data = CR_dev.period, aes(
-    xmin = start, xmax = stop, # draw bars
-    ymin = 10 - index, ymax = 10.5 - index, # use index to vertically place rects
+    xmin = start, 
+    xmax = stop, 
+    ymin = 10 - index, 
+    ymax = 10.5 - index, 
     fill = phenology
   )) +
   geom_point(data = crooked_river_sy, aes(x = date, y = temp_c), size = 0.25, ) +
   geom_line(data = crooked_river_sy, aes(x = date, y = temp_c)) +
-  lims(x = c(min(CR_dev.period$start) - days(30), max(CR_dev.period$stop) + days(30))) + # set limits
-  scale_x_datetime(date_labels = "%b") + # change X label to month
-  facet_wrap(~year, ncol = 1, scales = "free_x") + # facet wrap here subset plots on developmental year
+  # set limits
+  lims(x = c(min(CR_dev.period$start) - days(30), max(CR_dev.period$stop) + days(30))) + 
+  scale_x_datetime(date_labels = "%b") + 
+  # facet wrap here subset plots on developmental year
+  facet_wrap(~year, ncol = 1, scales = "free_x") + 
   scale_fill_manual(values = c("navyblue", "dodgerblue"), labels = c("Emerge", "Hatch")) + # custom colors
   labs(fill = "Phenology", x = "Date", y = "Temperature (C)") +
   theme_classic()
@@ -221,7 +243,7 @@ ggplot() +
 As you can see, this allows us to put our figures on the same X scale despite flowing into multiple years. You'll have to figure out the right way to cut up your data (or find similar alternative options). But this solves a primary problem of plotting phenology for multiple years, which is that our results span multiple years and may start and stop in the same intervals over multiple years (particularly for fall spawning species).
 
 ::: callout-note
-## Note that we run out of temperature data in 2015, which is why it is cutoff relative to the others. If you really wanted to fix that you could be adding on the necessary dates with no temperature data to the `crooked_river_sy` tibble.
+Note that we run out of temperature data in 2015, which is why it is cutoff relative to the others. If you really wanted to fix that you could be adding on the necessary dates with no temperature data to the `crooked_river_sy` tibble.
 :::
 
 ## Plotting multiple individual spawning events
@@ -285,7 +307,7 @@ Also, we're going to take a short cut with our mapping so we don't store all the
 
 ```{r}
 # make variable grid for pmap (we use dev_mods from previous example)
-spawn_grid <- expand_grid(model = dev_mods, spawn.date = fish_dates_str)
+spawn_grid <- expand_grid(model = dev_mods$func, spawn.date = fish_dates_str)
 
 bull_trout_dist <- pmap(spawn_grid,
   predict_phenology,
@@ -443,6 +465,3 @@ There are many more ways you can plot your data but we these are meant to serve 
 
 # References {.unnumbered}
 
-::: {#refs}
-:::
-:::::::
