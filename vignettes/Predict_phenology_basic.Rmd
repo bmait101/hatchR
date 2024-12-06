@@ -60,33 +60,33 @@ p <- plot_check_temp(
   data = woody_island,
   dates = date,
   temperature = temp_c
-)
+  )
 p
 ```
 
 There appear to be outliers in the data, specifically in the very beginning and end of the period of record, and right in the middle. The loggers look to have been recording observations outside of the water and then in the middle where the water level may have dropped and exposed it to the air.
 
-However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` is a ggplot object, we can add geoms to the plot to represent the approximate phenology window:
+However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` is a **ggplot2** object, we can add additional plotting elements to the graph to represent the approximate phenology window:
 
 ```{r}
 p +
   geom_rect(
     aes(
-      xmin = ymd("1990-08-18"), # spawn date
-      xmax = ymd("1991-04-01"), # approx phenology window end
-      ymin = -10, # lower bound
+      xmin = ymd("1990-08-18"),
+      xmax = ymd("1991-04-01"),
+      ymin = -10, 
       ymax = 25
-    ), # upper bound
-    fill = "darkgreen", # color rectangle dark green
-    alpha = 0.01 # make rectangle semi-transparent
+    ), 
+    fill = "gray",
+    alpha = 0.01
   )
 ```
 
-If we just apply the model within the green polygon we've drawn, the model should work just fine.
+If we just apply the model within the gray polygon we've drawn, the model should work just fine.
 
 ## Model select
 
-Now that our temperature data is usable we can select our models. We'll predict both hatching and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `dev.type`, which can be either "hatch" or "emerge".
+Now that our temperature data is usable we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `dev.type`, which can be either "hatch" or "emerge".
 
 ```{r}
 sockeye_hatch_mod <- model_select(
@@ -104,14 +104,14 @@ sockeye_emerge_mod <- model_select(
 )
 ```
 
-Let's look at the expressions for the two different models we've selected:
+Let's look at the model specifications for the two different parameterizations we've selected:
 
 ```{r}
 sockeye_hatch_mod
 sockeye_emerge_mod
 ```
 
-You can see they are parameterized slightly differently to account for the differences between hatch and emergence timing.
+You can see they are parameterized slightly different to account for the differences between hatch and emergence timing.
 
 ## Predict phenology
 
@@ -127,7 +127,7 @@ WI_hatch <- predict_phenology(
 )
 ```
 
-> Note the warning message that appears when you run this code for `woody_island`. It reveals that while the fish develoeped, negative temperature values resulted in NaNs after development. More on this in the [Negative Temperature]{#neg_temp} section.
+> Note the warning message that appears when you run this code for `woody_island`. It reveals that while the fish developed, negative temperature values resulted in `NaN`s after development. More on this in the [Negative Temperature]{#neg_temp} section.
 
 Next, look inside the returned object to see days to hatch and development period (more on this in the [Understanding your results](#results) section)
 
@@ -153,25 +153,23 @@ WI_emerge$dev.period
 
 ## Understanding your results {#results}
 
-The output from `predict_phenology()` includes a lot of information.
+The output from `predict_phenology()` includes a lot of information. Here is a summary of the elements in the output list.
 
 ```{r}
-str(WI_hatch)
+summary(WI_hatch)
 ```
 
-If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
+We can access each element using the `$` operator:
 
 -   `WI_hatch$days2done` outputs the predicted days to hatch or emerge.
 
 -   `WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
 
--   `WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
-
 -   `WI_hatch$ef.tibble` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature, effective value, and the cumulative sum of the effective values to that date. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
 
--   `WI_hatch$model` is a tibble showing the model specifications used to predict the phenology.
+-   `WI_hatch$model.specs` is a tibble showing the model specifications used to predict the phenology.
 
-## Vizualizing phenology
+## Visualizing phenology
 
 **hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results. The plot visualizes three specific components:
 
@@ -192,20 +190,17 @@ plot_phenology(WI_hatch)
 You can turn of labeling or plot specific values using the function arguments `style` and `labels`, for example (plots not rendered):
 
 ```{r, eval=FALSE}
-plot_phenology(WI_hatch,
-  style = "ef_cumsum"
-) # shows a plot with just the ef cumulative sum values
-plot_phenology(WI_hatch,
-  style = "ef_daily"
-) # shows a plot with just the ef daily values
-plot_phenology(WI_hatch,
-  labels = FALSE
-) # turns off the labeling for a cleaner figure
+ # shows a plot with just the ef cumulative sum values
+plot_phenology(WI_hatch, style = "ef_cumsum")
+# shows a plot with just the ef daily values
+plot_phenology(WI_hatch, style = "ef_daily") 
+# turns off the labeling for a cleaner figure
+plot_phenology(WI_hatch, labels = FALSE) 
 ```
 
 ## A note about negative temperatures {#negtemps}
 
-Occasionally, temperature data sets will have a few negative values or values very close to 0. Negative numbers below a certain threshold will output "not a number" (`NaN`) effective values because they are undefined in the model expression. Similarly, even negative values above that threshold will produce very small effective values. Because these values are so small, we allow the model to accumulate them even though development below 0 is biologically unlikely. We **assume** your data set has been checked for these values and doesn't include long periods of freezing, however the model allows for the occasional dip below freezing because the effect is so negligible toward development over incubation.
+Occasionally, temperature data sets will have a few negative values or values very close to 0. Negative numbers below a certain threshold will output "not a number" (`NaN`) effective values because they are undefined in the model expression and will break the function. Similarly, even negative values above that threshold will produce very small effective values. Because these values are so small, we allow the model to accumulate them even though development below 0 is biologically unlikely. We **assume** your data set has been checked for these values and doesn't include long periods of freezing, however the model allows for the occasional dip below freezing because the effect is so negligible toward development over incubation.
 
 A toy example of this phenomenon is shown below.
 
