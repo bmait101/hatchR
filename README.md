@@ -10,7 +10,7 @@
 
 **IN DEVELOPMENT**
 
-`hatchR` is an R package for predicting fish developmental phenology
+**hatchR** is an R package for predicting fish developmental phenology
 using statistical models. It is intended to bridge the analytic gap of
 taking statistical models developed in hatchery settings (e.g., Beacham
 and Murray 1990) and applying them to real world temperature data sets
@@ -18,9 +18,9 @@ using the effective value framework developed by Sparks et al. (2019).
 
 ## Citation
 
-If you use `hatchR` in a formal publication or report, please cite it.
-Citing `hatchR` lets us devote more resources to it in the future. View
-the `hatchR` citation by running
+If you use **hatchR** in a formal publication or report, please cite it.
+Citing **hatchR** lets us devote more resources to it in the future. View
+the **hatchR** citation by running
 
 ``` r
 citation(package = "hatchR")
@@ -28,7 +28,7 @@ citation(package = "hatchR")
 
 ## Installation Instructions
 
-You can install the development version of `hatchR` from
+You can install the development version of **hatchR** from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -36,15 +36,15 @@ You can install the development version of `hatchR` from
 pak::pak("bmait101/hatchR")
 ```
 
-## Contributing to `hatchR`
+## Contributing to **hatchR**
 
-We encourage users to report bugs and/or contribute to `hatchR`. For
+We encourage users to report bugs and/or contribute to **hatchR**. For
 more detail on how to do this, please see our contributing guide
 (`CONTRIBUTING.md`).
 
 ## Getting Help
 
-There are several ways to get help with `hatchR`:
+There are several ways to get help with **hatchR**:
 
 1.  Open a GitHub issue [link
     here](https://github.com/bmait101/hatchR/issues).
@@ -55,15 +55,15 @@ There are several ways to get help with `hatchR`:
 
 ## Example Usage
 
-Below we provide a brief example showing how to use `hatchR`. For a
+Below we provide a brief example showing how to use **hatchR**. For a
 thorough introduction to the software, see our introductory vignette
 [linked
 here](https://bmait101.github.io/hatchR/articles/Introduction.html). For
-a list of all functions available in `hatchR`, see our function
+a list of all functions available in **hatchR**, see our function
 reference [linked
 here](https://bmait101.github.io/hatchR/reference/index.html).
 
-First we load `hatchR` and helper packages by running
+First we load **hatchR** and helper packages by running
 
 ``` r
 library(hatchR)
@@ -71,7 +71,7 @@ library(ggplot2)  # for additional plotting options
 library(lubridate)  # for working with dates
 ```
 
-The example `woody_island` dataset is included in `hatchR` and contains
+The example `woody_island` dataset is included in **hatchR** and contains
 temperature data from Woody Island, Lake Iliamna, Alaska. It includes
 daily water temperature data from 1990-1992. We can use
 `plot_check_temp()` to visually check the data:
@@ -166,7 +166,7 @@ plot_phenology(WI_hatch)
 
 ## Suggested Packages
 
-`hatchR` suggests the following **R** packages:
+**hatchR** suggests the following **R** packages:
 
 - knitr: For vignette building.
 - readr: For reading in data.
@@ -180,7 +180,7 @@ This project is licensed under the GNU General Public License,
 
 ## USDA Disclaimer
 
-`hatchR` project code is provided on an “as is” basis and the user
+**hatchR** project code is provided on an “as is” basis and the user
 assumes responsibility for its use. USDA Forest Service has relinquished
 control of the information and no longer has responsibility to protect
 the integrity , confidentiality, or availability of the information. Any

@@ -5,7 +5,7 @@
 #' Generate your own custom parameterized models for predicting hatching and emergence phenology.
 #'
 #' @details
-#' `hatchR` also includes functionality to generate your own custom
+#' **hatchR** also includes functionality to generate your own custom
 #' parameterized models for predicting hatching and emergence phenology.
 #' Importantly, the custom parameterization relies on the model format
 #' developed from model 2 of Beacham and Murray (1990), which we chose

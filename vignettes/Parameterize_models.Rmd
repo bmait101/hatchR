@@ -29,12 +29,12 @@ library(ggplot2)
 
 # Overview
 
-This vignette describes the process of parameterizing models for predicting fish phenology using `hatchR`. The package provides two options for choosing phenological models:
+This vignette describes the process of parameterizing models for predicting fish phenology using **hatchR**. The package provides two options for choosing phenological models:
 
 1.  use model parameterizations included in the package
 2.  create custom parameterizations using your own data
 
-First, we load `hatchR`:
+First, we load **hatchR**:
 
 ```{r, eval = FALSE}
 library(hatchR)
@@ -42,11 +42,11 @@ library(hatchR)
 
 # Built-in parameterizations
 
-`hatchR` ships with built-in model parameterizations, which are included in the `model_table` object. This table includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], which can be selected using `model_select()`.
+**hatchR** ships with built-in model parameterizations, which are included in the `model_table` object. This table includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], which can be selected using `model_select()`.
 
 ## `model_table`
 
-`model_table` is loaded with `hatchR`, and is a tibble with 51 rows and 5 columns:
+`model_table` is loaded with **hatchR**, and is a tibble with 51 rows and 5 columns:
 
 ```{r}
 model_table
@@ -83,7 +83,7 @@ View(model_table)
 
 # Creating custom models
 
-`hatchR` also includes basic functionality to generate your own model parameterizations for predicting hatching and emergence phenology using your own data. **Importantly**, the this functionality implements ***model 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
+**hatchR** also includes basic functionality to generate your own model parameterizations for predicting hatching and emergence phenology using your own data. **Importantly**, the this functionality implements ***model 2*** of @beacham1990, which we chose because of its overall simplicity and negligible loss of accuracy. See @beacham1990 and @sparks2019 for more specific discussion regarding model 2 and the development of the effective value approach.
 
 The model follows the general format of:
 
@@ -99,7 +99,7 @@ The function `fit_model()` uses data where average incubation temperature (°C) 
 
 Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout *Salmo trutta*.
 
-You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble::tibble()` to create the data (which in installed with `hatchR`).
+You could either create a .csv file with those data and import them with `readr::read_csv()` or alternatively, directly input them as an object in R. We'll use `tibble::tibble()` to create the data (which in installed with **hatchR**).
 
 ```{r}
 # make a tibble of the two vectors
@@ -110,7 +110,7 @@ bt_data <- tibble::tibble(
 bt_data
 ```
 
-We can plot our data for a sanity check using `ggplot2` (installed with `hatchR`). First load the package:
+We can plot our data for a sanity check using `ggplot2` (installed with **hatchR**). First load the package:
 
 ```{r, eval=FALSE}
 library(ggplot2)

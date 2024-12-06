@@ -6,7 +6,7 @@
 #' different species from different studies built in. Refer to the
 #' table (`model_table`) before using function to find inputs for
 #' the different function arguments. It pulls the model format as a
-#' string and parses it to be usable in `hatchR` model.
+#' string and parses it to be usable in **hatchR** model.
 #'
 #' @param author Character string of author name.
 #' @param species Character string of species name.

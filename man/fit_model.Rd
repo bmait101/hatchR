@@ -24,7 +24,7 @@ data.frame, and plot of observations and model fit.
 Generate your own custom parameterized models for predicting hatching and emergence phenology.
 }
 \details{
-\code{hatchR} also includes functionality to generate your own custom
+\strong{hatchR} also includes functionality to generate your own custom
 parameterized models for predicting hatching and emergence phenology.
 Importantly, the custom parameterization relies on the model format
 developed from model 2 of Beacham and Murray (1990), which we chose
