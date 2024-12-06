@@ -38,7 +38,7 @@ Understanding the timing of key life history events is necessary for managing an
 
 # Introduction
 
-As primarily poikilothermic organisms, the development and growth of fishes is tightly linked with the temperature of their ambient environment. This close relationship has allowed researchers to generate statistical models that allow the prediction of developmental phenology with high accuracy and precision. These models were typically developed in aquaculture settings and their initial formulations were not applicable to wild populations because they assumed a constant temperature over the course of development @beacham1990 (**add more!**) . However, @sparks2019 reformulated this approach as an "Effective Value model", in which the input was daily average temperature after a parent spawned and fish would either hatch or emerge when effective values cumulatively summed to one.
+As primarily poikilothermic organisms, the development and growth of fishes is tightly linked with the temperature of their ambient environment. This close relationship has allowed researchers to generate statistical models that allow the prediction of developmental phenology with high accuracy and precision. These models were typically developed in aquaculture settings and their initial formulations were not applicable to wild populations because they assumed a constant temperature over the course of development [@beacham1990; @mcphail1979; @alderdice1978]. However, @sparks2019 reformulated this approach as an "Effective Value model", in which the input was daily average temperature after a parent spawned and fish would either hatch or emerge when effective values cumulatively summed to one.
 
 The resulting effective value approach has now been widely applied in Salmonids for which parameterizations from aquaculture were readily available—for example Pacific Salmon (*Oncorhynchus spp.*) models developed by @beacham1990 have been applied to various species and populations [@adelfio2024; @adelfio2019; @kaylor2021] while models developed for Bull Trout (*Salvelinus confluentus*) by @mcphail1979 were extended by @austin2019. Despite growing popularity, applications have been largely limited within Salmonids, presumably because parameterizations for such models already existed due to their wide use in aquaculture and their general popularity as sport and commercial fish.
 
@@ -50,7 +50,7 @@ To widen the user application of these methods, we distribute two user-interface
 
 # Package Overview
 
-`hatchR` is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice.
+`hatchR` is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of `hatchR` below, but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables.
 
 
 \begin{center}\includegraphics[width=5.68in,height=0.5\textheight]{flowchart} \end{center}
@@ -65,15 +65,31 @@ $$
 Effective Value_i = 1/exp(log_ea - log_e(Temperature_i - b))
 $$
 
-Where *i* is the daily value and a fish hatches or emerges when the cumulative sum reaches one: $$\sum_{i =1}^nEffectiveValue_i = 1$$
+Where *i* is the daily value and a fish hatches or emerges when the cumulative sum of effective values reaches one: $$\sum_{i =1}^nEffectiveValue_i = 1$$
 
-The effective value model framework is the basis for the phenological models in `hatchR`, both in the included `model_table` in the package (though the model table includes more complex models developed by @beacham1990) as well as for custom models users can fit with `fit_model()`. Specifically, `model_table` has been extended to include more parameterizations from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979).
+The effective value model framework is the basis for the phenological models in `hatchR`, both in the included `model_table` in the package (though `model_table` includes more complex models developed by @beacham1990), as well as for custom models users can fit with `fit_model()`. Specifically, `model_table` has includes parameterizations from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979).
 
 ## Data format
 
+Water temperature datasets collected for wild environments are often either 1.) already summarized by day (*i.e.*, mean daily temperature) or, 2.) in a raw format from something like a HOBO TidbiT where readings are taken multiple times per day, which can be summarized into a mean daily temperatures. Alternatively, new statistical models like that of @siegel2023 could be similarly implemented.
+
+Fundamentally, `hatchR` assumes you have input data with two columns: a date column, giving the date (and often time) of a temperature measurement, and a temperature column, giving the associated temperature measurement (in centigrade). Other columns are okay to include, but these two columns (with any column name—just *without* spaces) are required. We expect your data to look something like this:
+
+| date       | temperature |
+|------------|-------------|
+| 2000-01-01 | 2.51        |
+| ...        | ...         |
+| 2000-07-01 | 16.32       |
+| ...        | ...         |
+| 2000-12-31 | 3.13        |
+
+`hatchR` assumes you've checked for missing records or errors in your data as it *will function with gaps*, so it's important to go through the data checks discussed below, as well as your own validity checks. `hatchR` can use values down to freezing (e.g, 0 °C), which returns extremely small effective values, and time to hatch or emerge may be \> 1 year. In these cases, we suggest users consider how much of that data type is reasonable with their data.
+
+For users choosing to implement `hatchR` in program R, data can be imported from any format the user chooses, as long as users can eventually coerce their data into a `dataframe` or `tibble` format, in which each row represents a single record. For the Shiny application, users must have their data stored as a .csv (comma separated values) file for upload, which can easily be exported using datasheet software like Microsoft Excel or Google Sheets.
+
 ## Checking Data
 
-`hatchR` is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and `hatchR` includes functionality to summarize those data into a format that is usable, as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
+`hatchR` is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and `hatchR` includes functionality to summarize those data into a format that is usable, as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to user's attention.
 
 We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset with temperature readings every thirty minutes.
 
@@ -107,7 +123,7 @@ dim(year_sim)
 ## [1] 17568     2
 ```
 
-First, we recommend checking import data for any outliers or strange inputs using `plot_check_temp()`
+First, we recommend checking imported data for any outliers or strange inputs using `plot_check_temp()`
 
 
 ```r
@@ -182,9 +198,11 @@ model_table and fit_model
 
 fit_model for three non-salmonid specieslib
 
-Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for species beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+#### Fitting models for other fishes
 
-We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime.
+Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+
+We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure XXX).
 
 
 ```r
@@ -266,17 +284,134 @@ smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
 ## [1] 0.9217358
 ```
 
-We additionally provide the model estimates for hatch timing for each of the three species used to generate custom models in Figure XXX.
-
 ![](paper_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
 
 ## Predicting Phenology and Output
 
-Use woody example from website
+To illustrate model selection and phenology prediction we will recreate a small portion of the analysis done by @sparks2019 using the `woody_island` dataset included in this package . We will predict both hatch and emergence timing, so we will obtain a model expression for each using `model_select()`.
 
-show predict_phenology output slots
 
-show plot_phenology
+```r
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  dev.type = "hatch"
+  )
+
+sockeye_emerge_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  dev.type = "emerge"
+  )
+```
+
+We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
+
+
+```r
+WI_hatch <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
+  )
+```
+
+```
+## Warning: ! Fish developed, but negative temperature values resulted in NaNs after
+##   development.
+## i Check date(s): 1991-08-12
+## i Fish spawn date was: 1990-08-18
+```
+
+And then look inside the returned object to see days to hatch and development period:
+
+
+```r
+WI_hatch$days2done
+```
+
+```
+## [1] 74
+```
+
+```r
+WI_hatch$dev.period
+```
+
+```
+##        start       stop
+## 1 1990-08-18 1990-10-30
+```
+
+We can also do the same with emergence:
+
+
+```r
+WI_emerge <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_emerge_mod   # notice we're using emerge model expression here
+  )
+```
+
+```
+## Warning: ! Fish developed, but negative temperature values resulted in NaNs after
+##   development.
+## i Check date(s): 1991-08-12
+## i Fish spawn date was: 1990-08-18
+```
+
+```r
+# see days to hatch and development period
+WI_emerge$days2done
+```
+
+```
+## [1] 204
+```
+
+```r
+WI_emerge$dev.period
+```
+
+```
+##        start       stop
+## 1 1990-08-18 1991-03-09
+```
+
+#### Understanding your results
+
+The output from `predict_phenology()` includes a lot of information. If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
+
+
+```r
+str(WI_hatch)
+```
+
+`WI_hatch$days2done` outputs the predicted days to hatch or emerge.
+
+`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
+
+`WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
+
+`WI_hatch$ef.tibble` is a *n* x 4 tibble (*n* = number of days to hatch or emerge) and the columns are the date, each day's temperature and effective value, and the cumulative sum of the effective values. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+
+#### Plotting phenology
+
+**hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results. The plot visualizes three specific components: 1. )the temperature regime over which you are predicting, 2.) the cumulative sum of effective values, and 3.) the effective value for each day in your prediction span. The function allows you to output various figures based on your interests, but defaults to a figure with all information and the corresponding labels.
+
+
+```r
+plot_phenology(WI_hatch)
+```
+
+![](paper_files/figure-latex/unnamed-chunk-16-1.pdf)<!-- --> 
 
 # Case Study 1
 
