@@ -25,20 +25,35 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   if (labels == TRUE) {
     all_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to hatch/emerge"),
-      subtitle = paste("Fish spawned", dat$dev.period$start, "and hatched/emerged", dat$dev.period$stop, "\nblue = temp,  dark green = scaled cumulative ef_val, light green = daily ef_val(x100)")
+      title = paste(dat$days2done, "days to develop"),
+      subtitle = paste(
+        "Fish spawned",
+        dat$dev.period$start,
+        "and developed",
+        dat$dev.period$stop,
+        "\nblue = temp,  dark green = scaled cumulative ef_val, light green = daily ef_val(x100)")
     )
 
     ef_cumsum_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to hatch/emerge"),
-      subtitle = paste("Fish spawned", dat$dev.period$start, "and hatched/emerged", dat$dev.period$stop, "\nblue = temperature, green = scaled cumulative effective value")
+      title = paste(dat$days2done, "days to develop"),
+      subtitle = paste(
+        "Fish spawned",
+        dat$dev.period$start,
+        "and developed",
+        dat$dev.period$stop,
+        "\nblue = temperature, green = scaled cumulative effective value")
     )
 
     ef_daily_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to hatch/emerge"),
-      subtitle = paste("Fish spawned", dat$dev.period$start, "and hatched/emerged", dat$dev.period$stop, "\nblue = temperature,  green = daily effective value (x100)")
+      title = paste(dat$days2done, "days to develop"),
+      subtitle = paste(
+        "Fish spawned",
+        dat$dev.period$start,
+        "and developed",
+        dat$dev.period$stop,
+        "\nblue = temperature,  green = daily effective value (x100)")
     )
   }
 
