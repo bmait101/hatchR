@@ -61,7 +61,7 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
   model = 2,
-  dev.type = "hatch"
+  development_type = "hatch"
 )
 ```
 
@@ -211,14 +211,14 @@ bull_hatch_mod <- model_select(
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM",
-  dev.type = "hatch" # note we are using hatch model here
+  development_type = "hatch" # note we are using hatch model here
 )
 
 bull_emerge_mod <- model_select(
   author = "Austin et al. 2017",
   species = "bull trout",
   model = "MM",
-  dev.type = "emerge" # note we are using emerge model here
+  development_type = "emerge" # note we are using emerge model here
 )
 
 # set spawning dates in 2015
@@ -273,7 +273,7 @@ for (mod in c("hatch", "emerge")) { # loop for hatch and emerge
     author = "Austin et al. 2017",
     species = "bull trout",
     model = "MM",
-    dev.type = mod
+    development_type = mod
   )
 
   for (d in 1:length(spawn_dates)) { # nested loop over spawn dates

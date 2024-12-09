@@ -241,7 +241,7 @@ smallmouth <- smallmouth |>
 smb_mod <- fit_model(temp = smallmouth$temp_C,
                      days = smallmouth$days,
                      species = "smb",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 
 ### catfish mod
@@ -253,7 +253,7 @@ catfish$temp_C <- c(22,10,7)
 cat_mod <- fit_model(temp = catfish$temp_C,
                      days = catfish$days,
                      species = "catfish",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 ### lake sturgeon mod
 sturgeon <-  matrix(NA, 7, 2) |> data.frame()
@@ -267,7 +267,7 @@ sturgeon <- sturgeon |>
 sturgeon_mod <- fit_model(days = sturgeon$days,
                           temp = sturgeon$temp_C,
                           species = "sturgeon",
-                          dev.type = "hatch")
+                          development_type = "hatch")
 ```
 
 Note the model the *R^2^* fit from the models below. You can see the generally all preform well and are in line with values from model 2 of @beacham1990.
@@ -302,14 +302,14 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "hatch"
+  development_type = "hatch"
   )
 
 sockeye_emerge_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "emerge"
+  development_type = "emerge"
   )
 ```
 

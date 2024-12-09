@@ -5,7 +5,7 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
   model = 2,
-  dev.type = "hatch"
+  development_type = "hatch"
 )
 # predict phenology
 sockeye_hatch <- predict_phenology(
@@ -22,7 +22,7 @@ temp <- c(2, 5, 8, 11, 14)
 days <- c(194, 87, 54, 35, 28)
 hatch <- tibble::tibble(temp, days)
 hatch <- fit_model(df = hatch, temp = temp, days = days, species = "fish")
-hatch$func
+hatch$expression
 
 crooked_river$date <- as.character(crooked_river$date)
 crooked_river$date <- as.Date(crooked_river$date)

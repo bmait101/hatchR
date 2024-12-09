@@ -4,16 +4,16 @@
 \alias{model_select}
 \title{Select a development model structure}
 \usage{
-model_select(author, species, model, dev.type = "hatch")
+model_select(author, species, model_id, development_type = "hatch")
 }
 \arguments{
 \item{author}{Character string of author name.}
 
 \item{species}{Character string of species name.}
 
-\item{model}{Model number from Beacham and Murray (1990).}
+\item{model_id}{Model number from Beacham and Murray (1990).}
 
-\item{dev.type}{The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".}
+\item{development_type}{The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".}
 }
 \value{
 A data.frame giving model specifications to be passed to \code{predict_phenology()}.
@@ -33,8 +33,8 @@ library(hatchR)
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
-  model = 2,
-  dev.type = "hatch"
+  model_id = 2,
+  development_type = "hatch"
 )
 # print
 sockeye_hatch_mod

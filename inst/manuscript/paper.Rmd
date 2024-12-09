@@ -216,7 +216,7 @@ smallmouth <- smallmouth |>
 smb_mod <- fit_model(temp = smallmouth$temp_C,
                      days = smallmouth$days,
                      species = "smb",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 
 ### catfish mod
@@ -228,7 +228,7 @@ catfish$temp_C <- c(22,10,7)
 cat_mod <- fit_model(temp = catfish$temp_C,
                      days = catfish$days,
                      species = "catfish",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 ### lake sturgeon mod
 sturgeon <-  matrix(NA, 7, 2) |> data.frame()
@@ -242,7 +242,7 @@ sturgeon <- sturgeon |>
 sturgeon_mod <- fit_model(days = sturgeon$days,
                           temp = sturgeon$temp_C,
                           species = "sturgeon",
-                          dev.type = "hatch")
+                          development_type = "hatch")
 
 
 
@@ -264,14 +264,14 @@ smb_res <- predict_phenology(data = data_sim,
                   dates = date_sim,
                   temperature = temp_sim,
                   spawn.date = "2000-07-01",
-                  model = smb_mod$func)
+                  model = smb_mod$expression)
 
 # catfish
 catfish_res <- predict_phenology(data = data_sim,
                   dates = date_sim,
                   temperature = temp_sim,
                   spawn.date = "2000-07-01",
-                  model = cat_mod$func)
+                  model = cat_mod$expression)
 
 # sturgeon
 # note that 16 C is pretty far out of range of temps for model fit, not best practice
@@ -279,7 +279,7 @@ sturgeon_res <- predict_phenology(data = data_sim,
                   dates = date_sim,
                   temperature = temp_sim,
                   spawn.date = "2000-07-01",
-                  model = sturgeon_mod$func)
+                  model = sturgeon_mod$expression)
 
 # summary for all species
 all_res <- data.frame(matrix(NA, 3, 2))
@@ -321,7 +321,7 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "hatch"
+  development_type = "hatch"
   )
 ```
 
@@ -407,7 +407,7 @@ model_table |>
 bt_emerge_mod <- model_select(author = "Austin et al. 2017",
                             species = "bull trout",
                             model = "MM",
-                            dev.type = "emerge")
+                            development_type = "emerge")
 
 # predict emergence time using Sept. 30 as the spawn date 
 bt_emergence <- predict_phenology(data = EFS_data,

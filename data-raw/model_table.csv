@@ -1,4 +1,4 @@
-author,species,model,dev.type,func
+author,species,model_id,development_type,expression
 Beacham and Murray 1990,sockeye,2,hatch,1 /exp(6.727 - log(x + 2.394))
 Beacham and Murray 1990,sockeye,4,hatch,1/exp(8.734 + (-1.589*log(x + 7.067)))
 Beacham and Murray 1990,sockeye,5,hatch,1/exp(9.848 + (-1.583*log(x + 6.834)) + (-0.208*log(S)))

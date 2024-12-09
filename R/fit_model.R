@@ -17,7 +17,7 @@
 #' @param temp Numeric vector of temperatures
 #' @param days Numeric vector of days to hatch or emerge
 #' @param species Character string of species name (e.g., "sockeye")
-#' @param dev.type Character string of development type: "hatch" or "emerge"
+#' @param development_type Character string of development type: "hatch" or "emerge"
 #'
 #' @return List with fit model object, model coefficients, model specifications
 #' data.frame, and plot of observations and model fit.
@@ -31,8 +31,8 @@
 #' # vector of days to hatch
 #' days_to_hatch <- c(194, 87, 54, 35, 28)
 #' bt_hatch_mod <- fit_model(temp = temperature,
-#' days = days_to_hatch, species = "sockeye", dev.type = "hatch")
-fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
+#' days = days_to_hatch, species = "sockeye", development_type = "hatch")
+fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   df <- tibble::tibble(x = temp, y = days)
 
   # check if species is NULL
@@ -43,11 +43,11 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
       ))
   }
 
-  # check if dev.type is NULL
-  if (is.null(dev.type)) {
+  # check if development_type is NULL
+  if (is.null(development_type)) {
     cli::cli_abort(c(
-            "`dev.type` cannot be NULL",
-      "i" = "Provide a dev.type name using `dev.type = 'hatch' or `dev.type = 'emerge'`."
+            "`development_type` cannot be NULL",
+      "i" = "Provide a development_type name using `development_type = 'hatch' or `development_type = 'emerge'`."
     ))
   }
 
@@ -71,11 +71,11 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
   b <- stats::coef(m2)[2]
 
   # model expression and specs for predict_phenology()
-  func <- paste("1 / exp(", log_a, " - log(x + ", b * -1, "))", sep = "")
-  func <- tibble::tibble(
+  expression <- paste("1 / exp(", log_a, " - log(x + ", b * -1, "))", sep = "")
+  expression <- tibble::tibble(
     species = species,
-    dev.type = dev.type,
-    func = func
+    development_type = development_type,
+    expression = expression
     )
 
   # plot predictions and data --------------------------
@@ -121,7 +121,7 @@ fit_model <- function(temp, days, species = NULL, dev.type = NULL) {
     mse = mse,
     rmse = rmse,
     r_squared = r_squared,
-    func = func,
+    expression = expression,
     pred_plot = p_pred
   )
 

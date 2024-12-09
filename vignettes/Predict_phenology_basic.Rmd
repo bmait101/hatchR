@@ -86,21 +86,21 @@ If we just apply the model within the gray polygon we've drawn, the model should
 
 ## Model select
 
-Now that our temperature data is usable we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `dev.type`, which can be either "hatch" or "emerge".
+Now that our temperature data is usable we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
 
 ```{r}
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
   model = 2,
-  dev.type = "hatch"
+  development_type = "hatch"
 )
 
 sockeye_emerge_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
   model = 2,
-  dev.type = "emerge"
+  development_type = "emerge"
 )
 ```
 
@@ -211,7 +211,7 @@ x
 
 # get effective values for those temperatures
 # You can see the NaN warning that shows up in our past applications
-demo_ef_vals <- eval(parse(text = sockeye_hatch_mod$func))
+demo_ef_vals <- eval(parse(text = sockeye_hatch_mod$expression))
 demo_ef_vals
 
 # bring together as a tibble

@@ -10,8 +10,8 @@
 #'
 #' @param author Character string of author name.
 #' @param species Character string of species name.
-#' @param model Model number from Beacham and Murray (1990).
-#' @param dev.type The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".
+#' @param model_id Model number from Beacham and Murray (1990).
+#' @param development_type The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".
 #'
 #' @return A data.frame giving model specifications to be passed to `predict_phenology()`.
 #'
@@ -24,24 +24,20 @@
 #' sockeye_hatch_mod <- model_select(
 #'   author = "Beacham and Murray 1990",
 #'   species = "sockeye",
-#'   model = 2,
-#'   dev.type = "hatch"
+#'   model_id = 2,
+#'   development_type = "hatch"
 #' )
 #' # print
 #' sockeye_hatch_mod
 model_select <- function(author,
                          species,
-                         model,
-                         dev.type = "hatch") {
+                         model_id,
+                         development_type = "hatch") {
   mod <- model_table |>
     dplyr::filter(
       author == {{ author }} &
         species == {{ species }} &
-        model == {{ model }} &
-        dev.type == {{ dev.type }})
-  #   ) |>
-  #   dplyr::pull("func")
-  #
-  # mod <- parse(text = mod)
-  # return(mod)
+        model_id == {{ model_id }} &
+        development_type == {{ development_type }}
+    )
 }

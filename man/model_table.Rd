@@ -5,23 +5,23 @@
 \alias{model_table}
 \title{Table of phenology models}
 \format{
-Data frame
+Data frame with 5 columns:
 \describe{
-\item{author}{Short article citation}
+\item{author}{Author-year short citation}
 \item{species}{Species name}
-\item{model}{Model number from B&M}
-\item{dev.type}{Hatch or emergence}
-\item{func}{character string desciption of the function}
+\item{model_id}{Identification number for a model parameterization}
+\item{development_type}{Hatch or emergence}
+\item{expression}{character string of parameterized function expression}
 }
 }
 \source{
-To come...
+Beacham & Murray (1990), Sparks et al. (2019), Austin et al. (2019).
 }
 \usage{
 model_table
 }
 \description{
-Description to come...
+Table providing the model parameterizations for the phenology models.
 }
 \examples{
 model_table

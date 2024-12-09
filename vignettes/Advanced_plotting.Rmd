@@ -64,13 +64,13 @@ WI_mods <- map_df(
   species = "sockeye",
   model = 2
   ) |>
-  select(func)
+  select(expression)
 
 # make vector of spawn dates
 WI_spawn_dates <- c("1990-08-14", "1990-08-18", "1990-09-3")
 
 # make variables grid
-WI_var_grid <- expand_grid(model = WI_mods$func, spawn.date = WI_spawn_dates)
+WI_var_grid <- expand_grid(model = WI_mods$expression, spawn.date = WI_spawn_dates)
 
 
 
@@ -167,10 +167,10 @@ dev_mods <- map_df(
   species = "bull trout",
   model = "MM"
   ) |> 
-  select(func)
+  select(expression)
 
 # variable grid
-var_grid <- expand_grid(model = dev_mods$func, spawn.date = spawn_dates)
+var_grid <- expand_grid(model = dev_mods$expression, spawn.date = spawn_dates)
 
 
 ### multiple input mapping
@@ -307,7 +307,7 @@ Also, we're going to take a short cut with our mapping so we don't store all the
 
 ```{r}
 # make variable grid for pmap (we use dev_mods from previous example)
-spawn_grid <- expand_grid(model = dev_mods$func, spawn.date = fish_dates_str)
+spawn_grid <- expand_grid(model = dev_mods$expression, spawn.date = fish_dates_str)
 
 bull_trout_dist <- pmap(spawn_grid,
   predict_phenology,

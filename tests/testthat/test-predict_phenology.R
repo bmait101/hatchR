@@ -2,14 +2,14 @@ test_that("predict phenology works", {
   m <- model_select(
     author = "Beacham and Murray 1990",
     species = "sockeye",
-    model = 2,
-    dev.type = "hatch"
+    model_id = 2,
+    development_type = "hatch"
     )
   p <- suppressWarnings(predict_phenology(
     data = woody_island,dates = date,
     temperature = temp_c,
     spawn.date = "1990-08-18",
-    model = m$func
+    model = m$expression
     )
     )
 
