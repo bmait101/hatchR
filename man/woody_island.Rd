@@ -3,19 +3,16 @@
 \docType{data}
 \name{woody_island}
 \alias{woody_island}
-\title{Temperature Data from Lake Iliamna, Alaska}
+\title{Example dataset: Lake Iliamna, Alaska}
 \format{
-Data frame
+Data frame with columns:
 \describe{
-\item{author}{Short article citation}
-\item{species}{Species name}
-\item{model}{Model number from B&M}
-\item{dev.type}{Hatch or emergence}
-\item{func}{character string desciption of the function}
+\item{date}{Date measurement was taken.}
+\item{temp_c}{Temperature in degrees Celsius.}
 }
 }
 \source{
-To come...
+Sparks et al. (2019)
 }
 \usage{
 woody_island
@@ -25,5 +22,13 @@ Temperature Data from Lake Iliamna on Woody Island, Alaska
 }
 \examples{
 woody_island
+}
+\references{
+Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
+Schindler, D.E. (2019). Influences of spawning timing, water temperature,
+and climatic warming on early life history phenology in western
+Alaska sockeye salmon.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences},
+\bold{76(1)}, 123--135.
 }
 \keyword{datasets}
