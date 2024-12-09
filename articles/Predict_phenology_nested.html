@@ -103,9 +103,12 @@ years of data.</p>
 <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">isaak_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># idaho &lt;- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># idaho &lt;- idaho |&gt; na.omit()</span></span>
 <span></span>
-<span><span class="va">isaak_dat</span> <span class="op">&lt;-</span> <span class="va">isaak_dat</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#load rda file (because it is a very large datafile)</span></span>
+<span><span class="co"># load(here::here("data-raw", "Isaak_et_al_2018.rda"))</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="initial-checks">Initial Checks<a class="anchor" aria-label="anchor" href="#initial-checks"></a>
 </h4>
@@ -115,10 +118,10 @@ Boise, Payette, Clearwater, and upper Salmon River watersheds.</p>
 <p>To get started lets take a quick look at the data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># look at the first few rows</span></span>
-<span><span class="va">isaak_dat</span></span>
+<span><span class="va">idaho</span></span>
 <span></span>
 <span><span class="co"># count number of unique sites</span></span>
-<span><span class="va">isaak_dat</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">idaho</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
@@ -130,7 +133,7 @@ are generally not observed where mean August temperatures are above 13
 °C. So, we’ll first filter sites out for those cooler than 13 °C.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a vector of site names with temps at or below 13 C</span></span>
-<span><span class="va">bull_trout_sites</span> <span class="op">&lt;-</span> <span class="va">isaak_dat</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">bull_trout_sites</span> <span class="op">&lt;-</span> <span class="va">idaho</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">SampleDate</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co">#make a month column (numeric)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># filter out Aug.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># apply grouping by site</span></span>
@@ -143,16 +146,16 @@ are generally not observed where mean August temperatures are above 13
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bull_trout_sites</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create a dataset filtered on our bull trout sites</span></span>
-<span><span class="va">isaak_dat_bt</span> <span class="op">&lt;-</span> <span class="va">isaak_dat</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">idaho_bt</span> <span class="op">&lt;-</span> <span class="va">idaho</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">bull_trout_sites</span><span class="op">)</span> <span class="co"># only keep sites in our vector of bull trout sites</span></span>
 <span></span>
 <span><span class="co"># still lots of data!</span></span>
-<span><span class="va">isaak_dat_bt</span></span></code></pre></div>
+<span><span class="va">idaho_bt</span></span></code></pre></div>
 <p>Next we’ll want to do some data checks to make sure everything looks
 alright.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lets look at a couple individual sites</span></span>
-<span><span class="va">PIBO_1345</span> <span class="op">&lt;-</span> <span class="va">isaak_dat_bt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"PIBO_1345"</span><span class="op">)</span></span>
+<span><span class="va">PIBO_1345</span> <span class="op">&lt;-</span> <span class="va">idaho_bt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"PIBO_1345"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># looks nice</span></span>
 <span><span class="fu"><a href="../reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span><span class="va">PIBO_1345</span>,</span>
@@ -162,7 +165,7 @@ alright.</p>
 <span><span class="co"># order by sample date</span></span>
 <span><span class="va">PIBO_1345</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">SampleDate</span><span class="op">)</span></span>
 <span><span class="co"># looks like there are multiple records per day </span></span>
-<span><span class="co"># so we need to summarize those in the larger dataset (isaak_dat_bt)</span></span></code></pre></div>
+<span><span class="co"># so we need to summarize those in the larger dataset (idaho_bt)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="nested-dataframes">Nested Dataframes<a class="anchor" aria-label="anchor" href="#nested-dataframes"></a>
@@ -182,7 +185,7 @@ can do using the following code.</p>
 <p>First let’s just look at what nesting does before we actually make an
 object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">isaak_dat_bt</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">idaho_bt</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># we group by site</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># nest our grouped data</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -190,7 +193,7 @@ object.</p>
 data. The data column is actually a list and each row contains its own
 individual tibble (dataframe).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">isaak_summ_bt</span> <span class="op">&lt;-</span> <span class="va">isaak_dat_bt</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">isaak_summ_bt</span> <span class="op">&lt;-</span> <span class="va">idaho_bt</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
