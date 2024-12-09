@@ -1,7 +1,7 @@
 Package: hatchR
 Type: Package
 Title: Predict Fish Hatching and Emergence from Daily Temperature Data
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person(given = "Bryan", 
            family = "Maitland",
