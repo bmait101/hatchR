@@ -39,4 +39,5 @@ model_select <- function(author,
         model_id == {{ model_id }} &
         development_type == {{ development_type }}
     )
+  mod
 }
