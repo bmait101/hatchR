@@ -1,13 +1,13 @@
-#' Daily stream temperatures data
+#' Example dataset: Crooked River, Idaho
 #'
-#' Daily stream temperature data from the US Forest Service Rocky
-#' Mountain Research Station, Water and Watersheds Program.
+#' @description
+#' Daily stream temperature data from Crooked River, a tributary to the
+#' North Fork Boise River, Idaho.
 #'
-#' @source Dan Isaak, US Forest Service Rocky Mountain Research Station
+#' @source Dan Isaak, US Forest Service Rocky Mountain Research Station.
 #' @format Data frame with columns
 #' \describe{
-#' \item{SampleDate}{Date measurement was taken.}
-#' \item{site}{Site ID.}
+#' \item{date}{Date and time measurement was taken.}
 #' \item{temperture}{Temperature in degrees Celsius.}
 #' }
 #' @examples
