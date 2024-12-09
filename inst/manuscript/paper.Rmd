@@ -118,7 +118,8 @@ year_sim[1] <- dates
 set.seed(123)
 
 # take temps from a random normal dist with mean 10 sd 3 
-# for every date time combo in dates and append to column (temp) in year_sim
+# for every date time combo in dates and append to column (temp) 
+# in year_sim
 year_sim$temp <- rnorm(n = length(dates), mean = 10, sd = 3) %>%
   abs() 
 
@@ -181,7 +182,7 @@ fit_model for three non-salmonid specieslib
 
 #### Fitting models for other fishes
 
-Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*) from @webster1948, Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We provide parameterizations for three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. The parameterizations are for commonly cultured sport- and commercial fishes including Smallmouth Bass (*Micropterus dolomieu*) from @webster1948, Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
 
 We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure 3).
 
@@ -247,7 +248,7 @@ sturgeon_mod <- fit_model(days = sturgeon$days,
 
 ```
 
-Note the model the *R^2^* fit from the models below. You can see the generally all preform well and are in line with values from model 2 of @beacham1990.
+Note the *R^2^* fit from the models below. You can see they generally all preform well and are in line with values from model 2 of @beacham1990.
 
 ```{r}
 #model fits
@@ -322,14 +323,6 @@ sockeye_hatch_mod <- model_select(
   model = 2, 
   dev.type = "hatch"
   )
-
-sockeye_emerge_mod <- model_select(
-  author = "Beacham and Murray 1990", 
-  species = "sockeye", 
-  model = 2, 
-  dev.type = "emerge"
-  )
-
 ```
 
 We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
@@ -375,9 +368,9 @@ The output from `predict_phenology()` includes a lot of information. If we look 
 str(WI_hatch)
 ```
 
-`WI_hatch$days2done` outputs the predicted days to hatch or emerge.
+`WI_hatch$days2done` outputs the predicted days to develop.
 
-`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
+`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted todevelop.
 
 `WI_hatch$ef.vals` is a vector of each day's effective value as evaluated using whatever model is chosen.
 
