@@ -112,7 +112,7 @@ csv <- "
 read_csv(csv)
 ```
 
-If your dates are in a different format, you’ll need to use `col_types` plus `col_date()` or `col_datetime()` along with a standard date-time format (see [Table 17.1](https://r4ds.hadley.nz/datetimes.html#tbl-date-formats) in R for Data Science [@wickam2023] for a list of all date format options).
+If your dates are in a different format, you’ll need to use `col_types` plus `col_date()` or `col_datetime()` along with a standard date-time format (see [Table 17.1](https://r4ds.hadley.nz/datetimes.html#tbl-date-formats) in R for Data Science [@wickham2023] for a list of all date format options).
 
 #### From strings
 
