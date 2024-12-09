@@ -44,16 +44,22 @@ The resulting effective value approach has now been widely applied in Salmonids 
 
 To bridge the gap between the application of one-off effective value model applications within individual studies and the lack of parameterization for other species, we developed the software ecosystem, **hatchR**. Specifically, **hatchR** allows users to input standard raw or summarized temperature datasets that are commonly collected in wild settings, run basic checks on those data, use built-in parameterizations like those from @beacham1990 or @sparks2017, develop custom models from their own temperature and phenological data, and predict hatch and emergence timing using these models in the effective value framework.
 
-To widen the user application of these methods, we distribute two user-interfaces for **hatchR**. The first is a R package distributed via CRAN that allows users the most customizable application of these methods. The R package is especially powerful as it allows users to automate their analyses over multiple variables such as phenology type, multiple spawn dates, or different habitats with varying thermal regimes. These variable approaches are outlined in the package documentation on **hatchR**'s website. Alternatively, we also distribute a Shiny application in the form of an HTML-based web tool to interact with many of **hatchR**'s functions in a graphical-user-interface. The Shiny form trades-off some of automative power for user simplicity, while still allowing users to leverage much of the functionality of **hatchR**'s R package. Below, we present the basic overview of the software and multiple case studies of how it may be applied.
+To widen the user application of these methods, we distribute two user-interfaces for **hatchR**. The first is a R package distributed via CRAN that allows users the most customizable application of these methods. The R package is especially powerful as it allows users to automate their analyses over multiple variables such as phenology type, multiple spawn dates, or different habitats with varying thermal regimes. These variable approaches are outlined in the package documentation on **hatchR**'s website. Alternatively, we also distribute a Shiny application in the form of an HTML-based web tool to interact with many of **hatchR**'s functions in a graphical-user-interface. The Shiny form trades-off some of the automative power for user simplicity, while still allowing users to leverage much of the functionality of **hatchR**'s R package. Below, we present the basic overview of the software and multiple case studies of how it may be applied.
 
 
 
 # Package Overview
 
-**hatchR** is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of **hatchR** below, but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables. \>\>\>\>\>\>\> paper
+**hatchR** is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of **hatchR** below and include a visual representation of the full package workflow (Figure 1), but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables and making more complex plots.
 
+\begin{figure}
 
-\begin{center}\includegraphics[width=5.68in,height=0.5\textheight]{flowchart} \end{center}
+{\centering \includegraphics[width=5.68in,height=0.5\textheight]{flowchart} 
+
+}
+
+\caption{Generalized workflow for hatchR. Data actions are depicted with beige circles while functions are represented with white rectangles.}\label{fig:unnamed-chunk-3}
+\end{figure}
 
 ## Effective value models
 
@@ -89,7 +95,7 @@ For users choosing to implement **hatchR** in program R, data can be imported fr
 
 ## Checking Data
 
-**hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable, as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
+**hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable, as well as functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
 
 We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset with temperature readings every thirty minutes.
 
@@ -135,7 +141,7 @@ plot_check_temp(data = year_sim,
                 temp_max = 25)
 ```
 
-![](paper_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
+![Graphical output from plot_check_temp(), a visual data check tool in the package. Note that the upper (red) and lower (blue) bound lines  can be custom set by the user.](paper_files/figure-latex/unnamed-chunk-5-1.pdf) 
 
 There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data (though leave out the resulting plot for space efficiency in this manuscript).
 
@@ -284,7 +290,7 @@ smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
 ## [1] 0.9217358
 ```
 
-![](paper_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
+![Predicted days to hatch for Channel Catfish (blue), Lake Sturgeon (black), and Smallmouth Bass (green) using custom paramerizations from hatchR's fit_model() function. A simulated thermal regime with an ascending thermograph and a mean temperature of 16 °C is used to demonstate the different parameterizations. All fish spawn the same day, July 1.](paper_files/figure-latex/unnamed-chunk-10-1.pdf) 
 
 ## Predicting Phenology and Output
 
@@ -395,7 +401,7 @@ str(WI_hatch)
 plot_phenology(WI_hatch)
 ```
 
-![](paper_files/figure-latex/unnamed-chunk-16-1.pdf)<!-- --> 
+![Output from hatchR's function, plot_phenology(). The output is meant to provide a basic summary of your model using a single spawn date. Users are encouraged to visit the packages help page where articles demonstrate more advanced, custom plotting applications.](paper_files/figure-latex/unnamed-chunk-16-1.pdf) 
 
 # Case Study 1
 

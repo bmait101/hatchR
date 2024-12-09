@@ -56,9 +56,9 @@ library(tidyverse); library(hatchR)
 
 # Package Overview
 
-**hatchR** is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of **hatchR** below, but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables and making more complex plots.
+**hatchR** is meant to primarily be a tool for predicting phenology. In this sense, we mostly limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualization from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of **hatchR** below and include a visual representation of the full package workflow (Figure 1), but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables and making more complex plots.
 
-```{r echo = FALSE, out.height = '50%', fig.align = 'center'}
+```{r echo = FALSE, out.height = '50%', fig.align = 'center', fig.cap = "Generalized workflow for hatchR. Data actions are depicted with beige circles while functions are represented with white rectangles."}
 knitr::include_graphics("flowchart.png")
 ```
 
@@ -96,7 +96,7 @@ For users choosing to implement **hatchR** in program R, data can be imported fr
 
 ## Checking Data
 
-**hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable, as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
+**hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable, as well as functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to users' attention.
 
 We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset with temperature readings every thirty minutes.
 
@@ -129,7 +129,8 @@ dim(year_sim)
 
 First, we recommend checking imported data for any outliers or strange inputs using `plot_check_temp()`
 
-```{r}
+```{r, fig.cap = "Graphical output from plot_check_temp(), a visual data check tool in the package. Note that the upper (red) and lower (blue) bound lines  can be custom set by the user."}
+
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
@@ -180,9 +181,9 @@ fit_model for three non-salmonid specieslib
 
 #### Fitting models for other fishes
 
-Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*), Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
+Below, we demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. We include parameterizations for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*) from @webster1948, Channel Catfish (*Ictalurus punctatus*) from @small2001, and Lake Sturgeon (*Acipenser fulvescens*) from @smith2005.
 
-We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure XXX).
+We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure 3).
 
 ```{r}
 ###  make temp regime
@@ -254,7 +255,7 @@ smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
 
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap = "Predicted days to hatch for Channel Catfish (blue), Lake Sturgeon (black), and Smallmouth Bass (green) using custom paramerizations from hatchR's fit_model() function. A simulated thermal regime with an ascending thermograph and a mean temperature of 16 °C is used to demonstate the different parameterizations. All fish spawn the same day, July 1."}
 ### predict_phenology
 
 #smallmouth bass
@@ -384,9 +385,9 @@ str(WI_hatch)
 
 #### Plotting phenology
 
-**hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results. The plot visualizes three specific components: 1. )the temperature regime over which you are predicting, 2.) the cumulative sum of effective values, and 3.) the effective value for each day in your prediction span. The function allows you to output various figures based on your interests, but defaults to a figure with all information and the corresponding labels.
+**hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results (Figure 4). The plot visualizes three specific components: 1. )the temperature regime over which you are predicting, 2.) the cumulative sum of effective values, and 3.) the effective value for each day in your prediction span. The function allows you to output various figures based on your interests, but defaults to a figure with all information and the corresponding labels.
 
-```{r}
+```{r, fig.cap = "Output from hatchR's function, plot_phenology(). The output is meant to provide a basic summary of your model using a single spawn date. Users are encouraged to visit the packages help page where articles demonstrate more advanced, custom plotting applications."}
 plot_phenology(WI_hatch)
 ```
 
@@ -437,6 +438,14 @@ In this example we expect the last fish out of the gravel well before the June 1
 talk about how these models also represent local adaptation and heritable plasticity
 
 talk about how these models represent point estimates and that emergence and hatch will take the form of a distribution
+
+talk about how temperatures may not always reflect redd temperture
+
+talk about how other factors like oxygen or predator cues may change phenology
+
+talk about how these models could be extended for other development phases or to organisms that fit similar developmental patterns
+
+talk about how advanced users could fit their own models and provide their custom expression to predict_phenology for a really customized option.
 
 # Acknowledgements
 

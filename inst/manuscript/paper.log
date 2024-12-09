@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.9.11)  9 DEC 2024 08:47
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.9.11)  9 DEC 2024 09:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1079,9 +1079,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 523.
-
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1093,6 +1090,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [4]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 529.
 File: paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-5-1.pdf>
 
@@ -1108,11 +1107,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [5]
 
-LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 661.
-
-
-
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1123,6 +1117,11 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [6]
+
+LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 673.
+
+
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1194,24 +1193,35 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[12] (./paper.aux)
+[12]
+
+File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
+[13] (./paper.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-08-30>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: FE0E3ED997E3C7E5722E0BB1BE863740;1625.
+(rerunfilecheck)             Checksum: 5A17BEA023F870D8E610D0418701AD9E;1626.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37129 strings out of 476173
- 762745 string characters out of 5783591
- 1628919 words of memory out of 5000000
- 59139 multiletter control sequences out of 15000+600000
+ 37136 strings out of 476173
+ 762876 string characters out of 5783591
+ 1629084 words of memory out of 5000000
+ 59146 multiletter control sequences out of 15000+600000
  564957 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,13n,87p,1194b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (12 pages).
+Output written on paper.pdf (13 pages).
