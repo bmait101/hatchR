@@ -59,9 +59,13 @@ library(patchwork)
 # Data
 
 ```{r}
-isaak_dat <- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")
+# isaak_dat <- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")
+# 
+# isaak_dat <- isaak_dat |> na.omit()
 
-isaak_dat <- isaak_dat |> na.omit()
+#load rda file (because it is a very large datafile)
+load(here::here("data-raw", "Isaak_et_al_2018.rda"))
+
 ```
 
 
