@@ -10,3 +10,4 @@
 ^CONTRIBUTING\.md$
 ^inst/manuscript$
 ^inst/misc$
+^\.DS_Store$
