@@ -106,13 +106,13 @@ is a tibble with 51 rows and 5 columns:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_table</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 51 × 5</span></span></span>
-<span><span class="co">#&gt;   author                  species model dev.type func                           </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394)) </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Beacham and Murray 1990 sockeye 4     hatch    1/exp(8.734 + (-1.589*log(x + …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Beacham and Murray 1990 sockeye 5     hatch    1/exp(9.848 + (-1.583*log(x + …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Beacham and Murray 1990 sockeye 7     hatch    1/exp(5.379 + (-0.076*log(x)) …</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Beacham and Murray 1990 sockeye 2     emerge   1 / exp(7.227 - log(x + 2.56)) </span></span>
+<span><span class="co">#&gt;   author                  species model_id development_type expression          </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2        hatch            1 /exp(6.727 - log(…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Beacham and Murray 1990 sockeye 4        hatch            1/exp(8.734 + (-1.5…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Beacham and Murray 1990 sockeye 5        hatch            1/exp(9.848 + (-1.5…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Beacham and Murray 1990 sockeye 7        hatch            1/exp(5.379 + (-0.0…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Beacham and Murray 1990 sockeye 2        emerge           1 / exp(7.227 - log…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 46 more rows</span></span></span></code></pre></div>
 <ul>
 <li>
@@ -125,10 +125,10 @@ for</li>
 <code>model</code>: the model ID (if multiple model
 parameterizations were built (<em>e.g.</em>, <span class="citation">Beacham and Murray (1990)</span>))</li>
 <li>
-<code>dev.type</code>: the phenological development type
+<code>development_type</code>: the phenological development type
 (<em>i.e.</em>, hatch or emerge)</li>
 <li>
-<code>func</code>: a character string defining the model
+<code>expression</code>: a character string defining the model
 parameterization</li>
 </ul>
 </div>
@@ -137,23 +137,23 @@ parameterization</li>
 <code>model_select()</code><a class="anchor" aria-label="anchor" href="#model_select"></a>
 </h3>
 <p>You will use <code>author</code>, <code>species</code>,
-<code>model</code>, and <code>dev.type</code> to select model functions.
-For instance, if you wanted to access the parameterization for sockeye
-hatching using model #2 from <span class="citation">Beacham and Murray
-(1990)</span>, you would run:</p>
+<code>model</code>, and <code>development_type</code> to select model
+functions. For instance, if you wanted to access the parameterization
+for sockeye hatching using model #2 from <span class="citation">Beacham
+and Murray (1990)</span>, you would run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>, </span>
 <span>  species <span class="op">=</span> <span class="st">"sockeye"</span>, </span>
 <span>  model <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span></span>
+<span>  development_type <span class="op">=</span> <span class="st">"hatch"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">sockeye_hatch_mod</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394))</span></span></code></pre></div>
+<span><span class="co">#&gt;   author                  species model_id development_type expression          </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2        hatch            1 /exp(6.727 - log(…</span></span></code></pre></div>
 <p>Note, that the above arguments are equivalent to the first line and
 four columns from <code>model_table</code>. Your model function
 object—in this case <code>sockeye_hatch_mod</code>—can then be passed to
@@ -230,7 +230,7 @@ functions in <strong>hatchR</strong>.</p>
 <code class="sourceCode R"><span><span class="va">bt_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">bt_data</span><span class="op">$</span><span class="va">temperature</span>, </span>
 <span>                    days <span class="op">=</span> <span class="va">bt_data</span><span class="op">$</span><span class="va">days_to_hatch</span>, </span>
 <span>                    species <span class="op">=</span> <span class="st">"brown_trout"</span>, </span>
-<span>                    dev.type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
+<span>                    development_type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
 <p>The output of <code><a href="../reference/fit_model.html">fit_model()</a></code> is a list with numerous
 elements, including the full model, coefficients for
 <em>log<sub>e</sub>a</em> and <em>b</em>, the expression you will pass
@@ -265,26 +265,26 @@ using:</p>
 <span><span class="co">#&gt; $r_squared</span></span>
 <span><span class="co">#&gt; [1] 0.9979987</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $func</span></span>
+<span><span class="co">#&gt; $expression</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
-<span><span class="co">#&gt;   species     dev.type func                                                  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brown_trout hatch    1 / exp(6.08487164651134 - log(x + 0.258236059077016))</span></span>
+<span><span class="co">#&gt;   species     development_type expression                                       </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brown_trout hatch            1 / exp(6.08487164651134 - log(x + 0.25823605907…</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pred_plot</span></span></code></pre></div>
 <p><img src="Parameterize_models_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The vast majority of the time, what you will want is the actual
 expression with parameter estimates for use in the
 <code>model = ...</code> argument of <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>.
-This is stored in the <code>func</code> element of the list, which is a
-tibble giving the species, development type, and the parameterized model
-expression.</p>
+This is stored in the <code>expression</code> element of the list, which
+is a tibble giving the species, development type, and the parameterized
+model expression.</p>
 <p>You can either pass this tibble directly with the <code>$</code>
-operator by calling <code>$func</code> element of the list (e.g.,
-<code>model = bt_fit$func</code>) or set as an object to pass, like
-so:</p>
+operator by calling <code>$expression</code> element of the list (e.g.,
+<code>model = bt_fit$expression</code>) or set as an object to pass,
+like so:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_fit</span><span class="op">$</span><span class="va">func</span></span>
+<code class="sourceCode R"><span><span class="va">bt_hatch_exp</span> <span class="op">&lt;-</span> <span class="va">bt_fit</span><span class="op">$</span><span class="va">expression</span></span>
 <span><span class="va">bt_hatch_exp</span></span></code></pre></div>
 <p><code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> will extract the expression from the
 object and use it to predict phenology. We will demonstrate this in the

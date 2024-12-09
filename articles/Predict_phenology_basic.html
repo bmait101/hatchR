@@ -163,34 +163,35 @@ model should work just fine.</p>
 We’ll predict both hatch and emergence, so we will obtain a model
 expression for each using <code><a href="../reference/model_select.html">model_select()</a></code>. The only argument
 in <code><a href="../reference/model_select.html">model_select()</a></code> that must be changed in this case is
-<code>dev.type</code>, which can be either “hatch” or “emerge”.</p>
+<code>development_type</code>, which can be either “hatch” or
+“emerge”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"sockeye"</span>,</span>
 <span>  model <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span></span>
+<span>  development_type <span class="op">=</span> <span class="st">"hatch"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sockeye_emerge_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"sockeye"</span>,</span>
 <span>  model <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"emerge"</span></span>
+<span>  development_type <span class="op">=</span> <span class="st">"emerge"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Let’s look at the model specifications for the two different
 parameterizations we’ve selected:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     hatch    1 /exp(6.727 - log(x + 2.394))</span></span>
+<span><span class="co">#&gt;   author                  species model_id development_type expression          </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2        hatch            1 /exp(6.727 - log(…</span></span>
 <span><span class="va">sockeye_emerge_mod</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   author                  species model dev.type func                          </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2     emerge   1 / exp(7.227 - log(x + 2.56))</span></span></code></pre></div>
+<span><span class="co">#&gt;   author                  species model_id development_type expression          </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Beacham and Murray 1990 sockeye 2        emerge           1 / exp(7.227 - log…</span></span></code></pre></div>
 <p>You can see they are parameterized slightly different to account for
 the differences between hatch and emergence timing.</p>
 </div>
@@ -224,7 +225,7 @@ development period (more on this in the <a href="#results">Understanding
 your results</a> section)</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">WI_hatch</span><span class="op">$</span><span class="va">days2done</span></span>
-<span><span class="co">#&gt; [1] 74</span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="va">WI_hatch</span><span class="op">$</span><span class="va">dev.period</span></span>
 <span><span class="co">#&gt;        start       stop</span></span>
 <span><span class="co">#&gt; 1 1990-08-18 1990-10-30</span></span></code></pre></div>
@@ -243,7 +244,7 @@ your results</a> section)</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fish spawn date was: 1990-08-18</span></span>
 <span></span>
 <span><span class="va">WI_emerge</span><span class="op">$</span><span class="va">days2done</span></span>
-<span><span class="co">#&gt; [1] 204</span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="va">WI_emerge</span><span class="op">$</span><span class="va">dev.period</span></span>
 <span><span class="co">#&gt;        start       stop</span></span>
 <span><span class="co">#&gt; 1 1990-08-18 1991-03-09</span></span></code></pre></div>
@@ -255,11 +256,11 @@ your results</a> section)</p>
 information. Here is a summary of the elements in the output list.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">WI_hatch</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             Length Class       Mode   </span></span>
-<span><span class="co">#&gt; days2done   1      -none-      numeric</span></span>
-<span><span class="co">#&gt; dev.period  2      data.frame  list   </span></span>
-<span><span class="co">#&gt; ef.tibble   5      tbl_df      list   </span></span>
-<span><span class="co">#&gt; model.specs 5      spec_tbl_df list</span></span></code></pre></div>
+<span><span class="co">#&gt;                 Length Class       Mode   </span></span>
+<span><span class="co">#&gt; days_to_develop 1      -none-      numeric</span></span>
+<span><span class="co">#&gt; dev.period      2      data.frame  list   </span></span>
+<span><span class="co">#&gt; ef_table        5      tbl_df      list   </span></span>
+<span><span class="co">#&gt; model_specs     5      spec_tbl_df list</span></span></code></pre></div>
 <p>We can access each element using the <code>$</code> operator:</p>
 <ul>
 <li><p><code>WI_hatch$days2done</code> outputs the predicted days to
@@ -339,7 +340,7 @@ so negligible toward development over incubation.</p>
 <span></span>
 <span><span class="co"># get effective values for those temperatures</span></span>
 <span><span class="co"># You can see the NaN warning that shows up in our past applications</span></span>
-<span><span class="va">demo_ef_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/parse.html" class="external-link">parse</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sockeye_hatch_mod</span><span class="op">$</span><span class="va">func</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">demo_ef_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/parse.html" class="external-link">parse</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sockeye_hatch_mod</span><span class="op">$</span><span class="va">expression</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">demo_ef_vals</span></span>
 <span><span class="co">#&gt;  [1]         NaN         NaN         NaN         NaN         NaN         NaN</span></span>
 <span><span class="co">#&gt;  [7] 0.000472060 0.001071121 0.001670182 0.002269243 0.002868304 0.003467365</span></span>

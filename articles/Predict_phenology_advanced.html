@@ -115,8 +115,8 @@ parameterized as we did previously.</p>
 <code class="sourceCode R"><span><span class="va">sockeye_hatch_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Beacham and Murray 1990"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"sockeye"</span>,</span>
-<span>  model <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span></span>
+<span>  model_id <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  development_type <span class="op">=</span> <span class="st">"hatch"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now we can automate the model. We’ll demonstrate two ways—a loop and
 a vectorized approach.</p>
@@ -162,32 +162,32 @@ run through each element of the <code>woody_island</code> dataset.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">OUT_loop_all</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
@@ -195,12 +195,12 @@ run through each element of the <code>woody_island</code> dataset.</p>
 hatch:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">OUT_loop_d2h</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
-<span><span class="co">#&gt;   spawn_date days_2_hatch</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1990-08-14           71</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1990-08-18           74</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-09-3           110</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
+<span><span class="co">#&gt;   spawn_date</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1990-08-14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1990-08-18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-09-3</span></span></code></pre></div>
 <p>If you don’t want the full output of each run of
 <code>predict_phenolgy()</code> and you just for example want the
 predicted days to hatch, then it’s easier to access those elements
@@ -238,38 +238,38 @@ Science and Advanced R.</p>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_map</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
 <span></span>
 <span><span class="co"># we can then access days to hatch easily as such</span></span>
-<span><span class="va">results_map</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
+<span><span class="va">results_map</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days_to_develop"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1]  71  74 110</span></span></code></pre></div>
 </div>
 <div class="section level5">
@@ -300,32 +300,32 @@ output the same results:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_lapply</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span></code></pre></div>
@@ -392,14 +392,14 @@ enough data to hatch and emerge.</p>
 <span>  author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"hatch"</span> <span class="co"># note we are using hatch model here</span></span>
+<span>  development_type <span class="op">=</span> <span class="st">"hatch"</span> <span class="co"># note we are using hatch model here</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bull_emerge_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_select.html">model_select</a></span><span class="op">(</span></span>
 <span>  author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>  species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span>,</span>
-<span>  dev.type <span class="op">=</span> <span class="st">"emerge"</span> <span class="co"># note we are using emerge model here</span></span>
+<span>  development_type <span class="op">=</span> <span class="st">"emerge"</span> <span class="co"># note we are using emerge model here</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># set spawning dates in 2015</span></span>
@@ -467,7 +467,7 @@ as follows:</p>
 <span>    author <span class="op">=</span> <span class="st">"Austin et al. 2017"</span>,</span>
 <span>    species <span class="op">=</span> <span class="st">"bull trout"</span>,</span>
 <span>    model <span class="op">=</span> <span class="st">"MM"</span>,</span>
-<span>    dev.type <span class="op">=</span> <span class="va">mod</span></span>
+<span>    development_type <span class="op">=</span> <span class="va">mod</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">d</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">spawn_dates</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span> <span class="co"># nested loop over spawn dates</span></span>
@@ -510,15 +510,7 @@ do so. However, those results are easily accessed by map, like so:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_results</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">:::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span>
 <span><span class="va">mapped_results</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,621 × 5</span></span></span>
-<span><span class="co">#&gt;   index dates               temperature ef_vals ef_cumsum</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   275 2011-09-01 <span style="color: #949494;">00:00:00</span>        6.65  0.014<span style="text-decoration: underline;">8</span>    0.014<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   276 2011-09-02 <span style="color: #949494;">00:00:00</span>        6.45  0.014<span style="text-decoration: underline;">4</span>    0.029<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   277 2011-09-03 <span style="color: #949494;">00:00:00</span>        6.46  0.014<span style="text-decoration: underline;">4</span>    0.043<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   278 2011-09-04 <span style="color: #949494;">00:00:00</span>        6.66  0.014<span style="text-decoration: underline;">8</span>    0.058<span style="text-decoration: underline;">4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   279 2011-09-05 <span style="color: #949494;">00:00:00</span>        6.88  0.015<span style="text-decoration: underline;">2</span>    0.073<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,616 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 0</span></span></span></code></pre></div>
 <p>The above code outputs the <code>ef.tibble</code> element from every
 one of your lists from each combination of spawn date and phenology type
 into a dataframe like object which can then easily be plotted. Notice,
@@ -583,8 +575,8 @@ exclusively with mapping.</p>
 iterating over multiple variables, let’s verify our results match.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># loop predictions</span></span>
-<span><span class="va">preds_loop</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
-<span><span class="va">preds_pmap</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
+<span><span class="va">preds_loop</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days_to_develop"</span><span class="op">)</span></span>
+<span><span class="va">preds_pmap</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days_to_develop"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># everything matches!</span></span>
 <span><span class="va">preds_loop</span> <span class="op">==</span> <span class="va">preds_pmap</span></span>
@@ -606,7 +598,7 @@ plotting.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get predictions</span></span>
 <span><span class="va">days</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days2done"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days_to_develop"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># make a vector of what type of phenology we were predicting</span></span>
 <span><span class="co"># remember we ran hatch over 15 spawn dates then emerge over thos same 15</span></span>
@@ -668,7 +660,7 @@ alternatively, the developmental period.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the tibble with all temperature and effective values for each phenological period</span></span>
 <span><span class="va">all_data</span> <span class="op">&lt;-</span> <span class="va">crooked_predictions</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef_table"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   index dates               temperature ef_vals ef_cumsum</span></span>
@@ -715,32 +707,32 @@ which you would pipe into your mapping function.</p>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">WI_named_list</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ 1990-08-14:List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 71</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 71</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-14"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-23"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [71 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ 1990-08-18:List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 74</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 74</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-08-18"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-10-30"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [74 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
 <span><span class="co">#&gt;  $ 1990-09-3 :List of 4</span></span>
-<span><span class="co">#&gt;   ..$ days2done  : int 110</span></span>
-<span><span class="co">#&gt;   ..$ dev.period :'data.frame':  1 obs. of  2 variables:</span></span>
+<span><span class="co">#&gt;   ..$ days_to_develop: int 110</span></span>
+<span><span class="co">#&gt;   ..$ dev.period     :'data.frame':  1 obs. of  2 variables:</span></span>
 <span><span class="co">#&gt;   .. ..$ start: Date[1:1], format: "1990-09-03"</span></span>
 <span><span class="co">#&gt;   .. ..$ stop : Date[1:1], format: "1990-12-21"</span></span>
-<span><span class="co">#&gt;   ..$ ef.tibble  : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ model.specs: spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ ef_table       : tibble [110 × 5] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ model_specs    : spc_tbl_ [1 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "spec")=List of 3</span></span>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
