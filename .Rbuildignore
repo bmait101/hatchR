@@ -8,3 +8,5 @@
 ^pkgdown$
 ^\.github$
 ^CONTRIBUTING\.md$
+^inst/manuscript$
+^inst/misc$
