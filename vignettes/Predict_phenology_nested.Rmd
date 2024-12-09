@@ -59,12 +59,12 @@ library(patchwork)
 # Data
 
 ```{r}
-# isaak_dat <- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")
+# idaho <- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")
 # 
-# isaak_dat <- isaak_dat |> na.omit()
+# idaho <- idaho |> na.omit()
 
 #load rda file (because it is a very large datafile)
-load(here::here("data-raw", "Isaak_et_al_2018.rda"))
+# load(here::here("data-raw", "Isaak_et_al_2018.rda"))
 
 ```
 
@@ -79,10 +79,10 @@ To get started lets take a quick look at the data.
 
 ```{r}
 # look at the first few rows
-isaak_dat
+idaho
 
 # count number of unique sites
-isaak_dat |> 
+idaho |> 
   pull(site) |>
   unique() |> 
   length() 
@@ -95,7 +95,7 @@ For this application, we'll be thinking about these sites at putative bull trout
 
 ```{r}
 # create a vector of site names with temps at or below 13 C
-bull_trout_sites <- isaak_dat |> 
+bull_trout_sites <- idaho |> 
   mutate(month = month(SampleDate)) |> #make a month column (numeric)
   filter(month == 8) |> # filter out Aug.
   group_by(site) |> # apply grouping by site
@@ -108,18 +108,18 @@ bull_trout_sites <- isaak_dat |>
 length(bull_trout_sites)
 
 # create a dataset filtered on our bull trout sites
-isaak_dat_bt <- isaak_dat |> 
+idaho_bt <- idaho |> 
   filter(site %in% bull_trout_sites) # only keep sites in our vector of bull trout sites
 
 # still lots of data!
-isaak_dat_bt
+idaho_bt
 ```
 
 Next we'll want to do some data checks to make sure everything looks alright.
 
 ```{r}
 # lets look at a couple individual sites
-PIBO_1345 <- isaak_dat_bt |> filter(site == "PIBO_1345")
+PIBO_1345 <- idaho_bt |> filter(site == "PIBO_1345")
 
 # looks nice
 plot_check_temp(PIBO_1345,
@@ -129,7 +129,7 @@ plot_check_temp(PIBO_1345,
 # order by sample date
 PIBO_1345 |> arrange(SampleDate)
 # looks like there are multiple records per day 
-# so we need to summarize those in the larger dataset (isaak_dat_bt)
+# so we need to summarize those in the larger dataset (idaho_bt)
 
 ```
 
@@ -142,7 +142,7 @@ In this first example we want to summarize our data by day, which we can do usin
 First let's just look at what nesting does before we actually make an object.
 
 ```{r}
-isaak_dat_bt |> 
+idaho_bt |> 
   group_by(site) |>  # we group by site
   nest() |> # nest our grouped data
   head()
@@ -151,7 +151,7 @@ isaak_dat_bt |>
 The resulting data structure is tibble with a new data column called data. The data column is actually a list and each row contains its own individual tibble (dataframe).
 
 ```{r}
-isaak_summ_bt <- isaak_dat_bt |> 
+isaak_summ_bt <- idaho_bt |> 
   group_by(site) |> 
   nest() |> 
   mutate(
