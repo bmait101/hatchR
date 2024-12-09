@@ -75,8 +75,6 @@ Bryan M. Maitland</h4>
 
     
     
-<p><strong>CURRENTLY NOT RENDERED WITH CODE - MUST UPLOAD
-DATAFILE</strong></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
@@ -89,87 +87,109 @@ years of data.</p>
 <p>First, we load packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggridges/" class="external-link">ggridges</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
-</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># idaho &lt;- read_csv("C:/Users/BryanMaitland/OneDrive - USDA/Projects/hatchR/data/Isaak_et_al_2018_long.csv")</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># idaho &lt;- idaho |&gt; na.omit()</span></span>
-<span></span>
-<span><span class="co">#load rda file (because it is a very large datafile)</span></span>
-<span><span class="co"># load(here::here("data-raw", "Isaak_et_al_2018.rda"))</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="initial-checks">Initial Checks<a class="anchor" aria-label="anchor" href="#initial-checks"></a>
-</h4>
-<p>These data are downloaded (and modified to long format) from <span class="citation">Isaak et al. (2018)</span> and generally cover the
-Boise, Payette, Clearwater, and upper Salmon River watersheds.</p>
-<!-- ![Figure 1 from Isaak et al. 2018.](images/Screenshot%202024-11-20%20at%209.46.14%20AM.png){width="331"} -->
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span>      <span class="co"># for mapping functions</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>      <span class="co"># for nesting data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>      <span class="co"># for data manipulation</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>  <span class="co"># for date manipulation</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>    <span class="co"># for plotting</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggridges/" class="external-link">ggridges</a></span><span class="op">)</span>   <span class="co"># for plotting</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+</h3>
+<p>We’ll use a dataset of water temperature data from Central Idaho.
+These data are downloaded (and modified to long format) from <span class="citation">Isaak et al. (2018)</span> and generally cover the
+Boise, Payette, Clearwater, and upper Salmon River watersheds. The map
+below shows the locations of 226 water temperature monitoring sites
+overlaid on an August stream temperature scenario for the 29 600 km
+network in the study area.</p>
+<p><img src="img%2Fisaak-2019.png" height="70%" style="display: block; margin: auto;"></p>
 <p>To get started lets take a quick look at the data.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># look at the first few rows</span></span>
 <span><span class="va">idaho</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 773,681 × 3</span></span></span>
+<span><span class="co">#&gt;   date                site      temp_c</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1346   0.53</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1350   0.47</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1368   0.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1375   0.33</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 773,676 more rows</span></span></span>
 <span></span>
 <span><span class="co"># count number of unique sites</span></span>
 <span><span class="va">idaho</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 226</span></span></code></pre></div>
 <p>You can see there are 226 sites with 773,681 individual records of
 water temperature.</p>
 <p>For this application, we’ll be thinking about these sites at putative
 bull trout (<em>Salvelinus conflentus</em>) spawning habitat. Bull trout
 are generally not observed where mean August temperatures are above 13
 °C. So, we’ll first filter sites out for those cooler than 13 °C.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a vector of site names with temps at or below 13 C</span></span>
 <span><span class="va">bull_trout_sites</span> <span class="op">&lt;-</span> <span class="va">idaho</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">SampleDate</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co">#make a month column (numeric)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co">#make a month column (numeric)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># filter out Aug.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># apply grouping by site</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_aug_temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">temperature</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_aug_temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">temp_c</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">mean_aug_temp</span> <span class="op">&lt;=</span> <span class="fl">13</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># keep only sites 13 C or cooler</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># we now have a list of 139 sites</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">bull_trout_sites</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 139</span></span>
 <span></span>
-<span><span class="co"># create a dataset filtered on our bull trout sites</span></span>
+<span><span class="co"># only keep sites in our vector of bull trout sites</span></span>
 <span><span class="va">idaho_bt</span> <span class="op">&lt;-</span> <span class="va">idaho</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">bull_trout_sites</span><span class="op">)</span> <span class="co"># only keep sites in our vector of bull trout sites</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">bull_trout_sites</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># still lots of data!</span></span>
-<span><span class="va">idaho_bt</span></span></code></pre></div>
+<span><span class="va">idaho_bt</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 473,595 × 3</span></span></span>
+<span><span class="co">#&gt;   date                site      temp_c</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1346   0.53</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1350   0.47</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1368   0.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1375   0.33</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 473,590 more rows</span></span></span></code></pre></div>
 <p>Next we’ll want to do some data checks to make sure everything looks
 alright.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lets look at a couple individual sites</span></span>
 <span><span class="va">PIBO_1345</span> <span class="op">&lt;-</span> <span class="va">idaho_bt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"PIBO_1345"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># looks nice</span></span>
 <span><span class="fu"><a href="../reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span><span class="va">PIBO_1345</span>,</span>
-<span>                dates <span class="op">=</span> <span class="va">SampleDate</span>,</span>
-<span>                temperature <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span></span>
-<span></span>
+<span>                dates <span class="op">=</span> <span class="va">date</span>,</span>
+<span>                temperature <span class="op">=</span> <span class="va">temp_c</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Predict_phenology_nested_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># order by sample date</span></span>
-<span><span class="va">PIBO_1345</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">SampleDate</span><span class="op">)</span></span>
+<span><span class="va">PIBO_1345</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,601 × 3</span></span></span>
+<span><span class="co">#&gt;   date                site      temp_c</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2010-12-01 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2010-12-02 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2010-12-02 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2010-12-03 <span style="color: #949494;">00:00:00</span> PIBO_1345   0.06</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,596 more rows</span></span></span>
 <span><span class="co"># looks like there are multiple records per day </span></span>
 <span><span class="co"># so we need to summarize those in the larger dataset (idaho_bt)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="nested-dataframes">Nested Dataframes<a class="anchor" aria-label="anchor" href="#nested-dataframes"></a>
-</h4>
+</div>
+<div class="section level2">
+<h2 id="nested-dataframes">Nested Dataframes<a class="anchor" aria-label="anchor" href="#nested-dataframes"></a>
+</h2>
 <p>The package <strong>tidyr</strong> allows us to use a functionality
 called nested data (<code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">tidyr::nest()</a></code>). For our datatset, we
 can think of it in terms of a dataframe made up of a bunch of smaller
@@ -188,7 +208,17 @@ object.</p>
 <code class="sourceCode R"><span><span class="va">idaho_bt</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># we group by site</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># nest our grouped data</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [6]</span></span></span>
+<span><span class="co">#&gt;   site      data                </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIBO_1345 <span style="color: #949494;">&lt;tibble [3,601 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PIBO_1346 <span style="color: #949494;">&lt;tibble [3,570 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> PIBO_1350 <span style="color: #949494;">&lt;tibble [3,571 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> PIBO_1368 <span style="color: #949494;">&lt;tibble [3,581 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PIBO_1375 <span style="color: #949494;">&lt;tibble [3,582 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span></code></pre></div>
 <p>The resulting data structure is tibble with a new data column called
 data. The data column is actually a list and each row contains its own
 individual tibble (dataframe).</p>
@@ -200,57 +230,92 @@ individual tibble (dataframe).</p>
 <span>    summ_obj <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>      <span class="va">data</span>, </span>
 <span>      <span class="va">summarize_temp</span>,</span>
-<span>      temperature <span class="op">=</span> <span class="va">temperature</span>,</span>
-<span>      dates <span class="op">=</span> <span class="va">SampleDate</span></span>
+<span>      temperature <span class="op">=</span> <span class="va">temp_c</span>,</span>
+<span>      dates <span class="op">=</span> <span class="va">date</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">summ_obj</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># look at first rows of full object</span></span>
 <span><span class="va">isaak_summ_bt</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 139 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [139]</span></span></span>
+<span><span class="co">#&gt;   site      summ_obj            </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIBO_1345 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PIBO_1346 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> PIBO_1350 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> PIBO_1368 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PIBO_1375 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 134 more rows</span></span></span>
 <span></span>
-<span><span class="co"># pluck the first site to see its structure</span></span>
-<span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"summ_obj"</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># use purrr::pluck() the first site to see its structure</span></span>
+<span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"summ_obj"</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,826 × 2</span></span></span>
+<span><span class="co">#&gt;   date       daily_temp</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2010-12-01       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2010-12-02       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2010-12-03       0.06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2010-12-04       0.06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2010-12-05       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,821 more rows</span></span></span></code></pre></div>
 <p>Since we’ll be operating on these as nests we will keep them as a
 nest, however if you wanted to change back to the original dataframe
-format it’s easy with <code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest()</a></code>.</p>
+format it’s easy with <code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">tidyr::unnest()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">summ_obj</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="data-check">Data Check<a class="anchor" aria-label="anchor" href="#data-check"></a>
-</h4>
+<code class="sourceCode R"><span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">summ_obj</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 253,814 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [139]</span></span></span>
+<span><span class="co">#&gt;   site      date       daily_temp</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIBO_1345 2010-12-01       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PIBO_1345 2010-12-02       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> PIBO_1345 2010-12-03       0.06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> PIBO_1345 2010-12-04       0.06</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PIBO_1345 2010-12-05       0.07</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 253,809 more rows</span></span></span></code></pre></div>
+<div class="section level3">
+<h3 id="data-check">Data Check<a class="anchor" aria-label="anchor" href="#data-check"></a>
+</h3>
 <p>We can do a last data check to make sure we have continuous data.</p>
 <p>First we’ll use a smaller example to show how it works and then
 expand to our full dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># start on an idividual example</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="co"># Pull data from one sits</span></span>
 <span><span class="va">PIBO_1345_summ</span> <span class="op">&lt;-</span> <span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"PIBO_1345"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="st">"summ_obj"</span><span class="op">)</span></span>
 <span></span>
-<span></span>
-<span><span class="co"># we create a column that either contains NA, TRUE, or FALSE</span></span>
-<span><span class="co"># NA is for first data</span></span>
-<span><span class="co"># TRUE is if the difference between one row and the row preceding it is 1</span></span>
-<span><span class="co"># FALSE is the difference is not 1</span></span>
+<span><span class="co"># We create a column that either contains NA, TRUE, or FALSE</span></span>
+<span><span class="co">#   NA is for first data</span></span>
+<span><span class="co">#   TRUE is if the difference between one row and the row preceding it is 1</span></span>
+<span><span class="co">#   FALSE is the difference is not 1</span></span>
 <span><span class="va">PIBO_1345_summ</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># since the output is empty there are no FALSE in diff</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [0]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 variables: site &lt;chr&gt;, date &lt;date&gt;, daily_temp &lt;dbl&gt;, diff &lt;lgl&gt;</span></span></span>
 <span></span>
-<span><span class="co"># we can do the same to our isaak_summ_bt dataset</span></span>
-<span><span class="co"># only difference here is we are mapping with an anonymoys function hence the</span></span>
-<span><span class="co"># ~{..., .x$date...}</span></span>
-<span><span class="co"># ~{} tells us it's an anonymous function while the .x allows to us to call the column from whatever data</span></span>
-<span><span class="co"># is piped in</span></span>
-<span></span>
+<span><span class="co"># We can do the same to our isaak_summ_bt dataset</span></span>
+<span><span class="co">#   only difference here is we are mapping with an anonymous function hence the</span></span>
+<span><span class="co">#   ~{..., .x$date...} syntax. </span></span>
+<span><span class="co">#   ~{} tells us it's an anonymous function while the .x allows to us to </span></span>
+<span><span class="co">#   call the column from whatever data is piped in</span></span>
 <span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">summ_obj</span>, <span class="op">~</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
-<span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">summ_obj</span>, <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># unnest for our filter</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># all continuous!</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
+<span>    <span class="va">summ_obj</span>, <span class="op">~</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> </span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">summ_obj</span>, <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [0]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 variables: site &lt;chr&gt;, date &lt;date&gt;, daily_temp &lt;dbl&gt;, diff &lt;lgl&gt;</span></span></span>
+<span><span class="co"># all continuous!</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mapping-across-nested-data">Mapping Across Nested Data<a class="anchor" aria-label="anchor" href="#mapping-across-nested-data"></a>
@@ -283,21 +348,34 @@ up.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Then we can map it across our nested dataframe.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># see description of the multiple mapping and pipes below</span></span>
-<span><span class="va">hatch_res</span> <span class="op">&lt;-</span> <span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>dev_period <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2</a></span><span class="op">(</span><span class="va">summ_obj</span>, <span class="va">spawn_dates</span>, </span>
-<span>                          <span class="va">predict_phenology</span>,</span>
-<span>                          temperature <span class="op">=</span> <span class="va">daily_temp</span>,</span>
-<span>                          model <span class="op">=</span> <span class="va">bt_hatch</span>,</span>
-<span>                          dates <span class="op">=</span> <span class="va">date</span></span>
-<span>                          <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>           <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"dev.period"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">hatch_res</span> <span class="op">&lt;-</span> <span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    dev_period <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2</a></span><span class="op">(</span></span>
+<span>      <span class="va">summ_obj</span>, <span class="va">spawn_dates</span>, </span>
+<span>      <span class="va">predict_phenology</span>,</span>
+<span>      temperature <span class="op">=</span> <span class="va">daily_temp</span>,</span>
+<span>      model <span class="op">=</span> <span class="va">bt_hatch</span>,</span>
+<span>      dates <span class="op">=</span> <span class="va">date</span></span>
+<span>      <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"dev.period"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">dev_period</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># just select the columns we want</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dev_period</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># unnest everything</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days_to_hatch <span class="op">=</span> <span class="va">stop</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="co"># make a new column of days to hatch</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hatch_res</span><span class="op">)</span></span></code></pre></div>
-<div class="callout-warning">
+<span><span class="va">hatch_res</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,668 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [139]</span></span></span>
+<span><span class="co">#&gt;   site      start      stop       days_to_hatch</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;drtn&gt;</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIBO_1345 2011-09-01 2011-11-11  71 days     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PIBO_1345 2011-09-15 2011-12-27 103 days     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> PIBO_1345 2011-09-30 2012-02-07 130 days     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> PIBO_1345 2012-09-01 2012-11-26  86 days     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PIBO_1345 2012-09-15 2013-01-04 111 days     </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,663 more rows</span></span></span></code></pre></div>
+<blockquote>
 <p>It’s not output here, but this will output a boatload of warnings
 that some fish aren’t hatching. However, it’s pretty safe to assume that
 some of these habitats are actually too cold for bull trout and those
@@ -306,7 +384,7 @@ management decisions about these fish or testing a some kind of
 hypothesis it would be worth following up with why those fish weren’t
 hatching, but for now, we’ll rest on the assumption it’s just too
 cold.</p>
-</div>
+</blockquote>
 <p>A couple notes about what we did above. First we use
 <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2()</a></code> instead of <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> but
 they are interchangeable here as long as you set up your variable grid
@@ -338,13 +416,19 @@ time periods.</p>
 <span>    <span class="va">spawn_time</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Late"</span>, <span class="st">"Mid"</span>, <span class="st">"Early"</span><span class="op">)</span>, </span>
 <span>    ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">days_to_hatch</span>, y <span class="op">=</span> <span class="va">spawn_time</span>, fill <span class="op">=</span> <span class="va">spawn_time</span>, color <span class="op">=</span> <span class="va">spawn_time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">days_to_hatch</span><span class="op">)</span>, </span>
+<span>    y <span class="op">=</span> <span class="va">spawn_time</span>, </span>
+<span>    fill <span class="op">=</span> <span class="va">spawn_time</span>, </span>
+<span>    color <span class="op">=</span> <span class="va">spawn_time</span></span>
+<span>    <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html" class="external-link">geom_density_ridges</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Days to hatch"</span>, y <span class="op">=</span> <span class="st">"Spawn time"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Predict_phenology_nested_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
