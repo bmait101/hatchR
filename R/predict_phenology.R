@@ -1,7 +1,6 @@
 #' Predict phenology of fish
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' Predict the phenology of fish using the effective value framework.
 #'
 #' @param data Dataframe with dates and temperature.

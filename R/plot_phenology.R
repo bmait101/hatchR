@@ -1,7 +1,6 @@
 #' Visualize the phenology of fish development
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' The function takes the output from `predict_phenology()` and creates a ggplot2 object.
 #'
 #' @param plot A list containing the output from `predict_phenology()`

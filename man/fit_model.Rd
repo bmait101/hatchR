@@ -20,7 +20,6 @@ List with fit model object, model coefficients, model specifications
 data.frame, and plot of observations and model fit.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Generate your own custom parameterized models for predicting hatching and emergence phenology.
 }
 \details{

@@ -19,7 +19,6 @@ model_select(author, species, model_id, development_type = "hatch")
 A data.frame giving model specifications to be passed to \code{predict_phenology()}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 The function calls a model table with the parameterizations for
 different species from different studies built in. Refer to the
 table (\code{model_table}) before using function to find inputs for

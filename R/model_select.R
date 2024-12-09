@@ -1,7 +1,6 @@
 #' Select a development model structure
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' The function calls a model table with the parameterizations for
 #' different species from different studies built in. Refer to the
 #' table (`model_table`) before using function to find inputs for

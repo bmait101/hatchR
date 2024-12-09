@@ -18,7 +18,6 @@ plot_phenology(plot, style = "all", labels = TRUE)
 A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 The function takes the output from \code{predict_phenology()} and creates a ggplot2 object.
 }
 \examples{
