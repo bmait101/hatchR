@@ -21,7 +21,6 @@ plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 The \code{plot_check_temp} function is used to plot imported data to check temperature values.
 The function takes a data frame with dates and temperature values,
 and plots the temperature values over time. The function also allows users

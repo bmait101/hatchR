@@ -16,26 +16,25 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 \item{spawn.date}{Date of spawning, given as a character string
 (e.g., "1990-08-18")}
 
-\item{model}{A data.frame with a column named "func" or a character vector
+\item{model}{A data.frame with a column named "expression" or a character vector
 giving model specifications. Can be obtained using \code{model_select()}
 or using you own data to obtain a model expression (see \code{fit_model}).}
 }
 \value{
 A list with the following elements:
 \itemize{
-\item \code{days2done}: A numeric vector of length 1; number of predicted
+\item \code{days_to_develop}: A numeric vector of length 1; number of predicted
 days to hatch or emerge.
-\item \code{ef.tibble}: An n x 4 tibble (n = number of days to hatch or emerge) with
+\item \code{ef_table}: An n x 4 tibble (n = number of days to hatch or emerge) with
 the dates, temperature, effective values, and cumulative sum of the
 effective values.
 \item \code{dev.period}: a 1x2 dataframe with the dates corresponding to when your
 fish's parent spawned (input with \code{predict_phenology(spawn.date = ...)})
 and the date when the fish is predicted to hatch or emerge.
-\item \code{model.specs}: A data.frame with the model specifications.
+\item \code{model_specs}: A data.frame with the model specifications.
 }
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Predict the phenology of fish using the effective value framework.
 }
 \details{
@@ -47,8 +46,8 @@ library(hatchR)
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
-  model = 2,
-  dev.type = "hatch"
+  model_id = 2,
+  development_type = "hatch"
 )
 
 # predict phenology

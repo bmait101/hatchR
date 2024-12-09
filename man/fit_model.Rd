@@ -4,7 +4,7 @@
 \alias{fit_model}
 \title{Fit B&M model 2 to new data using \code{stats::nls()}}
 \usage{
-fit_model(temp, days, species = NULL, dev.type = NULL)
+fit_model(temp, days, species = NULL, development_type = NULL)
 }
 \arguments{
 \item{temp}{Numeric vector of temperatures}
@@ -13,14 +13,13 @@ fit_model(temp, days, species = NULL, dev.type = NULL)
 
 \item{species}{Character string of species name (e.g., "sockeye")}
 
-\item{dev.type}{Character string of development type: "hatch" or "emerge"}
+\item{development_type}{Character string of development type: "hatch" or "emerge"}
 }
 \value{
 List with fit model object, model coefficients, model specifications
 data.frame, and plot of observations and model fit.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Generate your own custom parameterized models for predicting hatching and emergence phenology.
 }
 \details{
@@ -40,5 +39,5 @@ temperature <- c(2, 5, 8, 11, 14)
 # vector of days to hatch
 days_to_hatch <- c(194, 87, 54, 35, 28)
 bt_hatch_mod <- fit_model(temp = temperature,
-days = days_to_hatch, species = "sockeye", dev.type = "hatch")
+days = days_to_hatch, species = "sockeye", development_type = "hatch")
 }

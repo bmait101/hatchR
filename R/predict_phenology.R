@@ -1,7 +1,6 @@
 #' Predict phenology of fish
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' Predict the phenology of fish using the effective value framework.
 #'
 #' @param data Dataframe with dates and temperature.
@@ -9,7 +8,7 @@
 #' @param temperature Temperature measurements.
 #' @param spawn.date Date of spawning, given as a character string
 #' (e.g., "1990-08-18")
-#' @param model A data.frame with a column named "func" or a character vector
+#' @param model A data.frame with a column named "expression" or a character vector
 #' giving model specifications. Can be obtained using `model_select()`
 #' or using you own data to obtain a model expression (see `fit_model`).
 #'
@@ -18,15 +17,15 @@
 #'
 #' @return
 #' A list with the following elements:
-#' * `days2done`: A numeric vector of length 1; number of predicted
+#' * `days_to_develop`: A numeric vector of length 1; number of predicted
 #'    days to hatch or emerge.
-#' * `ef.tibble`: An n x 4 tibble (n = number of days to hatch or emerge) with
+#' * `ef_table`: An n x 4 tibble (n = number of days to hatch or emerge) with
 #'    the dates, temperature, effective values, and cumulative sum of the
 #'    effective values.
 #' * `dev.period`: a 1x2 dataframe with the dates corresponding to when your
 #'    fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
 #'    and the date when the fish is predicted to hatch or emerge.
-#' * `model.specs`: A data.frame with the model specifications.
+#' * `model_specs`: A data.frame with the model specifications.
 #'
 #' @export
 #'
@@ -36,8 +35,8 @@
 #' sockeye_hatch_mod <- model_select(
 #'   author = "Beacham and Murray 1990",
 #'   species = "sockeye",
-#'   model = 2,
-#'   dev.type = "hatch"
+#'   model_id = 2,
+#'   development_type = "hatch"
 #' )
 #'
 #' # predict phenology
@@ -92,10 +91,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   # model prep
   if (is.null(model)) {
     cli::cli_abort("You must provide a model specification.")
-  } else if (is.data.frame(model) & !"func" %in% colnames(model)) {
-    cli::cli_abort("Model object must have a column named 'func'.")
-  } else if (is.data.frame(model) & "func" %in% colnames(model)) {
-    mod.exp <- model |> dplyr::pull("func")
+  } else if (is.data.frame(model) & !"expression" %in% colnames(model)) {
+    cli::cli_abort("Model object must have a column named 'expression'.")
+  } else if (is.data.frame(model) & "expression" %in% colnames(model)) {
+    mod.exp <- model |> dplyr::pull("expression")
   } else if (is.character(model)) {
     mod.exp <- model
   } else {
@@ -103,7 +102,7 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   }
 
   # bring in model df and extract the expression
-  # mod.exp <- model |> dplyr::pull("func")
+  # mod.exp <- model |> dplyr::pull("expression")
 
   # Parse model expression to get effective value function
   Ef <- parse(text = mod.exp)
@@ -145,10 +144,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     # dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     # get dates with NaN values
@@ -174,10 +173,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     # get dates with NaN values
@@ -204,10 +203,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = as.numeric(NA),
+      days_to_develop = as.numeric(NA),
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     cli::cli_inform(c(
@@ -228,10 +227,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- max(dat_out_sub$dates)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
   }
   return(ef.results)

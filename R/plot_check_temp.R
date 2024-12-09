@@ -1,7 +1,6 @@
 #' Visual check of imported temperature data
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' The `plot_check_temp` function is used to plot imported data to check temperature values.
 #' The function takes a data frame with dates and temperature values,
 #' and plots the temperature values over time. The function also allows users

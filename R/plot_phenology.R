@@ -1,7 +1,6 @@
 #' Visualize the phenology of fish development
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' The function takes the output from `predict_phenology()` and creates a ggplot2 object.
 #'
 #' @param plot A list containing the output from `predict_phenology()`
@@ -25,7 +24,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   if (labels == TRUE) {
     all_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to develop"),
+      title = paste(dat$days_to_develop, "days to develop"),
       subtitle = paste(
         "Fish spawned",
         dat$dev.period$start,
@@ -36,7 +35,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
 
     ef_cumsum_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to develop"),
+      title = paste(dat$days_to_develop, "days to develop"),
       subtitle = paste(
         "Fish spawned",
         dat$dev.period$start,
@@ -47,7 +46,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
 
     ef_daily_label <- ggplot2::labs(
       x = "Date", y = "Mean daily temperature",
-      title = paste(dat$days2done, "days to develop"),
+      title = paste(dat$days_to_develop, "days to develop"),
       subtitle = paste(
         "Fish spawned",
         dat$dev.period$start,
@@ -64,7 +63,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   }
 
   if (style == "all") {
-    p <- dat$ef.tibble |>
+    p <- dat$ef_table |>
       ggplot2::ggplot(ggplot2::aes(x = .data$dates, y = .data$temperature)) +
       ggplot2::geom_line(color = "darkblue") +
       ggplot2::geom_point(color = "darkblue", size = 0.5) +
@@ -77,7 +76,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   }
 
   if (style == "ef_cumsum") {
-    p <- dat$ef.tibble |>
+    p <- dat$ef_table |>
       ggplot2::ggplot(ggplot2::aes(x = .data$dates, y = .data$temperature)) +
       ggplot2::geom_line(color = "darkblue") +
       ggplot2::geom_point(color = "darkblue", size = 0.5) +
@@ -88,7 +87,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   }
 
   if (style == "ef_daily") {
-    p <- dat$ef.tibble |>
+    p <- dat$ef_table |>
       ggplot2::ggplot(ggplot2::aes(x = .data$dates, y = .data$temperature)) +
       ggplot2::geom_line(color = "darkblue") +
       ggplot2::geom_point(color = "darkblue", size = 0.5) +

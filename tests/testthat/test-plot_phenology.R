@@ -1,7 +1,7 @@
 test_that("plot_phenology works", {
   x <- model_select(
     author = "Beacham and Murray 1990",
-    species = "sockeye", model = 2, dev.type = "hatch")
+    species = "sockeye", model_id = 2, development_type = "hatch")
   y <- suppressWarnings(predict_phenology(
     data = woody_island,dates = date,
     temperature = temp_c, spawn.date = "1990-08-18", model = x))

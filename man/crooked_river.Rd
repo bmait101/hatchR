@@ -3,24 +3,23 @@
 \docType{data}
 \name{crooked_river}
 \alias{crooked_river}
-\title{Daily stream temperatures data}
+\title{Example dataset: Crooked River, Idaho}
 \format{
 Data frame with columns
 \describe{
-\item{SampleDate}{Date measurement was taken.}
-\item{site}{Site ID.}
+\item{date}{Date and time measurement was taken.}
 \item{temperture}{Temperature in degrees Celsius.}
 }
 }
 \source{
-Dan Isaak, US Forest Service Rocky Mountain Research Station
+Dan Isaak, US Forest Service Rocky Mountain Research Station.
 }
 \usage{
 crooked_river
 }
 \description{
-Daily stream temperature data from the US Forest Service Rocky
-Mountain Research Station, Water and Watersheds Program.
+Daily stream temperature data from Crooked River, a tributary to the
+North Fork Boise River, Idaho.
 }
 \examples{
 crooked_river

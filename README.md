@@ -121,7 +121,7 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "hatch"
+  development_type = "hatch"
   )
 ```
 

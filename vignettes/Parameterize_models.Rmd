@@ -55,19 +55,19 @@ model_table
 -   `author`: the author(s) and year of publication for the model
 -   `species`: the species the model is parameterized for
 -   `model`: the model ID (if multiple model parameterizations were built (*e.g.*, @beacham1990))
--   `dev.type`: the phenological development type (*i.e.*, hatch or emerge)
--   `func`: a character string defining the model parameterization
+-   `development_type`: the phenological development type (*i.e.*, hatch or emerge)
+-   `expression`: a character string defining the model parameterization
 
 ## `model_select()`
 
-You will use `author`, `species`, `model`, and `dev.type` to select model functions. For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990, you would run:
+You will use `author`, `species`, `model`, and `development_type` to select model functions. For instance, if you wanted to access the parameterization for sockeye hatching using model #2 from @beacham1990, you would run:
 
 ```{r}
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "hatch"
+  development_type = "hatch"
   )
 
 sockeye_hatch_mod
@@ -130,7 +130,7 @@ We can now use `fit_model()` to create our custom parameterization from our data
 bt_fit <- fit_model(temp = bt_data$temperature, 
                     days = bt_data$days_to_hatch, 
                     species = "brown_trout", 
-                    dev.type = "hatch")
+                    development_type = "hatch")
 ```
 
 The output of `fit_model()` is a list with numerous elements, including the full model, coefficients for *log~e~a* and *b*, the expression you will pass to `predict_phenology()`, a plot to see your fit for your data, and some diagnostic variables. You can see the full extent using:
@@ -139,12 +139,12 @@ The output of `fit_model()` is a list with numerous elements, including the full
 bt_fit
 ```
 
-The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `func` element of the list, which is a tibble giving the species, development type, and the parameterized model expression.
+The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `expression` element of the list, which is a tibble giving the species, development type, and the parameterized model expression.
 
-You can either pass this tibble directly with the `$` operator by calling `$func` element of the list (e.g., `model = bt_fit$func`) or set as an object to pass, like so:
+You can either pass this tibble directly with the `$` operator by calling `$expression` element of the list (e.g., `model = bt_fit$expression`) or set as an object to pass, like so:
 
 ```{r, eval=FALSE}
-bt_hatch_exp <- bt_fit$func
+bt_hatch_exp <- bt_fit$expression
 bt_hatch_exp
 ```
 
