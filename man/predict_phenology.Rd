@@ -23,15 +23,15 @@ or using you own data to obtain a model expression (see \code{fit_model}).}
 \value{
 A list with the following elements:
 \itemize{
-\item \code{days2done}: A numeric vector of length 1; number of predicted
+\item \code{days_to_develop}: A numeric vector of length 1; number of predicted
 days to hatch or emerge.
-\item \code{ef.tibble}: An n x 4 tibble (n = number of days to hatch or emerge) with
+\item \code{ef_table}: An n x 4 tibble (n = number of days to hatch or emerge) with
 the dates, temperature, effective values, and cumulative sum of the
 effective values.
 \item \code{dev.period}: a 1x2 dataframe with the dates corresponding to when your
 fish's parent spawned (input with \code{predict_phenology(spawn.date = ...)})
 and the date when the fish is predicted to hatch or emerge.
-\item \code{model.specs}: A data.frame with the model specifications.
+\item \code{model_specs}: A data.frame with the model specifications.
 }
 }
 \description{

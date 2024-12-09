@@ -16,17 +16,17 @@ test_that("predict phenology works", {
   expect_type(p, "list")
   expect_length(p, 4)
 
-  # expect_type(p$days2done, "integer")
+  # expect_type(p$days_to_develop, "integer")
 
   # expect_type(p$ef.vals, "double")
 
-  expect_s3_class(p$ef.tibble, "data.frame")
+  expect_s3_class(p$ef_table, "data.frame")
 
   expect_s3_class(p$dev.period, "data.frame")
   expect_equal(ncol(p$dev.period), 2)
 
-  # expect_s3_class(p$model.specs, "data.frame")
-  # expect_equal(ncol(p$model.specs), 5)
+  # expect_s3_class(p$model_specs, "data.frame")
+  # expect_equal(ncol(p$model_specs), 5)
 
 
 })

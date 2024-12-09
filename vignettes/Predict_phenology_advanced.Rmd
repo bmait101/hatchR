@@ -60,7 +60,7 @@ The we will go through the typical process of getting the model parameterized as
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
-  model = 2,
+  model_id = 2,
   development_type = "hatch"
 )
 ```
@@ -144,7 +144,7 @@ results_map <- map(
 glimpse(results_map)
 
 # we can then access days to hatch easily as such
-results_map |> map_dbl("days2done")
+results_map |> map_dbl("days_to_develop")
 ```
 
 #### Apply
@@ -359,8 +359,8 @@ Now that we've demonstrated both loops and mapping to get at iterating over mult
 
 ```{r}
 # loop predictions
-preds_loop <- OUT |> map_dbl("days2done")
-preds_pmap <- crooked_predictions |> map_dbl("days2done")
+preds_loop <- OUT |> map_dbl("days_to_develop")
+preds_pmap <- crooked_predictions |> map_dbl("days_to_develop")
 
 # everything matches!
 preds_loop == preds_pmap
@@ -375,7 +375,7 @@ First we'll demonstrate an example of how we can take those prediction and use t
 ```{r}
 # get predictions
 days <- crooked_predictions |>
-  map_dbl("days2done")
+  map_dbl("days_to_develop")
 
 # make a vector of what type of phenology we were predicting
 # remember we ran hatch over 15 spawn dates then emerge over thos same 15
@@ -429,7 +429,7 @@ Other data types you might want might include the tibble with dates, temperature
 ```{r}
 # the tibble with all temperature and effective values for each phenological period
 all_data <- crooked_predictions |>
-  map_df("ef.tibble")
+  map_df("ef_table")
 head(all_data)
 
 # the phenological durations for each prediction set

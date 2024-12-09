@@ -17,15 +17,15 @@
 #'
 #' @return
 #' A list with the following elements:
-#' * `days2done`: A numeric vector of length 1; number of predicted
+#' * `days_to_develop`: A numeric vector of length 1; number of predicted
 #'    days to hatch or emerge.
-#' * `ef.tibble`: An n x 4 tibble (n = number of days to hatch or emerge) with
+#' * `ef_table`: An n x 4 tibble (n = number of days to hatch or emerge) with
 #'    the dates, temperature, effective values, and cumulative sum of the
 #'    effective values.
 #' * `dev.period`: a 1x2 dataframe with the dates corresponding to when your
 #'    fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
 #'    and the date when the fish is predicted to hatch or emerge.
-#' * `model.specs`: A data.frame with the model specifications.
+#' * `model_specs`: A data.frame with the model specifications.
 #'
 #' @export
 #'
@@ -144,10 +144,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     # dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     # get dates with NaN values
@@ -173,10 +173,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     # get dates with NaN values
@@ -203,10 +203,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
-      days2done = as.numeric(NA),
+      days_to_develop = as.numeric(NA),
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
 
     cli::cli_inform(c(
@@ -227,10 +227,10 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dev.period$stop <- max(dat_out_sub$dates)
 
     ef.results <- list(
-      days2done = Ef.days,
+      days_to_develop = Ef.days,
       dev.period = dev.period,
-      ef.tibble = dat_out_sub,
-      model.specs = model
+      ef_table = dat_out_sub,
+      model_specs = model
     )
   }
   return(ef.results)
