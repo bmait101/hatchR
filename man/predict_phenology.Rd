@@ -7,7 +7,7 @@
 predict_phenology(data, dates, temperature, spawn.date, model)
 }
 \arguments{
-\item{data}{Dataframe with dates and temperature.}
+\item{data}{Data frame with dates and temperature.}
 
 \item{dates}{Date of temperature measurements.}
 
@@ -37,9 +37,6 @@ and the date when the fish is predicted to hatch or emerge.
 \description{
 Predict the phenology of fish using the effective value framework.
 }
-\details{
-Additional details...
-}
 \examples{
 library(hatchR)
 # get model parameterization
@@ -58,7 +55,6 @@ sockeye_hatch <- predict_phenology(
   spawn.date = "1990-08-18",
   model = sockeye_hatch_mod
 )
-
 }
 \references{
 Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,

@@ -3,7 +3,7 @@
 #' @description
 #' Predict the phenology of fish using the effective value framework.
 #'
-#' @param data Dataframe with dates and temperature.
+#' @param data Data frame with dates and temperature.
 #' @param dates Date of temperature measurements.
 #' @param temperature Temperature measurements.
 #' @param spawn.date Date of spawning, given as a character string
@@ -11,9 +11,6 @@
 #' @param model A data.frame with a column named "expression" or a character vector
 #' giving model specifications. Can be obtained using `model_select()`
 #' or using you own data to obtain a model expression (see `fit_model`).
-#'
-#' @details
-#' Additional details...
 #'
 #' @return
 #' A list with the following elements:
@@ -47,7 +44,6 @@
 #'   spawn.date = "1990-08-18",
 #'   model = sockeye_hatch_mod
 #' )
-#'
 #' @references
 #' Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
 #' Schindler, D.E. (2019). Influences of spawning timing, water temperature,
@@ -89,6 +85,7 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   dat_spawn <- dat[spawn.index:c(nrow(dat)), ]
 
   # model prep
+  # bring in model df and extract the expression
   if (is.null(model)) {
     cli::cli_abort("You must provide a model specification.")
   } else if (is.data.frame(model) & !"expression" %in% colnames(model)) {
@@ -100,9 +97,6 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
   } else {
     cli::cli_abort("Model object must be a data.frame or character string.")
   }
-
-  # bring in model df and extract the expression
-  # mod.exp <- model |> dplyr::pull("expression")
 
   # Parse model expression to get effective value function
   Ef <- parse(text = mod.exp)
