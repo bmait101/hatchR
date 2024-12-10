@@ -10,9 +10,11 @@
 #' @param author Character string of author name.
 #' @param species Character string of species name.
 #' @param model_id Model number from Beacham and Murray (1990).
-#' @param development_type The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".
+#' @param development_type The phenology type. A vector with possible values
+#' "hatch" or "emerge". The default is "hatch".
 #'
-#' @return A data.frame giving model specifications to be passed to `predict_phenology()`.
+#' @return A data.frame giving model specifications to be passed to
+#'  `predict_phenology()`.
 #'
 #' @export
 #'

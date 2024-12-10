@@ -1,24 +1,26 @@
-test_that("fit_model works", {
+test_that("output checks out", {
   temp <- c(2, 5, 8, 11, 14)
   days <- c(194, 87, 54, 35, 28)
-  df <- tibble::tibble(temp, days)
-  m <- fit_model(temp = temp, days = days, species = "sockeye", development_type = "hatch")
-
+  m <- fit_model(temp, days, "sockeye", "hatch")
   expect_type(m, "list")
-
+  expect_length(m, 8)
+  expect_type(m$model, "list")
+  expect_s3_class(m$model, "nls")
   expect_s3_class(m$expression, "data.frame")
-  # expect_length(m$expression, 1)
-
-  expect_type(m$log_a , "double")
+  expect_type(m$expression$expression, "character")
+  expect_type(m$log_a, "double")
   expect_type(m$b, "double")
   expect_type(m$r_squared, "double")
   expect_type(m$mse, "double")
   expect_type(m$rmse, "double")
-
-  expect_type(m$model, "list")
-  expect_s3_class(m$model, "nls")
-
   expect_s3_class(m$pred_plot, "gg")
   expect_invisible(plot(m$pred_plot))
+})
+
+test_that("errors work", {
+  temp <- c(2, 5, 8, 11, 14)
+  days <- c(194, 87, 54, 35, 28)
+  expect_error(fit_model(temp, days, development_type = "hatch"))
+  expect_error(fit_model(temp, days, species = "sockeye"))
 
 })
