@@ -23,7 +23,7 @@ measurements to obtain mean daily temperature.
 \examples{
 library(hatchR)
 summarize_temp(
-  data = crooked_river,
+  data = idaho,
   dates = date,
   temperature = temp_c
 )
