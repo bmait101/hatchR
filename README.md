@@ -142,7 +142,7 @@ We can check the predicted phenology by running:
 
 ``` r
 # see days to hatch
-WI_hatch$days2done
+WI_hatch$days_to_develop
 #> [1] 74
 # and development period
 WI_hatch$dev.period
