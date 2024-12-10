@@ -18,13 +18,15 @@ plot_check_temp(data, dates, temperature, temp_min = 0, temp_max = 25)
 \item{temp_max}{Threshold for upper range of expected temperature. Default is 25.}
 }
 \value{
-A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
+A object of class "gg" and "ggplot" that can be printed to the console
+or saved as an image.
 }
 \description{
-The \code{plot_check_temp} function is used to plot imported data to check temperature values.
-The function takes a data frame with dates and temperature values,
-and plots the temperature values over time. The function also allows users
-to specify the minimum and maximum temperature values to be plotted.
+The \code{plot_check_temp} function is used to plot imported data to check
+temperature values. The function takes a data frame with dates and
+temperature values, and plots the temperature values over time. The
+function also allows users to specify the minimum and maximum temperature
+values to be plotted.
 }
 \examples{
 library(hatchR)
