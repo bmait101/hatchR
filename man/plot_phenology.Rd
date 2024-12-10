@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_phenology.R
 \name{plot_phenology}
 \alias{plot_phenology}
-\title{Visualize the phenology of fish development}
+\title{Visualize fish phenology}
 \usage{
 plot_phenology(plot, style = "all", labels = TRUE)
 }
@@ -15,14 +15,31 @@ plot_phenology(plot, style = "all", labels = TRUE)
 \item{labels}{Logical. If TRUE (default), labels are added to the plot.}
 }
 \value{
-A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
+A object of class "gg" and "ggplot".
 }
 \description{
-The function takes the output from \code{predict_phenology()} and creates a ggplot2 object.
+The function takes the output from \code{predict_phenology()} and creates a
+basic ggplot2 plot object to visualize the predicted phenology.
 }
 \examples{
 library(hatchR)
-#plot_phenology(WI_hatch, style = "ef_cumsum") # shows a plot with just the ef cumulative sum values
-#plot_phenology(WI_hatch, style = "ef_daily") # shows a plot with just the ef daily values
-#plot_phenology(WI_hatch, labels = FALSE) # turns off the labeling for a cleaner figure
+# get model parameterization
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990",
+  species = "sockeye",
+  model = 2,
+  development_type = "hatch"
+)
+# predict phenology
+sockeye_hatch <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
+)
+plot_phenology(sockeye_hatch)
+plot_phenology(sockeye_hatch, style = "ef_cumsum")
+plot_phenology(sockeye_hatch, style = "ef_daily")
+plot_phenology(sockeye_hatch, labels = FALSE)
 }
