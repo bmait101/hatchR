@@ -103,7 +103,7 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   # Calculate sum of squared residuals (SSR)
   ssr <- sum(residuals^2)
 
-  # Calculate peudo R-squared
+  # Calculate pseudo R-squared
   r_squared <- 1 - (ssr / sst)
 
   # Mean Squared Error (MSE)
@@ -117,9 +117,9 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
     model = m2,
     log_a = log_a[[1]],
     b = b[[1]],
+    r_squared = r_squared,
     mse = mse,
     rmse = rmse,
-    r_squared = r_squared,
     expression = expression,
     pred_plot = p_pred
   )
