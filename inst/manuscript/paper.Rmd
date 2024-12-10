@@ -33,6 +33,7 @@ bibliography: ms_refs.bib
 ```{r, include=FALSE}
 library(tidyverse)
 library(hatchR)
+library(ggridges)
 ```
 
 # Abstract
@@ -51,7 +52,7 @@ To widen the user application of these methods, we distribute two user-interface
 
 ```{r echo=FALSE}
 ### 
-library(tidyverse); library(hatchR)
+library(tidyverse); library(hatchR); library(ggdist)
 ```
 
 # Package Overview
@@ -431,6 +432,136 @@ bt_emergence$dev.period$stop
 In this example we expect the last fish out of the gravel well before the June 1st date and the manager could allow grazing in this area without worrying about direct mechanical disturbance to fish developing in the gravel.
 
 # Case Study 2
+
+For the second example, we will again use bull trout, but demonstrate a much more complex application for the purpose of showing the full flexibility of the programmatic application of **hatchR**. In this scenario we will use data from @isaak2018 (included `idaho` dataset), which includes temperature data from 226 sites across the major upper Columbia River headwater watersheds in Idaho. For this approach we winnow putative bull trout spawning sites by filtering for sites with mean August temperature \</= 13 °C in accordance with thresholds from @isaak2015. For the resulting 139 sites we will demonstrate predicting hatch timing in these putative Bull Trout spawning habitats.
+
+```{r, echo = FALSE}
+
+bull_trout_sites <- idaho |> 
+  mutate(month = month(date)) |> #make a month column (numeric)
+  filter(month == 8) |> # filter out Aug.
+  group_by(site) |> # apply grouping by site
+  summarise(mean_aug_temp = mean(temp_c)) |> 
+  filter(mean_aug_temp <= 13) |> # keep only sites 13 C or cooler
+  pull(site) |> 
+  unique()
+
+# filter to bull trout sites
+idaho_bt <- idaho |> 
+  filter(site %in% bull_trout_sites) 
+
+# nest data and summarize
+isaak_summ_bt <- idaho_bt |> 
+  group_by(site) |> 
+  nest() |> 
+  mutate(
+    summ_obj = map(
+      data, 
+      summarize_temp,
+      temperature = temp_c,
+      dates = date
+      )
+    ) |> 
+  select(site, summ_obj) 
+
+# spawn dates
+spawn_dates <- map(
+  c(2011:2014), # year vector to map for custom function
+  function(year) { # custom paste function
+    c(
+      paste0(year, "-09-01"),
+      paste0(year, "-09-15"),
+      paste0(year, "-09-30")
+      )
+    }
+  ) |> 
+  unlist()
+
+# bull trout hatch model
+bt_hatch <- model_select(
+  development_type = "hatch",
+  author = "Austin et al. 2017",
+  species = "bull trout",
+  model = "MM"
+)
+
+
+```
+
+We need to setup our models and data for this analysis, which we don't show those steps here for the sake of concision in this manuscript, however they are demonstrated in `paper.Rmd` included in the GitHub repository for **hatchR**. After the setup, we can easily map `predict_phenology()` across all putative spawning sites and three spawn dates (September 1-Early Spawning, September 15-Peak Spawning, and September 31-Late Spawning), the results of which are presented in Figure XXX.
+
+```{r}
+hatch_res <- isaak_summ_bt |> 
+  mutate(
+    dev_period = map2(
+      summ_obj, spawn_dates, # map across our site object and spawn dates
+      predict_phenology,
+      temperature = daily_temp,
+      model = bt_hatch,
+      dates = date
+      ) |> 
+      map_df("dev.period") |> # pull out just dev.period results
+      list()
+    ) |> 
+  select(site, dev_period) |> # just select the columns we want
+  unnest(cols = c(dev_period)) |> # unnest everything
+  mutate(days_to_hatch = stop - start) # make a new column of days to hatch
+
+```
+
+```{r, message=FALSE}
+cut_ints <- date(
+  c(
+    "2011-08-31", "2012-08-31",
+    "2013-08-31", "2014-08-31",
+    "2015-08-31"
+  )
+)
+
+# add year and spawn time factors for plotting
+hatch_factors <- hatch_res |> 
+  mutate(year = cut(start,
+    breaks = cut_ints,
+    labels = c(2011:2014)
+  )) |>
+   # cut coerces our labels to factors, this changes them back to numbers
+  mutate(year = as.numeric(as.character(year))) |> 
+  mutate(day = day(start)) |> 
+  mutate(spawn_time = case_when(
+    day == 1 ~ "Early",
+    day == 15 ~ "Peak",
+    day == 30 ~ "Late"
+  )) |>
+  mutate(spawn_time = factor(
+    spawn_time, levels = c("Late", "Peak", "Early"), 
+    ordered = TRUE)
+    ) 
+
+hatch_factors_sum <- hatch_factors |> 
+  group_by(year, spawn_time, start) |> 
+  summarise(mean_hatch = ceiling(mean(days_to_hatch)),
+            hatch_5 = ceiling(quantile(days_to_hatch, probs = 0.05)),
+            hatch_95 = ceiling(quantile(days_to_hatch, probs = 0.95)))
+
+
+p1 <- ggplot(
+  data =  hatch_factors,
+    aes(
+      x = days_to_hatch,
+      y = spawn_time,
+      fill = spawn_time,
+      color = spawn_time
+    )) +
+  geom_density_ridges(alpha = 0.9) +
+    facet_wrap( ~ year, ncol = 1) +
+    scale_fill_brewer(palette = "Blues", direction = 1) +
+    scale_color_brewer(palette = "Blues", direction = 1) +
+    labs(x = "Days to hatch", y = "Spawn time") +
+    theme_classic() +
+    theme(legend.position = "none")
+
+
+```
 
 # Discussion
 
