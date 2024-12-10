@@ -13,14 +13,16 @@ fit_model(temp, days, species = NULL, development_type = NULL)
 
 \item{species}{Character string of species name (e.g., "sockeye")}
 
-\item{development_type}{Character string of development type: "hatch" or "emerge"}
+\item{development_type}{Character string of development type: "hatch"
+or "emerge"}
 }
 \value{
 List with fit model object, model coefficients, model specifications
 data.frame, and plot of observations and model fit.
 }
 \description{
-Generate your own custom parameterized models for predicting hatching and emergence phenology.
+Generate your own custom parameterized models for predicting hatching
+and emergence phenology.
 }
 \details{
 \strong{hatchR} also includes functionality to generate your own custom
@@ -38,6 +40,8 @@ library(hatchR)
 temperature <- c(2, 5, 8, 11, 14)
 # vector of days to hatch
 days_to_hatch <- c(194, 87, 54, 35, 28)
-bt_hatch_mod <- fit_model(temp = temperature,
-days = days_to_hatch, species = "sockeye", development_type = "hatch")
+bt_hatch_mod <- fit_model(
+  temp = temperature,
+  days = days_to_hatch, species = "sockeye", development_type = "hatch"
+)
 }
