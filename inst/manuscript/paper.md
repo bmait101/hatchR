@@ -47,6 +47,19 @@ To bridge the gap between the application of one-off effective value model appli
 To widen the user application of these methods, we distribute two user-interfaces for `hatchR`. The first is a R package distributed via CRAN that allows users the most customizable application for these methods. The R package is especially powerful as it allows users to automate their analyses over multiple variables such as phenology type, multiple spawn dates, or different habitats with varying thermal regimes. These variable approaches are outlined in the package documentation on `hatchR`'s website. Alternatively, we also distribute a Shiny application in the form of an HTML-based web tool to interact with many of `hatchR`'s functions in a graphical-user-interface. The Shiny form trades-off some of automative power for user simplicity, while still allowing users to leverage much of the functionality of `hatchR`'s R package. Below, we present the basic overview of the software and multiple case studies of how it may be applied.
 
 
+```
+## 
+## Attaching package: 'ggdist'
+```
+
+```
+## The following objects are masked from 'package:ggridges':
+## 
+##     scale_point_color_continuous, scale_point_color_discrete,
+##     scale_point_colour_continuous, scale_point_colour_discrete,
+##     scale_point_fill_continuous, scale_point_fill_discrete,
+##     scale_point_size_continuous
+```
 
 # Package Overview
 
@@ -171,12 +184,9 @@ check_continuous(data = year_sim_summ[-100,],
 ```
 
 ```
-## Warning: ! Breaks at the following rows were found:
+## Warning: ! Data not continuous
+## i Breaks found at rows:
 ## i 100
-```
-
-```
-## [1] 100
 ```
 
 
@@ -235,7 +245,7 @@ smallmouth <- smallmouth |>
 smb_mod <- fit_model(temp = smallmouth$temp_C,
                      days = smallmouth$days,
                      species = "smb",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 
 ### catfish mod
@@ -247,7 +257,7 @@ catfish$temp_C <- c(22,10,7)
 cat_mod <- fit_model(temp = catfish$temp_C,
                      days = catfish$days,
                      species = "catfish",
-                     dev.type = "hatch")
+                     development_type = "hatch")
 
 ### lake sturgeon mod
 sturgeon <-  matrix(NA, 7, 2) |> data.frame()
@@ -261,7 +271,7 @@ sturgeon <- sturgeon |>
 sturgeon_mod <- fit_model(days = sturgeon$days,
                           temp = sturgeon$temp_C,
                           species = "sturgeon",
-                          dev.type = "hatch")
+                          development_type = "hatch")
 ```
 
 Note the model the *R^2^* fit from the models below. You can see the generally all preform well and are in line with values from model 2 of @beacham1990.
@@ -296,14 +306,14 @@ sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "hatch"
+  development_type = "hatch"
   )
 
 sockeye_emerge_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
   model = 2, 
-  dev.type = "emerge"
+  development_type = "emerge"
   )
 ```
 
@@ -320,13 +330,6 @@ WI_hatch <- predict_phenology(
   )
 ```
 
-```
-## Warning: ! Fish developed, but negative temperature values resulted in NaNs after
-##   development.
-## i Check date(s): 1991-08-12
-## i Fish spawn date was: 1990-08-18
-```
-
 And then look inside the returned object to see days to hatch and development period:
 
 
@@ -335,7 +338,7 @@ WI_hatch$days2done
 ```
 
 ```
-## [1] 74
+## NULL
 ```
 
 ```r
@@ -358,22 +361,13 @@ WI_emerge <- predict_phenology(
   spawn.date = "1990-08-18",
   model = sockeye_emerge_mod   # notice we're using emerge model expression here
   )
-```
 
-```
-## Warning: ! Fish developed, but negative temperature values resulted in NaNs after
-##   development.
-## i Check date(s): 1991-08-12
-## i Fish spawn date was: 1990-08-18
-```
-
-```r
 # see days to hatch and development period
 WI_emerge$days2done
 ```
 
 ```
-## [1] 204
+## NULL
 ```
 
 ```r
@@ -426,6 +420,33 @@ We demonstrate this first case study using the graphical user interface portion 
 In this example we expect the last fish out of the gravel well before the June 1st date and the manager could allow grazing in this area without worrying about direct mechanical disturbance to fish developing in the gravel.
 
 # Case Study 2
+
+For the second example, we will again use bull trout, but demonstrate a much more complex application for the purpose of showing the full flexibility of the programmatic application of **hatchR**. In this scenario we will use data from @isaak2018 (included `idaho` dataset), which includes temperature data from 226 sites across the major upper Columbia River headwater watersheds in Idaho. For this approach we winnow putative bull trout spawning sites by filtering for sites with mean August temperature \</= 13 °C in accordance with thresholds from @isaak2015. For the resulting 139 sites we will demonstrate predicting hatch timing in these putative Bull Trout spawning habitats.
+
+
+
+We need to setup our models and data for this analysis, which we don't show those steps here for the sake of concision in this manuscript, however they are demonstrated in `paper.Rmd` included in the GitHub repository for **hatchR**. After the setup, we can easily map `predict_phenology()` across all putative spawning sites and three spawn dates (September 1-Early Spawning, September 15-Peak Spawning, and September 31-Late Spawning), the results of which are presented in Figure XXX.
+
+
+```r
+hatch_res <- isaak_summ_bt |> 
+  mutate(
+    dev_period = map2(
+      summ_obj, spawn_dates, # map across our site object and spawn dates
+      predict_phenology,
+      temperature = daily_temp,
+      model = bt_hatch,
+      dates = date
+      ) |> 
+      map_df("dev.period") |> # pull out just dev.period results
+      list()
+    ) |> 
+  select(site, dev_period) |> # just select the columns we want
+  unnest(cols = c(dev_period)) |> # unnest everything
+  mutate(days_to_hatch = stop - start) # make a new column of days to hatch
+```
+
+![](paper_files/figure-latex/unnamed-chunk-20-1.pdf)<!-- --> 
 
 # Discussion
 
