@@ -13,10 +13,12 @@ model_select(author, species, model_id, development_type = "hatch")
 
 \item{model_id}{Model number from Beacham and Murray (1990).}
 
-\item{development_type}{The phenology type. A vector with possible values "hatch" or "emerge". The default is "hatch".}
+\item{development_type}{The phenology type. A vector with possible values
+"hatch" or "emerge". The default is "hatch".}
 }
 \value{
-A data.frame giving model specifications to be passed to \code{predict_phenology()}.
+A data.frame giving model specifications to be passed to
+\code{predict_phenology()}.
 }
 \description{
 The function calls a model table with the parameterizations for

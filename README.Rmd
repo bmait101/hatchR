@@ -19,9 +19,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 # hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" alt="hatchR website" align="right" height="139"/></a>
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
-
 <!-- badges: end -->
 
 **hatchR** is an R package for predicting fish developmental phenology using statistical models. It is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (*e.g.*, Beacham and Murray 1990) and applying them to real world temperature data sets using the effective value framework developed by Sparks et al. (2019).

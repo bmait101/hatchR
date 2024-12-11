@@ -16,14 +16,13 @@
 #' @examples
 #' library(hatchR)
 #' summarize_temp(
-#'   data = crooked_river,
+#'   data = idaho,
 #'   dates = date,
 #'   temperature = temp_c
 #' )
 summarize_temp <- function(data,
                            dates,
                            temperature) {
-
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
     cli::cli_abort(c(

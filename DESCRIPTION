@@ -23,7 +23,7 @@ Authors@R: c(
            )
     )
 Maintainer: Bryan Maitland <bryan.maitland@usda.gov>
-Description: hatchR is intended to bridge the analytic gap of 
+Description: `hatchR` is intended to bridge the analytic gap of 
     taking statistical models developed in hatchery settings 
     (e.g., Beacham and Murray 1990) and applying them to real world 
     temperature data sets using an effective value framework 

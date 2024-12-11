@@ -1,10 +1,11 @@
 #' Visual check of imported temperature data
 #'
 #' @description
-#' The `plot_check_temp` function is used to plot imported data to check temperature values.
-#' The function takes a data frame with dates and temperature values,
-#' and plots the temperature values over time. The function also allows users
-#' to specify the minimum and maximum temperature values to be plotted.
+#' The `plot_check_temp` function is used to plot imported data to check
+#' temperature values. The function takes a data frame with dates and
+#' temperature values, and plots the temperature values over time. The
+#' function also allows users to specify the minimum and maximum temperature
+#' values to be plotted.
 #'
 #' @param data A data.frame, or data frame extension (e.g. a tibble).
 #' @param dates Vector of dates for temperature measurements. Must be date or date-time class.
@@ -13,7 +14,8 @@
 #' @param temp_max Threshold for upper range of expected temperature. Default is 25.
 #'
 #' @return
-#' A object of class "gg" and "ggplot" that can be printed to the console or saved as an image.
+#' A object of class "gg" and "ggplot" that can be printed to the console
+#' or saved as an image.
 #'
 #' @export
 #'
@@ -29,11 +31,10 @@ plot_check_temp <- function(data,
                             temperature,
                             temp_min = 0,
                             temp_max = 25) {
-
   check_dates <- data |> dplyr::pull({{ dates }})
   if (is.character(check_dates) == TRUE) {
     cli::cli_abort(c(
-            "`dates` must be a vector of class {.cls date} or {.cls dttm}, not a {.cls character} vector.",
+      "`dates` must be a vector of class {.cls date} or {.cls dttm}, not a {.cls character} vector.",
       "i" = "Use {.fn lubridate::ymd} to convert to {.cls date} or {.cls dttm} vector."
     ))
   }

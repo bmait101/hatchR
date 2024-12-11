@@ -1,7 +1,8 @@
 #' Fit B&M model 2 to new data using `stats::nls()`
 #'
 #' @description
-#' Generate your own custom parameterized models for predicting hatching and emergence phenology.
+#' Generate your own custom parameterized models for predicting hatching
+#' and emergence phenology.
 #'
 #' @details
 #' **hatchR** also includes functionality to generate your own custom
@@ -16,7 +17,8 @@
 #' @param temp Numeric vector of temperatures
 #' @param days Numeric vector of days to hatch or emerge
 #' @param species Character string of species name (e.g., "sockeye")
-#' @param development_type Character string of development type: "hatch" or "emerge"
+#' @param development_type Character string of development type: "hatch"
+#' or "emerge"
 #'
 #' @return List with fit model object, model coefficients, model specifications
 #' data.frame, and plot of observations and model fit.
@@ -29,24 +31,27 @@
 #' temperature <- c(2, 5, 8, 11, 14)
 #' # vector of days to hatch
 #' days_to_hatch <- c(194, 87, 54, 35, 28)
-#' bt_hatch_mod <- fit_model(temp = temperature,
-#' days = days_to_hatch, species = "sockeye", development_type = "hatch")
+#' bt_hatch_mod <- fit_model(
+#'   temp = temperature,
+#'   days = days_to_hatch, species = "sockeye", development_type = "hatch"
+#' )
 fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   df <- tibble::tibble(x = temp, y = days)
 
   # check if species is NULL
   if (is.null(species)) {
     cli::cli_abort(c(
-            "`species` cannot be NULL.",
+      "`species` cannot be NULL.",
       "i" = "Provide a species name using `species = 'your_species'`."
-      ))
+    ))
   }
 
   # check if development_type is NULL
   if (is.null(development_type)) {
     cli::cli_abort(c(
-            "`development_type` cannot be NULL",
-      "i" = "Provide a development_type name using `development_type = 'hatch' or `development_type = 'emerge'`."
+      "`development_type` cannot be NULL",
+      "i" = "Provide a development_type name using
+      `development_type = 'hatch' or `development_type = 'emerge'`."
     ))
   }
 
@@ -59,7 +64,7 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   st <- list(
     a = exp(stats::coef(m1)[1]),
     b = stats::coef(m1)[2]
-    )
+  )
 
   # fit model 2 from Beacham & Murray (1990) to data using nls
   m2 <- stats::nls(y ~ a / (x - b), data = df, start = st)
@@ -75,7 +80,7 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
     species = species,
     development_type = development_type,
     expression = expression
-    )
+  )
 
   # plot predictions and data --------------------------
 
@@ -84,7 +89,9 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   p_pred <- df |>
     ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
     ggplot2::geom_point() +
-    ggplot2::geom_line(data = grid, ggplot2::aes(x = .data$x, y = .data$pred), col = "blue") +
+    ggplot2::geom_line(
+      data = grid, ggplot2::aes(x = .data$x, y = .data$pred), col = "blue"
+    ) +
     ggplot2::theme_classic()
   p_pred
 
@@ -103,7 +110,7 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
   # Calculate sum of squared residuals (SSR)
   ssr <- sum(residuals^2)
 
-  # Calculate peudo R-squared
+  # Calculate pseudo R-squared
   r_squared <- 1 - (ssr / sst)
 
   # Mean Squared Error (MSE)
@@ -117,9 +124,9 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
     model = m2,
     log_a = log_a[[1]],
     b = b[[1]],
+    r_squared = r_squared,
     mse = mse,
     rmse = rmse,
-    r_squared = r_squared,
     expression = expression,
     pred_plot = p_pred
   )
