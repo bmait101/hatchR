@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.9.11)  10 DEC 2024 14:43
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.9.11)  11 DEC 2024 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1050,7 +1050,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 384.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 374.
 [1
 
 ]
@@ -1079,9 +1079,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 536.
-
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1093,6 +1090,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [4]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 529.
 File: paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-5-1.pdf>
 
@@ -1108,11 +1107,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [5]
 
-LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 671.
-
-
-
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1124,16 +1118,9 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 
 [6]
 
-File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 660.
 
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[7]
 File: paper_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-10-1.pdf>
 
@@ -1147,7 +1134,21 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
+[7]
+
+File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
 [8]
+File: paper_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-15-1.pdf>
+
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1159,9 +1160,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [9]
-File: paper_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-16-1.pdf>
-
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1173,8 +1171,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [10]
-File: paper_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-20-1.pdf>
+File: paper_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/unnamed-chunk-19-1.pdf>
 
 
 File: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -1214,16 +1212,16 @@ LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-08-30>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: FE0E3ED997E3C7E5722E0BB1BE863740;1625.
+(rerunfilecheck)             Checksum: 8BDAA4ACC49431435EEE873E63BD4077;1626.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37140 strings out of 476173
- 763237 string characters out of 5783591
- 1630989 words of memory out of 5000000
- 59149 multiletter control sequences out of 15000+600000
+ 37147 strings out of 476173
+ 763368 string characters out of 5783591
+ 1629141 words of memory out of 5000000
+ 59156 multiletter control sequences out of 15000+600000
  564957 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,13n,87p,1194b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
