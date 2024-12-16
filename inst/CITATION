@@ -1,15 +1,15 @@
 bibentry(
   bibtype    = "Unpublished",
-  title      = "{hatchR}: predicting fish developmental phenology",
+  title      = "{hatchR}: A toolset to predict hatch and emergence phenology in wild fishes",
   author     = c(person(given  = "Bryan M.",
                         family = "Maitland",
                         email  = "bryan.maitland@usda.gov"),
-                 person(given  = "Morgan R.",
+                 person(given  = "Morgan M.",
                         family = "Sparks"),
                  person(given  = "Eli",
                         family = "Felts",
                         email = "eli_felts@fws.gov")
                         ),
-  year       = "2024",
+  year       = "2025",
   note       = "In preparation"
 )
