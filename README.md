@@ -19,21 +19,21 @@ al. (2019).
 
 If you use **hatchR** in a formal publication or report, please cite it.
 Citing **hatchR** lets us devote more resources to it in the future.
-View the **hatchR** citation by running
+View the **hatchR** citation by running:
 
 ``` r
 citation(package = "hatchR")
 #> To cite package 'hatchR' in publications use:
 #> 
-#>   Maitland B, Sparks M, Felts E (2024). "hatchR: predicting fish
-#>   developmental phenology." In preparation.
+#>   Maitland B, Sparks M, Felts E (2025). "hatchR: A toolset to predict
+#>   hatch and emergence phenology in wild fishes." In preparation.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Unpublished{,
-#>     title = {{hatchR}: predicting fish developmental phenology},
-#>     author = {Bryan M. Maitland and Morgan R. Sparks and Eli Felts},
-#>     year = {2024},
+#>     title = {{hatchR}: A toolset to predict hatch and emergence phenology in wild fishes},
+#>     author = {Bryan M. Maitland and Morgan M. Sparks and Eli Felts},
+#>     year = {2025},
 #>     note = {In preparation},
 #>   }
 ```

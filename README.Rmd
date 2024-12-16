@@ -27,7 +27,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 ## Citation
 
-If you use **hatchR** in a formal publication or report, please cite it. Citing **hatchR** lets us devote more resources to it in the future. View the **hatchR** citation by running
+If you use **hatchR** in a formal publication or report, please cite it. Citing **hatchR** lets us devote more resources to it in the future. View the **hatchR** citation by running:
 
 ```{r}
 citation(package = "hatchR")
