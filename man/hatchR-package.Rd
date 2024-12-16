@@ -20,12 +20,16 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Bryan Maitland \email{bryan.maitland@usda.gov} (\href{https://orcid.org/0000-0002-4491-5064}{ORCID})
+\strong{Maintainer}: Bryan M. Maitland \email{bryan.maitland@usda.gov} (\href{https://orcid.org/0000-0002-4491-5064}{ORCID})
 
 Authors:
 \itemize{
-  \item Morgan Sparks \email{morgan.sparks@usda.gov} (\href{https://orcid.org/0000-0003-0787-2218}{ORCID})
-  \item Eli Felts \email{eli_felts@fws.gov} (\href{https://orcid.org/0000-0002-5888-9266}{ORCID})
+  \item Morgan M. Sparks \email{morgan.sparks@usda.gov} (\href{https://orcid.org/0000-0003-0787-2218}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Eli Felts \email{eli_felts@fws.gov} (\href{https://orcid.org/0000-0002-5888-9266}{ORCID}) [contributor]
 }
 
 }
