@@ -1,44 +1,103 @@
 ---
-title: 'hatchR: A toolset to predict hatch and emergence phenology in wild fishes'
-tags:
-  - R
-  - fishes
-  - developmental phenology
-authors:
+title: Template for Oxford University Press papers
+author:
   - name: Morgan M. Sparks
+    email: Morgan.Sparks@usda.gov
     orcid: 0000-0003-0787-2218
-    affiliation: 1 # (Multiple affiliations must be quoted)
+    corresponding_author: TRUE # Automatic footnote using corresponding_author
+    affiliation: A
   - name: Eli Felts
     orcid: 0000-0002-5888-9266
-    affiliation: 2
+    affiliation: B
   - name: Bryan M. Maitland
     orcid: 0000-0002-4491-5064
-    affiliation: 1
-affiliations:
- - name: US Forest Service, Rocky Mountain Research Station, Boise, ID, USA
-   index: 1
- - name: US Fish and Wildlife Service, Idaho Fish and Wildlife Conservation Office, Orofino, ID, USA
-   index: 2
-citation_author: Sparks et al.
-date: 07 July 2025
-year: 2025
-output: rticles::joss_article
-csl: apa.csl
-journal: JOSS
-editor_options:
-  chunk_output_type: console
-bibliography: ms_refs.bib
+    affiliation: A
+    footnote:
+address:
+  - code: A
+    department: Rocky Mountain Research Station
+    organization: U.S. Forest Service
+    #postcode: 
+    city: Boise
+    state: Idaho # Mix and match elements to get proper address
+    country: United States
+  - code: B
+    department: Idaho Fish and Wildlife Conservation Office
+    organization: U.S. Fish and Wildlife Service
+    city: Orofino
+    state: Idaho # Mix and match elements to get proper address
+    country: United States
+abstract:
+  - "Understanding the timing of key life history events is necessary for managing and conserving populations. Historically, models to predict hatch and emergence timing for fishes were difficult to employ in wild settings because average incubation temperature was needed as the primary parameter in predictive models. However, recent improvements to these techniques reworked models such that they could be applied in wild environments as long as users had data for when adult fish spawned and a record of average daily temperature over the course of development. Despite these improvements, their application remains limited due to few parameterizations for varying species, being largely limited to salmonids. Here we present **hatchR**, a software ecosystem that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. **hatchR** allows users to leverage popular historic parameterizations for phenological models or to easily implement custom parameterizations using data not included in the package. **hatchR** is also distributed in two forms—an open source R package for maximum customization, as well as an HTML graphical-user-interface web application for individuals not familiar with scripting languages. To demonstrate potential uses, we present two case studies as likely applications for this software. **hatchR** promises to open many exciting avenues in research and management of fishes during their early life history.
+"
+keywords:
+  - developmental phenology
+  - effective value model
+  - R
+  - Shiny
+#boxedlist: # Not fully compatible with all document formats
+#  - First point
+#  - Second point
+competing_interests: |
+  There are no competing interest.
+author_contributions: |
+  MMS and BMM designed and wrote the package. EF wrote the Shiny app. All authors wrote and edited the manuscript.
+acknowledgments: |
+  We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided useful discussion about model development and temperature datasets.
+  
+  The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS or USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government, USFS, or USFWS. USFS and USFWS do not endorse any commercial products, services or enterprises.
+
+
+bibliography: ms_refs.bib # Includes refs in OUP example template
+## When using `citation_package = "default"`, a CSL file can be used
+#csl: https://www.zotero.org/styles/oxford-university-press-note
+output:
+  rticles::oup_article:
+    oup_version: 1 # 1 = 2020 CTAN OUP CLS package; 0 = 2009 OUP CLS package
+    journal: "Fisheries"
+    document_style: "contemporary" # Can be contemporary, modern, traditional
+    papersize: "large" # Can be large, medium, small
+    citation_package: "default" # Uncomment when using a CSL; default "natbib"
+    namedate: TRUE # Set FALSE to use numeric refs; Default FALSE
+    #number_sections: FALSE # Uncomment to not number sections; default TRUE
+    #number_lines: TRUE # Use `lineno` package - Default FALSE
+    #number_lines_options: ["mathlines","switch"]  # Options for latex lineno package.
+    #onecolumn: TRUE # Uncomment for one column format; default FALSE
+    extra_dependencies:
+      - booktabs # to use with knitr::kable() example below
+      
+## Example of pandoc's variable
+#urlcolor: orange
+#linkcolor: green
+#citecolor: red
+header-includes:
+  #- \usepackage[nomarkers,tablesfirst]{endfloat} # For figures and tables at end
+  - \theoremstyle{thmstyleone} # Theorem stuff from OUP template
+  - \newtheorem{theorem}{Theorem} #  meant for continuous numbers. %%\newtheorem{theorem}{Theorem}[section] # meant for sectionwise numbers. optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+  - \newtheorem{proposition}[theorem]{Proposition} # %%\newtheorem{proposition}{Proposition}" # to get separate numbers for theorem and proposition etc.
+  - \theoremstyle{thmstyletwo}
+  - \newtheorem{example}{Example}
+  - \newtheorem{remark}{Remark}
+  - \theoremstyle{thmstylethree}
+  - \newtheorem{definition}{Definition}
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, # By default, hide code; set to TRUE to see code
+  fig.pos = 'th', # Places figures at top or here
+  out.width = '100%', dpi = 300, # Figure resolution and size
+  fig.env="figure"
+) # Latex figure environment
+
+options(knitr.table.format = "latex") # For kable tables to write LaTeX table directly
+```
 
 ```{r, include=FALSE}
 library(tidyverse)
 library(hatchR)
 library(ggridges)
 ```
-
-# Abstract
-
-Understanding the timing of key life history events is necessary for managing and conserving populations. Historically, models to predict hatch and emergence timing for fishes were difficult to employ in wild settings because average incubation temperature was needed as the primary parameter in predictive models. However, recent improvements to these techniques reworked models such that they could be applied in wild environments as long as users had data for when adult fish spawned and a record of average daily temperature over the course of development. Despite these improvements, their application remains limited due to few parameterizations for varying species, being largely limited to salmonids. Here we present **hatchR**, a software ecosystem that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. **hatchR** allows users to leverage popular historic parameterizations for phenological models or to easily implement custom parameterizations using data not included in the package. **hatchR** is also distributed in two forms—an open source R package for maximum customization, as well as an HTML graphical-user-interface web application for individuals not familiar with scripting languages. To demonstrate potential uses, we present two case studies as likely applications for this software. **hatchR** promises to open many exciting avenues in research and management of fishes during their early life history.
 
 # Introduction
 
@@ -59,7 +118,7 @@ library(tidyverse); library(hatchR); library(ggdist)
 
 **hatchR** is meant to primarily be a tool for predicting phenology. In this sense, we limit functionality to these applications and provide minimal data checking and plotting help. This decision is in part driven by the diversity of data types that users may import and the difficulty in addressing all those data types with respect to various data checks. In other words, we expect users to know their data better than we do and to check it accordingly. We do provide two basic data check functions discussed in the Checking Data section. Similarly, we provide limited functionality for plotting results, but provide examples of how to build custom visualizations from output, specifically in R. For the Shiny application, we provide a base output plot, but the ability to download your results for custom plotting in programs of the user's choice. Finally, we provide brief summaries of general applications of **hatchR** below, but encourage users to visit articles hosted on the software webpage that extensively outline primary functions and applications, especially automating the application of predicting phenology across multiple variables.
 
-```{r echo = FALSE, out.height = '50%', fig.align = 'center', fig.cap= "Full workflow for hatchR. Data processes are demonstrated with beige circles and pakcage functions with white rectangles."}
+```{r, echo = FALSE, out.height = '75%', fig.align = 'center'}
 knitr::include_graphics("flowchart.png")
 ```
 
@@ -83,13 +142,23 @@ Water temperature datasets collected for wild environments are often either 1.) 
 
 Fundamentally, **hatchR** assumes you have input data with two columns: a date column, giving the date (and often time) of a temperature measurement, and a temperature column, giving the associated temperature measurement (in centigrade). Other columns are okay to include, but these two columns (with any column name—just *without* spaces) are required. We expect your data to look something like this:
 
-| date       | temperature |
-|------------|-------------|
-| 2000-01-01 | 2.51        |
-| ...        | ...         |
-| 2000-07-01 | 16.32       |
-| ...        | ...         |
-| 2000-12-31 | 3.13        |
+```{r kabletable, echo=FALSE}
+df = data.frame(date = c("2000-01-01",
+                         "...",
+                         "2000-07-01",
+                         "...",
+                         "2000-12-31"),
+                temperature= c(2.51,
+                        "...",
+                        16.32,
+                        "...",
+                        3.13
+                        ))
+
+# kable can alse be used for creating tables
+knitr::kable(df,
+             booktabs=TRUE)
+```
 
 **hatchR** assumes you've checked for missing records or errors in your data as it *will function with gaps*, so it's important to go through the data checks discussed below, as well as your own validity checks. **hatchR** can use values down to freezing (e.g, 0 °C), which returns extremely small effective values, and time to hatch or emerge may be \> 1 year. In these cases, we suggest users consider how much of that data type is reasonable with their data.
 
@@ -101,7 +170,7 @@ For users choosing to implement **hatchR** in R, data can be imported from any f
 
 We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset with temperature readings every thirty minutes.
 
-```{r}
+```{r, echo = TRUE}
 # create date object for a year with 30 min reading intervals
 dates <- seq(from = ymd_hms("2000-07-01 00:00:00"),
              to = ymd_hms("2001-06-30 23:59:59"), length.out = 17568) 
@@ -131,7 +200,7 @@ dim(year_sim)
 
 First, we recommend checking imported data for any outliers or strange inputs using `plot_check_temp()`
 
-```{r, fig.cap= "Full output of the plot_check_temp() visual data check function from hatchR. Note that the red and blue lines are customizable by the user to create outlier thresholds for their visual check."}
+```{r, echo = TRUE}
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
@@ -142,7 +211,7 @@ plot_check_temp(data = year_sim,
 
 There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data (though leave out the resulting plot for space efficiency in this manuscript).
 
-```{r}
+```{r, echo = TRUE}
 # summarize
 year_sim_summ <- summarize_temp(data = year_sim,
                                 dates = date,
@@ -176,7 +245,7 @@ Below, we demonstrate how the `fit_model()` function may be used to create custo
 
 We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure 3).
 
-```{r}
+```{r, echo = TRUE}
 ###  make temp regime
 set.seed(123)
 # create random temps and corresponding dates
@@ -244,13 +313,13 @@ sturgeon_mod <- fit_model(days = sturgeon$days,
 
 Note the *R^2^* fit from the models below. You can see they generally all preform well and are in line with values from model 2 of @beacham1990.
 
-```{r}
+```{r, echo = TRUE}
 #model fits
 smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
 
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap= "Days to hatch as predicted using custom parameterizations for Channel Catfish (blue), Lake Sturgeon (black, and Smallmouth Bass (green) as generated by the fit_model() function in hathcR. Models are all run using a spawn date starting June 1 for a randomly generated ascending thermal regime with mean temperature 16 °C"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 ### predict_phenology
 
 #smallmouth bass
@@ -310,7 +379,7 @@ ggplot() +
 
 To illustrate model selection and phenology prediction we will recreate a small portion of the analysis done by @sparks2019 using the `woody_island` dataset included in this package . We will predict both hatch and emergence timing, so we will obtain a model expression for each using `model_select()`.
 
-```{r}
+```{r, echo = TRUE}
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
@@ -321,7 +390,7 @@ sockeye_hatch_mod <- model_select(
 
 We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, echo = TRUE}
 WI_hatch <- predict_phenology(
   data = woody_island,
   dates = date,
@@ -333,7 +402,7 @@ WI_hatch <- predict_phenology(
 
 And then look inside the returned object to see days to hatch and development period:
 
-```{r}
+```{r, echo = TRUE}
 WI_hatch$days2done
 WI_hatch$dev.period
 ```
@@ -342,7 +411,7 @@ WI_hatch$dev.period
 
 The output from `predict_phenology()` includes a lot of information. If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo = TRUE}
 str(WI_hatch)
 ```
 
@@ -358,9 +427,7 @@ str(WI_hatch)
 
 **hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results (Figure 4). The plot visualizes three specific components: 1.) the temperature regime over which you are predicting, 2.) the cumulative sum of effective values, and 3.) the effective value for each day in your prediction span. The function allows you to output various figures based on your interests, but defaults to a figure with all information and the corresponding labels.
 
-```{r, fig.cap= "Output of the plot_phenology() function from hatchR. The function plots the output of the predict_phenology() function and displays time to develop, as well as the ambient thermal regime (blue), scaled daily effective value (green), and the scaled cumulative sum of effective values (orange)."}
-plot_phenology(WI_hatch)
-```
+`{r"} plot_phenology(WI_hatch)`
 
 # Case Study 1
 
@@ -459,7 +526,7 @@ bt_hatch <- model_select(
 
 We need to setup our models and data for this analysis, which we don't show those steps here for the sake of concision in this manuscript, however they are demonstrated in `paper.Rmd` included in the GitHub repository for **hatchR**. After the setup, we can easily map `predict_phenology()` across all putative spawning sites and three spawn dates (September 1-Early Spawning, September 15-Peak Spawning, and September 31-Late Spawning), the results of which are presented in Figure XXX.
 
-```{r}
+```{r, echo = TRUE}
 hatch_res <- isaak_summ_bt |> 
   mutate(
     dev_period = map2(
@@ -477,7 +544,7 @@ hatch_res <- isaak_summ_bt |>
   mutate(days_to_hatch = stop - start) # make a new column of days to hatch
 ```
 
-```{r, message=FALSE, echo=FALSE, fig.cap= "Densities of predicted days to hatch for Bull Trout for 139 putative spawning locations across Idaho for four years of shared temperature data. Early spawning considers if a parent spawned September 1, Peak-September 15, and Late-September 30."}
+```{r, message=FALSE, echo=FALSE}
 cut_ints <- date(
   c(
     "2011-08-31", "2012-08-31",
@@ -540,11 +607,5 @@ To date, the application of the effective value framework has largely focused us
 **BRYAN check the below**
 
 The models presented in **hatchR** can be further customized in multiple ways beyond the use-cases provided above. For instance, while our models are fit to predict hatch or emergence timing, they could be used to predict other developmental stages prior to the initation of external feeding like eye-up or other embryological developmental stages (@velsen1980) or **Some example from a non-salmonid, maybe initiation of pelagic-larval or riverine current dispersal**. Additionally, while `fit_model()` relies on non-linear modeling platform, `predict_phenology()` only requires users to pass a model expression, so if users preferred a different model fit than the non-linear option provided (as long as it integrates daily temperature), they could pass a different expression into `predict_phenology()` for additional customization. Finally, while **hatchR** was designed specifically for fishes, we expect other poikilothermic organisms such as reptiles, amphibians, or invertebrates would develop in accordance with the power law and these developmental models could be extended to other organisms beyond fishes.
-
-# Acknowledgements
-
-We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided useful discussion about model development and temperature datasets.
-
-The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS or USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government, USFS, or USFWS. USFS and USFWS do not endorse any commercial products, services or enterprises.
 
 # References
