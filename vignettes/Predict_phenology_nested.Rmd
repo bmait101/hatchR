@@ -216,7 +216,7 @@ spawn_dates <- map(
 # bull trout hatch model
 bt_hatch <- model_select(
   development_type = "hatch",
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM"
 )

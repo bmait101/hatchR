@@ -2,7 +2,7 @@
 #'
 #' Table providing the model parameterizations for the phenology models.
 #'
-#' @source Beacham & Murray (1990), Sparks et al. (2019), Austin et al. (2019).
+#' @source Beacham & Murray (1990), Sparks et al. (2017), Austin et al. (2019).
 #' @format Data frame with 5 columns:
 #' \describe{
 #' \item{author}{Author-year short citation}
@@ -20,10 +20,9 @@
 #'   \emph{Canadian Journal of Zoology},
 #'   \bold{68}, 1931--1940.
 #'
-#' Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
-#' Schindler, D.E. (2019). Influences of spawning timing, water temperature,
-#' and climatic warming on early life history phenology in western
-#' Alaska sockeye salmon.
+#' Sparks, M.M., Westley, P.A.H., Falke, J.A., Quinn, T.A. (2017). Thermal
+#' adaptation and phenotypic plasticity in a warming world: Insights from
+#' common garden experiments on Alaskan sockeye salmon.
 #'   \emph{Canadian Journal of Fisheries and Aquatic Sciences},
 #'   \bold{76(1)}, 123--135.
 #'
