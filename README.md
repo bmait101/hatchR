@@ -48,6 +48,12 @@ You can install the development version of **hatchR** from
 pak::pak("bmait101/hatchR")
 ```
 
+## Interactive Shiny App
+
+You can also use the **hatchR** Shiny app to interactively predict fish
+developmental phenology. To run the app, visit the [hatchR Shiny
+app](https://elifelts.shinyapps.io/hatchR_demo/).
+
 ## Contributing to **hatchR**
 
 We encourage users to report bugs and/or contribute to **hatchR**. For

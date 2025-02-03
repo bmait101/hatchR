@@ -163,7 +163,7 @@ spawn_dates <- map(
 dev_mods <- map_df(
   c("hatch", "emerge"),
   model_select,
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM"
   ) |> 

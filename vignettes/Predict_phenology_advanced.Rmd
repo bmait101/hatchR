@@ -208,14 +208,14 @@ First let's just check to see if fish spawning in 2015 would have enough data to
 ```{r, warning=TRUE}
 # select bull trout hatch and emergence models
 bull_hatch_mod <- model_select(
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM",
   development_type = "hatch" # note we are using hatch model here
 )
 
 bull_emerge_mod <- model_select(
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM",
   development_type = "emerge" # note we are using emerge model here
@@ -270,7 +270,7 @@ for (mod in c("hatch", "emerge")) { # loop for hatch and emerge
   # here we just iterate model selection over the two hatch and emerge options
   # in the first for loop
   dev_mod <- model_select(
-    author = "Austin et al. 2017",
+    author = "Austin et al. 2019",
     species = "bull trout",
     model = "MM",
     development_type = mod
@@ -333,7 +333,7 @@ spawn_dates <- map(
 dev_mods <- map(
   c("hatch", "emerge"),
   model_select,
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM"
   )
