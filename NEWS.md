@@ -1,20 +1,23 @@
 # hatchR (development version)
 
+## Minor improvemements and bug fixes
+
+* fix `model_table` bug (#11) and add link to Shiny app (#12); (PR #13)
+* copy edits (#15)
+
+
 # hatchR 0.2.0
 
-## What's Changed
-* Model_select and predict_phenology tweaks by @efelts-usfws in https://github.com/bmait101/hatchR/pull/1
-* delete test.MD by @morgan-sparks in https://github.com/bmait101/hatchR/pull/2
-* fix predict_phenology NaN problem by @morgan-sparks in https://github.com/bmait101/hatchR/pull/3
-* Isaak data by @bmait101 in https://github.com/bmait101/hatchR/pull/5
-* Fx cleaning by @bmait101 in https://github.com/bmait101/hatchR/pull/6
-* Unit tests by @bmait101 in https://github.com/bmait101/hatchR/pull/7
-* Bring dev branch up to date with mater by @bmait101 in https://github.com/bmait101/hatchR/pull/8
-* Merge pull request #8 from bmait101/master by @bmait101 in https://github.com/bmait101/hatchR/pull/9
+## Minor improvemements and bug fixes
 
-## New Contributors
-* @efelts-usfws made their first contribution in https://github.com/bmait101/hatchR/pull/1
-* @morgan-sparks made their first contribution in https://github.com/bmait101/hatchR/pull/2
+* `model_select` and `predict_phenology` tweaks (#1)
+* delete test.MD (#2)
+* fix `predict_phenology` `NaN` problem (#3)
+* fix Isaak data (#5)
+* function cleaning (#6)
+* adding unit tests (#7)
+* Bring dev branch up to date with master (#8)
+* Merge pull request #8 (#9)
 
 # hatchR 0.1.0
 
