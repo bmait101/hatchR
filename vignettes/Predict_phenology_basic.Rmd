@@ -86,7 +86,7 @@ If we just apply the model within the gray polygon we've drawn, the model should
 
 ## Model select
 
-Now that our temperature data is usable we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
+Now that our temperature data is usable, we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
 
 ```{r}
 sockeye_hatch_mod <- model_select(

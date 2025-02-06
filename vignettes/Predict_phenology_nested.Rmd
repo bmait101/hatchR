@@ -70,7 +70,7 @@ idaho |>
 
 You can see there are 226 sites with 773,681 individual records of water temperature.
 
-For this application, we'll be thinking about these sites at putative bull trout (*Salvelinus conflentus*) spawning habitat. Bull trout are generally not observed where mean August temperatures are above 13 °C. So, we'll first filter sites out for those cooler than 13 °C.
+For this application, we'll be thinking about these sites at putative bull trout (*Salvelinus confluentus*) spawning habitat. Bull trout are generally not observed where mean August temperatures are above 13 °C. So, we'll first filter sites out for those cooler than 13 °C.
 
 ```{r}
 # create a vector of site names with temps at or below 13 C
@@ -200,7 +200,7 @@ Now that we have our data in the format we want and we're confident that it does
 First we need to make a vector of spawn dates and get our model set up.
 
 ```{r}
-# spawn datest
+# spawn dataest
 spawn_dates <- map(
   c(2011:2014), # year vector to map for custom function
   function(year) { # custom paste function

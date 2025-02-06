@@ -95,7 +95,7 @@ Where *i* is the daily value and a fish hatches or emerges when the cumulative s
 
 ## `fit_model()`
 
-The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event are the inputs and estimates parameter coeficients for *log~e~a* and *b* using `stats::nls()`.
+The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event are the inputs and estimates parameter coefficients for *log~e~a* and *b* using `stats::nls()`.
 
 Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout (*Salmo trutta*).
 

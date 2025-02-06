@@ -279,7 +279,7 @@ for (d in fish_dates$mo_day) {
 
   spawners <- fish_dist[fish_dist == d] # vector of spawners in fish_dist
 
-  spawners_date <- rep(day, times = length(spawners)) # make vector of date repeated the lenght of the vector spawners
+  spawners_date <- rep(day, times = length(spawners)) # make vector of date repeated the length of the vector spawners
 
   fish_dates_norm <- append(fish_dates_norm, spawners_date) # append to out file
 }
@@ -365,7 +365,7 @@ cut_ints_1314 <- ymd(c(
   "2014-08-01", "2015-08-01"
 ), tz = "UTC")
 
-# cut acording to our cut intervals and label by developmental year
+# cut according to our cut intervals and label by developmental year
 bull_trout_phenology_cut <- bull_trout_all_phenology |>
   mutate(year = cut(Date,
     breaks = cut_ints_1314,
@@ -410,7 +410,7 @@ ggplot() +
 
 As you can see, even small differences in thermal regime can make for big differences in developmental phenology.
 
-We could even combine this plot with the plot we made previously to show regime and duration along side the distributions. For combining plots we highly recommend the [patchwork package](https://patchwork.data-imaginist.com/).
+We could even combine this plot with the plot we made previously to show regime and duration alongside the distributions. For combining plots we highly recommend the [patchwork package](https://patchwork.data-imaginist.com/).
 
 ```{r}
 

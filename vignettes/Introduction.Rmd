@@ -116,7 +116,7 @@ If your dates are in a different format, you’ll need to use `col_types` plus `
 
 #### From strings
 
-If you you read in a CSV file using `read.csv()` from base R, date columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\>. **lubridate** helper functions attempt to automatically determine the format once you specify the order of the component. To use them, identify the order in which year, month, and day appear in your dates, then arrange “y”, “m”, and “d” in the same order. That gives you the name of the **lubridate** function that will parse your date. For date-time, add an underscore and one or more of “h”, “m”, and “s” to the name of the parsing function.
+If you read in a CSV file using `read.csv()` from base R, date columns will be formatted as a characters (\<char\>; e.g., `"2000-09-01"` or `"2000-09-01 12:00:00"`). You will have convert to this column to a \<date\> or \<dttm\>. **lubridate** helper functions attempt to automatically determine the format once you specify the order of the component. To use them, identify the order in which year, month, and day appear in your dates, then arrange “y”, “m”, and “d” in the same order. That gives you the name of the **lubridate** function that will parse your date. For date-time, add an underscore and one or more of “h”, “m”, and “s” to the name of the parsing function.
 
 ```{r}
 ymd("2017-01-31")
@@ -245,7 +245,7 @@ plot_check_temp(data = crooked_river,
 
 If you imported raw data with multiple recordings per day, **hatchR** has a built in function to summarize those data to a daily average mean called `summarize_temp()`. The output of the function is a tibble with mean daily temperature and its corresponding.
 
-Below, we simulate a dataset with 30 minute temperature recordings for a year and summarize the data to daily means.
+Below, we simulate a dataset with 30-minute temperature recordings for a year and summarize the data to daily means.
 
 ```{r}
 # set seed for reproducibility
@@ -258,7 +258,7 @@ dates <- seq(
   by = "30 min"
   )
 
-# simualte temperature data
+# simulate temperature data
 fake_data <- tibble(
   date = dates,
   temp = rnorm(n = length(dates), mean = 10, sd = 3) |> abs()
