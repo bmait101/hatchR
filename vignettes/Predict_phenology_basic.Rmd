@@ -86,7 +86,7 @@ If we just apply the model within the gray polygon we've drawn, the model should
 
 ## Model select
 
-Now that our temperature data is usable we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
+Now that our temperature data is usable, we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
 
 ```{r}
 sockeye_hatch_mod <- model_select(
@@ -132,7 +132,7 @@ WI_hatch <- predict_phenology(
 Next, look inside the returned object to see days to hatch and development period (more on this in the [Understanding your results](#results) section)
 
 ```{r}
-WI_hatch$days2done
+WI_hatch$days_to_develop
 WI_hatch$dev.period
 ```
 
@@ -147,7 +147,7 @@ WI_emerge <- predict_phenology(
   model = sockeye_emerge_mod # notice we're using emerge model expression here
 )
 
-WI_emerge$days2done
+WI_emerge$days_to_develop
 WI_emerge$dev.period
 ```
 
@@ -161,7 +161,7 @@ summary(WI_hatch)
 
 We can access each element using the `$` operator:
 
--   `WI_hatch$days2done` outputs the predicted days to hatch or emerge.
+-   `WI_hatch$days_to_develop` outputs the predicted days to hatch or emerge.
 
 -   `WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
 

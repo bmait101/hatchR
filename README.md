@@ -89,6 +89,12 @@ library(ggplot2)  # for additional plotting options
 library(lubridate)  # for working with dates
 ```
 
+**hatchR** requires three primary data inputs:
+
+1.  Water temperature data
+2.  Species-specific model parameters
+3.  Spawning date or date ranges
+
 The example `woody_island` dataset is included in **hatchR** and
 contains temperature data from Woody Island, Lake Iliamna, Alaska. It
 includes daily water temperature data from 1990-1992. We can use

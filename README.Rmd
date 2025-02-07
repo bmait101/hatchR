@@ -70,6 +70,12 @@ library(ggplot2)  # for additional plotting options
 library(lubridate)  # for working with dates
 ```
 
+**hatchR** requires three primary data inputs:
+
+1.  Water temperature data
+2.  Species-specific model parameters
+3.  Spawning date or date ranges
+
 The example `woody_island` dataset is included in **hatchR** and contains temperature data from Woody Island, Lake Iliamna, Alaska. It includes daily water temperature data from 1990-1992. We can use `plot_check_temp()` to visually check the data. Spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` returns a **ggplot2** object, we can add additional **ggplot2** elements to customize the plots.
 
 ```{r}

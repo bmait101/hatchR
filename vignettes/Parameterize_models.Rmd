@@ -32,7 +32,7 @@ library(ggplot2)
 This vignette describes two options for selecting parameterized models for predicting fish early life history phenology using **hatchR**:
 
 1.  model parameterizations included in the package
-2.  custom parameterizations using your own data
+2.  custom parameterizations using your own data (i.e., days to hatch or emerge and average incubation temperature)
 
 ```{r, eval = FALSE}
 library(hatchR)
@@ -42,7 +42,7 @@ library(ggplot2)
 
 # Built-in parameterizations
 
-**hatchR** ships with model parameterizations in `model_table`, which includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], and can be selected using `model_select()`.
+Published model parameterizations are contained in the `model_table` object. This includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], and can be selected using `hatchR::model_select()`.
 
 ## `model_table`
 
@@ -95,7 +95,7 @@ Where *i* is the daily value and a fish hatches or emerges when the cumulative s
 
 ## `fit_model()`
 
-The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event are the inputs and estimates parameter coeficients for *log~e~a* and *b* using `stats::nls()`.
+The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event are the inputs and estimates parameter coefficients for *log~e~a* and *b* using `stats::nls()`.
 
 Here, we borrow data from Table 8.1 (pg. 183) from @quinn2018 to generate a custom hatch parameterization for brown trout (*Salmo trutta*).
 
