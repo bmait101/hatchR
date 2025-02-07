@@ -33,7 +33,7 @@ library(tidyr)
 
 ## Overview
 
-The function `predict_phenolgy()` is purposefully kept fairly simple so it can be expanded to iterate across datasets. Typically, this will take the form of loops or vectorizing in R (functions of the `map()` famimy from **purrr** and `apply()` family from **base**). There are many reasons why you might want to iterate, including predicting over multiple years, multiple sites, predicting hatch or emergence simultaneously, or even using multiple potential spawn dates. We'll show some examples below (moving from less to more complicated). First, we load packages:
+The function `predict_phenolgy()` is purposefully kept fairly simple so it can be expanded to iterate across datasets. Typically, this will take the form of loops or vectorizing in R (functions of the `map()` family from **purrr** and `apply()` family from **base**). There are many reasons why you might want to iterate, including predicting over multiple years, multiple sites, predicting hatch or emergence simultaneously, or even using multiple potential spawn dates. We'll show some examples below (moving from less to more complicated). First, we load packages:
 
 ```{r}
 library(hatchR) # for data and phenology modeling
@@ -100,7 +100,7 @@ for (d in 1:length(WI_spawn_dates)) { # d will be our numerical iterator
   temp <- tibble(matrix(data = NA, ncol = 2, nrow = 1)) # empty dataframe to add in data
   colnames(temp) <- c("spawn_date", "days_2_hatch") # change column names
   temp$spawn_date <- WI_spawn # assign spawn date
-  temp$days_2_hatch <- WI_hatch$days2done # assign days to hatch
+  temp$days_2_hatch <- WI_hatch$days_to_develop # assign days to hatch
   OUT_loop_d2h <- rbind(OUT_loop_d2h, temp) # row bind temp object and OUT object
 }
 ```
@@ -140,7 +140,7 @@ results_map <- map(
   model = sockeye_hatch_mod
 )
 
-# we now have a list of lists the same as OUT_loop
+# we now have a list of lists the same as OUT_loop_all
 glimpse(results_map)
 
 # we can then access days to hatch easily as such
@@ -306,11 +306,11 @@ If that sounds a bit complicated, it's because it is. And this is where the vect
 A quick note about accessing lists. Even if you want to write loops instead of vectorizing, we do recommend accessing those results via a vectorized approach. It's hard to pull out a lot of information from very large nested loops. You would probably write a custom loop to do so. However, those results are easily accessed by map, like so:
 
 ```{r}
-mapped_results <- OUT |> purrr:::map_df("ef.tibble")
+mapped_results <- OUT |> purrr:::map_df("ef_table")
 mapped_results
 ```
 
-The above code outputs the `ef.tibble` element from every one of your lists from each combination of spawn date and phenology type into a dataframe like object which can then easily be plotted. Notice, we now use `purrr::map_df()` because we know the list element we are accessing is in the format of a dataframe type object (a tibble).
+The above code outputs the `ef_table` element from every one of your lists from each combination of spawn date and phenology type into a dataframe like object which can then easily be plotted. Notice, we now use `purrr::map_df()` because we know the list element we are accessing is in the format of a dataframe type object (a tibble).
 
 ### Vectorizing
 
@@ -378,7 +378,7 @@ days <- crooked_predictions |>
   map_dbl("days_to_develop")
 
 # make a vector of what type of phenology we were predicting
-# remember we ran hatch over 15 spawn dates then emerge over thos same 15
+# remember we ran hatch over 15 spawn dates then emerge over those same 15
 phenology <- c(rep("hatch", 12), rep("emerge", 12))
 
 # make a vector of our spawn dates replicated twice and turn into a timepoint
