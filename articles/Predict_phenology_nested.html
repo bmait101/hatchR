@@ -126,9 +126,10 @@ network in the study area.</p>
 <p>You can see there are 226 sites with 773,681 individual records of
 water temperature.</p>
 <p>For this application, we’ll be thinking about these sites at putative
-bull trout (<em>Salvelinus conflentus</em>) spawning habitat. Bull trout
-are generally not observed where mean August temperatures are above 13
-°C. So, we’ll first filter sites out for those cooler than 13 °C.</p>
+bull trout (<em>Salvelinus confluentus</em>) spawning habitat. Bull
+trout are generally not observed where mean August temperatures are
+above 13 °C. So, we’ll first filter sites out for those cooler than 13
+°C.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a vector of site names with temps at or below 13 C</span></span>
 <span><span class="va">bull_trout_sites</span> <span class="op">&lt;-</span> <span class="va">idaho</span> <span class="op">|&gt;</span> </span>
@@ -326,7 +327,7 @@ that it doesn’t have any gaps we can start to map our
 <p>First we need to make a vector of spawn dates and get our model set
 up.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># spawn datest</span></span>
+<code class="sourceCode R"><span><span class="co"># spawn dataest</span></span>
 <span><span class="va">spawn_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span><span class="op">:</span><span class="fl">2014</span><span class="op">)</span>, <span class="co"># year vector to map for custom function</span></span>
 <span>  <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span> <span class="co"># custom paste function</span></span>

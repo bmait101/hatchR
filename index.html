@@ -129,6 +129,12 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>  <span class="co"># for additional plotting options</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>  <span class="co"># for working with dates</span></span></code></pre></div>
+<p><strong>hatchR</strong> requires three primary data inputs:</p>
+<ol style="list-style-type: decimal">
+<li>Water temperature data</li>
+<li>Species-specific model parameters</li>
+<li>Spawning date or date ranges</li>
+</ol>
 <p>The example <code>woody_island</code> dataset is included in <strong>hatchR</strong> and contains temperature data from Woody Island, Lake Iliamna, Alaska. It includes daily water temperature data from 1990-1992. We can use <code><a href="reference/plot_check_temp.html">plot_check_temp()</a></code> to visually check the data. Spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because <code><a href="reference/plot_check_temp.html">plot_check_temp()</a></code> returns a <strong>ggplot2</strong> object, we can add additional <strong>ggplot2</strong> elements to customize the plots.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_check_temp.html">plot_check_temp</a></span><span class="op">(</span></span>

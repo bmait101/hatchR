@@ -83,7 +83,8 @@ models for predicting fish early life history phenology using
 <strong>hatchR</strong>:</p>
 <ol style="list-style-type: decimal">
 <li>model parameterizations included in the package</li>
-<li>custom parameterizations using your own data</li>
+<li>custom parameterizations using your own data (i.e., days to hatch or
+emerge and average incubation temperature)</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span>
@@ -93,11 +94,12 @@ models for predicting fish early life history phenology using
 <div class="section level2">
 <h2 id="built-in-parameterizations">Built-in parameterizations<a class="anchor" aria-label="anchor" href="#built-in-parameterizations"></a>
 </h2>
-<p><strong>hatchR</strong> ships with model parameterizations in
-<code>model_table</code>, which includes parameterizations for several
-salmonid species from hatchery studies relating temperature to hatch and
-emergence timing <span class="citation">Sparks et al. (2019)</span>, and
-can be selected using <code><a href="../reference/model_select.html">model_select()</a></code>.</p>
+<p>Published model parameterizations are contained in the
+<code>model_table</code> object. This includes parameterizations for
+several salmonid species from hatchery studies relating temperature to
+hatch and emergence timing <span class="citation">Sparks et al.
+(2019)</span>, and can be selected using
+<code><a href="../reference/model_select.html">hatchR::model_select()</a></code>.</p>
 <div class="section level3">
 <h3 id="model_table">
 <code>model_table</code><a class="anchor" aria-label="anchor" href="#model_table"></a>
@@ -190,8 +192,9 @@ when the cumulative sum reaches one:
 </h3>
 <p>The function <code><a href="../reference/fit_model.html">fit_model()</a></code> uses data in which average
 incubation temperature (°C) and days to phenological event are the
-inputs and estimates parameter coeficients for <em>log<sub>e</sub>a</em>
-and <em>b</em> using <code><a href="https://rdrr.io/r/stats/nls.html" class="external-link">stats::nls()</a></code>.</p>
+inputs and estimates parameter coefficients for
+<em>log<sub>e</sub>a</em> and <em>b</em> using
+<code><a href="https://rdrr.io/r/stats/nls.html" class="external-link">stats::nls()</a></code>.</p>
 <p>Here, we borrow data from Table 8.1 (pg. 183) from <span class="citation">Quinn (2018)</span> to generate a custom hatch
 parameterization for brown trout (<em>Salmo trutta</em>).</p>
 <p>You could either create a .csv file with those data and import them

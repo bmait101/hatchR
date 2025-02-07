@@ -340,7 +340,7 @@ mean).</p>
 <span></span>
 <span>  <span class="va">spawners</span> <span class="op">&lt;-</span> <span class="va">fish_dist</span><span class="op">[</span><span class="va">fish_dist</span> <span class="op">==</span> <span class="va">d</span><span class="op">]</span> <span class="co"># vector of spawners in fish_dist</span></span>
 <span></span>
-<span>  <span class="va">spawners_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">day</span>, times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">spawners</span><span class="op">)</span><span class="op">)</span> <span class="co"># make vector of date repeated the lenght of the vector spawners</span></span>
+<span>  <span class="va">spawners_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">day</span>, times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">spawners</span><span class="op">)</span><span class="op">)</span> <span class="co"># make vector of date repeated the length of the vector spawners</span></span>
 <span></span>
 <span>  <span class="va">fish_dates_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">fish_dates_norm</span>, <span class="va">spawners_date</span><span class="op">)</span> <span class="co"># append to out file</span></span>
 <span><span class="op">}</span></span>
@@ -470,7 +470,7 @@ limits to set everything on the same scale.</p>
 <span>  <span class="st">"2014-08-01"</span>, <span class="st">"2015-08-01"</span></span>
 <span><span class="op">)</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># cut acording to our cut intervals and label by developmental year</span></span>
+<span><span class="co"># cut according to our cut intervals and label by developmental year</span></span>
 <span><span class="va">bull_trout_phenology_cut</span> <span class="op">&lt;-</span> <span class="va">bull_trout_all_phenology</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">Date</span>,</span>
 <span>    breaks <span class="op">=</span> <span class="va">cut_ints_1314</span>,</span>
@@ -518,7 +518,7 @@ limits to set everything on the same scale.</p>
 <p>As you can see, even small differences in thermal regime can make for
 big differences in developmental phenology.</p>
 <p>We could even combine this plot with the plot we made previously to
-show regime and duration along side the distributions. For combining
+show regime and duration alongside the distributions. For combining
 plots we highly recommend the <a href="https://patchwork.data-imaginist.com/" class="external-link">patchwork package</a>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>

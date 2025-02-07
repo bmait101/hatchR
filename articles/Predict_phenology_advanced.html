@@ -81,7 +81,7 @@ Bryan M. Maitland</h4>
 <p>The function <code>predict_phenolgy()</code> is purposefully kept
 fairly simple so it can be expanded to iterate across datasets.
 Typically, this will take the form of loops or vectorizing in R
-(functions of the <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> famimy from <strong>purrr</strong>
+(functions of the <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> family from <strong>purrr</strong>
 and <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code> family from <strong>base</strong>). There are
 many reasons why you might want to iterate, including predicting over
 multiple years, multiple sites, predicting hatch or emergence
@@ -154,7 +154,7 @@ run through each element of the <code>woody_island</code> dataset.</p>
 <span>  <span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NA</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># empty dataframe to add in data</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spawn_date"</span>, <span class="st">"days_2_hatch"</span><span class="op">)</span> <span class="co"># change column names</span></span>
 <span>  <span class="va">temp</span><span class="op">$</span><span class="va">spawn_date</span> <span class="op">&lt;-</span> <span class="va">WI_spawn</span> <span class="co"># assign spawn date</span></span>
-<span>  <span class="va">temp</span><span class="op">$</span><span class="va">days_2_hatch</span> <span class="op">&lt;-</span> <span class="va">WI_hatch</span><span class="op">$</span><span class="va">days2done</span> <span class="co"># assign days to hathc</span></span>
+<span>  <span class="va">temp</span><span class="op">$</span><span class="va">days_2_hatch</span> <span class="op">&lt;-</span> <span class="va">WI_hatch</span><span class="op">$</span><span class="va">days_to_develop</span> <span class="co"># assign days to hatch</span></span>
 <span>  <span class="va">OUT_loop_d2h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">OUT_loop_d2h</span>, <span class="va">temp</span><span class="op">)</span> <span class="co"># row bind temp object and OUT object</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Inspect the loop output:</p>
@@ -195,12 +195,12 @@ run through each element of the <code>woody_island</code> dataset.</p>
 hatch:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">OUT_loop_d2h</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
-<span><span class="co">#&gt;   spawn_date</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1990-08-14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1990-08-18</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-09-3</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
+<span><span class="co">#&gt;   spawn_date days_2_hatch</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1990-08-14           71</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1990-08-18           74</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1990-09-3           110</span></span></code></pre></div>
 <p>If you don’t want the full output of each run of
 <code>predict_phenolgy()</code> and you just for example want the
 predicted days to hatch, then it’s easier to access those elements
@@ -234,7 +234,7 @@ Science and Advanced R.</p>
 <span>  model <span class="op">=</span> <span class="va">sockeye_hatch_mod</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># we now have a list of lists the same as OUT_loop</span></span>
+<span><span class="co"># we now have a list of lists the same as OUT_loop_all</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results_map</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 4</span></span>
@@ -361,8 +361,8 @@ trout spawning. The dataset is included as
 <span>  temp_max <span class="op">=</span> <span class="fl">12</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="Predict_phenology_advanced_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>We can use the functionality of <strong>dplyr</strong> to do a
-datacheck that shows the number of observations per year:</p>
+<p>We can use the functionality of <strong>dplyr</strong> to do a data
+check that shows the number of observations per year:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crooked_river</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -413,7 +413,7 @@ enough data to hatch and emerge.</p>
 <span>  temperature <span class="op">=</span> <span class="va">temp_c</span>,</span>
 <span>  model <span class="op">=</span> <span class="va">bull_hatch_mod</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>See how we receive 2 seperate warning messages saying: “FFish did not
+<p>See how we receive 2 separate warning messages saying: “Fish did not
 accrue enough effective units to develop. Did your fish spawn too close
 to the end of your data? Spawn date is _____”. It tells us the spawn
 date we used so we can reference which date isn’t working if we use an
@@ -505,13 +505,21 @@ where the vectorized approaches really shine.</p>
 <p>A quick note about accessing lists. Even if you want to write loops
 instead of vectorizing, we do recommend accessing those results via a
 vectorized approach. It’s hard to pull out a lot of information from
-from very large nested loops. You would probably write a custom loop to
-do so. However, those results are easily accessed by map, like so:</p>
+very large nested loops. You would probably write a custom loop to do
+so. However, those results are easily accessed by map, like so:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mapped_results</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">:::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef.tibble"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mapped_results</span> <span class="op">&lt;-</span> <span class="va">OUT</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">:::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"ef_table"</span><span class="op">)</span></span>
 <span><span class="va">mapped_results</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 0</span></span></span></code></pre></div>
-<p>The above code outputs the <code>ef.tibble</code> element from every
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,621 × 5</span></span></span>
+<span><span class="co">#&gt;   index dates               temperature ef_vals ef_cumsum</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   275 2011-09-01 <span style="color: #949494;">00:00:00</span>        6.65  0.014<span style="text-decoration: underline;">8</span>    0.014<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   276 2011-09-02 <span style="color: #949494;">00:00:00</span>        6.45  0.014<span style="text-decoration: underline;">4</span>    0.029<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   277 2011-09-03 <span style="color: #949494;">00:00:00</span>        6.46  0.014<span style="text-decoration: underline;">4</span>    0.043<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   278 2011-09-04 <span style="color: #949494;">00:00:00</span>        6.66  0.014<span style="text-decoration: underline;">8</span>    0.058<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   279 2011-09-05 <span style="color: #949494;">00:00:00</span>        6.88  0.015<span style="text-decoration: underline;">2</span>    0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,616 more rows</span></span></span></code></pre></div>
+<p>The above code outputs the <code>ef_table</code> element from every
 one of your lists from each combination of spawn date and phenology type
 into a dataframe like object which can then easily be plotted. Notice,
 we now use <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map_df()</a></code> because we know the list element
@@ -588,8 +596,8 @@ iterating over multiple variables, let’s verify our results match.</p>
 </h4>
 <p>Because the basic output of these iterative processes are big lists
 of lists, it can be a little annoying to access all that data. However,
-this is again were the different flavors of map can be our friend. We’ve
-already shown examples of how to access the predictions, but
+this is again where the different flavors of map can be our friend.
+We’ve already shown examples of how to access the predictions, but
 <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> outputs much more data than just point
 estimates.</p>
 <p>First we’ll demonstrate an example of how we can take those
@@ -601,7 +609,7 @@ plotting.</p>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span><span class="st">"days_to_develop"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># make a vector of what type of phenology we were predicting</span></span>
-<span><span class="co"># remember we ran hatch over 15 spawn dates then emerge over thos same 15</span></span>
+<span><span class="co"># remember we ran hatch over 15 spawn dates then emerge over those same 15</span></span>
 <span><span class="va">phenology</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"hatch"</span>, <span class="fl">12</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"emerge"</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># make a vector of our spawn dates replicated twice and turn into a timepoint</span></span>
@@ -737,7 +745,7 @@ which you would pipe into your mapping function.</p>
 <span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "col_spec"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "problems")=&lt;externalptr&gt;</span></span>
 <span></span>
-<span><span class="co"># therefore a single elemet could be accessed with its name and the $ operator</span></span>
+<span><span class="co"># therefore a single element could be accessed with its name and the $ operator</span></span>
 <span><span class="co"># if we wanted the dev.period for fish spawning on August 18th we would do the following</span></span>
 <span></span>
 <span><span class="va">WI_named_list</span><span class="op">$</span><span class="va">`1990-08-18`</span><span class="op">$</span><span class="va">dev.period</span></span>
