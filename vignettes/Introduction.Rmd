@@ -33,16 +33,31 @@ library(ggplot2)
 
 # Overview {#overview}
 
-**hatchR** is an R package that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. **hatchR** is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [*e.g.*, @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019.
+**hatchR** is an R package that allows users to predict hatch and emergence timing for wild fishes, as well as additional tools to aid in those analyses. **hatchR** is intended to bridge the analytic gap of taking statistical models developed in hatchery settings [*e.g.*, @beacham1990] and applying them to real world temperature data sets using the effective value framework developed by @sparks2019. **hatchR** is also available as an interactive web application at [https://elifelts.shinyapps.io/hatchR_demo/](https://elifelts.shinyapps.io/hatchR_demo/).
 
-In this vignette, we:
+**hatchR** is designed to be flexible to achieve many applications. However, by virtue of being built as a scripting application, **hatchR** is able to tackle very large datasets relatively quickly and efficiently. That is, **hatchR** can be used to predict hatch and emergence timing for many fish species across many locations and years. These type of upstream analyses are covered in additional vignettes in this package. In this introductory vignette, we:
 
 -   describes input data requirements
 -   provide recommendations for importing data
 -   review basic data checks
 -   preview the full **hatchR** workflow covered in other vignettes
 
-## Input Data Requirements {#inputs}
+The generalized workflow for **hatchR**, including the steps below and in subsequent other vignettes, is shown below.
+
+```{r echo = FALSE, out.width = '50%'}
+knitr::include_graphics("img/workflow.png")
+```
+
+
+# Input Data Requirements {#inputs}
+
+**hatchR** requires three primary data inputs:
+
+1.  Water temperature data
+2.  Species-specific model parameters
+3.  Spawning date or date ranges
+
+## Water Temperature Data
 
 Water temperature datasets for wild fishes are often either (1) already summarized by day (i.e., mean daily temperature) or, (2) in a raw format from something like a HOBO TidbiT data logger where readings are taken multiple times per day, which can be summarized into a mean daily temperatures. Alternatively, daily water temperature predictions from novel statistical models [*e.g.*, @siegel2023] could be similarly implemented.
 
@@ -67,7 +82,7 @@ We expect your data to look something like this:
 
 **hatchR** can use values down to freezing (*e.g.*, 0 °C), which returns extremely small effective values, and time to hatch or emerge may be \> 1 year. In these cases, we suggest users consider how much of that data type is reasonable with their data. To learn more about this, see the section on [negative temperatures](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html#negtemps) in the [Predict fish phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
 
-### Prerequisites: Dates and Times {#prereqs}
+#### Dates and Times {#date-times}
 
 Numeric temperature values are simple to work with in R, but dates and time can be tricky. Here we provide a brief overview of how to work with dates and times in R, but refer the user to [Chapter 17](https://r4ds.hadley.nz/datetimes.html) in R for Data Science [@wickham2023] for a more in-depth discussion.
 
@@ -146,11 +161,40 @@ flights |>
   mutate(departure = make_datetime(year, month, day, hour, minute))
 ```
 
-# Importing your data {#data-in}
+#### Time Zones
 
-## Using `readr::read_csv()`
+Time zones are a complex topic, but we don't need to delve too deep for our purposes. We will cover a few basic topics. For more information, see [Chapter 17](https://r4ds.hadley.nz/datetimes.html) in R for Data Science [@wickham2023].
 
-As noted in the prerequisites section, we recommend loading your data into R using `readr::read_csv()`. We can load readr using:
+R uses the international standard IANA time zones. These use a consistent naming scheme {area}/{location}, typically in the form {continent}/{city} or {ocean}/{city}. Examples include “America/New_York”, “Europe/Paris”, and “Pacific/Auckland”.
+
+You can find out what R thinks your current time zone is with `Sys.timezone()`:
+
+```{r}
+Sys.timezone()
+```
+
+(If R doesn’t know, you’ll get an NA.)
+
+In R, the time zone is an attribute of the date-time that only controls printing. For example, these three objects represent the same instant in time:
+
+```{r}
+x1 <- ymd_hms("2024-06-01 12:00:00", tz = "America/New_York")
+x1
+```
+
+Unless otherwise specified, lubridate always uses UTC. UTC (Coordinated Universal Time) is the standard time zone used by the scientific community and is roughly equivalent to GMT (Greenwich Mean Time). It does not have DST, which makes a convenient representation for computation. Thus `read_csv()` converts to UTC, so if times are shifted, then daily summaries can be incorrect. This only matters if data are not daily yet, `as.posixct()` sets to local time.
+
+You can change the time zone in two ways:
+
+1.  Change the time zone attribute with `force_tz()`
+2.  Change the time zone for printing with `with_tz()`
+
+
+## Importing water temperature data {#data-in}
+
+### Using `readr::read_csv()`
+
+We recommend loading your data into R using `readr::read_csv()`. We can load readr using:
 
 ```{r, eval=FALSE}
 library(readr)
@@ -192,7 +236,7 @@ your_data <- read_csv("data/your_data.csv")
 glimpse(your_data)
 ```
 
-## Using `read.csv()`
+### Using `read.csv()`
 
 If you import your data in with functions like `read.csv()` or `read.table()`, date columns will be formatted as a characters (\<chr\>). You will have convert to this column to a \<date\> or \<dttm\> type, and we recommend you do this using **lubridate**, which makes dealing with date a litter easier.
 
@@ -219,7 +263,7 @@ glimpse(crooked_river)
 glimpse(woody_island)
 ```
 
-# Data Checks {#data-checks}
+## Temperature data checks {#data-checks}
 
 After data are loaded and dates are formatted correctly, we can complete a series of checks to ensure that the temperature data is in the correct format and that there are no missing values.
 
@@ -229,7 +273,7 @@ After data are loaded and dates are formatted correctly, we can complete a serie
 library(hatchR)
 ```
 
-## Visualize your data {#viz-data}
+## Visualize your temperature data {#viz-data}
 
 **hatchR** comes with the function `plot_check_temp()` to visualize your imported data and verify nothing strange happened during your import process. The function outputs a **ggplot2** object which can be subsequently modified by the user. The arguments `temp_min =` and `temp_max =` can be used to custom set thresholds for expected temperature ranges (defaults are set at 0 and 25 °C). Here is an example using the built-in dataset `crooked_river`:
 
@@ -241,7 +285,7 @@ plot_check_temp(data = crooked_river,
                 temp_max = 12)
 ```
 
-## Summarize Data {#summarize-data}
+## Summarize temperature data {#summarize-data}
 
 If you imported raw data with multiple recordings per day, **hatchR** has a built in function to summarize those data to a daily average mean called `summarize_temp()`. The output of the function is a tibble with mean daily temperature and its corresponding.
 
@@ -311,7 +355,23 @@ You'll get a note providing the row index where breaks are found for inspection.
 
 If you have days of missing data, you could impute them using rolling means or other approaches.
 
-# Workflow {#workflow}
+
+# Species-specific model parameters {#species-params}
+
+**hatchR** has two options for selecting parameterized models for predicting fish early life history phenology using:
+
+1.  model parameterizations included in the package
+2.  custom parameterizations using your own data
+
+This processes is described in the vignette [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html)
+
+
+# Spawn Dates {#spawn-dates}
+
+A date or range of dates for spawning the species of interest is required to predict phenology. This information can be provided in the form of a single date or a range of dates. More information on how to provide this information is available in the vignette [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html), as well as subsequent vignettes.
+
+
+# Next steps
 
 After importing, wrangling, and checking your temperature data, there are a number of different actions you can take. These steps are laid out in subsequent vignettes:
 
@@ -320,11 +380,5 @@ After importing, wrangling, and checking your temperature data, there are a numb
 -   [Predict phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html)
 -   [Predict phenology: nested](https://bmait101.github.io/hatchR/articles/Predict_phenology_nested.html)
 -   [Advanced plotting](https://bmait101.github.io/hatchR/articles/Advanced_plotting.html).
-
-The generalized workflow for **hatchR**, including the above and subsequent steps, is shown below.
-
-```{r echo = FALSE, out.width = '50%'}
-knitr::include_graphics("img/workflow.png")
-```
 
 # References {.unnumbered}
