@@ -356,7 +356,7 @@ You'll get a note providing the row index where breaks are found for inspection.
 If you have days of missing data, you could impute them using rolling means or other approaches.
 
 
-# Species-specific model parameters {#species-params}
+## Species-specific model parameters {#species-params}
 
 **hatchR** has two options for selecting parameterized models for predicting fish early life history phenology using:
 
@@ -366,7 +366,7 @@ If you have days of missing data, you could impute them using rolling means or o
 This processes is described in the vignette [Parameterize hatchR models](https://bmait101.github.io/hatchR/articles/Parameterize_models.html)
 
 
-# Spawn Dates {#spawn-dates}
+## Spawn Dates {#spawn-dates}
 
 A date or range of dates for spawning the species of interest is required to predict phenology. This information can be provided in the form of a single date or a range of dates. More information on how to provide this information is available in the vignette [Predict phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html), as well as subsequent vignettes.
 
