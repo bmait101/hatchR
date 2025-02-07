@@ -32,7 +32,7 @@ library(ggplot2)
 This vignette describes two options for selecting parameterized models for predicting fish early life history phenology using **hatchR**:
 
 1.  model parameterizations included in the package
-2.  custom parameterizations using your own data
+2.  custom parameterizations using your own data (i.e., days to hatch or emerge and average incubation temperature)
 
 ```{r, eval = FALSE}
 library(hatchR)
