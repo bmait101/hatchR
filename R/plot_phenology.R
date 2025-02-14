@@ -49,7 +49,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
         stringr::str_glue(
           "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
-          <span style='color:#d95f02'>Scaled cumulative EF value</span>;
+          <span style='color:#d95f02'>Cumulative EF value</span>;
           <span style='color:#1b9e77'>Daily EF value (x100)</span>"
         ),
         width = 30
@@ -63,7 +63,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
         stringr::str_glue(
           "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
-          <span style='color:#d95f02'>Scaled cumulative EF value</span>"
+          <span style='color:#d95f02'>Cumulative EF value</span>"
         ),
         width = 30
       )
@@ -89,6 +89,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
     ef_daily_label <- ggplot2::labs(x = x_lab, y = y_lab)
   }
 
+  sec_axis_scalar <- max(dat$ef_table$temperature, na.rm = TRUE)
   if (style == "all") {
     p <- dat$ef_table |>
       ggplot2::ggplot(ggplot2::aes(x = .data$dates, y = .data$temperature)) +
@@ -100,7 +101,10 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::geom_point(ggplot2::aes(y = .data$ef_vals * 100), color = cols[3], size = 0.25) +
       all_label +
       ggplot2::theme_classic() +
-      ggplot2::theme(plot.subtitle = ggtext::element_markdown())
+      ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
+      ggplot2::scale_y_continuous(
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+      )
   }
 
   if (style == "ef_cumsum") {
@@ -112,7 +116,10 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::geom_point(ggplot2::aes(y = .data$ef_cumsum * max(.data$temperature)), color = cols[2], size = 0.25) +
       ef_cumsum_label +
       ggplot2::theme_classic() +
-      ggplot2::theme(plot.subtitle = ggtext::element_markdown())
+      ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
+      ggplot2::scale_y_continuous(
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+      )
   }
 
   if (style == "ef_daily") {
@@ -124,7 +131,10 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::geom_point(ggplot2::aes(y = .data$ef_vals * 100), color = cols[3], size = 0.25) +
       ef_daily_label +
       ggplot2::theme_classic() +
-      ggplot2::theme(plot.subtitle = ggtext::element_markdown())
+      ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
+      ggplot2::scale_y_continuous(
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+      )
   }
   return(p)
 }
