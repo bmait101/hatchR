@@ -44,6 +44,8 @@ library(ggplot2)
 
 Published model parameterizations are contained in the `model_table` object. This includes parameterizations for several salmonid species from hatchery studies relating temperature to hatch and emergence timing [@beacham1990, @austin2019, @sparks2019], and can be selected using `hatchR::model_select()`.
 
+These models are parameterized to 50% hatch or emergence (see @velsen1987 for details). It is important to remember that while these models predict a point estimate, hatch and emergence, even within a single spawning family would occur as a distribution of the phenological event.
+
 ## `model_table`
 
 `model_table` is loaded with **hatchR**, and is a tibble with 51 rows and 5 columns:
@@ -133,17 +135,16 @@ The output of `fit_model()` is a list with several elements:
 -   `bt_fit$log_a`: a named numeric vector of the estimated coefficient *log~e~a*
 -   `bt_fit$b`: a named numeric vector of the estimated coefficient *b*
 -   `bt_fit$r_squared`: pseudo R-squared value (1 - (residual sum of squares / total sum of squares))
--   `bt_fit$mse`: mean squared error (mean(residuals^2))
+-   `bt_fit$mse`: mean squared error (mean(residuals\^2))
 -   `bt_fit$rmse`: root mean squared error (sqrt(mse)
 -   `bt_fit$expression`: a tibble with the species, development type, and the parameterized model expression
 -   `bt_fit$pred_plot`: a ggplot object showing the observed data and predicted values
-
 
 ```{r}
 bt_fit
 ```
 
-The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `expression` element of the list. 
+The vast majority of the time, what you will want is the actual expression with parameter estimates for use in the `model = ...` argument of `predict_phenology()`. This is stored in the `expression` element of the list.
 
 You can either pass this tibble directly with the `$` operator by calling `$expression` element of the list (e.g., `model = bt_fit$expression`) or set as an object to pass, like so:
 
@@ -153,7 +154,6 @@ bt_hatch_exp
 ```
 
 `predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the [Predict phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
-
 
 # Important considerations
 
