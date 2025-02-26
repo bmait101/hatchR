@@ -11,13 +11,13 @@ bibliography: ms_refs.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## hatchR: A toolset to predict when fish hatch and emerge 
+## hatchR: A toolset to predict when fish hatch and emerge
 
 Morgan Sparks^1^, Eli Felts^2^, Allison Swartz^3^, Bryan Maitland^1^
 
 ^1^Rocky Mountain Research Station, U.S. Forest Service, Boise, ID, USA
 
-^2^US Fish and Wildlife Service, Idaho Fish and Wildlife Conservation Office, Orofino, ID, USA
+^2^Idaho Fish and Wildlife Conservation Office, U.S. Fish and Wildlife Service, Orofino, ID, USA
 
 ^3^College of Forestry, Oregon State University, Corvallis, OR, USA
 
@@ -101,9 +101,9 @@ For users choosing to implement **hatchR** in R, data can be imported from any f
 
 **hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable (only in R, it must be summarized for the Shiny app), as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to user's attention.
 
-We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset with temperature readings every thirty minutes.
+We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset (`year_sim`, first 6 rows shown) with temperature readings every thirty minutes.
 
-```{r, echo = TRUE}
+```{r, echo = FALSE}
 # create date object for a year with 30 min reading intervals
 dates <- seq(from = ymd_hms("2000-07-01 00:00:00"),
              to = ymd_hms("2001-06-30 23:59:59"), length.out = 17568) 
@@ -126,8 +126,7 @@ set.seed(123)
 year_sim$temp <- rnorm(n = length(dates), mean = 10, sd = 3) %>%
   abs() 
 
-dim(year_sim)
-
+head(year_sim)
 
 ```
 
@@ -166,7 +165,7 @@ check_continuous(data = year_sim_summ[-100,],
 
 ## Model Selection
 
-Users can either use Salmonid models from `model_table` included in the package and the Shiny app. As discussed, these models are included because parameterizations already existed in the literature. However, these parameterizations are limited to Pacific Salmon and Bull Trout. To widen the application of the effective value approach, we include a `fit_model()` function, which is species agnostic (as long as development generally follows the power law).
+Users can either use Salmonid models from `model_table` included in the package and the Shiny app. As discussed, these models are included because parameterizations already existed in the literature. However, these parameterizations are limited to Pacific Salmon and Bull Trout (though see @quinn2018 pg. 183 for numerous other Salmonids) . To widen the application of the effective value approach, we include a `fit_model()` function, which is species agnostic (as long as development generally follows the power law). Additionally, we limit available models in `model_table` because they are well vetted models, with experimental ranges spanning 2-17 °C. Custom models we demonstrate later with `fit_model()` have much narrower parameterization ranges and, as such, we choose to keep those models out of `model_table` so as to require users to think hard about whether the custom models they are parameterizing fit the data over which they are predicting.
 
 The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event (as two vectors) are the inputs. The function estimates parameter coefficients for *log~e~a* and *b* using `stats::nls()`
 
