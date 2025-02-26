@@ -1,0 +1,352 @@
+---
+title: "hatchR: A toolset to predict when fish hatch and emerge"
+author:
+  - name: Morgan Sparks
+    affil: 1
+  - name: Eli Felts
+    affil: 2
+  - name: Allison Swartz
+    affil: 3
+  - name: Bryan Maitland
+    affil: 1
+affiliation:
+  - num: 1
+    address: Rocky Mountain Research Station, US Forest Service
+  - num: 2
+    address: Idaho Fish and Wildlife Conservation Oﬀice, US Fish and Wildlife Service
+  - num: 3
+    address: College of Forestry, Oregon State University
+column_numbers: 4
+logoright_name: "./hatchR_posterdown_files/figure-html/agency_logos.png"
+logoleft_name: "./hatchR_posterdown_files/figure-html/logo.png"
+poster_height: "36in"
+poster_width: "48in"
+primary_colour: "	#011f4b"
+sectitle_bgcol: "#005b96"
+sectitle_bordercol: "#005b96"
+column_margins: "0.33in"
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: packages.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+library(hatchR); library(tidyverse); library(ggridges)
+```
+
+# hatchR
+
+**hatchR** is a software ecosystem for predicting fish developmental phenology using statistical models. It offers three primary applications:
+
+1.  Basic summarization, plotting, and data checks for water temperature data.
+2.  Access published parameterizations for salmonid developmental models or build your own custom parameterizations for any species with user provided data.
+3.  Predict hatch and/or emergence timing across ambient temperatures from common data sources such as HOBO loggers.
+
+**hatchR** is deployed in two formats. First, it can be downloaded as a R package. Secondly, for users not familiar with R, it can also be accessed as a web app built in Shiny as a point-and-click tool.
+
+To predict phenology, you need [**daily average temperatures over incubation (or data that can be summarized as such**]{.underline}**)** and [**spawn timing**]{.underline}.
+
+# hatchR's workflow
+
+```{r, out.width='36%', fig.align='center', fig.cap= "hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text."}
+
+knitr::include_graphics("./hatchR_posterdown_files/figure-html/workflow.png")
+```
+
+# Included & custom models
+
+**hatchR** includes numerous parameterizations for salmonids because the original models were built from aquaculture studies with salmon. Those models are included in `model_table` and include all North American Pacific Salmon (*Oncorhynchus spp.*) and Bull Trout (*Salvelinus confluentus*).
+
+```{r mytable, out.width='80%'}
+
+knitr::kable(model_table[c(1,9),c(1,2,5)], caption = 'Two example rows (of 51) from `model_table`.',align = 'c',"html")
+```
+
+Alternatively, you can build custom models with experimental data. Here we demonstrate with Channel Catfish (*Ictalurus punctatus*).
+
+```{r, echo=TRUE}
+# make catfish data object for function
+catfish <- matrix(NA, 3, 2) |> data.frame() 
+colnames(catfish) <- c("days", "temp_C") 
+catfish$days <- c(16,21,26) # days to hatch
+catfish$temp_C <- c(22,10,7) # exp. temperatures
+
+# fit model
+cat_mod <- fit_model(
+  temp = catfish$temp_C, 
+  days = catfish$days,
+  species = "catfish",
+  development_type = "hatch")
+```
+
+To further demonstrate this approach we parameterize models (not shown) for Smallmouth Bass (*Micropterus dolomieu*) and Lake Sturgeon (*Acipenser fulvescens*) and apply the models to a temperature regime with mean temperature 16 °C.
+
+```{r, out.width='75%', fig.align='center', fig.cap= "Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime."}
+###  make temp regime
+set.seed(123)
+# create random temps and corresponding dates
+temps_sim <- sort(rnorm(n =30, mean = 16, sd = 1), decreasing = FALSE)
+dates_sim <-  seq(from = ymd("2000-07-01"),
+             to = ymd("2000-07-31"), length.out = 30)
+
+data_sim <- matrix(NA, 30, 2) |> data.frame()
+data_sim[,1] <- temps_sim
+data_sim[,2] <- dates_sim
+
+# change names so they aren't the same as the vector objects
+colnames(data_sim) <- c("temp_sim", "date_sim")
+
+### smallmouth mod
+smallmouth <- matrix(NA, 10, 2) |> data.frame()
+colnames(smallmouth) <- c("hours", "temp_F")
+smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
+smallmouth$temp_F <- c(77, 75, 71, 70, 67, 65, 60, 59, 55, 55)
+
+# change F to C and hours to days
+smallmouth <- smallmouth |> 
+  mutate(days = ceiling(hours/24),
+         temp_C = (temp_F -32) * (5/9))
+
+
+smb_mod <- fit_model(temp = smallmouth$temp_C,
+                     days = smallmouth$days,
+                     species = "smb",
+                     development_type = "hatch")
+
+### lake sturgeon mod
+sturgeon <-  matrix(NA, 7, 2) |> data.frame()
+colnames(sturgeon) <- c("days", "CTU")
+sturgeon$days <- c(7,5,6,6,5,11,7)
+sturgeon$CTU <- c(58.1, 62.2, 61.1, 57.5, 58.1, 71.4, 54.7)
+
+sturgeon <- sturgeon |> 
+  mutate(temp_C = CTU/days) # change CTUs to average temp and add column
+
+sturgeon_mod <- fit_model(days = sturgeon$days,
+                          temp = sturgeon$temp_C,
+                          species = "sturgeon",
+                          development_type = "hatch")
+### predict_phenology
+
+#smallmouth bass
+smb_res <- predict_phenology(data = data_sim,
+                  dates = date_sim,
+                  temperature = temp_sim,
+                  spawn.date = "2000-07-01",
+                  model = smb_mod$expression)
+
+# catfish
+catfish_res <- predict_phenology(data = data_sim,
+                  dates = date_sim,
+                  temperature = temp_sim,
+                  spawn.date = "2000-07-01",
+                  model = cat_mod$expression)
+
+# sturgeon
+# note that 16 C is pretty far out of range of temps for model fit, not best practice
+sturgeon_res <- predict_phenology(data = data_sim,
+                  dates = date_sim,
+                  temperature = temp_sim,
+                  spawn.date = "2000-07-01",
+                  model = sturgeon_mod$expression)
+
+# summary for all species
+all_res <- data.frame(matrix(NA, 3, 2))
+colnames(all_res) <- c("start", "stop")
+
+all_res$start <- c(catfish_res$dev.period$start, 
+                   smb_res$dev.period$start, 
+                   sturgeon_res$dev.period$start)
+
+all_res$stop <- c(catfish_res$dev.period$stop,
+                  smb_res$dev.period$stop, 
+                  sturgeon_res$dev.period$stop)
+
+
+all_res <- all_res |> 
+  mutate(days = ceiling(stop-start),
+         index = c(17,16.5,16))
+
+all_res$Species <- c("Channel Catfish", "Smallmouth Bass", "Lake Sturgeon")
+
+
+ggplot() +
+  geom_point(data = data_sim, aes(x = date_sim, y = temp_sim )) + 
+  geom_line(data = data_sim, aes(x = date_sim, y = temp_sim )) +
+  geom_rect(data = all_res, aes(xmin = start, xmax = stop, ymax =index-.35, ymin = index-.5, fill = Species)) +
+  geom_label(data = all_res, aes(x = start + (stop - start) / 1.25, y = (index -0.425), label = days)) +
+  labs(x = "Date", y = "Temperature (°C)", fill = "") +
+  scale_fill_manual(values = c("deepskyblue4", "grey23", "darkolivegreen4")) +
+  theme_classic(base_size = 28) +
+  theme(legend.position = c(0.75, 0.25), 
+        legend.background = element_rect(fill=alpha('blue', 0)))
+```
+
+# Basic prediction
+
+As a case study for a basic application we'll use our included data set of `crooked_river` and an example with Bull Trout.
+
+Let's assume the forest manager wants to do some roadwork upstream of a Bull Trout spawning reach in Crooked River starting **July 1**. They engage the forest biologist who knows Bull Trout, which are sensitive to sediment, will be finished spawning there by **September 30**. They can then predict if fish are likely to have emerged from the gravel by July (using the 2014-2015 spawn year).
+
+```{r, echo = TRUE}
+# get model from model_table
+bull_trout_emerge <- model_select(
+  author = "Austin et al. 2017",
+  species = "bull trout",
+  model = "MM",
+  development_type = "emerge")
+
+# predict phenology assuming Sept. 30th as spawn
+crooked_river_emerge <- predict_phenology(
+  data = crooked_river, 
+  dates = date, 
+  temperature = temp_c, 
+  spawn.date = "2014-09-30", 
+  model = bull_trout_emerge) 
+
+#predicted days to emerge
+crooked_river_emerge$days_to_develop
+
+```
+
+Our model predicts Bull Trout will emerge 204 days after September 30th, which is April 22 or well before the July 1 date of road construction.
+
+# Advanced prediction
+
+The power of **hatchR** is fully realized when we combine multiple variables for iterating the **hatchR** function, `predict_phenology()`. We'll use 139 putative Bull Trout populations spread across Idaho to demonstrate combining predictions across sites, years, and spawn dates. We will use the included `idaho` data set, with which we will do some filtering (not shown) and then predict hatch timing assuming fish spawn September 1, 15, and 30 (Early, Peak, Late) at each site in each of the four continuous years of temperature data (1668 parameter combinations).
+
+We present an abridged demonstration automating across our parameter set:
+
+```{r}
+
+bull_trout_sites <- idaho |> 
+  mutate(month = month(date)) |> #make a month column (numeric)
+  filter(month == 8) |> # filter out Aug.
+  group_by(site) |> # apply grouping by site
+  summarise(mean_aug_temp = mean(temp_c)) |> 
+  filter(mean_aug_temp <= 13) |> # keep only sites 13 C or cooler
+  pull(site) |> 
+  unique()
+
+# filter to bull trout sites
+idaho_bt <- idaho |> 
+  filter(site %in% bull_trout_sites) 
+
+# nest data and summarize
+isaak_summ_bt <- idaho_bt |> 
+  group_by(site) |> 
+  nest() |> 
+  mutate(
+    summ_obj = map(
+      data, 
+      summarize_temp,
+      temperature = temp_c,
+      dates = date
+      )
+    ) |> 
+  select(site, summ_obj) 
+
+# spawn dates
+spawn_dates <- map(
+  c(2011:2014), # year vector to map for custom function
+  function(year) { # custom paste function
+    c(
+      paste0(year, "-09-01"),
+      paste0(year, "-09-15"),
+      paste0(year, "-09-30")
+      )
+    }
+  ) |> 
+  unlist()
+
+# bull trout hatch model
+bt_hatch <- model_select(
+  development_type = "hatch",
+  author = "Austin et al. 2017",
+  species = "bull trout",
+  model = "MM"
+)
+```
+
+```{r, echo=TRUE}
+# predict hatch time across variable combinations
+hatch_res <- isaak_summ_bt |> 
+  mutate(dev_period = map2(
+      summ_obj, spawn_dates, 
+      predict_phenology,
+      temperature = daily_temp,
+      model = bt_hatch,
+      dates = date) |> 
+      map_df("dev.period") |> 
+      list()) |> 
+  select(site, dev_period) |> 
+  unnest(cols = c(dev_period)) |> 
+  mutate(days_to_hatch = stop - start) 
+```
+
+We can then plot those results (code not shown) to visualize phenology across our variable set.
+
+```{r, fig.height = 8.75, fig.align='center', fig.cap= "Predicted hatch timing for 139 putatuve Bull Trout sites for three spawning periods."}
+cut_ints <- date(
+  c(
+    "2011-08-31", "2012-08-31",
+    "2013-08-31", "2014-08-31",
+    "2015-08-31"
+  )
+)
+
+# add year and spawn time factors for plotting
+hatch_factors <- hatch_res |> 
+  mutate(year = cut(start,
+    breaks = cut_ints,
+    labels = c(2011:2014)
+  )) |>
+   # cut coerces our labels to factors, this changes them back to numbers
+  mutate(year = as.numeric(as.character(year))) |> 
+  mutate(day = day(start)) |> 
+  mutate(spawn_time = case_when(
+    day == 1 ~ "Early",
+    day == 15 ~ "Peak",
+    day == 30 ~ "Late"
+  )) |>
+  mutate(spawn_time = factor(
+    spawn_time, levels = c("Late", "Peak", "Early"), 
+    ordered = TRUE)
+    ) 
+
+hatch_factors_sum <- hatch_factors |> 
+  group_by(year, spawn_time, start) |> 
+  summarise(mean_hatch = ceiling(mean(days_to_hatch)),
+            hatch_5 = ceiling(quantile(days_to_hatch, probs = 0.05)),
+            hatch_95 = ceiling(quantile(days_to_hatch, probs = 0.95)))
+
+
+ggplot(
+  data =  hatch_factors,
+    aes(
+      x = days_to_hatch,
+      y = spawn_time,
+      fill = spawn_time,
+      color = spawn_time
+    )) +
+  geom_density_ridges(alpha = 0.9) +
+    facet_wrap( ~ year, ncol = 1) +
+    scale_fill_brewer(palette = "Blues", direction = 1) +
+    scale_color_brewer(palette = "Blues", direction = 1) +
+    labs(x = "Days to hatch", y = "Spawn time") + 
+  theme_classic(base_size = 28) +
+    theme(legend.position = "none")
+```
+
+# Conclusion
+
+**hatchR** includes extensive documentation for these and other examples. To fully explore **hatchR** or try out the **Basic prediction** example in Shiny (*scroll pages down on mobile devices*), we recommend visiting the Shiny and package websites.
+
+```{r, out.width="11%",out.height="11%",fig.show='hold', fig.align='center', fig.cap= "Shiny App (left), Website (Right)", fig.width= 0.5}
+
+knitr::include_graphics(c("./hatchR_posterdown_files/figure-html/hatchR_shiny.png", "./hatchR_posterdown_files/figure-html/hatchR_website.png"))
+```
