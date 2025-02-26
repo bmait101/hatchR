@@ -5,6 +5,7 @@ header-includes:
    - \usepackage{lineno}
    - \linenumbers
 bibliography: ms_refs.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -13,13 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## hatchR: A toolset to predict when fish hatch and emerge
 
-Morgan Sparks^1^, Eli Felts^2^, Allison Swartz^3^, Bryan Maitland^1^
+Morgan Sparks^1,4^, Eli Felts^2^, Allison Swartz^3^, Bryan Maitland^1^
 
 ^1^Rocky Mountain Research Station, U.S. Forest Service, Boise, ID, USA
 
 ^2^Idaho Fish and Wildlife Conservation Office, U.S. Fish and Wildlife Service, Orofino, ID, USA
 
 ^3^College of Forestry, Oregon State University, Corvallis, OR, USA
+
+^4^Corresponding Author: Morgan M. Sparks, Morgan.Sparks\@USDA.gov
 
 keywords: developmental phenology, effective value model, R, Shiny
 
@@ -539,5 +542,27 @@ To date, the application of the effective value framework has largely focused us
 **BRYAN check the below**
 
 The models presented in **hatchR** can be further customized in multiple ways beyond the use-cases provided above. For instance, while our models are fit to predict hatch or emergence timing, they could be used to predict other developmental stages prior to the initation of external feeding like eye-up or other embryological developmental stages (@velsen1980) or **Some example from a non-salmonid, maybe initiation of pelagic-larval or riverine current dispersal**. Additionally, while `fit_model()` relies on non-linear modeling platform, `predict_phenology()` only requires users to pass a model expression, so if users preferred a different model fit than the non-linear option provided (as long as it integrates daily temperature), they could pass a different expression into `predict_phenology()` for additional customization. Finally, while **hatchR** was designed specifically for fishes, we expect other poikilothermic organisms such as reptiles, amphibians, or invertebrates would develop in accordance with the power law and these developmental models could be extended to other organisms beyond fishes.
+
+# Acknowledgements
+
+We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided useful discussion about model development and temperature data sets.
+
+The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS or USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government, USFS, or USFWS. USFS and USFWS do not endorse any commercial products, services or enterprises.
+
+# Conflicts of Interest
+
+The authors declare no known conflicts of interest.
+
+# Data Availability
+
+**hathcR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The latest version will be archived upon acceptance of the manuscript.
+
+# Ethics Statement
+
+All data was derived from pre-published sources or created synthetically.
+
+# Funding
+
+The authors declare no funding sources.
 
 # References
