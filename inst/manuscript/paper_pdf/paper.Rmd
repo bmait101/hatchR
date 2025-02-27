@@ -479,7 +479,7 @@ hatch_res <- isaak_summ_bt |>
   mutate(days_to_hatch = stop - start) # make a new column of days to hatch
 ```
 
-```{r, message=FALSE, echo=FALSE,  out.width='85%', fig.align='center', fig.cap="Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data."}
+```{r, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap="Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data."}
 cut_ints <- date(
   c(
     "2011-08-31", "2012-08-31",
