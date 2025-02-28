@@ -8,8 +8,12 @@ bibliography: ms_refs.bib
 csl: apa.csl
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(hatchR)
+library(ggdist)
+library(ggridges)
 ```
 
 ## hatchR: A toolset to predict when fish hatch and emerge
@@ -38,16 +42,11 @@ Understanding the timing of key life history events is essential for effective f
 
 As poikilothermic organisms, fish development and growth are closely tied to ambient environment. This strong relationship has enabled researchers to generate statistical models that predict developmental phenology with high accuracy. Historically, these models were formulated in aquaculture settings under the assumption of constant temperature throughout development [@beacham1990; @mcphail1979; @alderdice1978], limiting their applicability to wild populations. However, @sparks2019 reformulated this approach into an "Effective Value model", which instead uses daily average temperature after spawning, predicting hatch or emergence when cumulative effective values reach a threshold of one.
 
-This effective value approach has since been widely applied to salmonids, for which aquaculture-derived parameterizations were readily available. For example, Pacific Salmon (*Oncorhynchus* spp.) models developed by @beacham1990 have been applied across various species and populations [@adelfio2024; @adelfio2019; @kaylor2021], while Bull Trout (*Salvelinus confluentus*) models from @mcphail1979 were extended by @austin2019. Despite its growing adoption, applications of the effective value model remian largely confined to salmonids, likelu due to the availability of existing parameterizations and the commercial and recreational importance of these species.
+This effective value approach has since been widely applied to salmonids, for which aquaculture-derived parameterizations were readily available. For example, Pacific Salmon (*Oncorhynchus* spp.) models developed by @beacham1990 have been applied across various species and populations [@adelfio2024; @adelfio2019; @kaylor2021], while Bull Trout (*Salvelinus confluentus*) models from @mcphail1979 were extended by @austin2019. Despite its growing adoption, applications of the effective value model remain largely confined to salmonids, likely due to the availability of existing parameterizations and the commercial and recreational importance of these species.
 
-To extrend these modeling capabilities beyond salminds and facilitate broader applications, we developed **hatchR**, a software ecosystem designed to predict hatch and emergence timing for wild fish populations. **hatchR** enables users to input standard raw or summarized water temperature datasets commonly collected in field settings, conduct basic data validation, and apply built-in parameterizations such as those from @beacham1990 or @sparks2017. Users can also develop custom models using their own or published temperature and phenological data within the effective value framework.
+To extend these modeling capabilities beyond Salmonids and facilitate broader applications, we developed **hatchR**, a software ecosystem designed to predict hatch and emergence timing for wild fish populations. **hatchR** enables users to input standard raw or summarized water temperature datasets commonly collected in field settings, conduct basic data validation, and apply built-in parameterizations such as those from @beacham1990 or @sparks2017. Users can also develop custom models using their own or published temperature and phenological data within the effective value framework.
 
-To maximize accessibility, **hatchR** is available in two formats. The first is a R package, **hatchR**, distributed via CRAN (REF), providing advanced customization and automation for analyzing mutiple variables, such as phenology type, spawn timing, or thermal regimes. Comprehensize documentation is available on the **hatchR** website (<https://bmait101.github.io/hatchR/>). The second is a Shiny-based web application (@chang2024), offering a graphical user interface for those unfamiliar with R, balancing ease of use with much of the R package's core functionality. Below, we provide and overview of **hatchR** and present case studies demonstrating its application in research and management.
-
-```{r echo=FALSE, message=FALSE}
-### 
-library(tidyverse); library(hatchR); library(ggdist); library(ggridges)
-```
+To maximize accessibility, **hatchR** is available in two formats. The first is a R package, **hatchR**, distributed via CRAN (REF), providing advanced customization and automation for analyzing multiple variables, such as phenology type, spawn timing, or thermal regimes. Comprehensive documentation is available on the **hatchR** website (<https://bmait101.github.io/hatchR/>). The second is a Shiny-based web application (@chang2024), offering a graphical user interface for those unfamiliar with R, balancing ease of use with much of the R package's core functionality. Below, we provide and overview of **hatchR** and present case studies demonstrating its application in research and management.
 
 # Package Overview
 
