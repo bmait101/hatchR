@@ -157,9 +157,9 @@ bt_hatch_exp
 
 `predict_phenology()` will extract the expression from the object and use it to predict phenology. We will demonstrate this in the [Predict phenology: Basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette.
 
-### Fitting models for other fishes
+## Fitting models for other fishes
 
-We demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. These parameterizations are for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*) [@webster1948], Channel Catfish (*Ictalurus punctatus*) [@small2001], and Lake Sturgeon (*Acipenser fulvescens*) [@smith2005].
+We demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. These parameterizations are for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*) [@webster_relation_1948], Channel Catfish (*Ictalurus punctatus*) [@small_effect_2001] , and Lake Sturgeon (*Acipenser fulvescens*) [@smith_dynamics_2005].
 
 We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime .
 
