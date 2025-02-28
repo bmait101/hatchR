@@ -4,7 +4,7 @@
 #' The `plot_check_temp` function is used to plot imported data to check
 #' temperature values. The function takes a data frame with dates and
 #' temperature values, and plots the temperature values over time. The
-#' function also allows users to specify the minimum and maximum temperature
+#' function also allows users to specify the visual thresholds for minimum and maximum temperature
 #' values to be plotted.
 #'
 #' @param data A data.frame, or data frame extension (e.g. a tibble).
