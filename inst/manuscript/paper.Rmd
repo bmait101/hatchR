@@ -104,9 +104,9 @@ For R users, **hatchR** can import data in any format, provided it is converted 
 
 **hatchR** is designed to analyze daily average temperatures. While high-frequency data (e.g., from HOBO loggers) can be used, it must be summarized into daily averages. **hatchR** provides built-in functionality for this summarization in R but requires pre-summarized data for use in the Shiny app. 
 
-To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programattically. 
+To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integroty before model application.  
 
-We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long data set (`year_sim`, the dimensions of the data and first 6 rows are shown) with temperature readings every thirty minutes.
+We demonstrate the utility three functions: `summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long data set (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimentions and first six rows) is shown below.
 
 ```{r, echo = FALSE}
 library(lubridate)
@@ -141,7 +141,7 @@ dim(year_sim)
 head(year_sim)
 ```
 
-First, we recommend checking imported data for any outliers or strange inputs using `plot_check_temp()` (Figure 2).
+First, we recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values (Figure 2).
 
 ```{r, echo = TRUE, fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` data set. Users can set custom thresholds for minimum and maximum temperatures (dashed lines)."}
 plot_check_temp(data = year_sim,
@@ -152,7 +152,7 @@ plot_check_temp(data = year_sim,
                 temp_max = 25)
 ```
 
-There are no obvious outliers but since each day has 48 records, we need to summarize it to daily mean temperature with `summarize_temp()` and then check for missing days with `check_continuous()`. We also recommend using `plot_check_temp()` again on the summarized data (though leave out the resulting plot for space efficiency in this manuscript).
+In this case, no obvious outliers are present, but since each day contains 48 records, the data must be summarized to daily mean temperature using `summarize_temp()`. After summarization, `check_continuous()` should be used to identify any missing days. We also suggest running `plot_check_temp()` again on the summarized data to verify its integrity, though we omit the resulting plot here for space efficiency.
 
 ```{r, echo = TRUE}
 # summarize
