@@ -9,7 +9,7 @@
 #' \describe{
 #' \item{date}{Date measurement was taken.}
 #' \item{site}{Site ID.}
-#' \item{twmp_c}{Temperature in degrees Celsius.}
+#' \item{temp_c}{Temperature in degrees Celsius.}
 #' }
 #' @examples
 #' idaho
