@@ -73,9 +73,9 @@ This framework as the foundation for phenological models in **hatchR**. The pack
 
 ## Data format
 
-Water temperature data sets collected for wild environments are often either 1.) already summarized by day (*i.e.*, mean daily temperature) or, 2.) in a raw format from something like a HOBO TidbiT where readings are taken multiple times per day, which can be summarized into a mean daily temperatures. Alternatively, new statistical models like that of @siegel2023 could be similarly implemented.
+Water temperature datasets collected in the field typically fall into two categories: 1) summarized daily data, where mean daily temperatures are pre-computed, or 2) raw high-frequency data, such as those recorded by HOBO TidbiT loggers, which require summary into mean daily temperatures before use. Additionally, new statistical models, such as @siegel2023, could also be implemented into this framework.
 
-Fundamentally, **hatchR** assumes you have input data with two columns: a date column, giving the date (and often time) of a temperature measurement, and a temperature column, giving the associated temperature measurement (in centigrade). Other columns are okay to include, but these two columns (with any column name—just *without* spaces) are required. Data is expected to be formatted similar to Table 1.
+**hatchR** assumes input data consists if at least two required columns: a date column indicating the date (and optionally time) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but columns names should not include spaces. Data should follow the format outlined in Table 1.
 
 ```{r kabletable, echo=FALSE }
 df = data.frame(date = c("2000-01-01",
@@ -96,17 +96,20 @@ knitr::kable(df,
              caption = "Example temperature data for use in hatchR.")
 ```
 
-**hatchR** assumes you've checked for missing records or errors in your data as it *will function with gaps*, so it's important to go through the data checks discussed below, as well as your own validity checks. **hatchR** can use values down to freezing (e.g, 0 °C), which returns extremely small effective values, and time to hatch or emerge could extend to a year or more. In these cases, we suggest users consider how much of that data type is reasonable with their data.
+Since **hatchR** does not automatically handle missing data, users must check for gaps or errors before running analyses. The package will function with missing values, but gaps in the dataset may affect predictions. **hatchR** supports temperatures as low as 0 °C, though such values yield extremely small effective values, potentially extending hatch or emergence timing to a year or more. Users should critically assess whether such data align with biological expectations.
 
-For users choosing to implement **hatchR** in R, data can be imported from any format the user chooses, as long as users can eventually coerce their data into a `dataframe` or `tibble` format, in which each row represents a single record. For the Shiny application, users must have their data stored as a .csv (comma separated values) file for upload, which can easily be exported using datasheet software like Microsoft Excel or Google Sheets.
+For R users, **hatchR** can import data in any format, provided it is converted into a `data.frame` or `tibble`, where each row represents a single temperature record. The Shiny application requires data to be uploaded as a .csv (comma separated values) file, which can easily be exported from spreadsheet software such as Microsoft Excel or Google Sheets.
 
 ## Checking Data
 
-**hatchR** is built assuming data will be analyzed as daily average temperatures. Despite that assumption, raw data (*e.g.*, as outputted by HOBO loggers) can be used and **hatchR** includes functionality to summarize those data into a format that is usable (only in R, it must be summarized for the Shiny app), as well as provides functions for basic visual and programmatic data checks to make sure outliers or missing data are at least brought to user's attention.
+**hatchR** is designed to analyze daily average temperatures. While high-frequency data (e.g., from HOBO loggers) can be used, it must be summarized into daily averages. **hatchR** provides built-in functionality for this summarization in R but requires pre-summarized data for use in the Shiny app. 
+
+To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programattically. 
 
 We demonstrate the utility of the summary and check functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long data set (`year_sim`, the dimensions of the data and first 6 rows are shown) with temperature readings every thirty minutes.
 
 ```{r, echo = FALSE}
+library(lubridate)
 # create date object for a year with 30 min reading intervals
 dates <- seq(from = ymd_hms("2000-07-01 00:00:00"),
              to = ymd_hms("2001-06-30 23:59:59"), length.out = 17568) 
