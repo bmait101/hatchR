@@ -383,13 +383,22 @@ This function provides a quick and effective way to interpret model outputs, fac
 plot_phenology(WI_hatch)
 ```
 
-# Case Study 1
+# Case Study 1: 
 
-A common management scenario where developmental phenology might be useful would be trying to understand if fish might be free-moving before some management action. For instance, will fish have emerged from redds when a stream section has been opened to grazing or road work?
+**Bull Trout in the Crooked River** OR
+**Predicting Emergence Timing for Management Actions**
 
-In this scenario, we will consider the road work example and Bull Trout, a threatened fish in the United States under the Endangered Species Act [@nolfi2024], and the Crooked River, a key Bull Trout population in the Boise River watershed. In this hypothetical scenario, the Forest Fisheries Biologist wants to know if fish will likely be out of the gravel and free-swimming by June 1st as Bull Trout are particularly sensitive to sediment. In this system, it is expected that Bull Trout will be done spawning by the end of September, so we'll consider the last possible spawn date as September 30th.
+A common management application of developmental phenology is assessing whether fish will be free-moving before a scheduled management action, such as stream section access for grazing or road work. For instance, will fish have emerged from redds before construction begins, reducing potential disturbance?
 
-We demonstrate this first case study using the graphical user interface portion of the **hatchR** ecosystem found at [https://elifelts.shinyapps.io/hatchR_demo/](https://elifelts.shinyapps.io/hatchR/){.uri}. Users will first upload their data with the `Import Data` window, which requires them to select their file on their personal computer, provide the program with the columns corresponding for dates and temperatures, and then provide the format in which dates are coded (*e.g.*, year-month-day or day-month-year). Data used in this case study are from the `crooked_river` data set. It is included as a demo data set in Shiny, but can also be written out from the package or accessed at <https://github.com/bmait101/hatchR/blob/master/extdata/crooked_river.csv/>. Once data is uploaded the program automatically plots the user's data using `plot_check_temp()` in the background and provides them the outputted graphical check. After uploading and checking data, the user switches to the `Model Phenology` window. In this circumstance, we use the preloaded parameterization for bull trout from @austin2019 with the `Existing` button for model selection, which the user selects with the various drop down options in the menu. After the model is selected, the user can choose multiple spawn dates from the interactive calendar provided. We show results for spawning for September 30th as indicated in the example above. Once dates are chosen, a table entry for each spawn date is outputted in the `Phenology Summaries` tab and corresponding plot with data from each spawn date in the `Timeline Plot` tab. Output from predicting phenology and the resulting figure are downloadable from their respective tabs. The process is demonstrated in the included ***supplementary video file???***, but the interface is described more completely on **hatchR**'s Shiny website.
+In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, where a key Bull Trout (*Salvelinus confluentus*) population exists. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensative to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
+
+To demonstrate this case study, we use the **hatchR**  graphical user interface available at [https://elifelts.shinyapps.io/hatchR_demo/](https://elifelts.shinyapps.io/hatchR/){.uri}. Users begin by uploading their temperature dataset through the `Import Data` window, selecting their file, specifying the appropriate temperature and date columns, and providing the date format (e.g., year-month-day or day-month-year). For this example, we use the `crooked_river` dataset, included in the Shiny app as a demo dataset. It can also be accessed directly at <https://github.com/bmait101/hatchR/blob/master/extdata/crooked_river.csv/>. 
+
+Once uploaded, **hatchR** automatically generates a vizual data check using `plot_check_temp()`. After confirming data integrity, users navigate to the `Model Phenology` window. For this case study, we use the preloaded Bull Trout parameterization from @austin2019, selecting the `Existing` model option via dropdown menus. The user then chooses multiple spawn dates using an interactive calendar. Here, we focus on September 30th as outlined in our management scenario.
+
+Following model selection, **hatchR** outputs results in two key locations: the `Phenology Summaries` tab, which provides a table with predictions for each spawn date, and the `Timeline Plot` tab, which shows the corresponding visualization of development timing. Both the prediction table and plot can be downloaded directly from their respective tabs. 
+
+The process is demonstrated in the included ***supplementary video file???***, and a more detailed interface walkthrough is available on the **hatchR** Shiny website.
 
 ```{r, eval=FALSE, echo=FALSE}
 
@@ -421,7 +430,7 @@ bt_emergence$dev.period$stop
 
 ```
 
-In this example we expect the last fish out of the gravel well before the June 1st date and the manager could allow road work in this area without worrying about sediment disturbance to fish developing in the gravel.
+In this example, the model predicts that the last Bull Trout will emerge before the June 1st traget date. This suggests that the Fisheries Biologist can confidently approve the road work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with necessary land-use activities. 
 
 # Case Study 2
 
