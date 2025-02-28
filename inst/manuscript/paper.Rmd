@@ -325,7 +325,9 @@ ggplot() +
 
 ## Predicting Phenology and Output
 
-To illustrate model selection and phenology prediction we will recreate a small portion of the analysis done by @sparks2019 using the `woody_island` data set included in this package. We will predict both hatch and emergence timing, so we will obtain a model expression for each using `model_select()`, which calls built-in models from `model_table`.
+To illustrate model selection and phenology prediction, we will replicate a portion of the analysis from  @sparks2019 using the `woody_island` dataset included with **hatchR**. Speficially, we predict both hatch and emergence timing for Sockeye Salmon at Woody Island in 1990. 
+
+First, we obtain model expression for both hatch and emergence using `model_select()`, which retrieves the appropriate parameterizations from `model_table`:
 
 ```{r, echo = TRUE}
 sockeye_hatch_mod <- model_select(
@@ -336,7 +338,7 @@ sockeye_hatch_mod <- model_select(
   )
 ```
 
-We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
+These model expressions are then applied in `predict_phenology()` to estimate the days to hatch and development:
 
 ```{r, warning=FALSE, echo = TRUE}
 WI_hatch <- predict_phenology(
@@ -348,7 +350,7 @@ WI_hatch <- predict_phenology(
   )
 ```
 
-And then look at the returned object to see days to hatch and development period:
+The returned object provides key outputs, including days to hatch and the full developmental period, allowing us to assess phenological patterns under the recorded thermal conditions:
 
 ```{r, echo = TRUE}
 WI_hatch$days_to_develop
@@ -357,23 +359,25 @@ WI_hatch$dev.period
 
 ### Understanding your results
 
-The output from `predict_phenology()` includes a lot of information. If we look at our `WI_hatch` object we see there are multiple elements stored in a list which can be accessed using the `$` operator.
+The output from `predict_phenology()` contains mutiple elements in a list, which can be accessed using the `$` operator. Each component provides different insight into the predicted phenology:
 
 ```{r, eval=FALSE, echo = TRUE}
 str(WI_hatch)
 ```
 
-`WI_hatch$days_to_develop` outputs the predicted days to develop.
+`WI_hatch$days_to_develop` -- Returns the predicted number of days required for development.
 
-`WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to develop.
+`WI_hatch$dev.period` -- A 1x2 dataframe containing the spawning date (as input via `predict_phenology(spawn.date = ...)`) and predicted development completion date.
 
-`WI_hatch$ef_table` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature and effective value, and the cumulative sum of the effective values. The `ef_table` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+`WI_hatch$ef_table` -- An *n* x 5 tibble (*n* = number of days to hatch or emerge), containing a row index, the date, each day's temperature and effective value, and the cumulative sum of the effective values. This table serves as a foundation for users to create custom visualizations beyond the built-in functionality discuss below.
 
-`WI_hatch$model_specs` provides details about the model used for predicting phenology, which varies depending on if the model was generated from `model_select()` or `fit_model()`, but most importantly contains the model expression (*e.g.*, the formula) used for prediction.
+`WI_hatch$model_specs` -- Provides details about the model used for prediction, including whether it was retrieved from `model_select()` or generated using `fit_model()`. Most importantly, it contains the model expression (i.e., the formula) used for phenology predictions. 
 
 ### Plotting phenology
 
-**hatchR** has a built in function, `plot_phenology()`, that allows users to visualize their phenology results (Figure 4). The plot visualizes three specific components: 1.) the temperature regime over which you are predicting, 2.) the cumulative sum of effective values, and 3.) the effective value for each day in your prediction span. The function allows you to output various figures based on your interests, but defaults to a figure with all information and the corresponding labels.
+**hatchR** includes a built in function, `plot_phenology()`, for visualizing phenology predictions (Figure 4). This function generates plots with three specific components: 1) the temperature regime over the prediction period, 2) the cumulative sum of effective values, and 3) the effective value for each day within the prediction span. Be default, `plot_phenology()` produces a comprehensive figure that includes all three elements with corresponding labels and titles. However, users can customize the output to focus on specific aspects of interest, allowing for tailored visual representations of their results. 
+
+This function provides a quick and effective way to interpret model outputs, facilitating comparisons between temperature regimes or species-specific phenological responses.
 
 ```{r, fig.cap="Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` data set."}
 plot_phenology(WI_hatch)
