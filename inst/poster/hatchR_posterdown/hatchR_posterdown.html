@@ -19,7 +19,7 @@ Google fonts api stuff
 
 
 
-<title>hatchR: A toolset to predict when fish hatch and emerge</title>
+<title>hatchR: A tool set to predict when fish hatch and emerge</title>
 
 
 
@@ -345,7 +345,7 @@ font-size: 20pt;
 </div>
 <!-- Poster Title -->
 <div class= "poster_title">
-<h1 id="title">hatchR: A toolset to predict when fish hatch and emerge</h1>
+<h1 id="title">hatchR: A tool set to predict when fish hatch and emerge</h1>
 <h3 id="author">Morgan Sparks<sup>1</sup>, Eli Felts<sup>2</sup>, Allison Swartz<sup>3</sup>, Bryan Maitland<sup>1</sup></h3><br>
 <h5 id="affiliation"><sup>1</sup> Rocky Mountain Research Station, US Forest Service<br> <sup>2</sup> Idaho Fish and Wildlife Conservation Oﬀice, US Fish and Wildlife Service<br> <sup>3</sup> College of Forestry, Oregon State University</h5>
 </div>
@@ -449,7 +449,7 @@ Figure 2: Predicted days to hatch using custom parameterizations for three warmw
 <p>Let’s assume the forest manager wants to do some roadwork upstream of a Bull Trout spawning reach in Crooked River starting <strong>July 1</strong>. They engage the forest biologist who knows Bull Trout, which are sensitive to sediment, will be finished spawning there by <strong>September 30</strong>. They can then predict if fish are likely to have emerged from the gravel by July (using the 2014-2015 spawn year).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># get model from model_table</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>bull_trout_emerge <span class="ot">&lt;-</span> <span class="fu">model_select</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">author =</span> <span class="st">&quot;Austin et al. 2017&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">author =</span> <span class="st">&quot;Austin et al. 2019&quot;</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">species =</span> <span class="st">&quot;bull trout&quot;</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">&quot;MM&quot;</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">development_type =</span> <span class="st">&quot;emerge&quot;</span>)</span>

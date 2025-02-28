@@ -1,5 +1,5 @@
 ---
-title: "hatchR: A toolset to predict when fish hatch and emerge"
+title: "hatchR: A tool set to predict when fish hatch and emerge"
 author:
   - name: Morgan Sparks
     affil: 1
@@ -195,7 +195,7 @@ Let's assume the forest manager wants to do some roadwork upstream of a Bull Tro
 ```{r, echo = TRUE}
 # get model from model_table
 bull_trout_emerge <- model_select(
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM",
   development_type = "emerge")
@@ -266,7 +266,7 @@ spawn_dates <- map(
 # bull trout hatch model
 bt_hatch <- model_select(
   development_type = "hatch",
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM"
 )
