@@ -8,12 +8,8 @@ bibliography: ms_refs.bib
 csl: apa.csl
 ---
 
-```{r setup, include=FALSE, warning=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(hatchR)
-library(ggdist)
-library(ggridges)
 ```
 
 ## hatchR: A toolset to predict when fish hatch and emerge
@@ -48,6 +44,10 @@ To extend these modeling capabilities beyond Salmonids and facilitate broader ap
 
 To maximize accessibility, **hatchR** is available in two formats. The first is a R package, **hatchR**, distributed via CRAN (REF), providing advanced customization and automation for analyzing multiple variables, such as phenology type, spawn timing, or thermal regimes. Comprehensive documentation is available on the **hatchR** website (<https://bmait101.github.io/hatchR/>). The second is a Shiny-based web application (@chang2024), offering a graphical user interface for those unfamiliar with R, balancing ease of use with much of the R package's core functionality. Below, we provide and overview of **hatchR** and present case studies demonstrating its application in research and management.
 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse); library(hatchR); library(ggdist); library(ggridges)
+```
+
 # Package Overview
 
 **hatchR** is designed primarily as a tool for predicting fish phenology. To maintain focus on this core function, we provide minimal build-in data validation and vizualization tools, as users are expected to understand and check their own data. Given the diversity of potential data types, it is impractical to implement comprehensize validation checks. However, we include basic data-checking functions (`check_continuous()`, `summarize_temp()`) and limited built-in visualization capabilities (`plot_check_temp()`, `plot_phenology()`). Intuitive functions are provided for users to apply models (either existing models from the literature using the `model_select()` function or fitting custom functions from data using the `fit_model()` function). Users can then apply these models to water temperature data (e.g. from a HOBO temp logger) to predict when hatching phenology will occur. This is accomplished with the `predict_phenology()` function. The R package provides example workflows for customizing plots from model output, while the Shiny application includes a default output plot and an option to download results for external visualizations. For a high-level overview of **hatchR**'s applications, see Figure 1. Additional details on key functions and workflows–particularly for automating phenology predictions across multiple variables–are available in articles hosted on the software's webpage.
@@ -66,7 +66,11 @@ $$
 \mathrm{E_i} = \frac{1}{\exp(\log_e(a) - \log_e(T_i - b)}
 $$
 
-where $E_i$ is the effective value and $T_i$ the temperature for day $i$, and $a$ and $b$ are model parameterization estimates (i.e. species- or model-specific constants).
+where $E_i$ is the effective value and $T_i$ the temperature for day $i$, and $a$ and $b$ are model parameterization estimates (i.e. species- or model-specific constants). A fish hatches or emerges when the cumulative sum of effective values reaches one:
+
+$$
+\sum_{i =1}^nE_i = 1
+$$
 
 This framework as the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond salmonids.
 
