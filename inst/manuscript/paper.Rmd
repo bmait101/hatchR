@@ -186,9 +186,9 @@ This approach allows users to generate models tailored to non-Salmonid species, 
 
 ### Fitting models for other fishes
 
-We demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids in the `model_table` included in the package. We include parameterizations from three warm-water species to demonstrate the `fit_model()` utility for fishes beyond the scope of the original effective value approach. These parameterizations are for commonly cultured sportfishes including Smallmouth Bass (*Micropterus dolomieu*) [@webster1948], Channel Catfish (*Ictalurus punctatus*) [@small2001], and Lake Sturgeon (*Acipenser fulvescens*) [@smith2005]. We show parameterization for just Smallmouth Bass here for concision, but the full code set for all species is available at in the [paper.Rmd](https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper_pdf/paper.Rmd) in the project GitHub.
+We demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids included in `model_table`. To showcase its utility, we provide parameterizations for  three warm-water species: Smallmouth Bass (*Micropterus dolomieu*) [@webster1948], Channel Catfish (*Ictalurus punctatus*) [@small2001], and Lake Sturgeon (*Acipenser fulvescens*) [@smith2005]. These species were selected due to their common use in aquaculture and sport fisheries, illustrating the broad applicability of the effective values approach. For conciseness, we present parameterization for Smallmouth Bass here, while the full implementation details for all species are available in the [paper.Rmd](https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper_pdf/paper.Rmd) on the  GitHub project repository.
 
-We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure 3).
+Next, we generate a simulated thermal regime featuring an ascending thermograph with a mean temperature of 16 °C. Using this dataset, we apply the parameterized models for each species to predict hatch timing and total developmental duration (Figure 3). This example highlights the flexibility of **hatchR** im accommodating diverse fish species and environmental conditions, making it a valuable tool for researchers and managers working outside of Salmonid system. 
 
 ```{r, echo=FALSE}
 library(dplyr)
@@ -260,12 +260,11 @@ sturgeon_mod <- fit_model(days = sturgeon$days,
 
 ```
 
-Note the *R^2^* fit from the models below. You can see they generally all preform well and are in line with values from model 2 of @beacham1990.
+Note the *R^2^* fit from the models below. You can see they generally preform well and are in line with values from model 2 of @beacham1990.
 
 ```{r, echo = TRUE}
 #model fits
 smb_mod$r_squared; cat_mod$r_squared; sturgeon_mod$r_squared
-
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days."}
