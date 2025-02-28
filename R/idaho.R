@@ -4,12 +4,12 @@
 #' Water temperature data from Isaak et al. (2018).  Generally covers the
 #' Boise, Payette, Clearwater, and upper Salmon River watersheds.
 #'
-#' @source To come...
+#' @source https://hess.copernicus.org/articles/22/6225/2018/
 #' @format Data frame
 #' \describe{
 #' \item{date}{Date measurement was taken.}
 #' \item{site}{Site ID.}
-#' \item{twmp_c}{Temperature in degrees Celsius.}
+#' \item{temp_c}{Temperature in degrees Celsius.}
 #' }
 #' @examples
 #' idaho

@@ -7,7 +7,7 @@
 #' @param dates Date of temperature measurements.
 #' @param temperature Temperature measurements.
 #' @param spawn.date Date of spawning, given as a character string
-#' (e.g., "1990-08-18")
+#' (e.g., "1990-08-18"). Must be year-month-day in format shown.
 #' @param model A data.frame with a column named "expression" or a character vector
 #' giving model specifications. Can be obtained using `model_select()`
 #' or using you own data to obtain a model expression (see `fit_model`).

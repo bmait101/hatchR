@@ -1,7 +1,7 @@
-#' Example dataset: Lake Iliamna, Alaska
+#' Example dataset: Woody Island, Lake Iliamna, Alaska
 #'
 #' @description
-#' Temperature Data from Lake Iliamna on Woody Island, Alaska
+#' Temperature Data from Woody Island in Lake Iliamna, Alaska
 #'
 #' @source Sparks et al. (2019)
 #' @format Data frame with columns:
@@ -13,7 +13,7 @@
 #' woody_island
 #' @references
 #' Sparks, M.M., Falke, J.A., Quinn, T.A., Adkinson, M.D.,
-#' Schindler, D.E. (2019). Influences of spawning timing, water temperature,
+#' Schindler, D.E., Bartz, K., Young, D., Westley, P.A.H. (2019). Influences of spawning timing, water temperature,
 #' and climatic warming on early life history phenology in western
 #' Alaska sockeye salmon.
 #'   \emph{Canadian Journal of Fisheries and Aquatic Sciences},

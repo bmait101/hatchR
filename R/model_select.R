@@ -9,7 +9,7 @@
 #'
 #' @param author Character string of author name.
 #' @param species Character string of species name.
-#' @param model_id Model number from Beacham and Murray (1990).
+#' @param model_id Either model number from Beacham and Murray (1990) or specific to other paper (e.g., Sparks et al. 2017 = AK).
 #' @param development_type The phenology type. A vector with possible values
 #' "hatch" or "emerge". The default is "hatch".
 #'

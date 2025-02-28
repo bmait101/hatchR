@@ -11,7 +11,7 @@ model_select(author, species, model_id, development_type = "hatch")
 
 \item{species}{Character string of species name.}
 
-\item{model_id}{Model number from Beacham and Murray (1990).}
+\item{model_id}{Either model number from Beacham and Murray (1990) or specific to other paper (e.g., Sparks et al. 2017 = AK).}
 
 \item{development_type}{The phenology type. A vector with possible values
 "hatch" or "emerge". The default is "hatch".}

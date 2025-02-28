@@ -14,7 +14,7 @@ predict_phenology(data, dates, temperature, spawn.date, model)
 \item{temperature}{Temperature measurements.}
 
 \item{spawn.date}{Date of spawning, given as a character string
-(e.g., "1990-08-18")}
+(e.g., "1990-08-18"). Must be year-month-day in format shown.}
 
 \item{model}{A data.frame with a column named "expression" or a character vector
 giving model specifications. Can be obtained using \code{model_select()}
