@@ -1,0 +1,12 @@
+---
+title: "Potential reviewers"
+output: html_document
+date: "2025-02-28"
+---
+
+Potential reviews for hatchR ms:
+
+* Keith Nislow
+* Greg Sass
+* Ben Letcher
+* Dave Schmetterling
