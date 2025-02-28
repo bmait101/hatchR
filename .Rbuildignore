@@ -9,5 +9,6 @@
 ^\.github$
 ^CONTRIBUTING\.md$
 ^inst/manuscript$
+^inst/poster$
 ^inst/misc$
 ^\.DS_Store$
