@@ -43,6 +43,9 @@
     <li><a class="dropdown-item" href="../articles/Predict_phenology_advanced.html">Predict fish phenology: advanced</a></li>
     <li><a class="dropdown-item" href="../articles/Predict_phenology_nested.html">Predict fish phenology: nested</a></li>
     <li><a class="dropdown-item" href="../articles/Advanced_plotting.html">Advanced plotting</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Model Bibliography</h6></li>
+    <li><a class="dropdown-item" href="../articles/Model_bibliography.html">Model bibliography</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -100,10 +103,10 @@ several salmonid species from hatchery studies relating temperature to
 hatch and emergence timing <span class="citation">Sparks et al.
 (2019)</span>, and can be selected using
 <code><a href="../reference/model_select.html">hatchR::model_select()</a></code>.</p>
-<p>These models are parameterized to 50% hatch or emergence (see <span class="citation">(<strong>velsen1987?</strong>)</span> for details). It
-is important to remember that while these models predict a point
-estimate, hatch and emergence, even within a single spawning family
-would occur as a distribution of the phenological event.</p>
+<p>These models are parameterized to 50% hatch or emergence (see <span class="citation">Velsen (1987)</span> for details). It is important to
+remember that while these models predict a point estimate, hatch and
+emergence, even within a single spawning family would occur as a
+distribution of the phenological event.</p>
 <div class="section level3">
 <h3 id="model_table">
 <code>model_table</code><a class="anchor" aria-label="anchor" href="#model_table"></a>
@@ -320,6 +323,152 @@ object and use it to predict phenology. We will demonstrate this in the
 <a href="https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html">Predict
 phenology: Basic</a> vignette.</p>
 </div>
+<div class="section level3">
+<h3 id="fitting-models-for-other-fishes">Fitting models for other fishes<a class="anchor" aria-label="anchor" href="#fitting-models-for-other-fishes"></a>
+</h3>
+<p>We demonstrate how the <code><a href="../reference/fit_model.html">fit_model()</a></code> function may be used
+to create custom parameterizations for species beyond the Salmonids in
+the <code>model_table</code> included in the package. We include
+parameterizations from three warm-water species to demonstrate the
+<code><a href="../reference/fit_model.html">fit_model()</a></code> utility for fishes beyond the scope of the
+original effective value approach. These parameterizations are for
+commonly cultured sportfishes including Smallmouth Bass (<em>Micropterus
+dolomieu</em>) <span class="citation">(Webster 1948)</span>, Channel
+Catfish (<em>Ictalurus punctatus</em>) <span class="citation">(Small and
+Bates 2001)</span> , and Lake Sturgeon (<em>Acipenser fulvescens</em>)
+<span class="citation">(Smith and King 2005)</span>.</p>
+<p>We demonstrate the utility of this approach by creating a random
+thermal regime with an ascending thermograph with a mean temperature of
+16 °C, parameterizing models for each species, and demonstrating days to
+hatch and developmental period for each species with the random thermal
+regime .</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">###  make temp regime</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="co"># create random temps and corresponding dates</span></span>
+<span><span class="va">temps_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span><span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">16</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">dates_sim</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2000-07-01"</span><span class="op">)</span>,</span>
+<span>             to <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2000-07-31"</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">30</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">data_sim</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">temps_sim</span></span>
+<span><span class="va">data_sim</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dates_sim</span></span>
+<span></span>
+<span><span class="co"># change names so they aren't the same as the vector objects</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data_sim</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"temp_sim"</span>, <span class="st">"date_sim"</span><span class="op">)</span></span></code></pre></div>
+<p>Next we’ll parameterize our models for the three different fishes</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">### smallmouth mod</span></span>
+<span><span class="va">smallmouth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">smallmouth</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hours"</span>, <span class="st">"temp_F"</span><span class="op">)</span></span>
+<span><span class="va">smallmouth</span><span class="op">$</span><span class="va">hours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span>, <span class="fl">54</span>, <span class="fl">70</span>, <span class="fl">78</span>, <span class="fl">90</span>, <span class="fl">98</span>, <span class="fl">150</span>, <span class="fl">167</span>, <span class="fl">238</span>, <span class="fl">234</span><span class="op">)</span></span>
+<span><span class="va">smallmouth</span><span class="op">$</span><span class="va">temp_F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">77</span>, <span class="fl">75</span>, <span class="fl">71</span>, <span class="fl">70</span>, <span class="fl">67</span>, <span class="fl">65</span>, <span class="fl">60</span>, <span class="fl">59</span>, <span class="fl">55</span>, <span class="fl">55</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># change °F to °C and hours to days</span></span>
+<span><span class="va">smallmouth</span> <span class="op">&lt;-</span> <span class="va">smallmouth</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">hours</span><span class="op">/</span><span class="fl">24</span><span class="op">)</span>,</span>
+<span>         temp_C <span class="op">=</span> <span class="op">(</span><span class="va">temp_F</span> <span class="op">-</span><span class="fl">32</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># model object for smallmouth bass </span></span>
+<span><span class="va">smb_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">smallmouth</span><span class="op">$</span><span class="va">temp_C</span>,</span>
+<span>                     days <span class="op">=</span> <span class="va">smallmouth</span><span class="op">$</span><span class="va">days</span>,</span>
+<span>                     species <span class="op">=</span> <span class="st">"smb"</span>,</span>
+<span>                     development_type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### catfish mod</span></span>
+<span><span class="va">catfish</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">catfish</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"days"</span>, <span class="st">"temp_C"</span><span class="op">)</span></span>
+<span><span class="va">catfish</span><span class="op">$</span><span class="va">days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>,<span class="fl">21</span>,<span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">catfish</span><span class="op">$</span><span class="va">temp_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>,<span class="fl">10</span>,<span class="fl">7</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cat_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="va">catfish</span><span class="op">$</span><span class="va">temp_C</span>,</span>
+<span>                     days <span class="op">=</span> <span class="va">catfish</span><span class="op">$</span><span class="va">days</span>,</span>
+<span>                     species <span class="op">=</span> <span class="st">"catfish"</span>,</span>
+<span>                     development_type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### lake sturgeon mod</span></span>
+<span><span class="va">sturgeon</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">7</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sturgeon</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"days"</span>, <span class="st">"CTU"</span><span class="op">)</span></span>
+<span><span class="va">sturgeon</span><span class="op">$</span><span class="va">days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">5</span>,<span class="fl">11</span>,<span class="fl">7</span><span class="op">)</span></span>
+<span><span class="va">sturgeon</span><span class="op">$</span><span class="va">CTU</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">58.1</span>, <span class="fl">62.2</span>, <span class="fl">61.1</span>, <span class="fl">57.5</span>, <span class="fl">58.1</span>, <span class="fl">71.4</span>, <span class="fl">54.7</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sturgeon</span> <span class="op">&lt;-</span> <span class="va">sturgeon</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>temp_C <span class="op">=</span> <span class="va">CTU</span><span class="op">/</span><span class="va">days</span><span class="op">)</span> <span class="co"># change CTUs to average temp and add column</span></span>
+<span></span>
+<span><span class="va">sturgeon_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_model.html">fit_model</a></span><span class="op">(</span>days <span class="op">=</span> <span class="va">sturgeon</span><span class="op">$</span><span class="va">days</span>,</span>
+<span>                          temp <span class="op">=</span> <span class="va">sturgeon</span><span class="op">$</span><span class="va">temp_C</span>,</span>
+<span>                          species <span class="op">=</span> <span class="st">"sturgeon"</span>,</span>
+<span>                          development_type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
+<p>Note the <em>R<sup>2</sup></em> fit from the models below. You can
+see they generally all preform well and are in line with values from
+model 2 of <span class="citation">Beacham and Murray (1990)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#model fits</span></span>
+<span><span class="va">smb_mod</span><span class="op">$</span><span class="va">r_squared</span>; <span class="va">cat_mod</span><span class="op">$</span><span class="va">r_squared</span>; <span class="va">sturgeon_mod</span><span class="op">$</span><span class="va">r_squared</span></span>
+<span><span class="co">#&gt; [1] 0.9868067</span></span>
+<span><span class="co">#&gt; [1] 0.9433598</span></span>
+<span><span class="co">#&gt; [1] 0.9217358</span></span></code></pre></div>
+<p>After we have our fits for each species we can predict phenology
+using our <code>data_sim</code> datset we created above.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">### predict_phenology</span></span>
+<span></span>
+<span><span class="co">#smallmouth bass</span></span>
+<span><span class="va">smb_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predict_phenology.html">predict_phenology</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_sim</span>,</span>
+<span>                  dates <span class="op">=</span> <span class="va">date_sim</span>,</span>
+<span>                  temperature <span class="op">=</span> <span class="va">temp_sim</span>,</span>
+<span>                  spawn.date <span class="op">=</span> <span class="st">"2000-07-01"</span>,</span>
+<span>                  model <span class="op">=</span> <span class="va">smb_mod</span><span class="op">$</span><span class="va">expression</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># catfish</span></span>
+<span><span class="va">catfish_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predict_phenology.html">predict_phenology</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_sim</span>,</span>
+<span>                  dates <span class="op">=</span> <span class="va">date_sim</span>,</span>
+<span>                  temperature <span class="op">=</span> <span class="va">temp_sim</span>,</span>
+<span>                  spawn.date <span class="op">=</span> <span class="st">"2000-07-01"</span>,</span>
+<span>                  model <span class="op">=</span> <span class="va">cat_mod</span><span class="op">$</span><span class="va">expression</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sturgeon</span></span>
+<span><span class="co"># note that 16 C is pretty far out of range of temps for model fit, not best practice</span></span>
+<span><span class="va">sturgeon_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predict_phenology.html">predict_phenology</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_sim</span>,</span>
+<span>                  dates <span class="op">=</span> <span class="va">date_sim</span>,</span>
+<span>                  temperature <span class="op">=</span> <span class="va">temp_sim</span>,</span>
+<span>                  spawn.date <span class="op">=</span> <span class="st">"2000-07-01"</span>,</span>
+<span>                  model <span class="op">=</span> <span class="va">sturgeon_mod</span><span class="op">$</span><span class="va">expression</span><span class="op">)</span></span></code></pre></div>
+<p>After we have our predictions we’ll combine our results and do a
+little data cleaning.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># summary for all species</span></span>
+<span><span class="va">all_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">all_res</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"stop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_res</span><span class="op">$</span><span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">catfish_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">start</span>, </span>
+<span>                   <span class="va">smb_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">start</span>, </span>
+<span>                   <span class="va">sturgeon_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">start</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_res</span><span class="op">$</span><span class="va">stop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">catfish_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">stop</span>,</span>
+<span>                  <span class="va">smb_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">stop</span>, </span>
+<span>                  <span class="va">sturgeon_res</span><span class="op">$</span><span class="va">dev.period</span><span class="op">$</span><span class="va">stop</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">all_res</span> <span class="op">&lt;-</span> <span class="va">all_res</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">stop</span><span class="op">-</span><span class="va">start</span><span class="op">)</span>,</span>
+<span>         index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">17</span>,<span class="fl">16.5</span>,<span class="fl">16</span><span class="op">)</span><span class="op">)</span> <span class="co"># index for our horizontal bars</span></span>
+<span></span>
+<span><span class="va">all_res</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Channel Catfish"</span>, <span class="st">"Smallmouth Bass"</span>, <span class="st">"Lake Sturgeon"</span><span class="op">)</span></span></code></pre></div>
+<p>And then finally we can plot our results.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_sim</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_sim</span>, y <span class="op">=</span> <span class="va">temp_sim</span> <span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_sim</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_sim</span>, y <span class="op">=</span> <span class="va">temp_sim</span> <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">start</span>, xmax <span class="op">=</span> <span class="va">stop</span>, ymax <span class="op">=</span><span class="va">index</span><span class="op">-</span><span class="fl">.35</span>, ymin <span class="op">=</span> <span class="va">index</span><span class="op">-</span><span class="fl">.5</span>, fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">start</span> <span class="op">+</span> <span class="op">(</span><span class="va">stop</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="op">(</span><span class="va">index</span> <span class="op">-</span><span class="fl">0.425</span><span class="op">)</span>, label <span class="op">=</span> <span class="va">days</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Date"</span>, y <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"deepskyblue4"</span>, <span class="st">"grey23"</span>, <span class="st">"darkolivegreen4"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Parameterize_models_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="important-considerations">Important considerations<a class="anchor" aria-label="anchor" href="#important-considerations"></a>
@@ -374,6 +523,21 @@ Fisheries Society</em> 119 (6): 927–45. <a href="https://doi.org/10.1577/1548-
 Quinn, Thomas P. 2018. <em>The Behavior and Ecology of Pacific Salmon
 and Trout</em>. University of Washington Press.
 </div>
+<div id="ref-small_effect_2001" class="csl-entry">
+Small, Brian C., and Terry D. Bates. 2001. <span>“Effect of
+<span>Low</span>-<span>Temperature</span> <span>Incubation</span> of
+<span>Channel</span> <span>Catfish</span> <span>Ictalurus</span>
+Punctatus <span>Eggs</span> on <span>Development</span>,
+<span>Survival</span>, and <span>Growth</span>.”</span> <em>Journal of
+the World Aquaculture Society</em> 32 (2): 189–94. <a href="https://doi.org/10.1111/j.1749-7345.2001.tb01094.x" class="external-link">https://doi.org/10.1111/j.1749-7345.2001.tb01094.x</a>.
+</div>
+<div id="ref-smith_dynamics_2005" class="csl-entry">
+Smith, K. M., and D. K. King. 2005. <span>“Dynamics and Extent of Larval
+Lake Sturgeon <span>Acipenser</span> Fulvescens Drift in the
+<span>Upper</span> <span>Black</span> <span>River</span>,
+<span>Michigan</span>.”</span> <em>Journal of Applied Ichthyology</em>
+21 (3): 161–68. <a href="https://doi.org/10.1111/j.1439-0426.2005.00623.x" class="external-link">https://doi.org/10.1111/j.1439-0426.2005.00623.x</a>.
+</div>
 <div id="ref-sparks2019" class="csl-entry">
 Sparks, Morgan M., Jeffrey A. Falke, Thomas P. Quinn, Milo D. Adkison,
 Daniel E. Schindler, Krista Bartz, Dan Young, and Peter A. H. Westley.
@@ -381,6 +545,20 @@ Daniel E. Schindler, Krista Bartz, Dan Young, and Peter A. H. Westley.
 Climatic Warming on Early Life History Phenology in Western Alaska
 Sockeye Salmon.”</span> <em>Canadian Journal of Fisheries and Aquatic
 Sciences</em> 76 (1): 123–35. <a href="https://doi.org/10.1139/cjfas-2017-0468" class="external-link">https://doi.org/10.1139/cjfas-2017-0468</a>.
+</div>
+<div id="ref-velsen1987" class="csl-entry">
+Velsen, FPJ. 1987. <span>“Temperature and Incubation in Pacific Salmon
+and Rainbow Trout: Compilation of Data on Median Hatching Time,
+Mortality and Embryonic Staging.”</span> Department of Fisheries;
+Oceans, Fisheries Research Branch, Pacific ….
+</div>
+<div id="ref-webster_relation_1948" class="csl-entry">
+Webster, Dwight A. 1948. <span>“Relation of <span>Temperature</span> to
+<span>Survival</span> and <span>Incubation</span> of the
+<span>Eggs</span> of <span>Smallmouth</span> <span>Bass</span>
+(<span>Micropterus</span> <span>Dolomieu</span>).”</span>
+<em>Transactions of the American Fisheries Society</em> 75 (1): 43–47.
+<a href="https://doi.org/10.1577/1548-8659(1945)75%5B43:ROTTSA%5D2.0.CO;2" class="external-link">https://doi.org/10.1577/1548-8659(1945)75[43:ROTTSA]2.0.CO;2</a>.
 </div>
 </div>
 </div>
