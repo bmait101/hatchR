@@ -9,11 +9,11 @@ Data frame
 \describe{
 \item{date}{Date measurement was taken.}
 \item{site}{Site ID.}
-\item{twmp_c}{Temperature in degrees Celsius.}
+\item{temp_c}{Temperature in degrees Celsius.}
 }
 }
 \source{
-To come...
+https://hess.copernicus.org/articles/22/6225/2018/
 }
 \usage{
 idaho
