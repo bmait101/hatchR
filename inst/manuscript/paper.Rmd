@@ -176,11 +176,13 @@ check_continuous(data = year_sim_summ[-100,],
 
 ## Model Selection
 
-Users can either use Salmonid models from `model_table` or generate custom models suing `fit_model()` in both R and Shiny deployments of **hatchR**. As discussed, the models in `model_table` are included because parameterizations already existed in the literature, however, these parameterizations are limited to Pacific Salmon and Bull Trout (though see @quinn2018 pg. 183 for numerous other Salmonids). Additionally, we limit available models in `model_table` because they are well vetted models, with experimental ranges spanning 2-17 °C. Custom models we demonstrate later with `fit_model()` have much narrower parameterization ranges and, as such, we choose to keep those models out of `model_table` so as to require users to consider whether the custom models they are parameterizing fit the data over which they are predicting.
+Users can select from existing Salmonid models in `model_table` or generate custom models using `fit_model()` in both the R and Shiny deployments of **hatchR**. The models in `model_table` are included because their parameterizations are well-documented in the literature, though they are currently limited to Pacific Salmon and Bull Trout (see @quinn2018 pg. 183, for additional Salmonid models). To ensure reliability, we restrict `model_table` to well vetted models with experimental ranges spanning 2-17 °C. 
 
-To widen the application of the effective value approach, we include a `fit_model()` function, which is species agnostic (as long as development generally follows the power law). The function `fit_model()` uses data in which average incubation temperature (°C) and days to phenological event (as two vectors) are the inputs. The function estimates parameter coefficients for *log~e~a* and *b* using `stats::nls()`
+Custom models, by contrast, often have narrower parameterization ranges. To prevent misapplication, we exclude other model parameterization from `model_table`, requiring users to carefully asses whether their parameterized models are appropriate for the temperature ranges in their datasets.
 
-**BRYAN TO FINISH THIS PARAGRAPH OFF HERE**
+To expand the applicability of the effective value approach beyond Salmonids, **hacthR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors--one for average incubation temperature (°C) and one for the number of days to a given phenological event--and estimates model parameters (*log~e~a* and *b*) using `stats::nls()`. 
+
+This approach allows users to generate models tailored to non-Salmonid species, provided they have experimental or field data linking development to temperature. However, users should be mindful that custom models may not generalize well beyond the temperature range of the data used to fit the model. Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, pending sufficient validation in the literature. 
 
 ### Fitting models for other fishes
 
@@ -189,6 +191,7 @@ We demonstrate how the `fit_model()` function may be used to create custom param
 We demonstrate the utility of this approach by creating a random thermal regime with an ascending thermograph with a mean temperature of 16 °C, parameterizing models for each species, and demonstrating days to hatch and developmental period for each species with the random thermal regime (Figure 3).
 
 ```{r, echo=FALSE}
+library(dplyr)
 ###  make temp regime
 set.seed(123)
 # create random temps and corresponding dates
