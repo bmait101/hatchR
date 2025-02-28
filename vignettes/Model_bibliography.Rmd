@@ -14,11 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, echo = FALSE}
 library(hatchR)
 ```
 
 This page is a living bibliography of potential model sources for `fit_model()`. If you have recommendations for updates to this page, please either open an issue on our GitHub page (<https://github.com/bmait101/hatchR/issues>) or email either of Morgan ([Morgan.Sparks\@usda.gov](mailto:Morgan.Sparks@usda.gov){.email}) or Bryan ([Bryan.Maitland\@usda.gov](mailto:Bryan.Maitland@usda.gov){.email}).
+
+Treat these as putative model sources, as we have generally not vetted them as usable in **hatchR**.
 
 ### Bibliography
 
