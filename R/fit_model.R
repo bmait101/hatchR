@@ -92,7 +92,9 @@ fit_model <- function(temp, days, species = NULL, development_type = NULL) {
     ggplot2::geom_line(
       data = grid, ggplot2::aes(x = .data$x, y = .data$pred), col = "blue"
     ) +
-    ggplot2::theme_classic()
+    ggplot2::theme_classic() +
+    # added labels to make output plot more intuitive - PNF
+    ggplot2::xlab("Temperature") + ggplot2::ylab("Days until Hatch")
   p_pred
 
   # model diagnostics --------------------------------
