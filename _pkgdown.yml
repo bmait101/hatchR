@@ -17,3 +17,8 @@ articles:
     - Predict_phenology_advanced
     - Predict_phenology_nested
     - Advanced_plotting
+
+  - title: "Model Bibliography"
+    navbar: "Model Bibliography"
+    contents:
+    - Model_bibliography
