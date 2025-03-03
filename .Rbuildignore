@@ -12,3 +12,4 @@
 ^inst/poster$
 ^inst/misc$
 ^\.DS_Store$
+^cran-comments\.md$
