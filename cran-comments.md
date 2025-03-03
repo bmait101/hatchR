@@ -1,6 +1,12 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
+* omitted "+ file LICENSE" from DESCRIPTION and the file itself
+* ommited the email address from README
+
+## Resubmission
+This is a resubmission. In this version I have:
+
 * added a missing dependency on R >= 4.1.0 because package code uses the pipe syntax added in R 4.1.0
 
 Additionally, the incoming checks automatically noted:
