@@ -184,7 +184,7 @@ Users can select from existing Salmonid models in `model_table` or generate cust
 
 Custom models, by contrast, often have narrower parameterization ranges. To prevent misapplication, we exclude other model parameterization from `model_table`, requiring users to carefully asses whether their parameterized models are appropriate for the temperature ranges in their datasets.
 
-To expand the applicability of the effective value approach beyond Salmonids, **hatchR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors--one for average incubation temperature (°C) and one for the number of days to a given phenological event--and estimates model parameters (*log~e~a* and *b*) using `stats::nls()`.
+To expand the applicability of the effective value approach beyond Salmonids, **hatchR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors—one for average incubation temperature (°C) and one for the number of days to a given phenological event—and estimates model parameters (*log~e~a* and *b*) using `stats::nls()`.
 
 This approach allows users to generate models tailored to non-Salmonid species, provided they have experimental or field data linking development to temperature. However, users should be mindful that custom models may not generalize well beyond the temperature range of the data used to fit the model. Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, pending sufficient validation in the literature.
 
@@ -572,34 +572,31 @@ ggplot(
 
 # Discussion
 
-With **hatchR**, we present a software ecosystem that bridges the analytical gap in predicting developmental phenology for wild fishes. It establishes a formal framework for applying effective value models from user-provided parameterizations. The software is available in two formats:
-
--   A fully customizable R package, ideal for complex and repetitive analyses.
--   A graphical user interface (GUI) for ease of use, designed for tasks that may only need to be run once or a few times.
+With **hatchR**, we present a software ecosystem that bridges the analytical gap in predicting developmental phenology for wild fishes. It establishes a formal framework for applying effective value models from user-provided parameterizations. The software is available in two formats: 1) A fully customizable R package, ideal for complex and repetitive analyses and 2) a graphical user interface for ease of use, designed for tasks that may only need to be run once or a few times.
 
 Both versions allow users to import data, perform basic data checks, and apply either pre-existing salmonid model parameterizations or generate custom models specific to other species or populations. To support users at various levels of expertise, we provide extensive documentation on the hatchR website (<https://bmait101.github.io/hatchR/>), covering basic and advanced applications.
 
 ## Assumptions and considerations in applying effective value models
 
-The application of hatchR and the effective value modeling framework relies on several key assumptions. First, environmental stressors may alter developmental timing. While effective value models predict developmental timing based on temperature, studies have shown that stressful environmental conditions—such as low dissolved oxygen, altered pH, high salinity, pathogen exposure, or mechanical disturbance—can induce premature hatching or emergence (@quinn2018; @cowan2024). Users should consider how such factors may influence their predictions.
+The application of hatchR and the effective value modeling framework relies on several key assumptions. First, environmental stressors may alter developmental timing. While effective value models predict developmental timing based on temperature, studies have shown that stressful environmental condition such as low dissolved oxygen, altered pH, high salinity, pathogen exposure, or mechanical disturbance can induce premature hatching or emergence [@quinn2018; @cowan2024]. Users should consider how such factors may influence their predictions.
 
-Second, developmental timing occurs as a distribution, not a fixed point. While **hatchR** provides point estimates for developmental phenology, fish spawning and development within populations occur as distributions rather than single events (@mason1976). We encourage users to predict phenology using early, peak, and late thresholds (e.g., 5th, 50th, and 95th percentiles) or incorporate real or modeled distributions to capture variation.
+Second, developmental timing occurs as a distribution, not a fixed point. While **hatchR** provides point estimates for developmental phenology, fish spawning and development within populations occur as distributions rather than single events [@mason1976]. We encourage users to predict phenology using early, peak, and late thresholds (e.g., 5th, 50th, and 95th percentiles) or incorporate real or modeled distributions to capture variation.
 
-Third, sensor-based temperature data may differ from actual egg temperatures. Water temperatures recorded by environmental sensors may not fully reflect thermal conditions in spawning microhabitats, where geomorphic factors influence temperature regimes (@geist2002). Users should consider how differences between measured and actual incubation temperatures may affect predictions.
+Third, sensor-based temperature data may differ from actual embryonic ambient temperatures. Water temperatures recorded by environmental sensors may not fully reflect thermal conditions in spawning microhabitats, where geomorphic factors influence temperature regimes [@geist2002]. Users should consider how differences between measured and actual incubation temperatures may affect predictions.
 
 ## Evolutionary and population-level considerations
 
-To date, effective value models have primarily been used to predict phenology in wild environments using species-specific parameterizations (@adelfio2024; @austin2019). However, these models fundamentally represent reaction norms, meaning that temperature-development relationships are influenced by genetic variation, gene-environment interactions, and phylogenetic differences (@west-eberhard2003).
+To date, effective value models have primarily been used to predict phenology in wild environments using species-specific parameterizations [@adelfio2024; @austin2019]. However, these models fundamentally represent reaction norms, meaning that temperature-development relationships are influenced by genetic variation, gene-environment interactions, and phylogenetic differences [@west-eberhard2003].
 
-For example, @sparks2017 found no significant differences in developmental rates between populations in their study but did observe family-level genetic × environment interactions under different thermal regimes. Similarly, when they reparameterized their models using western Alaskan Sockeye Salmon, they found slower developmental rates compared to populations from Canada (@beacham1990), consistent with cogradient variation (@conover2009; @sparks2022). These findings highlight the importance of considering not only developmental time predictions but also how the underlying statistical relationships inform micro- and macro-evolutionary processes in fishes.
+For example, @sparks2017 found no significant differences in developmental rates between populations in their study but did observe family-level genetic × environment interactions under different thermal regimes. Similarly, when they reparameterized their models using western Alaskan Sockeye Salmon, they found slower developmental rates compared to populations from Canada [@beacham1990], consistent with cogradient variation [@conover2009; @sparks2022]. These findings highlight the importance of considering not only developmental time predictions but also how the underlying statistical relationships inform micro- and macro-evolutionary processes in fishes.
 
-## Future directions OR Expanding the utility of **hatchR**
+## Expanding the utility of **hatchR**
 
-The models within **hatchR** can be customized in multiple ways beyond the examples provided. While our current framework focuses on predicting hatch or emergence timing, it could be adapted to other key developmental milestones, such as early embryonic stages (e.g., eye-up in salmonids; @velsen1980), initiation of pelagic-larval dispersal in marine fish, where temperature regulates the transition from demersal to pelagic behavior, or current-mediated dispersal in riverine species, where larvae begin downstream drift at temperature-dependent thresholds.
+The models within **hatchR** can be customized in multiple ways beyond the examples provided. While our current framework focuses on predicting hatch or emergence timing, it could be adapted to other key developmental milestones, such as early embryonic stages (*e.g.*, eye-up in salmonids; [@velsen1980]), initiation of pelagic-larval dispersal in marine fish, where temperature regulates the transition from demersal to pelagic behavior, or current-mediated dispersal in riverine species, where larvae begin downstream drift at temperature-dependent thresholds.
 
 Additionally, while `fit_model()` uses non-linear regression to estimate parameters, `predict_phenology()` only requires users to provide a model expression. This means that users can integrate alternative model structures, as long as they incorporate daily temperature, allowing further customization of predictions.
 
-Finally, while hatchR was designed specifically for fishes, it has potential applications for other poikilothermic organisms, such as reptiles, amphibians, and invertebrates, where developmental rates similarly follow a power-law relationship with temperature. Extending the effective value framework to these taxa could provide valuable insights into their life history timing under variable environmental conditions.
+Finally, while hatchR was designed specifically for fishes, it has potential applications for other poikilothermic organisms, such as reptiles, amphibians, and invertebrates, where developmental rates similarly follow a power law relationship with temperature. Extending the effective value framework to these taxa could provide valuable insights into their life history timing under variable environmental conditions.
 
 # Conclusion
 
@@ -611,7 +608,7 @@ Importantly, hatchR extends the effective value framework developed by @sparks20
 
 We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided useful discussion about model development and temperature data sets.
 
-The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS or USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government, USFS, or USFWS. USFS and USFWS do not endorse any commercial products, services or enterprises.
+The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government or USFS. USFS does not endorse any commercial products, services or enterprises.
 
 # Conflicts of Interest
 
@@ -619,7 +616,7 @@ The authors declare no known conflicts of interest.
 
 # Data Availability
 
-**hathcR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The latest version will be archived upon acceptance of the manuscript.
+**hatchR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The latest version will be archived upon acceptance of the manuscript.
 
 # Ethics Statement
 
