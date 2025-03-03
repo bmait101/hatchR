@@ -1,3 +1,9 @@
+# hatchR 0.3.1
+
+## Bug fixes
+
+-   added a missing dependency on R >= 4.1.0 because package code uses the pipe syntax added in R 4.1.0
+
 # hatchR 0.3.0
 
 ## Minor improvements and bug fixes

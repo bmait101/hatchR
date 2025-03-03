@@ -1,7 +1,7 @@
 Package: hatchR
 Type: Package
 Title: Predict Fish Hatch and Emergence Timing
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Bryan M.", "Maitland", email = "bryan.maitland@usda.gov",
            role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4491-5064")),
