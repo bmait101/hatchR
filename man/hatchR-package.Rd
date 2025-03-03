@@ -4,11 +4,11 @@
 \name{hatchR-package}
 \alias{hatchR}
 \alias{hatchR-package}
-\title{hatchR: Predict Fish Hatching and Emergence from Daily Temperature Data}
+\title{hatchR: Predict Fish Hatch and Emergence Timing}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-`hatchR` is intended to bridge the analytic gap of taking statistical models developed in hatchery settings (e.g., Beacham and Murray 1990) and applying them to real world temperature data sets using an effective value framework developed by Sparks et al. (2019).
+Predict hatch and emergence timing for a wide range of wild fishes using the effective value framework (Sparks et al., (2019) \doi{10.1139/cjfas-2017-0468}). 'hatchR' offers users access to established phenological models and the flexibility to incorporate custom parameterizations using external datasets.
 }
 \seealso{
 Useful links:
@@ -24,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Morgan M. Sparks \email{morgan.sparks@usda.gov} (\href{https://orcid.org/0000-0003-0787-2218}{ORCID})
+  \item Morgan M. Sparks \email{morgan.sparks@usda.gov} (\href{https://orcid.org/0000-0003-0787-2218}{ORCID}) [copyright holder]
 }
 
 Other contributors:
