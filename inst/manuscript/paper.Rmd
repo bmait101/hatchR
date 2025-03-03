@@ -439,11 +439,11 @@ In this example, the model predicts that the last Bull Trout will emerge before 
 
 # Case Study 2
 
-**Bull Trout in the Upper Columbia River Headwaters** OR **Large-scale Predictions of Bull Trout development timing**
+**Large Scale Predictions of Bull Trout Development Timing**
 
-For the second case study, we demonstrate a more complex, large-sclae application of **hatchR**, highlighting its full flexibility when applied programmatically in R. This example also focuses on Bull Trout, but extends beyond a single site to a broad spatial analysis across 226 locations in the upper Columbia River headwaters in Idaho.
+For the second case study, we demonstrate a more complex, large-scale application of **hatchR**, highlighting its full flexibility when applied programmatically in R. This example also focuses on Bull Trout, but extends beyond a single site to a broad spatial analysis across 226 locations in the upper Columbia River headwaters in Idaho.
 
-We use the `idaho` dataset from @isaak2018, which includes temperature data from these sites. To identify putative Bull Trout Spawning locations, we apply a filtering criterion based on mean August temperature, as outlined in @isaak2015, selecting only sites with mean August temperature \</= 13 °C, a known thermal threshold for Bull Trout spawning suitability. The filtering process reduced the dataset to 139 sites potential spawning sites.
+We use the `idaho` dataset from @isaak2018, which includes temperature data for these sites. To identify putative Bull Trout Spawning locations, we apply a filtering criterion based on mean August temperature, as outlined in @isaak2015, selecting only sites with mean August temperature \</= 13 °C, a known thermal threshold for Bull Trout spawning suitability. The filtering process reduced the dataset to 139 sites potential spawning sites.
 
 ```{r, echo = FALSE}
 
@@ -496,17 +496,9 @@ bt_hatch <- model_select(
 )
 ```
 
-To predict hatch timing across these sites, we:
+To predict hatch timing across these sites, we first set up the necessary models and data, using Bull Trout parameterization. (For conciseness, we omit this set up here, but full details are available in the `paper.Rmd` file in the GitHub repository for **hatchR**.) We then apply `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates (Early: September 1st, Peak: September 15th, Late: September 30th).
 
-1.  Set up the necessary moels and data, using Bull Trout parameterization. (For conciseness, we omit this set up here, but full details are available in the `paper.Rmd` file in the GitHub repository for **hatchR**.)
-
-2.  Apply `predict_phenology()` across all 139 sites, running predictions for three representative spawn date:
-
--   Early: September 1st
--   Peak: September 15th
--   Late: September 30th
-
-By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing caries across different spawning habitats. The results of this analysis are presented in Figure 5, providing insights into how emergence timing might vary under different thermal regimes and across the species' geographic range. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
+By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 5, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
 
 ```{r, echo = TRUE}
 hatch_res <- isaak_summ_bt |> 
