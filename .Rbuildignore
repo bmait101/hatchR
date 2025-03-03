@@ -13,3 +13,4 @@
 ^inst/misc$
 ^\.DS_Store$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$
