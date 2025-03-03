@@ -1,3 +1,10 @@
+# hatchR 0.3.2
+
+## Bug fixes
+
+-   omitted "+ file LICENSE" from DESCRIPTION and the file itself
+-   ommited the email address from README
+
 # hatchR 0.3.1
 
 ## Bug fixes
