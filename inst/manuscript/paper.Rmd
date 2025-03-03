@@ -18,7 +18,7 @@ Morgan M. Sparks^1,4^, Eli A. Felts^2^, Allison G. Swartz^3^, Bryan M. Maitland^
 
 ^1^Rocky Mountain Research Station, U.S. Forest Service, Boise, ID, USA
 
-^2^Idaho Fish and Wildlife Conservation Office, U.S. Fish and Wildlife Service, Orofino, ID, USA
+^2^Clearwater Solutions, Lenore, ID, USA
 
 ^3^College of Forestry, Oregon State University, Corvallis, OR, USA
 
@@ -334,6 +334,7 @@ To illustrate model selection and phenology prediction, we will replicate a port
 First, we obtain model expression for both hatch and emergence using `model_select()`, which retrieves the appropriate parameterizations from `model_table`:
 
 ```{r, echo = TRUE}
+#model_select() to get sockeye model
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990", 
   species = "sockeye", 
@@ -345,11 +346,12 @@ sockeye_hatch_mod <- model_select(
 These model expressions are then applied in `predict_phenology()` to estimate the days to hatch and development:
 
 ```{r, warning=FALSE, echo = TRUE}
+#predict_phenology() with sockeye model and woody_island temperature data
 WI_hatch <- predict_phenology(
   data = woody_island,
   dates = date,
   temperature = temp_c,
-  spawn.date = "1990-08-18",
+  spawn.date = "1990-08-18", #notice the character string for spawn date
   model = sockeye_hatch_mod
   )
 ```
@@ -365,8 +367,8 @@ WI_hatch$dev.period
 
 The output from `predict_phenology()` contains mutiple elements in a list, which can be accessed using the `$` operator. Each component provides different insight into the predicted phenology:
 
-```{r, eval=FALSE, echo = TRUE}
-str(WI_hatch)
+```{r, echo = TRUE}
+summary(WI_hatch)
 ```
 
 `WI_hatch$days_to_develop` -- Returns the predicted number of days required for development.
@@ -375,7 +377,7 @@ str(WI_hatch)
 
 `WI_hatch$ef_table` -- An *n* x 5 tibble (*n* = number of days to hatch or emerge), containing a row index, the date, each day's temperature and effective value, and the cumulative sum of the effective values. This table serves as a foundation for users to create custom visualizations beyond the built-in functionality discuss below.
 
-`WI_hatch$model_specs` -- Provides details about the model used for prediction, including whether it was retrieved from `model_select()` or generated using `fit_model()`. Most importantly, it contains the model expression (i.e., the formula) used for phenology predictions.
+`WI_hatch$model_specs` -- Provides details about the model used for prediction, including whether it was retrieved from `model_select()` or generated using `fit_model()`. Most importantly, it contains the model expression (*i.e.*, the formula) used for phenology predictions.
 
 ### Plotting phenology
 
