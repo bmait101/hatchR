@@ -11,7 +11,7 @@ Authors@R: c(
            role = c("ctb"), comment = c(ORCID = "0000-0002-5888-9266")))
 Maintainer: Bryan M. Maitland <bryan.maitland@usda.gov>
 Description: Predict hatch and emergence timing for a wide range of wild fishes using the effective value framework (Sparks et al., (2019) <DOI:10.1139/cjfas-2017-0468>). 'hatchR' offers users access to established phenological models and the flexibility to incorporate custom parameterizations using external datasets.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
