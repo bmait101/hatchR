@@ -109,7 +109,7 @@ For R users, **hatchR** can import data in any format, provided it is converted 
 
 To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integroty before model application.
 
-We demonstrate the utility three functions: `summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long data set (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimentions and first six rows) is shown below.
+We demonstrate the utility three functions: `summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long data set (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below.
 
 ```{r, echo = FALSE}
 library(lubridate)
@@ -138,7 +138,7 @@ year_sim$temp <- rnorm(n = length(dates), mean = 10, sd = 3) %>%
 ```
 
 ```{r}
-#year_sim data dimensions
+#year_sim data dimensions (rows x columns)
 dim(year_sim)
 #fist 6 rows of year_sim
 head(year_sim)
@@ -164,6 +164,7 @@ year_sim_summ <- summarize_temp(data = year_sim,
                                 temperature = temp)
 
 # now a year's worth of single-day data
+# 365 days x two columns
 dim(year_sim_summ)
 
 # check continuous (no errors)
