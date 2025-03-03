@@ -61,8 +61,7 @@ We encourage users to report bugs and/or contribute to **hatchR**. For more deta
 There are several ways to get help with **hatchR**:
 
 1.  Open a GitHub issue [link here](https://github.com/bmait101/hatchR/issues).
-2.  Email the **hatchR** support team ([Morgan Sparks](morgan.sparks@usda.gov), [Bryan Maitland](bryan.maitland@usda.gov))
-3.  Post on a support website like Stack Overflow or Cross Validated.
+2.  Post on a support website like Stack Overflow or Cross Validated.
 
 ## Example Usage
 
