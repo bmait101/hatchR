@@ -389,17 +389,17 @@ This function provides a quick and effective way to interpret model outputs, fac
 plot_phenology(WI_hatch)
 ```
 
-# Case Study 1:
+# Case Study 1
 
-**Bull Trout in the Crooked River** OR **Predicting Emergence Timing for Management Actions**
+**Predicting Emergence Timing for Management Actions**
 
 A common management application of developmental phenology is assessing whether fish will be free-moving before a scheduled management action, such as stream section access for grazing or road work. For instance, will fish have emerged from redds before construction begins, reducing potential disturbance?
 
-In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, where a key Bull Trout (*Salvelinus confluentus*) population exists. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensative to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
+In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensative to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
 
 To demonstrate this case study, we use the **hatchR** graphical user interface available at [https://elifelts.shinyapps.io/hatchR_demo/](https://elifelts.shinyapps.io/hatchR/){.uri}. Users begin by uploading their temperature dataset through the `Import Data` window, selecting their file, specifying the appropriate temperature and date columns, and providing the date format (e.g., year-month-day or day-month-year). For this example, we use the `crooked_river` dataset, included in the Shiny app as a demo dataset. It can also be accessed directly at <https://github.com/bmait101/hatchR/blob/master/extdata/crooked_river.csv/>.
 
-Once uploaded, **hatchR** automatically generates a vizual data check using `plot_check_temp()`. After confirming data integrity, users navigate to the `Model Phenology` window. For this case study, we use the preloaded Bull Trout parameterization from @austin2019, selecting the `Existing` model option via dropdown menus. The user then chooses multiple spawn dates using an interactive calendar. Here, we focus on September 30th as outlined in our management scenario.
+Once uploaded, **hatchR** automatically generates a vizual data check using `plot_check_temp()`. After confirming data integrity, users navigate to the `Model Phenology` window. For this case study, we use the pre-loaded Bull Trout parameterization from @austin2019, selecting the `Existing` model option via dropdown menus. The user then chooses multiple spawn dates using an interactive calendar. Here, we focus on September 30th (in the 2014 spawn year) as outlined in our management scenario.
 
 Following model selection, **hatchR** outputs results in two key locations: the `Phenology Summaries` tab, which provides a table with predictions for each spawn date, and the `Timeline Plot` tab, which shows the corresponding visualization of development timing. Both the prediction table and plot can be downloaded directly from their respective tabs.
 
@@ -435,7 +435,7 @@ bt_emergence$dev.period$stop
 
 ```
 
-In this example, the model predicts that the last Bull Trout will emerge before the June 1st traget date. This suggests that the Fisheries Biologist can confidently approve the road work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with necessary land-use activities.
+In this example, the model predicts that the last Bull Trout will emerge before the June 1st road work target date. This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with necessary land-use activities.
 
 # Case Study 2
 
