@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.26)  3 MAR 2025 16:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.26)  4 MAR 2025 10:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -588,14 +588,14 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 <paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=49, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 446.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 445.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
 [6]
 
 [7 <./paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 468.
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 467.
 (/Users/morgan.sparks/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -603,58 +603,43 @@ File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 [8]
 
 LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 568.
+(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 565.
 
 <paper_files/figure-latex/unnamed-chunk-11-1.pdf, id=76, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-11-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-11-1.pdf  used on input line 612.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-11-1.pdf  used on input line 609.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
 [9]
 
 [10 <./paper_files/figure-latex/unnamed-chunk-11-1.pdf>]
-Overfull \hbox (38.54797pt too wide) in paragraph at lines 709--713
+Overfull \hbox (38.54797pt too wide) in paragraph at lines 706--710
 []\T1/lmtt/m/n/10 WI_hatch$dev.period \T1/lmr/m/n/10 (-20) -- A 1x2 dataframe con-tain-ing the spawn-ing date (as in-put via \T1/lmtt/m/n/10 predict_phenology(spawn.date
  []
 
 
 
 [11]
-<paper_files/figure-latex/unnamed-chunk-16-1.pdf, id=99, 469.755pt x 325.215pt>
+<paper_files/figure-latex/unnamed-chunk-16-1.pdf, id=98, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-16-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-16-1.pdf  used on input line 752.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-16-1.pdf  used on input line 749.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
 [12 <./paper_files/figure-latex/unnamed-chunk-16-1.pdf>]
 
-LaTeX Warning: Hyper reference `0' on page 13 undefined on input line 787.
-
-
-Overfull \hbox (86.01349pt too wide) in paragraph at lines 778--788
-[]\T1/lmr/m/n/10 (-20) To demon-strate this case study, we use the \T1/lmr/bx/n/10 (-20) hatchR \T1/lmr/m/n/10 (-20) graph-i-cal user in-ter-face avail-able at []https://elifelts.shinyapps.io/hatchR_demo/[].
- []
-
-
-Underfull \hbox (badness 2189) in paragraph at lines 778--788
-\T1/lmr/m/n/10 (+20) Users be-gin by up-load-ing their tem-per-a-ture dataset through the \T1/lmtt/m/n/10 Import Data \T1/lmr/m/n/10 (+20) win-dow, se-lect-
- []
-
-
-Underfull \hbox (badness 1527) in paragraph at lines 778--788
-\T1/lmr/m/n/10 (+20) dataset, in-cluded in the Shiny app as a demo dataset. It can also be ac-cessed di-rectly at
- []
+LaTeX Warning: Hyper reference `0' on page 13 undefined on input line 784.
 
 
 
 [13]
-<paper_files/figure-latex/unnamed-chunk-20-1.pdf, id=120, 469.755pt x 325.215pt>
+<paper_files/figure-latex/unnamed-chunk-20-1.pdf, id=121, 469.755pt x 325.215pt>
 File: paper_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/unnamed-chunk-20-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-20-1.pdf  used on input line 875.
+Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-20-1.pdf  used on input line 873.
 (pdftex.def)             Requested size: 352.31538pt x 243.91064pt.
 
 
@@ -678,16 +663,16 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  14622 strings out of 475172
  232780 string characters out of 5764517
- 673893 words of memory out of 5000000
+ 671893 words of memory out of 5000000
  37121 multiletter control sequences out of 15000+600000
  622774 words of font info for 171 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  83i,6n,93p,1002b,557s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtko10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/morgan.sparks/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on paper.pdf (18 pages, 1618678 bytes).
+Output written on paper.pdf (18 pages, 1618906 bytes).
 PDF statistics:
- 398 PDF objects out of 1000 (max. 8388607)
- 329 compressed objects within 4 object streams
+ 400 PDF objects out of 1000 (max. 8388607)
+ 331 compressed objects within 4 object streams
  77 named destinations out of 1000 (max. 500000)
  32994 words of extra memory for PDF output out of 35830 (max. 10000000)
 
