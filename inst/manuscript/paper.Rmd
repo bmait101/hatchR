@@ -38,7 +38,7 @@ Understanding the timing of key life history events is essential for effective f
 
 As poikilothermic organisms, fish development and growth are closely tied to ambient environment. This strong relationship has enabled researchers to generate statistical models that predict developmental phenology with high accuracy. Historically, these models were formulated in aquaculture settings under the assumption of constant temperature throughout development [@beacham1990; @mcphail1979; @alderdice1978], limiting their applicability to wild populations. However, @sparks2019 reformulated this approach into an "Effective Value model", which instead uses daily average temperature after spawning, predicting hatch or emergence when cumulative effective values reach a threshold of one.
 
-This effective value approach has since been widely applied to salmonids, for which aquaculture-derived parameterizations were readily available. For example, Pacific Salmon (*Oncorhynchus* spp.) models developed by @beacham1990 have been applied across various species and populations [@adelfio2024; @adelfio2019; @kaylor2021], while Bull Trout (*Salvelinus confluentus*) models from @mcphail1979 were extended by @austin2019. Despite its growing adoption, applications of the effective value model remain largely confined to Salmonids, likely due to the availability of existing parameterizations and the commercial and recreational importance of these species.
+This effective value approach has since been widely applied to Salmonids, for which aquaculture-derived parameterizations were readily available. For example, Pacific Salmon (*Oncorhynchus* spp.) models developed by @beacham1990 have been applied across various species and populations [@adelfio2024; @adelfio2019; @kaylor2021], while Bull Trout (*Salvelinus confluentus*) models from @mcphail1979 were extended by @austin2019. Despite its growing adoption, applications of the effective value model remain largely confined to Salmonids, likely due to the availability of existing parameterizations and the commercial and recreational importance of these species.
 
 To extend these modeling capabilities beyond Salmonids and facilitate broader applications, we developed **hatchR**, a software ecosystem designed to predict hatch and emergence timing for wild fish populations. **hatchR** enables users to input standard raw or summarized water temperature datasets commonly collected in field settings, conduct basic data validation, and apply built-in parameterizations such as those from @beacham1990 or @sparks2017. Users can also develop custom models using their own or published temperature and phenological data within the effective value framework.
 
@@ -50,7 +50,7 @@ library(tidyverse); library(hatchR); library(ggdist); library(ggridges)
 
 # Package Overview
 
-**hatchR** is designed primarily as a tool for predicting fish phenology. To maintain focus on this core function, we provide minimal built-in data validation and vizualization tools, as users are expected to understand and check their own data. Given the diversity of potential data types, it is impractical to implement comprehensize validation checks. However, we include basic data-checking and summarization functions (`check_continuous()`, `summarize_temp()`) and limited built-in visualization capabilities (`plot_check_temp()`, `plot_phenology()`). Intuitive functions are provided for users to apply models—either existing models from the literature using the `model_select()` function or fitting custom functions from data using the `fit_model()` function. Users can then apply these models to water temperature data (*e.g.,* from a HOBO temperature logger) to predict when hatching phenology will occur. This is accomplished with the `predict_phenology()` function. The R package provides example workflows for customizing plots from model output, while the Shiny application includes a default output plot and an option to download results for external visualizations. For a high-level overview of **hatchR**'s applications, see Figure 1. Additional details on key functions and workflows–particularly for automating phenology predictions across multiple variables–are available in articles hosted on the software's webpage.
+**hatchR** is designed primarily as a tool for predicting fish phenology. To maintain focus on this core function, we provide minimal built-in data validation and visualization tools, as users are expected to understand and check their own data. Given the diversity of potential data types, it is impractical to implement comprehensive validation checks. However, we include basic data-checking and summarization functions (`check_continuous()`, `summarize_temp()`) and limited built-in visualization capabilities (`plot_check_temp()`, `plot_phenology()`). Intuitive functions are provided for users to apply models—either existing models from the literature using the `model_select()` function or fitting custom functions from data using the `fit_model()` function. Users can then apply these models to water temperature data (*e.g.,* from a HOBO temperature logger) to predict when hatching phenology will occur. This is accomplished with the `predict_phenology()` function. The R package provides example workflows for customizing plots from model output, while the Shiny application includes a default output plot and an option to download results for external visualizations. For a high-level overview of **hatchR**'s applications, see Figure 1. Additional details on key functions and workflows–particularly for automating phenology predictions across multiple variables–are available in articles hosted on the software's webpage.
 
 ```{r, echo = FALSE, out.height = '75%', fig.align = 'center', fig.cap="hatchR workflow. Data inputs are represented by folders, data processes by filled circles, hatchR functions as plain text rectangles, and decision choices as italicized text."}
 knitr::include_graphics("./workflow.png")
@@ -72,7 +72,7 @@ $$
 \sum_{i =1}^nE_i = 1
 $$
 
-This framework as the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond salmonids.
+This framework as the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond Salmonids.
 
 ## Data format
 
@@ -107,7 +107,7 @@ For R users, **hatchR** can import data in any format, provided it is converted 
 
 **hatchR** is designed to analyze daily average temperatures. While high-frequency data (e.g., from HOBO loggers) can be used, it must be summarized into daily averages. **hatchR** provides built-in functionality for this summarization in R but requires pre-summarized data for use in the Shiny app.
 
-To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integroty before model application.
+To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integrity before model application.
 
 We demonstrate the utility three functions: `summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long data set (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below.
 
@@ -183,15 +183,15 @@ Users can select from existing Salmonid models in `model_table` or generate cust
 
 Custom models, by contrast, often have narrower parameterization ranges. To prevent misapplication, we exclude other model parameterization from `model_table`, requiring users to carefully asses whether their parameterized models are appropriate for the temperature ranges in their datasets.
 
-To expand the applicability of the effective value approach beyond Salmonids, **hatchR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors: average incubation temperature (°C) and the number of days to a given phenological event. A model is then fit to the data using `stats::nls()`, which performs nonlinear least squares regression to estimate the parameters *log~e~a* and *b*. Because the optimization process in `nls()` is sensitive to initial parameter values, `fit_model()` first fits a linear model to the log-transformed data to provide initial parameter estimates, which are then used to fit the nonlinear model. 
+To expand the applicability of the effective value approach beyond Salmonids, **hatchR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors: average incubation temperature (°C) and the number of days to a given phenological event. A model is then fit to the data using `stats::nls()`, which performs nonlinear least squares regression to estimate the parameters *log~e~a* and *b*. Because the optimization process in `nls()` is sensitive to initial parameter values, `fit_model()` first fits a linear model to the log-transformed data to provide initial parameter estimates, which are then used to fit the nonlinear model.
 
-This approach allows users to generate models tailored to non-Salmonid species, provided they have experimental or field data linking development to temperature. However, users should be mindful of several factors, such as extrapolations risks (models may not generalize beyond the temperature range for which they were parameterized) and species-specific variation (genetic differences among populations may affect developmental responses). Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, such as non-Salmonid fishes, amphibians, invertebrates, provided sufficient validation in the literature. 
+This approach allows users to generate models tailored to non-Salmonid species, provided they have experimental or field data linking development to temperature. However, users should be mindful of several factors, such as extrapolations risks (models may not generalize beyond the temperature range for which they were parameterized) and species-specific variation (genetic differences among populations may affect developmental responses). Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, such as non-Salmonid fishes, amphibians, invertebrates, provided sufficient validation in the literature.
 
 ### Fitting models for other fishes
 
 We demonstrate how the `fit_model()` function may be used to create custom parameterizations for species beyond the Salmonids included in `model_table`. To showcase its utility, we provide parameterizations for three warm-water species: Smallmouth Bass (*Micropterus dolomieu*) [@webster1948], Channel Catfish (*Ictalurus punctatus*) [@small2001], and Lake Sturgeon (*Acipenser fulvescens*) [@smith2005]. These species were selected due to their common use in aquaculture and sport fisheries, illustrating the broad applicability of the effective values approach. For concision, we present parameterization for Smallmouth Bass here, while the full implementation details for all species are available in the `paper.Rmd` on the GitHub project repository.
 
-To demonstrate parameterizations, we generate a simulated thermal regime featuring an ascending thermograph with a mean temperature of 16 °C (again, available in paper.Rmd). Using this dataset, we apply the parameterized models for each species to predict hatch timing and total developmental duration (Figure 3). This example highlights the flexibility of **hatchR** im accommodating diverse fish species and environmental conditions, making it a valuable tool for researchers and managers working outside of Salmonid systems.
+To demonstrate parameterizations, we generate a simulated thermal regime featuring an ascending thermograph with a mean temperature of 16 °C (again, available in paper.Rmd). Using this dataset, we apply the parameterized models for each species to predict hatch timing and total developmental duration (Figure 3). This example highlights the flexibility of **hatchR** for accommodating diverse fish species and environmental conditions, making it a valuable tool for researchers and managers working outside of Salmonid systems.
 
 ```{r, echo=FALSE}
 library(dplyr)
@@ -328,7 +328,7 @@ ggplot() +
 
 ## Predicting Phenology and Output
 
-To illustrate model selection and phenology prediction, we will replicate a portion of the analysis from @sparks2019 using the `woody_island` dataset included with **hatchR**. Speficially, we predict both hatch and emergence timing for Sockeye Salmon at Woody Island in 1990.
+To illustrate model selection and phenology prediction, we will replicate a portion of the analysis from @sparks2019 using the `woody_island` dataset included with **hatchR**. Specifically, we predict both hatch and emergence timing for Sockeye Salmon at Woody Island in 1990.
 
 First, we obtain model expression for both hatch and emergence using `model_select()`, which retrieves the appropriate parameterizations from `model_table`:
 
@@ -364,7 +364,7 @@ WI_hatch$dev.period
 
 ### Understanding your results
 
-The output from `predict_phenology()` contains mutiple elements in a list, which can be accessed using the `$` operator. Each component provides different insight into the predicted phenology:
+The output from `predict_phenology()` contains multiple elements in a list, which can be accessed using the `$` operator. Each component provides different insight into the predicted phenology:
 
 ```{r, echo = TRUE}
 summary(WI_hatch)
@@ -394,7 +394,7 @@ plot_phenology(WI_hatch)
 
 A common management application of developmental phenology is assessing whether fish will be free-moving before a scheduled management action, such as stream section access for grazing or road work. For instance, will fish have emerged from redds before construction begins, reducing potential disturbance?
 
-In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensative to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
+In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensitive to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
 
 To demonstrate this case study, we use the **hatchR** graphical user interface available at  <https://elifelts.shinyapps.io/hatchR_demo/>. Users begin by uploading their temperature dataset through the `Import Data` window, selecting their file, specifying the appropriate temperature and date columns, and providing the date format (e.g., year-month-day or day-month-year). For this example, we use the `crooked_river` dataset, included in the Shiny app as a demo dataset. It can also be accessed directly at [https://github.com/bmait101/hatchR/blob/master/extdata/crooked_river.csv/](#0){.uri}.
 
@@ -402,7 +402,7 @@ Once uploaded, **hatchR** automatically generates a visual data check using `plo
 
 Following model selection, **hatchR** outputs results in two key locations: the `Phenology Summaries` tab, which provides a table with predictions for each spawn date, and the `Timeline Plot` tab, which shows the corresponding visualization of development timing. Both the prediction table and plot can be downloaded directly from their respective tabs.
 
-The process is demonstrated in the included ***supplementary video file???***, and a more detailed interface walkthrough is available on the **hatchR** Shiny website.
+The process is demonstrated in the included ***supplementary video file???***, and a more detailed interface walk through is available on the **hatchR** Shiny website.
 
 ```{r, eval=FALSE, echo=FALSE}
 
@@ -587,7 +587,7 @@ Third, sensor-based temperature data may differ from actual embryonic ambient te
 
 To date, effective value models have primarily been used to predict phenology in wild environments using species-specific parameterizations [@adelfio2024; @austin2019]. However, these models fundamentally represent reaction norms, meaning that temperature-development relationships are influenced by local adaptation, gene-environment interactions, and phylogenetic differences [@west-eberhard2003].
 
-For example, @sparks2017 found no significant differences in developmental rates between populations in their study but did observe family-level genetic × environment interactions under different thermal regimes. Similarly, when they reparameterized their models using western Alaskan Sockeye Salmon, they found slower developmental rates compared to populations from Canada [@beacham1990], consistent with cogradient variation [@conover2009; @sparks2022]. These findings highlight the importance of considering how developmental rates are keyedto specific environments but also how these underlying statistical relationships inform micro- and macro-evolutionary processes in fishes.
+For example, @sparks2017 found no significant differences in developmental rates between populations in their study but did observe family-level genetic × environment interactions under different thermal regimes. Similarly, when they reparameterized their models using western Alaskan Sockeye Salmon, they found slower developmental rates compared to populations from Canada [@beacham1990], consistent with cogradient variation [@conover2009; @sparks2022]. These findings highlight the importance of considering how developmental rates are keyed to specific environments but also how these underlying statistical relationships inform micro- and macro-evolutionary processes in fishes.
 
 ## Expanding the utility of **hatchR**
 
@@ -605,7 +605,7 @@ Importantly, hatchR extends the effective value framework developed by @sparks20
 
 # Acknowledgements
 
-We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided useful discussion about model development and temperature data sets.
+We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided helpful discussion about model development and temperature data sets.
 
 The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government or USFS. USFS does not endorse any commercial products, services or enterprises.
 
