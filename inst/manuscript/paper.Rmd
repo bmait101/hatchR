@@ -437,7 +437,7 @@ In this example, the model predicts that the last Bull Trout will emerge before 
 
 For the second case study, we demonstrate a more complex, large-scale application of **hatchR**, highlighting its full flexibility when applied programmatically in R. This example also focuses on Bull Trout, but extends beyond a single site to a broad spatial analysis across 226 locations in the upper Columbia River headwaters in Idaho.
 
-We use the `idaho` dataset from @isaak2018, which includes four years of temperature data (2011-2014) for these sites. To identify putative Bull Trout Spawning locations, we apply a filtering criterion based on mean August temperature, as outlined in @isaak2015, selecting only sites with mean August temperature ≤ 13 °C, a known thermal threshold for Bull Trout spawning suitability. The filtering process reduced the dataset to 139 potential spawning sites.
+We use the `idaho` dataset from @isaak2018, which includes four years of temperature data (2011-2014) for these sites. To identify putative Bull Trout Spawning locations, we apply a filtering criterion based on mean August temperature, as outlined in @isaak2015, selecting only sites with mean August temperature at or less than 13 °C, a known thermal threshold for Bull Trout spawning suitability. The filtering process reduced the dataset to 139 potential spawning sites.
 
 ```{r, echo = FALSE}
 bull_trout_sites <- idaho |> 
