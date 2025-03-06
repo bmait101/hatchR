@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## hatchR: A toolset to predict when fish hatch and emerge
 
-Morgan M. Sparks^1,5^, Bryan M. Maitland^1^, Eli A. Felts^2^, Allison G. Swartz^3^, Paul Frater^4^
+Morgan M. Sparks^1,5,6^, Bryan M. Maitland^1,6^, Eli A. Felts^2^, Allison G. Swartz^3^, Paul Frater^4^
 
 ^1^Rocky Mountain Research Station, U.S. Forest Service, Boise, ID, USA
 
@@ -25,6 +25,8 @@ Morgan M. Sparks^1,5^, Bryan M. Maitland^1^, Eli A. Felts^2^, Allison G. Swartz^
 ^4^Wisconsin Department of Natural Resources, Madison, WI, USA
 
 ^5^Corresponding Author: Morgan M. Sparks, Morgan.Sparks\@usda.gov
+
+^6^Dual first authors
 
 keywords: developmental phenology, effective value model, R, Shiny
 
