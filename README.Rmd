@@ -19,7 +19,10 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 # hatchR: Predict Fish Hatch and Emergence Timing <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
+[![cran checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html)
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 **hatchR** is an R package for predicting hatch and emergence timing for a wide range of wild fishes using the effective value framework (Sparks et al., (2019) <DOI:10.1139/cjfas-2017-0468>). 'hatchR' offers users access to established phenological models and the flexibility to incorporate custom parameterizations using external datasets. The package includes functions for model selection, phenology prediction, and visualization. **hatchR** is designed to be user-friendly and accessible to a wide range of users, including researchers, managers, and educators.

@@ -5,7 +5,14 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
+[![cran
+checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html)
 [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 **hatchR** is an R package for predicting hatch and emergence timing for
@@ -48,6 +55,10 @@ Install and load the most recent approved version from CRAN by running:
 ``` r
 # install the most recent approved version from CRAN
 install.packages("hatchR")
+#> package 'hatchR' successfully unpacked and MD5 sums checked
+#> 
+#> The downloaded binary packages are in
+#>  C:\Users\BryanMaitland\AppData\Local\Temp\Rtmpg1mxhs\downloaded_packages
 ```
 
 Install the development version of **hatchR** from
