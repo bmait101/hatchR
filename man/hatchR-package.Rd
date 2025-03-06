@@ -30,6 +30,8 @@ Authors:
 Other contributors:
 \itemize{
   \item Eli Felts \email{eli_felts@fws.gov} (\href{https://orcid.org/0000-0002-5888-9266}{ORCID}) [contributor]
+  \item Allison Swartz \email{allison.swartz@oregonstate.edu} [contributor]
+  \item Paul Frater \email{paul.frater@wisconsin.gov} [contributor]
 }
 
 }

@@ -1,5 +1,7 @@
 # hatchR (development version)
 
+-   adding @pfrater and @allisonswartz as a contributors (should have been done for v0.3.2)
+
 # hatchR 0.3.2
 
 ## Bug fixes
