@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
 [![cran
 checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html)
-[![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -35,14 +35,14 @@ View the **hatchR** citation by running:
 citation(package = "hatchR")
 #> To cite package 'hatchR' in publications use:
 #> 
-#>   Maitland B, Sparks M, Felts E (2025). "hatchR: A toolset to predict
-#>   hatch and emergence phenology in wild fishes." In preparation.
+#>   Sparks M, Maitland B, Felts E, Swartz A, Frater P (2025). "hatchR: A
+#>   toolset to predict when fish hatch and emerge." In preparation.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Unpublished{,
-#>     title = {{hatchR}: A toolset to predict hatch and emergence phenology in wild fishes},
-#>     author = {Bryan M. Maitland and Morgan M. Sparks and Eli Felts},
+#>     title = {{hatchR}: A toolset to predict when fish hatch and emerge},
+#>     author = {Morgan M. Sparks and Bryan M. Maitland and Eli Felts and Allison Swartz and Paul Frater},
 #>     year = {2025},
 #>     note = {In preparation},
 #>   }
@@ -50,22 +50,16 @@ citation(package = "hatchR")
 
 ## Installation Instructions
 
-Install and load the most recent approved version from CRAN by running:
+Install the released version from CRAN:
 
 ``` r
-# install the most recent approved version from CRAN
 install.packages("hatchR")
-#> package 'hatchR' successfully unpacked and MD5 sums checked
-#> 
-#> The downloaded binary packages are in
-#>  C:\Users\BryanMaitland\AppData\Local\Temp\Rtmpg1mxhs\downloaded_packages
 ```
 
-Install the development version of **hatchR** from
-[GitHub](https://github.com/) by running:
+Install the development version of **hatchR** from GitHub:
 
 ``` r
-# install the most recent version from GitHub
+# install.packages("pak")
 pak::pak("bmait101/hatchR")
 ```
 
