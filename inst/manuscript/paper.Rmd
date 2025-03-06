@@ -167,7 +167,7 @@ For R users, **hatchR** can import data in any format, provided it is converted 
 
 To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integrity before model application.
 
-Here, we demonstrate the utility three functions--`summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long data set (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below:
+Here, we demonstrate the utility three functions--`summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long dataset (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below:
 
 ```{r fakedata, echo=FALSE}
 library(lubridate)
@@ -207,7 +207,7 @@ head(year_sim)
 
 We recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values (Figure 2). This function plots the temperature data against time, allowing users to set custom thresholds for minimum and maximum temperatures. In this example, we set the minimum and maximum thresholds to 0 and 25 °C, respectively.
 
-```{r plot-check-1, echo = TRUE,  fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` data set. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height= 4, fig.width=6.5}
+```{r plot-check-1, echo = TRUE,  fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height= 4, fig.width=6.5}
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
@@ -456,7 +456,7 @@ summary(WI_hatch)
 
 This function provides a quick and effective way to interpret model outputs, facilitating comparisons between temperature regimes or species-specific phenological responses.
 
-```{r, fig.cap="Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` data set."}
+```{r, fig.cap="Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` dataset."}
 plot_phenology(WI_hatch)
 ```
 
