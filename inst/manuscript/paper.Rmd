@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse); library(hatchR); library(ggdist); library(ggridges)
+library(tidyverse); library(hatchR); library(ggdist); library(ggridges); library(patchwork)
 ```
 
 ## hatchR: A toolset to predict when fish hatch and emerge
@@ -75,6 +75,55 @@ where $E_i$ is the effective value and $T_i$ the temperature for day $i$, and $a
 $$
 \sum_{i =1}^nE_i = 1
 $$
+
+To demonstrate this approach, we use European Grayling (*Thymallus thymallus*) that were raised in five experimental average temperatures ranging from 2-14 °C [@quinn2018]. We fit a developmental model to those experimental data (Figure 2A), reparameterize that model into an effective value model, and predict effective values for daily average temperatures ranging from 2-14 °C (Figure 2B).
+
+```{r, fig.cap= "Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.",fig.height= 8, fig.width=4,  fig.align = 'center', echo =FALSE}
+
+grayling <- matrix(NA, 5, 2) |> tibble::tibble()
+colnames(grayling) <- c("temp", "days")
+
+grayling$temp <- c(2,5,8,11,14)
+grayling$days <- c(106,51,29,19,13)
+
+grayling_mod <- hatchR::fit_model(temp = grayling$temp,
+                                  days = grayling$days,
+                                  species = "grayling",
+                                  development_type = "hatch")
+
+temps <- c(2:14)
+
+ef_vals <- NULL
+for (x in temps){
+  ef <- eval(parse(text = grayling_mod$expression$ expression))
+  ef_vals <- rbind(ef_vals, ef)
+}
+
+grayling_ef <- matrix(NA, 13, 2) |> tibble::tibble()
+colnames(grayling_ef) <- c("temp", "ef")
+grayling_ef$temp <- temps
+grayling_ef$ef <- ef_vals[,1]
+
+
+p1 <- grayling_mod$pred_plot +
+  labs(x = "Developmental average temperature (°C)", y = "Days to hatch") +
+  theme_classic()
+
+data_1 <- tibble(t = c(0:14), e = seq(0, 0.14, by =0.01))
+
+p2 <- grayling_ef |>
+  ggplot() +
+  geom_point(aes(x = temp, y = ef)) +
+  geom_line(aes(x = temp, y = ef)) +
+  geom_line(data = data_1, aes(x = t, y = e), linetype = "dashed") +
+  #geom_abline(intercept = 0, slope = .01, linetype = "dashed") +
+  labs(x = "Daily average temperature (°C)", y = "Effective value") +
+  theme_classic()
+
+p1/p2 + plot_annotation(tag_levels = 'A')
+
+
+```
 
 This framework is the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond Salmonids.
 
@@ -158,7 +207,7 @@ head(year_sim)
 
 We recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values (Figure 2). This function plots the temperature data against time, allowing users to set custom thresholds for minimum and maximum temperatures. In this example, we set the minimum and maximum thresholds to 0 and 25 °C, respectively.
 
-```{r plot-check-1, echo = TRUE, fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` data set. Users can set custom thresholds for minimum and maximum temperatures (dashed lines)."}
+```{r plot-check-1, echo = TRUE,  fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` data set. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height= 4, fig.width=6.5}
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
