@@ -38,7 +38,7 @@ keywords: developmental phenology, effective value model, R, Shiny
 
 # Abstract
 
-Understanding the timing of key life history events is essential for effective fish conservation and management. Traditionally, predicting hatch and emergence timing in wild fish populations was challenging due to the reliance on average incubation temperature as a primary model parameter, which is often difficult in to obtain in natural settings. Recent advancements have refined these models, enabling their application in wild environments using spawning dates and daily water temperature records. However, their broader use remains constrained by a lack of parameterizations for many species, with most applications focused on Salmonids. Here we introduce **hatchR**, a software ecosystem designed to predict hatch and emergence timing for a wide range of wild fishes, requiring only spawning date and stream temperature data. **hatchR** offers users access to established phenological models and the flexibility to incorporate custom parameterizations using external datasets. The software is available in two formats: an open-source R package for advanced customization and an HTML-based graphical user interface for those unfamiliar with scripting. To illustrate its utility, we present two case studies demonstrating its application in research and management. By expanding access to predictive modeling tools, **hatchR** has the potential to advance studies of fish early life history and support conservation efforts across diverse species.
+Understanding the timing of key life history events is essential for effective fish conservation and management. Traditionally, predicting hatch and emergence timing in wild fish populations was challenging due to the reliance on average incubation temperature as a primary model parameter, which is often difficult to obtain in natural settings. Recent advancements have refined these models, enabling their application in wild environments using spawning dates and daily water temperature records. However, their broader use remains constrained by a lack of parameterizations for many species, with most applications focused on Salmonids. Here we introduce **hatchR**, a software ecosystem designed to predict hatch and emergence timing for a wide range of wild fishes, requiring only spawning date and stream temperature data. **hatchR** offers users access to established phenological models and the flexibility to incorporate custom parameterizations using external datasets. The software is available in two formats: an open-source R package for advanced customization and an HTML-based graphical user interface for those unfamiliar with scripting. To illustrate its utility, we present two case studies demonstrating its application in research and management. By expanding access to predictive modeling tools, **hatchR** has the potential to advance studies of fish early life history and support conservation efforts across diverse species.
 
 \newpage
 
@@ -165,7 +165,7 @@ For R users, **hatchR** can import data in any format, provided it is converted 
 
 To help users identify potential issues, **hatchR** includes basic data checking functions that highlight outliers or missing values both visually and programatically. These checks ensure data integrity before model application.
 
-Here, we demonstrate the utility three functions--`summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long dataset (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below:
+Here, we demonstrate the utility of three functions--`summarize_temp()`, `plot_check_temp()`, and `check_continuous()`--using a simulated year-long dataset (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below:
 
 ```{r fakedata, echo=FALSE}
 library(lubridate)
@@ -205,12 +205,12 @@ head(year_sim)
 
 We recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values (Figure 2). This function plots the temperature data against time, allowing users to set custom thresholds for minimum and maximum temperatures. In this example, we set the minimum and maximum thresholds to 0 and 25 °C, respectively.
 
-```{r plot-check-1, echo = TRUE,  fig.cap="Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height= 4, fig.width=6.5}
+```{r plot-check-1, echo = TRUE,  fig.cap = "Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height = 4, fig.width = 6.5}
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
-                temp_min = 0, # temp_min and max lines are 
-                temp_max = 25) # user customizable
+                temp_min = 0,
+                temp_max = 25)
 ```
 
 In this case, no obvious outliers are present. However, each day contains 48 records, so the data must be summarized to daily mean temperature using `summarize_temp()`. After summarization, `check_continuous()` should be used to identify any missing days. We also suggest running `plot_check_temp()` again on the summarized data to verify its integrity, though we omit the resulting plot here for space efficiency.
@@ -247,7 +247,7 @@ Custom models, by contrast, often have narrower parameterization ranges. To prev
 
 To expand the applicability of the effective value approach beyond Salmonids, **hatchR** includes a `fit_model()` function, which is species-agnostic as long as development follows a power law relationship with temperature. The function takes two input vectors: average incubation temperature (°C) and the number of days to a given phenological event. A model is then fit to the data using `stats::nls()`, which performs nonlinear least squares regression to estimate the parameters *log~e~a* and *b*. Because the optimization process in `nls()` is sensitive to initial parameter values, `fit_model()` first fits a linear model to the log-transformed data to provide initial parameter estimates, which are then used to fit the nonlinear model.
 
-This approach allows users to generate models tailored to non-Salmonid species, or even different populations within species, provided they have experimental or field data linking development to temperature. However, users should be mindful of several factors, such as extrapolation risks (models may not generalize beyond the temperature range for which they were parameterized) and species-specific variation (genetic differences among populations may affect developmental responses). Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, such as non-Salmonid fishes, amphibians, invertebrates, provided sufficient validation in the literature.
+This approach allows users to generate models tailored to any species of fish, or even different populations within species, provided they have experimental or field data linking development to temperature. However, users should be mindful of several factors, such as extrapolation risks (models may not generalize beyond the temperature range for which they were parameterized) and species-specific variation (genetic differences among populations may affect developmental responses). Future expansions of **hatchR** could incorporate additional vetted parameterizations for other taxa, such as non-Salmonid fishes, amphibians, invertebrates, provided sufficient validation in the literature.
 
 ### Fitting models for other fishes
 
@@ -425,7 +425,7 @@ WI_hatch <- predict_phenology(
   )
 ```
 
-The returned object provides key outputs, including days to hatch and the full developmental period, allowing us to assess phenological patterns under the recorded thermal conditions:
+The returned object provides key outputs, including days to hatch and the full development period, allowing us to assess phenological patterns under the recorded thermal conditions:
 
 ```{r, echo=TRUE}
 WI_hatch$days_to_develop
@@ -464,7 +464,7 @@ plot_phenology(WI_hatch)
 
 A common management application of developmental phenology is assessing whether fish will be free-moving before a scheduled management action, such as stream section access for grazing or road work. For instance, will fish have emerged from redds before construction begins, reducing potential disturbance?
 
-In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@nolfi2024], are particularly sensitive to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
+In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@usfws_bt_1999], are particularly sensitive to sediment disturbance [@nolfi2024]. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
 
 To demonstrate this case study, we use the **hatchR** graphical user interface available at <https://elifelts.shinyapps.io/hatchR_demo/>. Users begin by uploading their temperature dataset through the `Import Data` window, selecting their file, specifying the appropriate temperature and date columns, and providing the date format (e.g., year-month-day or day-month-year). For this example, we use the `crooked_river` dataset, which is included in **hatchR**.
 
@@ -501,7 +501,7 @@ bt_emergence <- predict_phenology(
 bt_emergence$dev.period$stop
 ```
 
-In this example, the model predicts that the last Bull Trout will emerge before the June 1st road work target date. This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
+In this example, the model predicts that the last Bull Trout will emerge on April 21, before the June 1st road work target date. This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
 
 # Case Study 2
 
