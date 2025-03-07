@@ -472,7 +472,7 @@ Once uploaded, **hatchR** automatically generates a visual data check using `plo
 
 Following model selection, **hatchR** outputs results in two key locations: the `Phenology Summaries` tab, which provides a table with predictions for each spawn date, and the `Timeline Plot` tab, which shows the corresponding visualization of development timing. Both the prediction table and plot can be downloaded directly from their respective tabs. The full process is demonstrated through a detailed walkthrough on the **hatchR** Shiny website.
 
-```{r, eval=FALSE, echo=FALSE}
+```{r bt-emerge-crooked, eval=FALSE, echo=FALSE}
 # read in EFS data
 EFS_data <- crooked_river
 
@@ -482,7 +482,7 @@ model_table |>
 
 # we care about when fish are out of gravel, so select emerge mod
 bt_emerge_mod <- model_select(
-  author = "Austin et al. 2017",
+  author = "Austin et al. 2019",
   species = "bull trout",
   model = "MM",
   development_type = "emerge"
@@ -501,7 +501,7 @@ bt_emergence <- predict_phenology(
 bt_emergence$dev.period$stop
 ```
 
-In this example, the model predicts that the last Bull Trout will emerge on April 21, before the June 1st road work target date. This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
+In this example, the model predicts that the last Bull Trout will emerge on May 1, before the road work target date (June 1). This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
 
 # Case Study 2
 
