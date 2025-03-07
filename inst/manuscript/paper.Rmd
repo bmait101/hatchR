@@ -80,7 +80,7 @@ $$
 
 To demonstrate this approach, we use European Grayling (*Thymallus thymallus*) that were raised in five experimental average temperatures ranging from 2-14 °C [@quinn2018]. We fit a developmental model to those experimental data (Figure 2A), reparameterize that model into an effective value model, and predict effective values for daily average temperatures ranging from 2-14 °C (Figure 2B).
 
-```{r, echo = FALSE, fig.height = 8, fig.width = 4,  fig.align = 'center', fig.cap = "Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference."}
+```{r, echo = FALSE, fig.height=3, fig.align = 'center', fig.cap = "Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference."}
 grayling <- matrix(NA, 5, 2) |> tibble::tibble()
 colnames(grayling) <- c("temp", "days")
 
@@ -122,7 +122,7 @@ p2 <- grayling_ef |>
   labs(x = "Daily average temperature (°C)", y = "Effective value") +
   theme_classic()
 
-p1 / p2 + plot_annotation(tag_levels = "A")
+p1 + p2 + plot_annotation(tag_levels = "A")
 ```
 
 This framework is the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond Salmonids.
@@ -207,7 +207,7 @@ head(year_sim)
 
 We recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values (Figure 3). This function plots the temperature data against time, allowing users to set custom thresholds for minimum and maximum temperatures. In this example, we set the minimum and maximum thresholds to 0 and 25 °C, respectively.
 
-```{r plot-check-1, echo = TRUE,  fig.cap = "Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height = 4, fig.width = 6.5}
+```{r plot-check-1, echo = TRUE,  fig.cap = "Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height = 3.25}
 # visual check of temperature data
 plot_check_temp(data = year_sim,
                 dates = date,
@@ -402,7 +402,7 @@ smb_res <- predict_phenology(
 
 Finally, we summarize the outputs across species to visualize hatch timing and total developmental duration (Figure 5). This example highlights the flexibility of **hatchR** for accommodating diverse fish species and environmental conditions, making it a valuable tool for researchers and managers working outside of Salmonid systems.
 
-```{r pred-pheno-warmwater, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days."}
+```{r pred-pheno-warmwater, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.", fig.height=5}
 # Catfish
 catfish_res <- predict_phenology(
   data = data_sim,
