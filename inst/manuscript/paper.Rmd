@@ -464,7 +464,7 @@ ggplot() +
 
 A common management application of developmental phenology is assessing whether fish will be free-moving before a scheduled management action, such as stream section access for grazing or road work. For instance, will fish have emerged from redds before construction begins, reducing potential disturbance?
 
-In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@usfws_bt_1999], are particularly sensitive to sediment disturbance [@nolfi2024]. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
+In this scenario, we consider road work near the upper portion of Crooked River in the Boise River watershed, home to a key Bull Trout (*Salvelinus confluentus*) population. Bull Trout, a federally threatened species under the Endangered Species Act [@usfws_bt_1999, @nolfi2024], are particularly sensitive to sediment disturbance. The Forest Service Fisheries Biologist overseeing the project wants to determine whether Bull Trout fry will likely be out of the gravel and free-swimming by June 1st. In this system, Bull Trout typically complete spawning by the end of September, so we consider the latest possible spawn date: September 30th.
 
 To demonstrate this case study, we use the **hatchR** graphical user interface available at <https://elifelts.shinyapps.io/hatchR_demo/>. Users begin by uploading their temperature dataset through the `Import Data` window, selecting their file, specifying the appropriate temperature and date columns, and providing the date format (e.g., year-month-day or day-month-year). For this example, we use the `crooked_river` dataset, which is included in **hatchR**.
 
@@ -493,7 +493,7 @@ bt_emergence <- predict_phenology(
   data = EFS_data,
   dates = date,
   temperature = temp_c,
-  spawn.date = "2011-09-30",
+  spawn.date = "2014-09-30",
   model = bt_emerge_mod
 )
 
@@ -501,7 +501,7 @@ bt_emergence <- predict_phenology(
 bt_emergence$dev.period$stop
 ```
 
-In this example, the model predicts that the last Bull Trout will emerge on May 1, before the road work target date (June 1). This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
+In this example, the model predicts that the last Bull Trout will emerge on April 21, before the road work target date (June 1). This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel. This type of predictive modeling helps managers make informed, science-based decisions that balance conservation priorities with land-use activities.
 
 # Case Study 2
 
@@ -653,7 +653,7 @@ Both versions allow users to import data, perform basic data checks, perform bas
 
 The application of **hatchR** and the effective value modeling framework relies on several key assumptions. First, environmental stressors may alter developmental timing. While effective value models predict developmental timing based on temperature, studies have shown that stressful environmental condition such as low dissolved oxygen, altered pH, high salinity, pathogen exposure, or mechanical disturbance can induce premature hatching or emergence [@quinn2018; @cowan2024]. Users should consider how such factors may influence their predictions.
 
-Second, developmental timing occurs as a distribution, not a fixed point. While **hatchR** provides point estimates for developmental phenology, fish spawning and development within populations occur as distributions rather than single events [@mason1976]. We encourage users to predict phenology using early, peak, and late thresholds (e.g., 5th, 50th, and 95th percentiles) or incorporate real or modeled distributions to capture variation.
+Second, developmental timing occurs as a distribution, not a fixed point. While **hatchR** provides point estimates for developmental phenology, fish spawning and development within populations occur as distributions rather than single events [@mason1976]. We encourage users to predict phenology using early, peak, and late thresholds (*e.g.*, 5th, 50th, and 95th percentiles) or incorporate real or modeled distributions to capture variation.
 
 Third, sensor-based temperature data may differ from actual embryonic ambient temperatures. Water temperatures recorded by environmental sensors may not fully reflect thermal conditions in spawning microhabitats, where geomorphic factors influence temperature regimes [@geist2002]. Users should consider how differences between measured and actual incubation temperatures may affect predictions.
 
@@ -673,7 +673,7 @@ Finally, while **hatchR** was designed specifically for fishes, it has potential
 
 **hatchR** provides a versatile and accessible tool for predicting developmental phenology in wild fish populations. It offers basic data checks and summarization tools, pre-existing and customizable model parameterization options, and scalable applications from simple site-level predictions to complex multi-site analyses.
 
-Importantly, hatchR extends the effective value framework developed by @sparks2019 into a generalizable tool that can be applied to any fish species or population, provided that appropriate source data are available—data that can easily be collected in aquaculture settings. We present foundational applications of **hatchR**, with additional user-friendly cases and implementation guides available on the software's website. The software is designed for both applied and fundamental research, allowing users to engage with it either through a programmatic R environment or via a user-friendly Shiny app. We expect that the examples provided here represent only a fraction of **hatchR**'s potential applications and encourage the user community to explore and expand upon this framework for their own research and management needs.
+Importantly, hatchR extends the effective value framework developed by @sparks2019 into a generalizable tool that can be applied to any fish species or population, provided that appropriate source data are available. We present foundational applications of **hatchR**, with additional user-friendly cases and implementation guides available on the software's website. The software is designed for both applied and fundamental research, allowing users to engage with it either through a programmatic R environment or via a user-friendly Shiny app. We expect that the examples provided here represent only a fraction of **hatchR**'s potential applications and encourage the user community to explore and expand upon this framework for their own research and management needs.
 
 # Acknowledgements
 
