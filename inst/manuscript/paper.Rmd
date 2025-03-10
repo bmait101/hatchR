@@ -4,6 +4,8 @@ output: pdf_document
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
+   - \usepackage{setspace}
+   - \doublespacing
 bibliography: ms_refs.bib
 csl: apa.csl
 ---
@@ -458,6 +460,8 @@ ggplot() +
   theme(legend.position = c(0.75, 0.25))
 ```
 
+\newpage
+
 # Case Study 1
 
 **Predicting Emergence Timing for Management Actions**
@@ -677,7 +681,7 @@ Importantly, hatchR extends the effective value framework developed by @sparks20
 
 # Acknowledgements
 
-We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided helpful discussion about model development and temperature data sets.
+We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided helpful discussion about model development and temperature data sets. Matt Kaylor provided useful comments on an earlier trial run of the package and shiny app.
 
 The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government or USFS. USFS does not endorse any commercial products, services or enterprises.
 
