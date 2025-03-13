@@ -113,7 +113,7 @@ width: 48in;
 height: calc(36in * 0.15);
 overflow: hidden;
 background-color: #011f4b;
-border: 0 solid #0b4545;
+border: 1cm solid #011f4b;
 }
 .logo_left {
 float: left;
@@ -184,9 +184,9 @@ column-rule-style: dashed;
 -webkit-column-rule-color: #011f4b;
 -moz-column-rule-color: #011f4b;
 column-rule-color: #011f4b;
-column-gap: 1em;
-padding-left: 0.5em;
-padding-right: 0.5em;
+column-gap: 1cm;
+padding-left: calc(1cm / 2);
+padding-right: calc(1cm / 2);
 height: 100%;
 color: #000000
 background-color: #ffffff;
@@ -198,14 +198,14 @@ border: 0;
 font-weight: normal;
 }
 .poster_body_wrap{
-width: calc(48in + 0 + 0);
+width: calc(48in + 1cm + 1cm);
 height: calc(36in * 0.83);
 padding-top: calc(36in * 0.005);
 padding-bottom: calc(36in * 0.01);
 background-color: #ffffff;
 }
 .poster_title h3 {
-color: #ffffff;
+color: white;
 font-size: 50pt;
 margin: 0;
 border: 0;
@@ -286,7 +286,7 @@ padding-bottom: 3mm;
 code {
 font-size: 1em;
 font-family: monospace;
-background-color: #00808024;
+background-color: #011f4b24;
 color: #011f4b;
 padding: 1.2mm;
 border-radius: 2mm;
@@ -371,7 +371,7 @@ font-size: 20pt;
 <div id="hatchrs-workflow" class="section level1">
 <h1>hatchR’s workflow</h1>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
-<img src="hatchR_posterdown_files/figure-html/workflow.png" alt="hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text." width="36%" />
+<img src="hatchR_posterdown_files/figure-html/workflow.png" alt="hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text." width="34%" />
 <p class="caption">
 Figure 1: hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text.
 </p>
@@ -437,7 +437,7 @@ pink odd
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">development_type =</span> <span class="st">&quot;hatch&quot;</span>)</span></code></pre></div>
 <p>To further demonstrate this approach we parameterize models (not shown) for Smallmouth Bass (<em>Micropterus dolomieu</em>) and Lake Sturgeon (<em>Acipenser fulvescens</em>) and apply the models to a temperature regime with mean temperature 16 °C.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
-<img src="hatchR_posterdown_files/figure-html/unnamed-chunk-3-1.png" alt="Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime." width="75%" />
+<img src="hatchR_posterdown_files/figure-html/unnamed-chunk-3-1.png" alt="Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime." width="73%" />
 <p class="caption">
 Figure 2: Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime.
 </p>
@@ -465,7 +465,7 @@ Figure 2: Predicted days to hatch using custom parameterizations for three warmw
 <span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#predicted days to emerge</span></span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>crooked_river_emerge<span class="sc">$</span>days_to_develop</span></code></pre></div>
 <pre><code>## [1] 204</code></pre>
-<p>Our model predicts Bull Trout will emerge 204 days after September 30th, which is April 22 or well before the July 1 date of road construction.</p>
+<p>Our model predicts Bull Trout will emerge 204 days after September 30, which is April 22 or well before the July 1 date of road construction.</p>
 </div>
 <div id="advanced-prediction" class="section level1">
 <h1>Advanced prediction</h1>
@@ -486,9 +486,9 @@ Figure 2: Predicted days to hatch using custom parameterizations for three warmw
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">days_to_hatch =</span> stop <span class="sc">-</span> start) </span></code></pre></div>
 <p>We can then plot those results (code not shown) to visualize phenology across our variable set.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
-<img src="hatchR_posterdown_files/figure-html/unnamed-chunk-7-1.png" alt="Predicted hatch timing for 139 putatuve Bull Trout sites for three spawning periods." width="672" />
+<img src="hatchR_posterdown_files/figure-html/unnamed-chunk-7-1.png" alt="Predicted hatch timing for 139 putative Bull Trout sites for three spawning periods." width="672" />
 <p class="caption">
-Figure 3: Predicted hatch timing for 139 putatuve Bull Trout sites for three spawning periods.
+Figure 3: Predicted hatch timing for 139 putative Bull Trout sites for three spawning periods.
 </p>
 </div>
 </div>

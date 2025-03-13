@@ -21,7 +21,11 @@ logoright_name: "./hatchR_posterdown_files/figure-html/agency_logos.png"
 logoleft_name: "./hatchR_posterdown_files/figure-html/logo.png"
 poster_height: "36in"
 poster_width: "48in"
-primary_colour: "	#011f4b"
+primary_colour: "#011f4b"
+secondary_colour: "#011f4b"
+author_textcol: "white"
+titlebox_borderwidth: "1cm"
+titlebox_bordercol: "#011f4b"
 sectitle_bgcol: "#005b96"
 sectitle_bordercol: "#005b96"
 column_margins: "0.33in"
@@ -52,7 +56,7 @@ To predict phenology, you need [**daily average temperatures over incubation (or
 
 # hatchR's workflow
 
-```{r, out.width='36%', fig.align='center', fig.cap= "hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text."}
+```{r, out.width='34%', fig.align='center', fig.cap= "hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text."}
 
 knitr::include_graphics("./hatchR_posterdown_files/figure-html/workflow.png")
 ```
@@ -85,7 +89,7 @@ cat_mod <- fit_model(
 
 To further demonstrate this approach we parameterize models (not shown) for Smallmouth Bass (*Micropterus dolomieu*) and Lake Sturgeon (*Acipenser fulvescens*) and apply the models to a temperature regime with mean temperature 16 °C.
 
-```{r, out.width='75%', fig.align='center', fig.cap= "Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime."}
+```{r, out.width='73%', fig.align='center', fig.cap= "Predicted days to hatch using custom parameterizations for three warmwater species with mean 16 °C thermal regime."}
 ###  make temp regime
 set.seed(123)
 # create random temps and corresponding dates
@@ -213,7 +217,7 @@ crooked_river_emerge$days_to_develop
 
 ```
 
-Our model predicts Bull Trout will emerge 204 days after September 30th, which is April 22 or well before the July 1 date of road construction.
+Our model predicts Bull Trout will emerge 204 days after September 30, which is April 22 or well before the July 1 date of road construction.
 
 # Advanced prediction
 
@@ -290,7 +294,7 @@ hatch_res <- isaak_summ_bt |>
 
 We can then plot those results (code not shown) to visualize phenology across our variable set.
 
-```{r, fig.height = 8.75, fig.align='center', fig.cap= "Predicted hatch timing for 139 putatuve Bull Trout sites for three spawning periods."}
+```{r, fig.height = 8.75, fig.align='center', fig.cap= "Predicted hatch timing for 139 putative Bull Trout sites for three spawning periods."}
 cut_ints <- date(
   c(
     "2011-08-31", "2012-08-31",
