@@ -1,0 +1,372 @@
+---
+title: "hatchR"
+format: pptx
+editor: visual
+execute:
+  echo: TRUE
+  warning: false
+---
+
+## Prep
+
+```{r}
+library(hatchR)
+library(tidyverse)
+library(ggridges) 
+```
+
+## Woody Island Dataset
+
+```{r}
+print(woody_island, n = 5)
+```
+
+## `plot_temp_check()`
+
+```{r}
+plot_check_temp(
+  data = woody_island,
+  dates = date, 
+  temperature = temp_c
+  ) +
+  geom_rect(
+    aes(
+      xmin = ymd("1990-08-18"),
+      xmax = ymd("1991-04-01"),
+      ymin = -10,
+      ymax = 25),
+    fill = "grey",
+    alpha = 0.01
+    ) 
+```
+
+## Select built-in model parameterization
+
+```{r}
+model_table
+```
+
+------------------------------------------------------------------------
+
+```{r}
+sockeye_hatch_mod <- model_select(
+  author = "Beacham and Murray 1990", 
+  species = "sockeye", 
+  model = 2, 
+  development_type = "hatch"
+  )
+sockeye_hatch_mod$expression
+```
+
+## Predict phenology!
+
+```{r}
+WI_hatch <- predict_phenology(
+  data = woody_island,
+  dates = date,
+  temperature = temp_c,
+  spawn.date = "1990-08-18",
+  model = sockeye_hatch_mod
+  )
+```
+
+## Checking outputs
+
+```{r}
+WI_hatch$days_to_develop
+WI_hatch$dev.period
+```
+
+## Plot phenology
+
+```{r}
+plot_phenology(WI_hatch)
+```
+
+------------------------------------------------------------------------
+
+```{r echo=FALSE}
+# Smallmouth Bass data (Webster 1948)
+smallmouth <- matrix(NA, 10, 2) |> data.frame()
+colnames(smallmouth) <- c("hours", "temp_F")
+smallmouth$hours <- c(52, 54, 70, 78, 90, 98, 150, 167, 238, 234)
+smallmouth$temp_F <- c(77, 75, 71, 70, 67, 65, 60, 59, 55, 55)
+
+# change °F to °C and hours to days
+smallmouth <- smallmouth |>
+  mutate(
+    days = ceiling(hours / 24),
+    temp_C = (temp_F - 32) * (5 / 9)
+  ) |> 
+  select(-hours, -temp_F)
+```
+
+```{r}
+smallmouth
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# estimate parameters for Smallmouth Bass using fit_model()
+smb_mod <- fit_model(
+  temp = smallmouth$temp_C,
+  days = smallmouth$days,
+  species = "smb",
+  development_type = "hatch"
+)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+smb_mod$pred_plot
+```
+
+------------------------------------------------------------------------
+
+```{r}
+smb_mod$r_squared
+smb_mod$expression$expression
+```
+
+------------------------------------------------------------------------
+
+```{r echo=FALSE, message=FALSE}
+set.seed(123)
+
+# create random temps and corresponding dates
+temps_sim <- sort(rnorm(n = 30, mean = 16, sd = 1), decreasing = FALSE)
+dates_sim <- seq(
+  from = ymd("2000-07-01"),
+  to = ymd("2000-07-31"), length.out = 30
+)
+
+data_sim <- matrix(NA, 30, 2) |> data.frame()
+data_sim[, 1] <- temps_sim
+data_sim[, 2] <- dates_sim
+
+# change names so they aren't the same as the vector objects
+colnames(data_sim) <- c("temp_sim", "date_sim")
+```
+
+```{r message=FALSE}
+smb_hatch <- predict_phenology(
+  data = data_sim,             # simulated data
+  dates = date_sim,            # simulated dates
+  temperature = temp_sim,      # simulated temperatures
+  spawn.date = "2000-07-01",   # spawn date
+  model = smb_mod$expression   # model expression from fit_model()
+)
+smb_hatch$days_to_develop
+smb_hatch$dev.period
+```
+
+------------------------------------------------------------------------
+
+```{r echo=FALSE}
+# Summary for all species
+all_res <- data.frame(matrix(NA, 1, 2))
+colnames(all_res) <- c("start", "stop")
+
+all_res$start <- c(smb_hatch$dev.period$start)
+
+all_res$stop <- c(smb_hatch$dev.period$stop)
+
+
+all_res <- all_res |>
+  mutate(
+    days = ceiling(stop - start),
+    index = c(16.5)
+  )
+
+all_res$Species <- c("Smallmouth Bass")
+
+ggplot() +
+  geom_point(data = data_sim, aes(x = date_sim, y = temp_sim)) +
+  geom_line(data = data_sim, aes(x = date_sim, y = temp_sim)) +
+  geom_rect(data = all_res, aes(xmin = start, xmax = stop, ymax = index - .35, ymin = index - .5, fill = Species)) +
+  geom_label(data = all_res, aes(x = start + (stop - start) / 1.25, y = (index - 0.425), label = days)) +
+  labs(x = "Date", y = "Temperature (°C)") +
+  scale_fill_manual(values = c("deepskyblue4", "grey23", "darkolivegreen4")) +
+  theme_classic(base_size = 16) +
+  theme(legend.position = c(0.75, 0.25))
+```
+
+------------------------------------------------------------------------
+
+```{r}
+plot_phenology(smb_hatch)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+idaho
+```
+
+------------------------------------------------------------------------
+
+```{r}
+bull_trout_sites <- idaho |>
+  mutate(month = month(date)) |>                # make a month column (numeric)
+  filter(month == 8) |>                         # filter out Aug.
+  group_by(site) |>                             # apply grouping by site
+  summarise(mean_aug_temp = mean(temp_c)) |>
+  filter(mean_aug_temp <= 13) |>                # keep only sites 13 C or cooler
+  pull(site) |>
+  unique()
+
+# filter to bull trout sites
+idaho_bt <- idaho |>
+  filter(site %in% bull_trout_sites)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# nest data and summarize
+isaak_summ_bt <- idaho_bt |>
+  group_by(site) |>
+  nest() |>
+  mutate(
+    summ_obj = map(
+      data,
+      summarize_temp,
+      temperature = temp_c,
+      dates = date
+    )
+  ) |>
+  select(site, summ_obj)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+isaak_summ_bt
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# lets look at a couple individual sites
+PIBO_1345 <- idaho_bt |> filter(site == "PIBO_1345")
+
+# looks nice
+plot_check_temp(PIBO_1345,
+                dates = date,
+                temperature = temp_c)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+spawn_dates <- map(
+  c(2011:2014),     # year vector to map for custom function
+  function(year) {  # custom paste function
+    c(
+      paste0(year, "-09-01"),
+      paste0(year, "-09-15"),
+      paste0(year, "-09-30")
+    )
+  }
+) |>
+  unlist()
+```
+
+------------------------------------------------------------------------
+
+```{r}
+spawn_dates
+```
+
+------------------------------------------------------------------------
+
+```{r}
+bt_hatch <- model_select(
+  development_type = "hatch",
+  author = "Austin et al. 2019",
+  species = "bull trout",
+  model = "MM"
+)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# apply predict_phenology() over multiple sites and spawn dates
+hatch_res <- isaak_summ_bt |>
+  mutate(
+    dev_period = map2(
+      summ_obj,                  # summarized temperature data object
+      spawn_dates,               # list of spawn dates
+      predict_phenology,         # function to apply
+      temperature = daily_temp,  # column of temperature data in `summ_obj`
+      dates = date,              # column of date in `summ_obj`
+      model = bt_hatch           # model to use (from model_select())
+    ) |>
+      map_df("dev.period") |>    # pull out just dev.period results
+      list()
+  ) |>
+  select(site, dev_period) |>           # just select the columns we want
+  unnest(cols = c(dev_period)) |>       # un-nest everything
+  mutate(days_to_hatch = stop - start)  # make a new column of days to hatch
+```
+
+------------------------------------------------------------------------
+
+```{r}
+cut_ints <- date(
+  c(
+    "2011-08-31", "2012-08-31",
+    "2013-08-31", "2014-08-31",
+    "2015-08-31"
+  )
+)
+
+# add year and spawn time factors for plotting
+hatch_factors <- hatch_res |>
+  mutate(year = cut(start,
+    breaks = cut_ints,
+    labels = c(2011:2014)
+  )) |>
+  # cut coerces our labels to factors, this changes them back to numbers
+  mutate(year = as.numeric(as.character(year))) |>
+  mutate(day = day(start)) |>
+  mutate(spawn_time = case_when(
+    day == 1 ~ "Early",
+    day == 15 ~ "Peak",
+    day == 30 ~ "Late"
+  )) |>
+  mutate(spawn_time = factor(
+    spawn_time,
+    levels = c("Late", "Peak", "Early"),
+    ordered = TRUE
+  ))
+
+hatch_factors_sum <- hatch_factors |>
+  group_by(year, spawn_time, start) |>
+  summarise(
+    mean_hatch = ceiling(mean(days_to_hatch)),
+    hatch_5 = ceiling(quantile(days_to_hatch, probs = 0.05)),
+    hatch_95 = ceiling(quantile(days_to_hatch, probs = 0.95))
+  )
+
+
+ggplot(
+  data = hatch_factors,
+  aes(
+    x = days_to_hatch,
+    y = spawn_time,
+    fill = spawn_time,
+    color = spawn_time
+  )
+) +
+  geom_density_ridges(alpha = 0.9) +
+  facet_wrap(~year, ncol = 1) +
+  scale_fill_brewer(palette = "Blues", direction = 1) +
+  scale_color_brewer(palette = "Blues", direction = 1) +
+  labs(x = "Days to hatch", y = "Spawn time") +
+  theme_classic() +
+  theme(legend.position = "none")
+```
