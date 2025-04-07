@@ -10,6 +10,7 @@
 status](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
 [![cran
 checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html)
+[![](https://cranlogs.r-pkg.org/badges/hatchR)](https://cran.r-project.org/package=hatchR)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
