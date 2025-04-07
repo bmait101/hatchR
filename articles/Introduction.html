@@ -206,9 +206,9 @@ that’s not a helpful name.</li>
 <code><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">lubridate::now()</a></code> to get the current date or date-time:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2025-03-13"</span></span>
+<span><span class="co">#&gt; [1] "2025-04-07"</span></span>
 <span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2025-03-13 14:47:49 UTC"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2025-04-07 15:46:24 UTC"</span></span></code></pre></div>
 <p>In the context of <strong>hatchR</strong>, the ways you are likely to
 create a date/time are:</p>
 <ol style="list-style-type: decimal">
@@ -403,13 +403,13 @@ dataset:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,826</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2010-12-01, 2010-12-02, 2010-12-03, 2010-12-04, 2010-12-05, 20…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020, 1.3442852, 1.2533443, 1.0068728, 1.2899153, 1.229158…</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2010-12-01<span style="color: #949494;">, </span>2010-12-02<span style="color: #949494;">, </span>2010-12-03<span style="color: #949494;">, </span>2010-12-04<span style="color: #949494;">, </span>2010-12-05<span style="color: #949494;">, </span>20…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020<span style="color: #949494;">, </span>1.3442852<span style="color: #949494;">, </span>1.2533443<span style="color: #949494;">, </span>1.0068728<span style="color: #949494;">, </span>1.2899153<span style="color: #949494;">, </span>1.229158…</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 735</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8/11/1990", "8/12/1990", "8/13/1990", "8/14/1990", "8/15/1990"…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8/11/1990"<span style="color: #949494;">, </span>"8/12/1990"<span style="color: #949494;">, </span>"8/13/1990"<span style="color: #949494;">, </span>"8/14/1990"<span style="color: #949494;">, </span>"8/15/1990"…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000<span style="color: #949494;">, </span>23.308333<span style="color: #949494;">, </span>18.533333<span style="color: #949494;">, </span>15.350000<span style="color: #949494;">, </span>13.966667<span style="color: #949494;">, </span>11.35833…</span></span></code></pre></div>
 <p>For your own data, assuming you have a .csv file in a
 <code>data</code> folder in your working directory called
 <code>your_data.csv</code>, you would call:</p>
@@ -438,13 +438,13 @@ structure of the <code>crooked_river</code> and
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span> <span class="co"># note date column imported as a character (&lt;chr&gt;)</span></span>
 <span><span class="co">#&gt; Rows: 1,826</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2010-12-01T00:00:00Z", "2010-12-02T00:00:00Z", "2010-12-03T00:…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020, 1.3442852, 1.2533443, 1.0068728, 1.2899153, 1.229158…</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2010-12-01T00:00:00Z"<span style="color: #949494;">, </span>"2010-12-02T00:00:00Z"<span style="color: #949494;">, </span>"2010-12-03T00:…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020<span style="color: #949494;">, </span>1.3442852<span style="color: #949494;">, </span>1.2533443<span style="color: #949494;">, </span>1.0068728<span style="color: #949494;">, </span>1.2899153<span style="color: #949494;">, </span>1.229158…</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span> <span class="co"># note date column imported as a character (&lt;chr&gt;)</span></span>
 <span><span class="co">#&gt; Rows: 735</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8/11/1990", "8/12/1990", "8/13/1990", "8/14/1990", "8/15/1990"…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8/11/1990"<span style="color: #949494;">, </span>"8/12/1990"<span style="color: #949494;">, </span>"8/13/1990"<span style="color: #949494;">, </span>"8/14/1990"<span style="color: #949494;">, </span>"8/15/1990"…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000<span style="color: #949494;">, </span>23.308333<span style="color: #949494;">, </span>18.533333<span style="color: #949494;">, </span>15.350000<span style="color: #949494;">, </span>13.966667<span style="color: #949494;">, </span>11.35833…</span></span></code></pre></div>
 <p>Then, we convert the date columns using
 <strong>lubridate</strong>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -457,13 +457,13 @@ structure of the <code>crooked_river</code> and
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">crooked_river</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,826</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2010-12-01, 2010-12-02, 2010-12-03, 2010-12-04, 2010-12-05, 20…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020, 1.3442852, 1.2533443, 1.0068728, 1.2899153, 1.229158…</span></span>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2010-12-01<span style="color: #949494;">, </span>2010-12-02<span style="color: #949494;">, </span>2010-12-03<span style="color: #949494;">, </span>2010-12-04<span style="color: #949494;">, </span>2010-12-05<span style="color: #949494;">, </span>20…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.1638020<span style="color: #949494;">, </span>1.3442852<span style="color: #949494;">, </span>1.2533443<span style="color: #949494;">, </span>1.0068728<span style="color: #949494;">, </span>1.2899153<span style="color: #949494;">, </span>1.229158…</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">woody_island</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 735</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-08-11, 1990-08-12, 1990-08-13, 1990-08-14, 1990-08-15, 19…</span></span>
-<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000, 23.308333, 18.533333, 15.350000, 13.966667, 11.35833…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ date   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1990-08-11<span style="color: #949494;">, </span>1990-08-12<span style="color: #949494;">, </span>1990-08-13<span style="color: #949494;">, </span>1990-08-14<span style="color: #949494;">, </span>1990-08-15<span style="color: #949494;">, </span>19…</span></span>
+<span><span class="co">#&gt; $ temp_c <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 25.850000<span style="color: #949494;">, </span>23.308333<span style="color: #949494;">, </span>18.533333<span style="color: #949494;">, </span>15.350000<span style="color: #949494;">, </span>13.966667<span style="color: #949494;">, </span>11.35833…</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -527,8 +527,8 @@ for a year and summarize the data to daily means.</p>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">fake_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 17,568</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ date <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2000-01-01 00:00:00, 2000-01-01 00:30:00, 2000-01-01 01:00:00, 2…</span></span>
-<span><span class="co">#&gt; $ temp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.318573, 9.309468, 14.676125, 10.211525, 10.387863, 15.145195, 1…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ date <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2000-01-01 00:00:00<span style="color: #949494;">, </span>2000-01-01 00:30:00<span style="color: #949494;">, </span>2000-01-01 01:00:00<span style="color: #949494;">, </span>2…</span></span>
+<span><span class="co">#&gt; $ temp <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.318573<span style="color: #949494;">, </span>9.309468<span style="color: #949494;">, </span>14.676125<span style="color: #949494;">, </span>10.211525<span style="color: #949494;">, </span>10.387863<span style="color: #949494;">, </span>15.145195<span style="color: #949494;">, </span>1…</span></span></code></pre></div>
 <p>Now we can summarize the data to daily means using
 <code><a href="../reference/summarize_temp.html">summarize_temp()</a></code>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
