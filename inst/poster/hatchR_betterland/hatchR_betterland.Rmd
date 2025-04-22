@@ -22,8 +22,8 @@ affiliation:
     address: Wisconsin Department of Natural Resources, Madison, WI, USA
 main_findings:
   - "A toolset to predict when fish hatch and emerge in the wild"
-  - '![](hatchR_betterland_files/figure-html/logo.png){.main_pic}'
-logoleft_name: '![](hatchR_betterland_files/figure-html/hatchR_website.png){.main-img-left}'
+  - '![](hatchR_betterland_files/figure-html/hatchR_logo_hires.png){.main_pic}'
+logoleft_name: 
 logoright_name:
 main_fontfamily: "Rasa"
 output: 
@@ -62,11 +62,11 @@ To predict phenology, you need [**daily average temperatures over incubation (or
 
 # Using hatchR
 
-## `hatchR` can be accessed two ways:
+## **hatchR** can be accessed two ways:
 
 ### R package
 
-`hatchR` can be downloaded from CRAN and used in the R programming language for full functionality. The `hatchR` website provides numerous Articles on basic to advanced use.
+**hatchR** can be downloaded from CRAN and used in the R programming language for full functionality. The **hatchR** website provides numerous Articles on basic to advanced use.
 
 ```{r,out.width="50%",out.height="50%",fig.show='hold', fig.align='center'}
 
@@ -75,7 +75,7 @@ knitr::include_graphics("./hatchR_betterland_files/figure-html/hatchR_website.pn
 
 ### Shiny app
 
-`hatchR` can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less automative.
+**hatchR** can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less automative.
 
 ```{r,out.width="50%",out.height="50%",fig.show='hold', fig.align='center'}
 
