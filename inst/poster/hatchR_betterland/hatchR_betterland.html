@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>hatchR</title>
+
+
+
+
+
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+
+<!--
+Here are the required style attributes for css to make this poster work :)
+-->
+<style>
+@page {
+size: 46in 32in;
+margin: 0;
+padding: 0;
+background-color: #ffffff;
+}
+body {
+margin: 0px;
+padding: 0px;
+width: 46in;
+height: 32in;
+text-align: justify;
+font-size: 45px;
+background-color: #FFFFFF;
+color: #000000;
+}
+/* RMarkdown Class Styles */
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: #00808024;
+color: #0b4545;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+caption {
+margin-bottom: 10px;
+font-size: 20pt;
+font-style: italic;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #0b454520;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  border-spacing: 0;
+  font-size: 40%;
+  border-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 1em;
+  padding-left: 1em;
+  line-height: 1em;
+}
+table {
+  margin: auto;
+}
+th {
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+.caption {
+font-size: 20pt;
+font-style: italic;
+padding-top: 0;
+}
+.references {
+font-size: 20px;
+line-height: 90%;
+}
+/* Create three unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 0px;
+}
+.outer {
+width: 46in;
+height: 32in;
+-webkit-column-count: 2; /* Chrome, Safari, Opera */
+-moz-column-count: 2; /* Firefox */
+column-count: 2;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: 50%;
+-moz-column-rule-width: 50%;
+column-rule-width: 50%;
+-webkit-column-rule-style: solid;
+-moz-column-rule-style: solid;
+column-rule-style: solid;
+-webkit-column-rule-color: black;
+-moz-column-rule-color: black;
+column-rule-color: black;
+-webkit-column-gap: 50%;
+background-color: #ffffff;
+font-family: Rasa;
+color: #000000;
+}
+span.citation {
+  color: #008080;
+  font-weight: bold;
+}
+a {
+text-decoration: none;
+color: #008080;
+}
+#title {
+font-size: 125pt;
+text-align: left;
+margin: 0;
+line-height: 90%;
+border-bottom: 0;
+}
+#author {
+color: #0b4545;
+margin: 0;
+line-height: 90%;
+font-size: 1.17em;
+}
+#affiliation {
+padding-top: 1em;
+color: #00000060;
+font-style: italic;
+font-size: 25px;
+margin: 0;
+}
+sup {
+color: #cc0000;
+}
+.affiliation sup {
+font-size: 20px;
+}
+.author sup {
+font-size: 30px;
+}
+.author_extra {
+color: #008080;
+margin: 0;
+line-height: 85%;
+font-size: 35px;
+}
+.outer h1 {
+text-align: center;
+margin-top: 0.5in;
+margin-bottom: 0.5in;
+}
+.outer h2 {
+text-align: center;
+}
+.outer p {
+color: #000000;
+}
+.outer ol {
+text-align: left;
+}
+.main {
+width: calc(46in / 2);
+height: 32in;
+position: absolute;
+margin-left: calc(46in / 4);
+background-color: #0b4545;
+color: #FFFFFF90;
+font-family: Rasa;
+background-image: linear-gradient(#0b4545 50%, #008080);
+}
+.main strong {
+color: #FFFFFF;
+}
+img.main-img-left {
+width: 20%;
+left: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+img.main-img-right {
+width: 18%;
+right: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+.main p {
+padding-top: 20%;
+font-size: 170px;
+text-align: left;
+}
+.fab {
+color: #00000060;
+font-size: 25px;
+}
+.twitter, i {
+color: #00000060;
+font-size: 35px;
+text-decoration: none;
+}
+a.email {
+text-decoration: none;
+color: #00000060;
+font-size: 35px;
+}
+.envelope {
+color: #00000060;
+font-size: 5px;
+text-decoration: none;
+}
+.poster_wrap {
+width: 46in;
+height: 32in;
+padding: 0cm;
+background-color: #ffffff;
+}
+span > #tab:mytable {
+  font-weight: bold;
+}
+.section {
+  padding-left: 10mm;
+  padding-right: 10mm;
+}
+.main p {
+  padding-left: 30mm;
+  padding-right: 30mm;
+}
+.main_pic {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.orcid img {
+  width: 3%;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+<div class="column outer">
+<br>
+<div class="title section">
+<h1 id="title">hatchR</h1>
+<br>
+<h3 id="author" class="author">
+
+    </h3>
+
+<h5 id="author_extra" class="author_extra">
+Morgan Sparks<sup>1</sup>
+ Bryan Maitland<sup>1</sup>
+ Eli Felts<sup>2</sup>
+ Allison Swartz<sup>3</sup>
+ Paul Frater<sup>4</sup>
+</h5>
+
+<p id="affiliation" class="affiliation">
+<sup>1</sup> Rocky Mountain Research Station, US Forest Service<br> <sup>2</sup> Idaho Fish and Wildlife Conservation Oﬀice, US Fish and Wildlife Service<br> <sup>3</sup> College of Forestry, Oregon State University<br> <sup>4</sup> Wisconsin Department of Natural Resources, Madison, WI, USA
+</p>
+
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p><strong>hatchR</strong> is a software ecosystem for predicting fish developmental phenology using statistical models. It offers three primary applications:</p>
+<ol style="list-style-type: decimal">
+<li>Basic summarization, plotting, and data checks for water temperature data.</li>
+<li>Access published parameterizations for salmonid developmental models or build your own custom parameterizations for any species with user provided data.</li>
+<li>Predict hatch and/or emergence timing across ambient temperatures from common data sources such as HOBO loggers.</li>
+</ol>
+<p><strong>hatchR</strong> is deployed in two formats. First, it can be downloaded as a R package. Secondly, for users not familiar with R, it can also be accessed as a web app built in Shiny as a point-and-click tool.</p>
+<p>To predict phenology, you need <u><strong>daily average temperatures over incubation (or data that can be summarized as such</strong></u><strong>)</strong> and <u><strong>spawn timing</strong></u>.</p>
+</div>
+<div id="using-hatchr" class="section level1">
+<h1>Using hatchR</h1>
+<div id="hatchr-can-be-accessed-two-ways" class="section level2">
+<h2><code>hatchR</code> can be accessed two ways:</h2>
+<div id="r-package" class="section level3">
+<h3>R package</h3>
+<p><code>hatchR</code> can be downloaded from CRAN and used in the R programming language for full functionality. The <code>hatchR</code> website provides numerous Articles on basic to advanced use.</p>
+<p><img src="hatchR_betterland_files/figure-html/hatchR_website.png" width="50%" height="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="shiny-app" class="section level3">
+<h3>Shiny app</h3>
+<p><code>hatchR</code> can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less automative.</p>
+<p><img src="hatchR_betterland_files/figure-html/hatchR_shiny.png" width="50%" height="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="workflow" class="section level1">
+<h1>Workflow</h1>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="hatchR_betterland_files/figure-html/workflow.png" alt="hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text." width="60%" />
+<p class="caption">
+Figure 1: hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text.
+</p>
+</div>
+</div>
+
+</div>
+<div class="main">
+<p>A toolset to predict when fish hatch and emerge in the wild<br><br> <img src="hatchR_betterland_files/figure-html/logo.png" class="main_pic" /></p>
+<img src="hatchR_betterland_files/figure-html/hatchR_website.png" class="main-img-left" />
+
+</div>
+</div>
+
+
+
+</body>
+</html>
