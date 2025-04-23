@@ -103,7 +103,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::theme_classic() +
       ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
       ggplot2::scale_y_continuous(
-        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "Cumulative EF Value")
       )
   }
 
@@ -118,7 +118,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::theme_classic() +
       ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
       ggplot2::scale_y_continuous(
-        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "Cumulative EF Value")
       )
   }
 
@@ -133,7 +133,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::theme_classic() +
       ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
       ggplot2::scale_y_continuous(
-        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "EF Values")
+        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "Cumulative EF Value")
       )
   }
   return(p)
