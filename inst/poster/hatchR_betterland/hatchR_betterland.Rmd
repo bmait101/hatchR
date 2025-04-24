@@ -26,6 +26,7 @@ main_findings:
 logoleft_name: 
 logoright_name:
 main_fontfamily: "Rasa"
+column_padding: "10mm"
 output: 
   posterdown::posterdown_betterland:
     self_contained: false
@@ -73,6 +74,9 @@ To predict phenology, you need [**daily average temperatures over incubation (or
 knitr::include_graphics("./hatchR_betterland_files/figure-html/hatchR_website.png")
 ```
 
+<br>
+
+
 ### Shiny app
 
 **hatchR** can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less automative.
@@ -84,7 +88,7 @@ knitr::include_graphics("./hatchR_betterland_files/figure-html/hatchR_website.pn
 
 # Workflow
 
-```{r, out.width='60%', fig.align='center', fig.cap= "hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text."}
+```{r, out.width='55%', fig.align='center', fig.cap= "hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text."}
 
 knitr::include_graphics("./hatchR_betterland_files/figure-html/workflow.png")
 ```
