@@ -289,7 +289,7 @@ span > #tab:mytable {
 <div class="column outer">
 <br>
 <div class="title section">
-<h1 id="title">hatchR</h1>
+<h1 id="title"><code>hatchR</code></h1>
 <br>
 <h3 id="author" class="author">
 
@@ -304,7 +304,7 @@ Morgan Sparks<sup>1</sup>
 </h5>
 
 <p id="affiliation" class="affiliation">
-<sup>1</sup> Rocky Mountain Research Station, US Forest Service<br> <sup>2</sup> Idaho Fish and Wildlife Conservation Oﬀice, US Fish and Wildlife Service<br> <sup>3</sup> College of Forestry, Oregon State University<br> <sup>4</sup> Wisconsin Department of Natural Resources, Madison, WI, USA
+<sup>1</sup> Rocky Mountain Research Station, US Forest Service<br> <sup>2</sup> Idaho Fish and Wildlife Conservation Office, US Fish and Wildlife Service<br> <sup>3</sup> College of Forestry, Oregon State University<br> <sup>4</sup> Wisconsin Department of Natural Resources, Madison, WI, USA
 </p>
 
 </div>
@@ -314,10 +314,10 @@ Morgan Sparks<sup>1</sup>
 <ol style="list-style-type: decimal">
 <li>Basic summarization, plotting, and data checks for water temperature data.</li>
 <li>Access published parameterizations for salmonid developmental models or build your own custom parameterizations for any species with user provided data.</li>
-<li>Predict hatch and/or emergence timing across ambient temperatures from common data sources such as HOBO loggers.</li>
+<li>Predict hatch and/or emergence timing in <em>wild</em> environments from common data sources such as HOBO loggers.</li>
 </ol>
-<p><strong>hatchR</strong> is deployed in two formats. First, it can be downloaded as a R package. Secondly, for users not familiar with R, it can also be accessed as a web app built in Shiny as a point-and-click tool.</p>
-<p>To predict phenology, you need <u><strong>daily average temperatures over incubation (or data that can be summarized as such</strong></u><strong>)</strong> and <u><strong>spawn timing</strong></u>.</p>
+<p><strong>hatchR</strong> is deployed in two formats. First, it can be downloaded as an R package. Secondly, for users not familiar with R, it can also be accessed as a web app built in Shiny as a point-and-click tool.</p>
+<p>To predict phenology, you need <u><strong>daily average temperatures over devlopment (or data that can be summarized as such</strong></u><strong>)</strong> and <u><strong>spawn timing</strong></u>.</p>
 </div>
 <div id="using-hatchr" class="section level1">
 <h1>Using hatchR</h1>
@@ -331,7 +331,7 @@ Morgan Sparks<sup>1</sup>
 </div>
 <div id="shiny-app" class="section level3">
 <h3>Shiny app</h3>
-<p><strong>hatchR</strong> can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less automative.</p>
+<p><strong>hatchR</strong> can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less flexible.</p>
 <p><img src="hatchR_betterland_files/figure-html/hatchR_shiny.png" width="50%" height="50%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -339,9 +339,9 @@ Morgan Sparks<sup>1</sup>
 <div id="workflow" class="section level1">
 <h1>Workflow</h1>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
-<img src="hatchR_betterland_files/figure-html/workflow.png" alt="hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text." width="55%" />
+<img src="hatchR_betterland_files/figure-html/workflow.png" alt="**hatchR** workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text." width="55%" />
 <p class="caption">
-Figure 1: hatchR workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text.
+Figure 1: <strong>hatchR</strong> workflow. Processes are presented as filled circles, functions as plain text rectangles, and decisions as italicized text.
 </p>
 </div>
 </div>
