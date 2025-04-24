@@ -65,7 +65,7 @@ To predict phenology, you need [**daily average temperatures over devlopment (or
 
 ## **hatchR** can be accessed two ways:
 
-### R package
+### 1. R package
 
 **hatchR** can be downloaded from CRAN and used in the R programming language for full functionality. The **hatchR** website provides numerous Articles on basic to advanced use.
 
@@ -77,7 +77,7 @@ knitr::include_graphics("./hatchR_betterland_files/figure-html/hatchR_website.pn
 <br>
 
 
-### Shiny app
+### 2. Shiny app
 
 **hatchR** can be accessed in a point-and-click interface via Shiny. The app loads in your browser and provides much of the functionality of the R package but is less flexible.
 
