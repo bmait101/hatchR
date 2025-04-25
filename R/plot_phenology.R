@@ -52,7 +52,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#d95f02'>Cumulative EF value</span>;
           <span style='color:#1b9e77'>Daily EF value (x100)</span>"
@@ -66,7 +66,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#d95f02'>Cumulative EF value</span>"
         ),
@@ -79,7 +79,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#1b9e77'>Daily EF value (x100)</span>"
         ),

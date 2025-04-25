@@ -234,7 +234,7 @@ hatch_res <- isaak_summ_bt |>
       model = bt_hatch,
       dates = date
       ) |> 
-      map_df("dev.period") |>
+      map_df("dev_period") |>
       list()
     ) |> 
   select(site, dev_period) |> # just select the columns we want
@@ -246,7 +246,7 @@ hatch_res
 
 > It's not output here, but this will output a boatload of warnings that some fish aren't hatching. However, it's pretty safe to assume that some of these habitats are actually too cold for bull trout and those are the places where they won't have hatched. If we were trying to make management decisions about these fish or testing a some kind of hypothesis it would be worth following up with why those fish weren't hatching, but for now, we'll rest on the assumption it's just too cold.
 
-A couple notes about what we did above. First we use `purrr::map2()` instead of `purrr::pmap()` but they are interchangeable here as long as you set up your variable grid for `purrr::pmap()`. Secondly, we're actually piping the output of the `purrr::map2()` into `purrr::map_df()` function so we can just pull out the `dev.period` list element out of the `predict_phenology()` output. Otherwise we'd end up with a list of the 4 outputs from `predict_phenology()`, which would end up being a pretty big object in your memory. So better just to store the 1x2 vector that is `dev.period`. Lastly, the `purrr::map_df()` is piped into a list because the nested dataframe doesn't know how to hold onto multiple dimension object (the 1x2 vector), it just wants a singular list containing all the elements.
+A couple notes about what we did above. First we use `purrr::map2()` instead of `purrr::pmap()` but they are interchangeable here as long as you set up your variable grid for `purrr::pmap()`. Secondly, we're actually piping the output of the `purrr::map2()` into `purrr::map_df()` function so we can just pull out the `dev_period` list element out of the `predict_phenology()` output. Otherwise we'd end up with a list of the 4 outputs from `predict_phenology()`, which would end up being a pretty big object in your memory. So better just to store the 1x2 vector that is `dev_period`. Lastly, the `purrr::map_df()` is piped into a list because the nested dataframe doesn't know how to hold onto multiple dimension object (the 1x2 vector), it just wants a singular list containing all the elements.
 
 With that in mind we can plot our data.
 

@@ -169,7 +169,7 @@ We can check the predicted phenology by running:
 WI_hatch$days_to_develop
 #> [1] 74
 # and development period
-WI_hatch$dev.period
+WI_hatch$dev_period
 #>        start       stop
 #> 1 1990-08-18 1990-10-30
 ```

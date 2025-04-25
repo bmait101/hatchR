@@ -19,7 +19,7 @@
 #' * `ef_table`: An n x 4 tibble (n = number of days to hatch or emerge) with
 #'    the dates, temperature, effective values, and cumulative sum of the
 #'    effective values.
-#' * `dev.period`: a 1x2 dataframe with the dates corresponding to when your
+#' * `dev_period`: a 1x2 dataframe with the dates corresponding to when your
 #'    fish's parent spawned (input with `predict_phenology(spawn.date = ...)`)
 #'    and the date when the fish is predicted to hatch or emerge.
 #' * `model_specs`: A data.frame with the model specifications.
@@ -131,15 +131,15 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dat_out_sub <- dat_out[1:(1 + (Ef.days - 1)), ]
 
     # get development period
-    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
-    colnames(dev.period) <- c("start", "stop")
-    dev.period$start <- min(dat_out_sub$dates)
-    dev.period$stop <- max(dat_out_sub$dates)
-    # dev.period$stop <- lubridate::as_date(NA)
+    dev_period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev_period) <- c("start", "stop")
+    dev_period$start <- min(dat_out_sub$dates)
+    dev_period$stop <- max(dat_out_sub$dates)
+    # dev_period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
       days_to_develop = Ef.days,
-      dev.period = dev.period,
+      dev_period = dev_period,
       ef_table = dat_out_sub,
       model_specs = model
     )
@@ -160,15 +160,15 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dat_out_sub <- dat_out
 
     # get development period
-    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
-    colnames(dev.period) <- c("start", "stop")
-    dev.period$start <- min(dat_out_sub$dates)
-    # dev.period$stop <- max(dat_out_sub$dates)
-    dev.period$stop <- lubridate::as_date(NA)
+    dev_period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev_period) <- c("start", "stop")
+    dev_period$start <- min(dat_out_sub$dates)
+    # dev_period$stop <- max(dat_out_sub$dates)
+    dev_period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
       days_to_develop = Ef.days,
-      dev.period = dev.period,
+      dev_period = dev_period,
       ef_table = dat_out_sub,
       model_specs = model
     )
@@ -190,15 +190,15 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dat_out_sub <- dat_out
 
     # get development period
-    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
-    colnames(dev.period) <- c("start", "stop")
-    dev.period$start <- min(dat_out_sub$dates)
-    # dev.period$stop <- max(dat_out_sub$dates)
-    dev.period$stop <- lubridate::as_date(NA)
+    dev_period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev_period) <- c("start", "stop")
+    dev_period$start <- min(dat_out_sub$dates)
+    # dev_period$stop <- max(dat_out_sub$dates)
+    dev_period$stop <- lubridate::as_date(NA)
 
     ef.results <- list(
       days_to_develop = as.numeric(NA),
-      dev.period = dev.period,
+      dev_period = dev_period,
       ef_table = dat_out_sub,
       model_specs = model
     )
@@ -215,14 +215,14 @@ predict_phenology <- function(data, dates, temperature, spawn.date, model) {
     dat_out_sub <- dat_out[1:(1 + (Ef.days - 1)), ]
 
     # get development period
-    dev.period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
-    colnames(dev.period) <- c("start", "stop")
-    dev.period$start <- min(dat_out_sub$dates)
-    dev.period$stop <- max(dat_out_sub$dates)
+    dev_period <- data.frame(matrix(NA, nrow = 1, ncol = 2))
+    colnames(dev_period) <- c("start", "stop")
+    dev_period$start <- min(dat_out_sub$dates)
+    dev_period$stop <- max(dat_out_sub$dates)
 
     ef.results <- list(
       days_to_develop = Ef.days,
-      dev.period = dev.period,
+      dev_period = dev_period,
       ef_table = dat_out_sub,
       model_specs = model
     )

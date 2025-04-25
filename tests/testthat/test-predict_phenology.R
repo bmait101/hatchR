@@ -16,8 +16,8 @@ test_that("predict phenology works", {
   expect_type(p, "list")
   expect_length(p, 4)
   expect_s3_class(p$ef_table, "data.frame")
-  expect_s3_class(p$dev.period, "data.frame")
-  expect_equal(ncol(p$dev.period), 2)
+  expect_s3_class(p$dev_period, "data.frame")
+  expect_equal(ncol(p$dev_period), 2)
 })
 
 

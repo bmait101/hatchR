@@ -133,7 +133,7 @@ Next, look inside the returned object to see days to hatch and development perio
 
 ```{r}
 WI_hatch$days_to_develop
-WI_hatch$dev.period
+WI_hatch$dev_period
 ```
 
 We can also do the same with emergence:
@@ -148,7 +148,7 @@ WI_emerge <- predict_phenology(
 )
 
 WI_emerge$days_to_develop
-WI_emerge$dev.period
+WI_emerge$dev_period
 ```
 
 ## Understanding your results {#results}
@@ -163,7 +163,7 @@ We can access each element using the `$` operator:
 
 -   `WI_hatch$days_to_develop` outputs the predicted days to hatch or emerge.
 
--   `WI_hatch$dev.period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
+-   `WI_hatch$dev_period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
 
 -   `WI_hatch$ef.tibble` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature, effective value, and the cumulative sum of the effective values to that date. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
 
