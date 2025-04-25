@@ -19,7 +19,7 @@ affiliation:
   - num: 3
     address: College of Forestry, Oregon State University
   - num: 4
-    address: Wisconsin Department of Natural Resources, Madison, WI, USA
+    address: Wisconsin Department of Natural Resources
 main_findings:
   - "A toolset to predict when fish hatch and emerge in the wild"
   - '![](hatchR_betterland_files/figure-html/hatchR_logo_hires.png){.main_pic}'
