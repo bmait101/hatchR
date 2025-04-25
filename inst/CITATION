@@ -1,5 +1,5 @@
 bibentry(
-  bibtype    = "Unpublished",
+  bibtype    = "Article",
   title      = "{hatchR}: A toolset to predict when fish hatch and emerge",
   author     = c(person(given  = "Morgan M.",
                         family = "Sparks"),
@@ -12,6 +12,8 @@ bibentry(
                  person(given  = "Paul",
                         family = "Frater")
                         ),
+  journal    = "CRAN",
   year       = "2025",
-  note       = "In preparation"
+  doi       = "10.32614/CRAN.package.hatchR",
+  url       = "https://github.com/bmait101/hatchR",
 )
