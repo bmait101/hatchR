@@ -43,7 +43,7 @@ Install the latest development version of **hatchR** from GitHub:
 pak::pak("bmait101/hatchR")
 ```
 
-## Interactive Shiny App <img src='https://upload.wikimedia.org/wikipedia/commons/b/bf/Shiny_hex_logo.svg' align="right" height="50" />
+## Interactive Shiny App
 
 You can also use the **hatchR** Shiny app to interactively predict fish
 developmental phenology. To run the app, visit the [hatchR Shiny
