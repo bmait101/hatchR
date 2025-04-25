@@ -1,24 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# hatchR: Predict Fish Hatch and Emergence Timing <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
+# hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
 
-<!-- badges: start -->
+[![publication](https://img.shields.io/badge/Cite-Unpublished-yellow)](https://github.com/bmait101/hatchR/blob/master/inst/CITATION)
+[![downloads](https://cranlogs.r-pkg.org/badges/hatchR)](https://cran.r-project.org/package=hatchR)
+[![total](https://cranlogs.r-pkg.org/badges/grand-total/hatchR)](https://cranlogs.r-pkg.org/)
 
-[![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
-[![cran
-checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html)
-[![](https://cranlogs.r-pkg.org/badges/hatchR)](https://cran.r-project.org/package=hatchR)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-<!-- badges: end -->
+***Predict hatch and emergence timing for wild fish***
+
+------------------------------------------------------------------------
 
 **hatchR** is an R package for predicting hatch and emergence timing for
 a wide range of wild fishes using the effective value framework (Sparks
-et al., (2019) <DOI:10.1139/cjfas-2017-0468>). ‘hatchR’ offers users
+et al., (2019) <DOI:10.1139/cjfas-2017-0468>). **hatchR** offers users
 access to established phenological models and the flexibility to
 incorporate custom parameterizations using external datasets. The
 package includes functions for model selection, phenology prediction,
@@ -26,45 +21,29 @@ and visualization. **hatchR** is designed to be user-friendly and
 accessible to a wide range of users, including researchers, managers,
 and educators.
 
-## Citation
+## Installation
 
-If you use **hatchR** in a formal publication or report, please cite it.
-Citing **hatchR** lets us devote more resources to it in the future.
-View the **hatchR** citation by running:
+[![CRAN](https://www.r-pkg.org/badges/version/hatchR)](https://CRAN.R-project.org/package=hatchR)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+<!-- [![R-CMD-check](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bmait101/hatchR/actions/workflows/R-CMD-check.yaml) -->
+<!-- [![cran checks](https://badges.cranchecks.info/worst/hatchR.svg)](https://cran.r-project.org/web/checks/check_results_hatchR.html) -->
 
-``` r
-citation(package = "hatchR")
-#> To cite package 'hatchR' in publications use:
-#> 
-#>   Sparks M, Maitland B, Felts E, Swartz A, Frater P (2025). "hatchR: A
-#>   toolset to predict when fish hatch and emerge." In preparation.
-#> 
-#> A BibTeX entry for LaTeX users is
-#> 
-#>   @Unpublished{,
-#>     title = {{hatchR}: A toolset to predict when fish hatch and emerge},
-#>     author = {Morgan M. Sparks and Bryan M. Maitland and Eli Felts and Allison Swartz and Paul Frater},
-#>     year = {2025},
-#>     note = {In preparation},
-#>   }
-```
-
-## Installation Instructions
-
-Install the released version from CRAN:
+Install the released version of **hatchR** from CRAN:
 
 ``` r
 install.packages("hatchR")
 ```
 
-Install the development version of **hatchR** from GitHub:
+Install the latest development version of **hatchR** from GitHub:
 
 ``` r
 # install.packages("pak")
 pak::pak("bmait101/hatchR")
 ```
 
-## Interactive Shiny App
+## Interactive Shiny App <img src='https://upload.wikimedia.org/wikipedia/commons/b/bf/Shiny_hex_logo.svg' align="right" height="50" />
 
 You can also use the **hatchR** Shiny app to interactively predict fish
 developmental phenology. To run the app, visit the [hatchR Shiny
@@ -135,7 +114,7 @@ plot_check_temp(
     ) 
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Next, select hatch and emerge models we want to use to predict
 phenology:
@@ -181,7 +160,7 @@ Finally, we can visualize the predicted phenology using
 plot_phenology(WI_hatch)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 ## Imported Packages
 
