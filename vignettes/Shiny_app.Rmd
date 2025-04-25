@@ -3,7 +3,7 @@ title: "Launching Shiny"
 author: "Morgan Sparks, Bryan M. Maitland"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Shiny_app}
+  %\VignetteIndexEntry{Launching Shiny}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

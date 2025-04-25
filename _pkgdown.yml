@@ -18,6 +18,12 @@ articles:
     - Predict_phenology_nested
     - Advanced_plotting
 
+  - title: "Shiny App"
+    navbar: "Shiny App"
+    contents:
+    - Shiny_app
+
+
   - title: "Model Bibliography"
     navbar: "Model Bibliography"
     contents:
