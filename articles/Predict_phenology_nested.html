@@ -44,6 +44,9 @@
     <li><a class="dropdown-item" href="../articles/Predict_phenology_nested.html">Predict fish phenology: nested</a></li>
     <li><a class="dropdown-item" href="../articles/Advanced_plotting.html">Advanced plotting</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Shiny App</h6></li>
+    <li><a class="dropdown-item" href="../articles/Shiny_app.html">Launching Shiny</a></li>
+    <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Model Bibliography</h6></li>
     <li><a class="dropdown-item" href="../articles/Model_bibliography.html">Model bibliography</a></li>
   </ul>
@@ -286,40 +289,50 @@ format it’s easy with <code><a href="https://tidyr.tidyverse.org/reference/unn
 <p>First we’ll use a smaller example to show how it works and then
 expand to our full dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Pull data from one sits</span></span>
+<code class="sourceCode R"><span><span class="co"># Pull data from one site</span></span>
 <span><span class="va">PIBO_1345_summ</span> <span class="op">&lt;-</span> <span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">site</span> <span class="op">==</span> <span class="st">"PIBO_1345"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="st">"summ_obj"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># We create a column that either contains NA, TRUE, or FALSE</span></span>
-<span><span class="co">#   NA is for first data</span></span>
-<span><span class="co">#   TRUE is if the difference between one row and the row preceding it is 1</span></span>
-<span><span class="co">#   FALSE is the difference is not 1</span></span>
-<span><span class="va">PIBO_1345_summ</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># since the output is empty there are no FALSE in diff</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [0]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 variables: site &lt;chr&gt;, date &lt;date&gt;, daily_temp &lt;dbl&gt;, diff &lt;lgl&gt;</span></span></span>
+<span><span class="co"># We can then use the hatchR function to check that our data are continuous</span></span>
+<span><span class="co"># We see from the message they are!</span></span>
+<span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">PIBO_1345_summ</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
 <span></span>
-<span><span class="co"># We can do the same to our isaak_summ_bt dataset</span></span>
-<span><span class="co">#   only difference here is we are mapping with an anonymous function hence the</span></span>
-<span><span class="co">#   ~{..., .x$date...} syntax. </span></span>
-<span><span class="co">#   ~{} tells us it's an anonymous function while the .x allows to us to </span></span>
-<span><span class="co">#   call the column from whatever data is piped in</span></span>
-<span><span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
-<span>    <span class="va">summ_obj</span>, <span class="op">~</span> <span class="op">{</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> </span>
-<span>      <span class="op">}</span></span>
-<span>    <span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">summ_obj</span>, <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [0]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 variables: site &lt;chr&gt;, date &lt;date&gt;, daily_temp &lt;dbl&gt;, diff &lt;lgl&gt;</span></span></span>
-<span><span class="co"># all continuous!</span></span></code></pre></div>
+<span><span class="co"># To demonstrate an example of our data not being continuous, we remove the 100th row</span></span>
+<span><span class="fu"><a href="../reference/check_continuous.html">check_continuous</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">PIBO_1345_summ</span><span class="op">[</span><span class="op">-</span><span class="fl">100</span>,<span class="op">]</span>, dates <span class="op">=</span> <span class="va">date</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> Data not continuous</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Breaks found at rows:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> 100</span></span></code></pre></div>
+<p>Next we can <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map()</a></code> our <code><a href="../reference/check_continuous.html">check_continuous()</a></code>
+across our nested data set.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Map check_continuous() across isaak_summ_bt</span></span>
+<span><span class="co"># We'll only do the first 5 nested objects so the output doesn't get too long</span></span>
+<span></span>
+<span><span class="va">isaak_summ_bt</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span> <span class="op">|&gt;</span> <span class="co"># run on first five nested dataframes for convenience</span></span>
+<span>                       <span class="co"># remove [1:5,] to run on all nested objects </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span> <span class="co"># mutate a dummy diff column to run map</span></span>
+<span>    <span class="va">summ_obj</span>, <span class="co"># nested data object (akin to "data =" argument in normal function)</span></span>
+<span>    <span class="va">check_continuous</span>, <span class="co"># function name, no parentheses</span></span>
+<span>    dates <span class="op">=</span> <span class="va">date</span> <span class="co"># specify dates argument with column name of dates in summ_obj</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> No breaks were found. All clear!</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   site [5]</span></span></span>
+<span><span class="co">#&gt;   site      summ_obj             diff  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;list&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> PIBO_1345 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> PIBO_1346 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> PIBO_1350 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> PIBO_1368 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> PIBO_1375 <span style="color: #949494;">&lt;tibble [1,826 × 2]&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mapping-across-nested-data">Mapping Across Nested Data<a class="anchor" aria-label="anchor" href="#mapping-across-nested-data"></a>
@@ -329,7 +342,7 @@ that it doesn’t have any gaps we can start to map our
 <strong>hatchR</strong> functions onto the data.</p>
 <p>First we need to make a vector of spawn dates and get our model set
 up.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># spawn dataest</span></span>
 <span><span class="va">spawn_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span><span class="op">:</span><span class="fl">2014</span><span class="op">)</span>, <span class="co"># year vector to map for custom function</span></span>
@@ -351,7 +364,7 @@ up.</p>
 <span>  model <span class="op">=</span> <span class="st">"MM"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Then we can map it across our nested dataframe.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hatch_res</span> <span class="op">&lt;-</span> <span class="va">isaak_summ_bt</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    dev_period <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2</a></span><span class="op">(</span></span>
@@ -408,7 +421,7 @@ elements.</p>
 <p>Briefly, we’ll add an extra set of columns to define whether a fish
 spawned early, mid, or late and then plot the distributions across those
 time periods.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hatch_res</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">day</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>spawn_time <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
@@ -432,7 +445,7 @@ time periods.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Days to hatch"</span>, y <span class="op">=</span> <span class="st">"Spawn time"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_nested_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_nested_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
