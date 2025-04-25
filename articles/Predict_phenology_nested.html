@@ -374,7 +374,7 @@ up.</p>
 <span>      model <span class="op">=</span> <span class="va">bt_hatch</span>,</span>
 <span>      dates <span class="op">=</span> <span class="va">date</span></span>
 <span>      <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"dev.period"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="st">"dev_period"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, <span class="va">dev_period</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># just select the columns we want</span></span>
@@ -408,11 +408,11 @@ they are interchangeable here as long as you set up your variable grid
 for <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code>. Secondly, we’re actually piping the
 output of the <code><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">purrr::map2()</a></code> into
 <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map_df()</a></code> function so we can just pull out the
-<code>dev.period</code> list element out of the
+<code>dev_period</code> list element out of the
 <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> output. Otherwise we’d end up with a
 list of the 4 outputs from <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, which would
 end up being a pretty big object in your memory. So better just to store
-the 1x2 vector that is <code>dev.period</code>. Lastly, the
+the 1x2 vector that is <code>dev_period</code>. Lastly, the
 <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">purrr::map_df()</a></code> is piped into a list because the nested
 dataframe doesn’t know how to hold onto multiple dimension object (the
 1x2 vector), it just wants a singular list containing all the
