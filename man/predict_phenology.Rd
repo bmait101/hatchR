@@ -28,7 +28,7 @@ days to hatch or emerge.
 \item \code{ef_table}: An n x 4 tibble (n = number of days to hatch or emerge) with
 the dates, temperature, effective values, and cumulative sum of the
 effective values.
-\item \code{dev.period}: a 1x2 dataframe with the dates corresponding to when your
+\item \code{dev_period}: a 1x2 dataframe with the dates corresponding to when your
 fish's parent spawned (input with \code{predict_phenology(spawn.date = ...)})
 and the date when the fish is predicted to hatch or emerge.
 \item \code{model_specs}: A data.frame with the model specifications.

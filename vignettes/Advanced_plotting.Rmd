@@ -84,8 +84,8 @@ WI_results <- pmap(WI_var_grid,
 )
 
 # Now that we have our model results, lets put them in a tibble for plotting
-WI_dev.period <- WI_results |>
-  map_df("dev.period") |>
+WI_dev_period <- WI_results |>
+  map_df("dev_period") |>
   tibble() |>
   mutate(
     phenology = c(rep("hatch", 3), rep("emerge", 3)), # add a phenology column
@@ -98,7 +98,7 @@ Now we'll make a plot with the temperature and rectangles to show duration for t
 
 ```{r}
 # min and max for x-axis with 30 day buffer
-x_lims <- c(min(WI_dev.period$start), max(WI_dev.period$stop) + days(30))
+x_lims <- c(min(WI_dev_period$start), max(WI_dev_period$stop) + days(30))
 y_lims <- c(-1, 16)
 # filter data for plot
 p_data <- woody_island |> filter(date >= x_lims[1], date <= x_lims[2])
@@ -106,7 +106,7 @@ p_data <- woody_island |> filter(date >= x_lims[1], date <= x_lims[2])
 plot1 <- p_data |> 
   ggplot() +
   geom_rect(
-    data = WI_dev.period, 
+    data = WI_dev_period, 
     aes(
       xmin = start, xmax = stop,
       ymin = 10 - index, 
@@ -130,7 +130,7 @@ We can add some labels for days to hatch or emergence and change the labels on t
 ```{r}
 plot1 +
   geom_label(
-    data = WI_dev.period,
+    data = WI_dev_period,
     aes(
       x = start + (stop - start) / 1.25, 
       y = (10.25 - index), 
@@ -183,8 +183,8 @@ crooked_predictions <- pmap(var_grid, # combos of variables to iterate over
 )
 
 # make duration dataframe
-CR_dev.period <- crooked_predictions |>
-  map_df("dev.period") |>
+CR_dev_period <- crooked_predictions |>
+  map_df("dev_period") |>
   tibble() |>
   mutate(
     phenology = c(rep("hatch", 12), rep("emerge", 12)), # add a phenology column
@@ -221,7 +221,7 @@ crooked_river_sy <- crooked_river |>
 
 # make plot (facet_wrap by development year)
 ggplot() +
-  geom_rect(data = CR_dev.period, aes(
+  geom_rect(data = CR_dev_period, aes(
     xmin = start, 
     xmax = stop, 
     ymin = 10 - index, 
@@ -231,7 +231,7 @@ ggplot() +
   geom_point(data = crooked_river_sy, aes(x = date, y = temp_c), size = 0.25, ) +
   geom_line(data = crooked_river_sy, aes(x = date, y = temp_c)) +
   # set limits
-  lims(x = c(min(CR_dev.period$start) - days(30), max(CR_dev.period$stop) + days(30))) + 
+  lims(x = c(min(CR_dev_period$start) - days(30), max(CR_dev_period$stop) + days(30))) + 
   scale_x_datetime(date_labels = "%b") + 
   # facet wrap here subset plots on developmental year
   facet_wrap(~year, ncol = 1, scales = "free_x") + 
@@ -303,7 +303,7 @@ fish_dates_str <- format(fish_dates_all, "%Y-%m-%d")
 
 Now we can map hatch and emergence timing across the vector of dates we have created for the two years. Notice we have chosen two fairly thermally different years with quite different developmental phenology estimates (see plot from [Plotting multiple years]).
 
-Also, we're going to take a short cut with our mapping so we don't store all the results of each date (1200 total, 600 for each developmental period estimated) in our memory. So instead, we will pipe `|>` our `pmap()` into a `map_dbl("dev.period")` command so we only are left with our phenology estimates and not all the other data we would have otherwise outputted.
+Also, we're going to take a short cut with our mapping so we don't store all the results of each date (1200 total, 600 for each developmental period estimated) in our memory. So instead, we will pipe `|>` our `pmap()` into a `map_dbl("dev_period")` command so we only are left with our phenology estimates and not all the other data we would have otherwise outputted.
 
 ```{r}
 # make variable grid for pmap (we use dev_mods from previous example)
@@ -315,7 +315,7 @@ bull_trout_dist <- pmap(spawn_grid,
   dates = date,
   temperature = temp_c
 ) |> # pipe!
-  map_df("dev.period") # just output dev.period
+  map_df("dev_period") # just output dev_period
 
 ### now let's add the key columns for plotting
 
@@ -353,7 +353,7 @@ head(bull_trout_all_phenology)
 tail(bull_trout_all_phenology)
 ```
 
-Before we plot, let's briefly walk through what we did there. First we made our predictions but then only output the start and stop data with the `map_df("dev.period")` command. Next we added a `Phenology` column with the appropriate phenology type determined by the structure of our `spawn_grid` object. Then we made a similar object for spawning which we combined with the mapping ouput all into `bull_trout_all_phenology`. The reason for this is we will plot the distributions of spawning, hatching, and emergence across years.
+Before we plot, let's briefly walk through what we did there. First we made our predictions but then only output the start and stop data with the `map_df("dev_period")` command. Next we added a `Phenology` column with the appropriate phenology type determined by the structure of our `spawn_grid` object. Then we made a similar object for spawning which we combined with the mapping ouput all into `bull_trout_all_phenology`. The reason for this is we will plot the distributions of spawning, hatching, and emergence across years.
 
 You can see we also need to cut like we did before to add a developmental year and we use `geom_blank()` and custom limits to set everything on the same scale.
 
@@ -416,19 +416,19 @@ We could even combine this plot with the plot we made previously to show regime 
 
 # same plot as before but we'll filter the years to 2013 and 2014
 
-CR_dev.period_1314 <- CR_dev.period |> filter(year %in% c(2013, 2014))
+CR_dev_period_1314 <- CR_dev_period |> filter(year %in% c(2013, 2014))
 crooked_river_sy_1314 <- crooked_river_sy |> filter(year %in% c(2013, 2014))
 
 # name plot as object p1
 p1 <- ggplot() +
-  geom_rect(data = CR_dev.period_1314, aes(
+  geom_rect(data = CR_dev_period_1314, aes(
     xmin = start, xmax = stop, # draw bars
     ymin = 10 - index, ymax = 10.5 - index, # use index to vertically place rects
     fill = phenology
   )) +
   geom_point(data = crooked_river_sy_1314, aes(x = date, y = temp_c), size = 0.25, ) +
   geom_line(data = crooked_river_sy_1314, aes(x = date, y = temp_c)) +
-  lims(x = c(min(CR_dev.period$start) - days(30), max(CR_dev.period$stop) + days(30))) + # set limits
+  lims(x = c(min(CR_dev_period$start) - days(30), max(CR_dev_period$stop) + days(30))) + # set limits
   scale_x_datetime(date_labels = "%b") + # change X label to month
   facet_wrap(~year, ncol = 1, scales = "free_x") + # facet wrap here subset plots on developmental year
   scale_fill_manual(values = c("navyblue", "dodgerblue"), labels = c("Emerge", "Hatch")) + # custom colors
