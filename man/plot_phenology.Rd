@@ -21,6 +21,10 @@ A object of class "gg" and "ggplot".
 The function takes the output from \code{predict_phenology()} and creates a
 basic ggplot2 plot object to visualize the predicted phenology.
 }
+\details{
+When displayed, scaled daily effective temperature (EF) values plot to the
+primary y-axis. Cumulative EF values plot to the secondary y-axis.
+}
 \examples{
 library(hatchR)
 # get model parameterization
