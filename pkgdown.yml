@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   Advanced_plotting: Advanced_plotting.html
@@ -10,7 +10,7 @@ articles:
   Predict_phenology_basic: Predict_phenology_basic.html
   Predict_phenology_nested: Predict_phenology_nested.html
   Shiny_app: Shiny_app.html
-last_built: 2025-04-25T22:05Z
+last_built: 2025-04-29T20:08Z
 urls:
   reference: https://bmait101.github.io/hatchR/reference
   article: https://bmait101.github.io/hatchR/articles
