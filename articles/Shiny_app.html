@@ -85,7 +85,7 @@ Bryan M. Maitland</h4>
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The <strong>hatchR</strong> Shiny app is a powerful tool to interact
-with the <strong>hatchR</strong> base code without needing to write any
+with the <strong>hatchR</strong> package without needing to write any
 code. There are multiple ways to interact with the Shiny app. The first
 is through the online Shiny server. The second is downloading the Shiny
 directory with all the Shiny code and launching it locally.</p>
@@ -112,9 +112,8 @@ Shiny locally and use the app an unlimited number of times.</p>
 language) and Rstudio (the visual editor used to interact with R,
 sometimes called and IDE or integrated development environment)
 downloaded to your computer.</p>
-<p>Alternatively, if you have already have downloaded those software,
-jump to the <a href="#in-rstudio">In Rstudio</a> section.</p>
-<p>The can be downloaded at the following locations (it’s recommended
+<p>If you have already downloaded those software, jump to the <a href="#in-rstudio">In Rstudio</a> section.</p>
+<p>They can be downloaded at the following locations (it’s recommended
 you download R first).</p>
 <p>R: <a href="https://www.r-project.org/" class="external-link uri">https://www.r-project.org/</a></p>
 <p>Rstudio: <a href="https://posit.co/downloads/" class="external-link uri">https://posit.co/downloads/</a></p>
@@ -154,7 +153,7 @@ where you can see <code>efelts-usfws</code> hosts a
 </h4>
 <p>Importantly, you still need internet to download the Shiny app and
 the Shiny package (<code>install.packages("shiny")</code>) for the first
-time.</p>
+time, but will not need access after they have been downloaded.</p>
 <p>The easiest way to install the Shiny app is to navigate to the GitHub
 page and download a zipped directory for the app.</p>
 <p><a href="https://github.com/efelts-usfws/hatchR_shiny" class="external-link uri">https://github.com/efelts-usfws/hatchR_shiny</a></p>
@@ -167,18 +166,20 @@ purple).</p>
 <p>This will then download a zipped directory to your personal computer,
 wherever online downloads are sent to on your machine. From there you
 will need to unzip the directory. The unzipped directory can be kept in
-your downloads folder or moved to a more permanent location in your File
-system.</p>
+your downloads folder or moved to a more permanent location in your file
+management system.</p>
 <p>In the unzipped directory, you will navigate to the
 <code>app.R</code> file (purple arrow) and open it in Rstudio.</p>
 <p><img src="img/Shiny_dir.png" width="100%" style="display: block; margin: auto;"></p>
 <p>With the <code>app.R</code> file open in Rstudio click the <em>Run
-App</em> button (white rounded rectangle) in your <code>app.R</code>
-script tab and it will launch the Shiny app just like the
-<code>shiny::runGitHub("hatchR_shiny", "efelts-usfws")</code> did above.
-However, once the repository is downloaded to your computer you won’t
-need an internet connection to use the app again (if accessed this
-way).</p>
+App</em> button (white rounded rectangle and arrow) in your
+<code>app.R</code> script tab and it will launch the Shiny app just like
+the <code>shiny::runGitHub("hatchR_shiny", "efelts-usfws")</code> did
+above. Once the repository is downloaded to your computer you won’t need
+an internet connection to use the app again (if accessed this way).
+However, if the software is updated in the repository you will need to
+redownload the repository for your local Shiny app to reflect the newly
+added changes.</p>
 <p><img src="img/Rstudio_app.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Importantly, <strong>DO NOT</strong> modify the code in the
 <code>app.R</code> script in Rstudio.</p>
