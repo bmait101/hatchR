@@ -1,5 +1,6 @@
 # hatchR (development version)
 
+-   added new function `predict_spawn()` to take observed hatch or spawn events and back calculate when a parent spawned
 -   adding @pfrater and @allisonswartz as a contributors (should have been done for v0.3.2)
 -   secondary y-axis in `plot_phenology()` now "Cumulative EF Values" and updated documentation (#43)
 -   added new vignette for launching Shiny app (#45)
