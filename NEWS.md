@@ -1,5 +1,6 @@
 # hatchR (development version)
 
+-   added new function `predict_spawn()` to take observed hatch or spawn events and back calculate when a parent spawned
 -   adding @pfrater and @allisonswartz as a contributors (should have been done for v0.3.2)
 
 # hatchR 0.3.2
