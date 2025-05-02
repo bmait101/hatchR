@@ -101,9 +101,9 @@ fish phenology: basic</a> vignette. First you have to select a
 developmental model. This will be determined by what life history stage
 from which you have empirical phenology data. For example, maybe you
 snorkeled a stream and observed bull trout emerging from a redd.</p>
-<div class="section level4">
-<h4 id="model-selection">Model selection<a class="anchor" aria-label="anchor" href="#model-selection"></a>
-</h4>
+<div class="section level3">
+<h3 id="model-selection">Model selection<a class="anchor" aria-label="anchor" href="#model-selection"></a>
+</h3>
 <p>Because our empirical data are from observing juvenile bull trout
 emergence we will use the bull trout emergence model using
 <code><a href="../reference/model_select.html">model_select()</a></code> and our <code>model_table</code>. However,
@@ -116,9 +116,9 @@ if you have custom models those could be used in the same fashion.</p>
 <span>                                      development_type <span class="op">=</span> <span class="st">"emerge"</span></span>
 <span>                              <span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="predict-spawning">Predict spawning<a class="anchor" aria-label="anchor" href="#predict-spawning"></a>
-</h4>
+<div class="section level3">
+<h3 id="predict-spawning">Predict spawning<a class="anchor" aria-label="anchor" href="#predict-spawning"></a>
+</h3>
 <p>We’ll use our <code>crooked_river</code> data set, as it is from a
 spawning population of bull trout. With model in hand we’ll predict
 spawn timing assuming we observed fish emerging March 21, 2015.</p>
@@ -214,7 +214,6 @@ as <code><a href="../reference/predict_phenology.html">predict_phenology()</a></
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">bt_spawn</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Predict_spawning_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
-</div>
 <div class="section level4">
 <h4 id="compare-to-predict_phenology">Compare to <code>predict_phenology()</code><a class="anchor" aria-label="anchor" href="#compare-to-predict_phenology"></a>
 </h4>
@@ -243,6 +242,7 @@ match.</p>
 <span><span class="co">#&gt; 1 2014-09-15 2015-03-21</span></span>
 <span><span class="co">#&gt;        start       stop</span></span>
 <span><span class="co">#&gt; 1 2014-09-15 2015-03-21</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="using-multiple-inputs-for-predict_spawn">Using multiple inputs for <code>predict_spawn()</code><a class="anchor" aria-label="anchor" href="#using-multiple-inputs-for-predict_spawn"></a>
