@@ -68,7 +68,7 @@ The outputted object has the exact same structure as a `predict_phenolog()` outp
 
 -   `ef_table`: a n x 5 tibble where n is the number of days from spawn to development. Note that the table is ordered from the development date and moves backwards in time. The columns are:
 
-    -    `index`: the row number in the temperature dataset),
+    -   `index`: the row number in the temperature datas et
 
     -   `dates`: dates imported from your temperature data
 
@@ -91,6 +91,7 @@ So we see, the fish took 188 days to emerge with a predicted spawning date of Se
 ```{r}
 # development time
 bt_spawn$days_to_develop
+
 # spawning date
 bt_spawn$dev_period$start
 ```
@@ -119,12 +120,13 @@ And we can compare `dev_period` to verify the outputs match.
 ```{r}
 # are they the same (yes!)
 bt_emerge$dev_period == bt_spawn$dev_period
+
 #print out values
 bt_emerge$dev_period; bt_spawn$dev_period
 
 ```
 
-## Mapping `predict_spawn()`
+## Using multiple inputs for `predict_spawn()`
 
 Like `predict_phenology()`, `predict_spawn()` can easily be mapped across multiple variable sets to automate the function. We can use a simple example of observing emerging fish across multiple months to demonstrate.
 
