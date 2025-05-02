@@ -1,0 +1,156 @@
+---
+title: "Predict spawning"
+author: "Morgan Sparks, Bryan M. Maitland"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Predict spawning}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  fig.align = 'center',
+  fig.width = 6
+)
+options(tibble.print_min = 5, tibble.print_max = 5)
+```
+
+```{r setup, echo=FALSE}
+library(hatchR)
+library(tidyverse)
+```
+
+# Introduction
+
+**hatchR** has a built in function—`predict_spawn()`—which allows users to predict when a fish's parent spawned based on the observation of either when a fish hatched or emerged. The function works almost exactly the same as `predict_phenology()` but walks backwards from the point of development (hatch or emerge) and outputs spawn date.
+
+# Workflow
+
+`predict_spawn()` works in essentially the same fashion as you learned about for `predict_phenology()` in the [Predict fish phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette. First you have to select a developmental model. This will be determined by what life history stage from which you have empirical phenology data. For example, maybe you snorkeled a stream and observed bull trout emerging from a redd.
+
+### Model selection
+
+Because our empirical data are from observing juvenile bull trout emergence we will use the bull trout emergence model using `model_select()` and our `model_table`. However, if you have custom models those could be used in the same fashion.
+
+```{r}
+#select bull trout emergence model
+bt_emerge_mod <- model_select(author = "Austin et al. 2019",
+                                      species = "bull trout",
+                                      model = "MM",
+                                      development_type = "emerge"
+                              )
+```
+
+### Predict spawning
+
+We'll use our `crooked_river` data set, as it is from a spawning population of bull trout. With model in hand we'll predict spawn timing assuming we observed fish emerging March 21, 2015.
+
+```{r}
+#predict spawn timing using "2015-03-21" emergence date
+bt_spawn <- predict_spawn(data = crooked_river,
+              dates = date,
+              temperature = temp_c,
+              develop.date = "2015-03-21",
+              model = bt_emerge_mod
+              )
+```
+
+The outputted object has the exact same structure as a `predict_phenolog()` output. They include the slots:
+
+-   `days_to_develop`: days from hatch or emergence to spawn
+
+-   `dev_period`: a 1x2 dataframe where `start`= predicted spawn time and `stop`=empirical developmental event used for prediction in the model.
+
+-   `ef_table`: a n x 5 tibble where n is the number of days from spawn to development. Note that the table is ordered from the development date and moves backwards in time. The columns are:
+
+    -    `index`: the row number in the temperature dataset),
+
+    -   `dates`: dates imported from your temperature data
+
+    -   `temperature`: temperature imported from your temperature data
+
+    -   `ef_vals`: every day's individual effective value
+
+    -   `ef_cumsum`: the cumulative sum of effective values moving backwards from 1, a fish hatches when `ef_cumsum` \<= 0.
+
+-   `model_specs`: model specifications imported from the developmental model supplied to `predict_phenology()`
+
+A summary of those output for `bt_spawn` is presented below.
+
+```{r}
+glimpse(bt_spawn)
+```
+
+So we see, the fish took 188 days to emerge with a predicted spawning date of September 15, 2014.
+
+```{r}
+# development time
+bt_spawn$days_to_develop
+# spawning date
+bt_spawn$dev_period$start
+```
+
+Finally, because the model output is in essentially the same format as `predict_phenology()` it can be plotted using `plot_phenology()` .
+
+```{r}
+plot_phenology(bt_spawn)
+```
+
+### Compare to `predict_phenology()`
+
+To demonstrate this provides the same information as `predict_phenology()` we can compare the outputs. Now we will use the predicted spawn date of `"2014-09-15"` as our input in `predict_phenology()`.
+
+```{r}
+bt_emerge <- predict_phenology(data = crooked_river,
+              dates = date,
+              temperature = temp_c,
+              spawn.date = "2014-09-15",
+              model = bt_emerge_mod
+              )
+```
+
+And we can compare `dev_period` to verify the outputs match.
+
+```{r}
+# are they the same (yes!)
+bt_emerge$dev_period == bt_spawn$dev_period
+#print out values
+bt_emerge$dev_period; bt_spawn$dev_period
+
+```
+
+## Mapping `predict_spawn()`
+
+Like `predict_phenology()`, `predict_spawn()` can easily be mapped across multiple variable sets to automate the function. We can use a simple example of observing emerging fish across multiple months to demonstrate.
+
+We'll assume we observed fish emerging February 15, March 15, and April 15 in 2015. And then `map()` the function across those dates using the `purrr` package.
+
+```{r}
+library(purrr)
+
+#vector of dates
+emerge_days <- c("2015-02-15","2015-03-15", "2015-04-15")
+
+# object for predicting spawn timing across three emergence days
+bt_multiple_emerge <- map(emerge_days,
+                          predict_spawn,
+                          data = crooked_river,
+                          dates = date,
+                          temperature = temp_c,
+                          model = bt_emerge_mod)
+
+# we can access just the dev_periods using map_df
+# the start column provides the predicted spawn dates
+bt_multiple_emerge |> 
+  map_df("dev_period")
+```
+
+Based on our predictions, the fish spawned for our respective observed emergence dates on August 29, September 11, and September 27 in 2014.
+
+`predict_spawn()` can be automated to greater extents just like with `predict_phenology()`. We recommend reading the [Predict fish phenology: advanced](https://bmait101.github.io/hatchR/articles/Predict_phenology_advanced.html) vignette to review ways to map across multiple variables.
