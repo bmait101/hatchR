@@ -33,7 +33,7 @@ library(hatchR)
 
 `predict_spawn()` works in essentially the same fashion as you learned about for `predict_phenology()` in the [Predict fish phenology: basic](https://bmait101.github.io/hatchR/articles/Predict_phenology_basic.html) vignette. First you have to select a developmental model. This will be determined by what life history stage from which you have empirical phenology data. For example, maybe you snorkeled a stream and observed bull trout emerging from a redd.
 
-### Model selection
+## Model selection
 
 Because our empirical data are from observing juvenile bull trout emergence we will use the bull trout emergence model using `model_select()` and our `model_table`. However, if you have custom models those could be used in the same fashion.
 
@@ -46,7 +46,7 @@ bt_emerge_mod <- model_select(author = "Austin et al. 2019",
                               )
 ```
 
-### Predict spawning
+## Predict spawning
 
 We'll use our `crooked_river` data set, as it is from a spawning population of bull trout. With model in hand we'll predict spawn timing assuming we observed fish emerging March 21, 2015.
 
