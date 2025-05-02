@@ -23,7 +23,6 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 ```{r setup, echo=FALSE}
 library(hatchR)
-library(tidyverse)
 ```
 
 # Introduction
@@ -84,7 +83,7 @@ The outputted object has the exact same structure as a `predict_phenolog()` outp
 A summary of those output for `bt_spawn` is presented below.
 
 ```{r}
-glimpse(bt_spawn)
+str(bt_spawn)
 ```
 
 So we see, the fish took 188 days to emerge with a predicted spawning date of September 15, 2014.
