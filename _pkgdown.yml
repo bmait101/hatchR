@@ -10,6 +10,7 @@ articles:
     - Introduction
     - Parameterize_models
     - Predict_phenology_basic
+    - Predict_spawning
 
   - title: "Advanced hatchR"
     navbar: "Advanced hatchR"
