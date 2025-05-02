@@ -143,8 +143,8 @@ developmental event used for prediction in the model.</p></li>
 days from spawn to development. Note that the table is ordered from the
 development date and moves backwards in time. The columns are:</p>
 <ul>
-<li><p><code>index</code>: the row number in the temperature
-dataset),</p></li>
+<li><p><code>index</code>: the row number in the temperature datas
+et</p></li>
 <li><p><code>dates</code>: dates imported from your temperature
 data</p></li>
 <li><p><code>temperature</code>: temperature imported from your
@@ -204,6 +204,7 @@ date of September 15, 2014.</p>
 <code class="sourceCode R"><span><span class="co"># development time</span></span>
 <span><span class="va">bt_spawn</span><span class="op">$</span><span class="va">days_to_develop</span></span>
 <span><span class="co">#&gt; [1] 188</span></span>
+<span></span>
 <span><span class="co"># spawning date</span></span>
 <span><span class="va">bt_spawn</span><span class="op">$</span><span class="va">dev_period</span><span class="op">$</span><span class="va">start</span></span>
 <span><span class="co">#&gt; [1] "2014-09-15 UTC"</span></span></code></pre></div>
@@ -235,6 +236,7 @@ match.</p>
 <span><span class="va">bt_emerge</span><span class="op">$</span><span class="va">dev_period</span> <span class="op">==</span> <span class="va">bt_spawn</span><span class="op">$</span><span class="va">dev_period</span></span>
 <span><span class="co">#&gt;      start stop</span></span>
 <span><span class="co">#&gt; [1,]  TRUE TRUE</span></span>
+<span></span>
 <span><span class="co">#print out values</span></span>
 <span><span class="va">bt_emerge</span><span class="op">$</span><span class="va">dev_period</span>; <span class="va">bt_spawn</span><span class="op">$</span><span class="va">dev_period</span></span>
 <span><span class="co">#&gt;        start       stop</span></span>
@@ -243,7 +245,7 @@ match.</p>
 <span><span class="co">#&gt; 1 2014-09-15 2015-03-21</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="mapping-predict_spawn">Mapping <code>predict_spawn()</code><a class="anchor" aria-label="anchor" href="#mapping-predict_spawn"></a>
+<h3 id="using-multiple-inputs-for-predict_spawn">Using multiple inputs for <code>predict_spawn()</code><a class="anchor" aria-label="anchor" href="#using-multiple-inputs-for-predict_spawn"></a>
 </h3>
 <p>Like <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code>, <code><a href="../reference/predict_spawn.html">predict_spawn()</a></code>
 can easily be mapped across multiple variable sets to automate the
