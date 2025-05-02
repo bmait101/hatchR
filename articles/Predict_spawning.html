@@ -119,9 +119,10 @@ if you have custom models those could be used in the same fashion.</p>
 <div class="section level3">
 <h3 id="predict-spawning">Predict spawning<a class="anchor" aria-label="anchor" href="#predict-spawning"></a>
 </h3>
-<p>We’ll use our <code>crooked_river</code> data set, as it is from a
-spawning population of bull trout. With model in hand we’ll predict
-spawn timing assuming we observed fish emerging March 21, 2015.</p>
+<p>We’ll use our <code>crooked_river</code> data set, which is
+temperature data from a reach of spawning bull trout. With model in hand
+we’ll predict spawn timing assuming we observed fish emerging March 21,
+2015.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#predict spawn timing using "2015-03-21" emergence date</span></span>
 <span><span class="va">bt_spawn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predict_spawn.html">predict_spawn</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">crooked_river</span>,</span>
@@ -131,7 +132,7 @@ spawn timing assuming we observed fish emerging March 21, 2015.</p>
 <span>              model <span class="op">=</span> <span class="va">bt_emerge_mod</span></span>
 <span>              <span class="op">)</span></span></code></pre></div>
 <p>The outputted object has the exact same structure as a
-<code>predict_phenolog()</code> output. They include the slots:</p>
+<code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> output. They include the slots:</p>
 <ul>
 <li><p><code>days_to_develop</code>: days from hatch or emergence to
 spawn</p></li>
@@ -140,15 +141,16 @@ spawn</p></li>
 developmental event used for prediction in the model.</p></li>
 <li>
 <p><code>ef_table</code>: a n x 5 tibble where n is the number of
-days from spawn to development. Note that the table is ordered from the
-development date and moves backwards in time. The columns are:</p>
+days from spawn to development. <em>Note that the table is ordered from
+the development date and moves backwards in time.</em> The columns
+are:</p>
 <ul>
-<li><p><code>index</code>: the row number in the temperature datas
-et</p></li>
+<li><p><code>index</code>: the row number in the temperature data
+set</p></li>
 <li><p><code>dates</code>: dates imported from your temperature
 data</p></li>
-<li><p><code>temperature</code>: temperature imported from your
-temperature data</p></li>
+<li><p><code>temperature</code>: daily average temperature imported from
+your temperature data</p></li>
 <li><p><code>ef_vals</code>: every day’s individual effective
 value</p></li>
 <li><p><code>ef_cumsum</code>: the cumulative sum of effective values
@@ -157,10 +159,10 @@ moving backwards from 1, a fish hatches when <code>ef_cumsum</code>
 </ul>
 </li>
 <li><p><code>model_specs</code>: model specifications imported from the
-developmental model supplied to
+developmental model provided to
 <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code></p></li>
 </ul>
-<p>A summary of those output for <code>bt_spawn</code> is presented
+<p>A summary of the above output for <code>bt_spawn</code> is presented
 below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">bt_spawn</span><span class="op">)</span></span>
@@ -209,7 +211,7 @@ date of September 15, 2014.</p>
 <span><span class="va">bt_spawn</span><span class="op">$</span><span class="va">dev_period</span><span class="op">$</span><span class="va">start</span></span>
 <span><span class="co">#&gt; [1] "2014-09-15 UTC"</span></span></code></pre></div>
 <p>Finally, because the model output is in essentially the same format
-as <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> it can be plotted using
+as that from <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> it can be plotted using
 <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code> .</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">bt_spawn</span><span class="op">)</span></span></code></pre></div>
