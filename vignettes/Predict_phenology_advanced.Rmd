@@ -434,7 +434,7 @@ head(all_data)
 
 # the phenological durations for each prediction set
 development_period <- crooked_predictions |>
-  map_df("dev.period")
+  map_df("dev_period")
 head(development_period)
 ```
 
@@ -457,12 +457,12 @@ WI_named_list <- WI_spawn_dates |>
 glimpse(WI_named_list)
 
 # therefore a single element could be accessed with its name and the $ operator
-# if we wanted the dev.period for fish spawning on August 18th we would do the following
+# if we wanted the dev_period for fish spawning on August 18th we would do the following
 
-WI_named_list$`1990-08-18`$dev.period
+WI_named_list$`1990-08-18`$dev_period
 ```
 
-This approach works well for the example above, but not so well with our examples with `purrr::pmap()` because the variable grid we create has a bunch of expressions which don't work for naming lists. However, if we were to do a `purrr::pmap()` example where it was a site x dates combination, that still work and would name the lists according to their site and then the date used to predict phenology (e.g. `` named_list$site1$`date`$dev.period ``)
+This approach works well for the example above, but not so well with our examples with `purrr::pmap()` because the variable grid we create has a bunch of expressions which don't work for naming lists. However, if we were to do a `purrr::pmap()` example where it was a site x dates combination, that still work and would name the lists according to their site and then the date used to predict phenology (e.g. `` named_list$site1$`date`$dev_period ``)
 
 
 # References {.unnumbered}

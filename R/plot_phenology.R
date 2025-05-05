@@ -4,6 +4,11 @@
 #' The function takes the output from `predict_phenology()` and creates a
 #' basic ggplot2 plot object to visualize the predicted phenology.
 #'
+#' @details
+#' When displayed, scaled daily effective temperature (EF) values plot to the
+#' primary y-axis. Cumulative EF values plot to the secondary y-axis.
+#'
+#'
 #' @param plot A list containing the output from `predict_phenology()`
 #' @param style The style of the plot. A vector with possible values "all",
 #'  "ef_cumsum", "ef_daily". The default is "all".
@@ -47,7 +52,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#d95f02'>Cumulative EF value</span>;
           <span style='color:#1b9e77'>Daily EF value (x100)</span>"
@@ -61,7 +66,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#d95f02'>Cumulative EF value</span>"
         ),
@@ -74,7 +79,7 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       title = paste(dat$days_to_develop, "days to develop"),
       subtitle = stringr::str_wrap(
         stringr::str_glue(
-          "Fish spawned: {dat$dev.period$start}; fish developed: {dat$dev.period$stop}",
+          "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
           "<br><span style='color:#1f78b4'>Temperature</span>;
           <span style='color:#1b9e77'>Daily EF value (x100)</span>"
         ),
@@ -131,10 +136,10 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       ggplot2::geom_point(ggplot2::aes(y = .data$ef_vals * 100), color = cols[3], size = 0.25) +
       ef_daily_label +
       ggplot2::theme_classic() +
-      ggplot2::theme(plot.subtitle = ggtext::element_markdown()) +
-      ggplot2::scale_y_continuous(
-        sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "Cumulative EF Value")
-      )
+      ggplot2::theme(plot.subtitle = ggtext::element_markdown())
+      # ggplot2::scale_y_continuous(
+      #   sec.axis = ggplot2::sec_axis(~. / sec_axis_scalar, name = "Cumulative EF Value")
+      # )
   }
   return(p)
 }

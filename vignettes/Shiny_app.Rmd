@@ -72,7 +72,9 @@ Once the Shiny package is installed, you simply run the below either in your scr
 shiny::runGitHub("hatchR_shiny", "efelts-usfws")
 ```
 
-This will launch the Shiny app in an HTML window of Rstudio for you to use just as you would the online resource, but without the limitations of a limited wall time or continuous internet connection. You can rerun that same line over and over again to relaunch the Shiny app each time.
+This will launch the Shiny app in an HTML window of Rstudio. We recommend transferring from the RStudio viewer pane to an internet browser. This can be accomplished by clicking "Open in Browser" from the RStudio HTML window. Now the app will be available for you to use just as you would the online resource, but without the limitations of a limited wall time or continuous internet connection. You can rerun that same line over and over again to relaunch the Shiny app each time.
+
+> **Note:** the app runs using more packages than just `shiny::` mentioned in the previous section. The app will automatically install those packages the first time it is used.
 
 Briefly, the command refers to the GitHub website page that hosts the Shiny app and accesses it using `shiny::runGitHub(repository_name, repository_user_name)`. So if either the repository name or host's user name changed in the GitHub they could easily be accessed to correctly changing the above script accordingly. This makes more sense when you visit the Shiny app GitHub where you can see `efelts-usfws` hosts a `hatchR_shiny` repository (or GitHub directory) <https://github.com/efelts-usfws/hatchR_shiny>.
 
