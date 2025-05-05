@@ -34,6 +34,8 @@ This vignette demonstrates a complete and simple **hatchR** workflow. We will us
 
 If you have not already done so, see the vignettes on [data checks](https://bmait101.github.io/hatchR/articles/Introduction.html) and [model parameterization](https://bmait101.github.io/hatchR/articles/Parameterize_models.html).
 
+Additionally, `predict_phenology()` has a companion function, `predict_spawn()`, which works in the backwards direction of `predict_phenology()`. It allows users to predict spawn timing starting from known hatch or emergence timing—you can read more about it in the [Predict spawning](https://bmait101.github.io/hatchR/articles/Predict_spawning.html) vignette.
+
 First, we load needed packages:
 
 ```{r, eval = FALSE}
