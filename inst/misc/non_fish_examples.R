@@ -20,7 +20,7 @@ rana_s_mod <- fit_model(temp = rana_s_data$temp,
 
 
 # Ranan pipiens -----------------------------------------------------------
-
+# from Moore 1939
 
 rana_pip_data <- tibble(temp = c(15.3,18.6,19.8, 26),
                       hours = c(168,116,99,57)) |>
@@ -32,6 +32,7 @@ rana_pip_mod <- fit_model(temp = rana_pip_data$temp,
                         development_type = "hatch")
 
 # Rana clamitans ----------------------------------------------------------
+# from Moore 1939
 
 rana_c_data <- tibble(temp = c(15,19.8, 25.3,33.4),
                         hours = c(263,112,62,45)) |>
@@ -44,6 +45,7 @@ rana_c_mod <- fit_model(temp = rana_c_data$temp,
 
 
 # Rana palustris ----------------------------------------------------------
+# from Moore 1939
 
 rana_p_data <- tibble(temp = c(15.5,18.6, 19.9, 25.7),
                       hours = c(190,126,106,63)) |>
@@ -80,7 +82,7 @@ efl_mod <- fit_model(temp = efl_data$temp,
                           development_type = "hatch")
 
 
-# data --------------------------------------------------------------------
+# Lithobates example --------------------------------------------------------------------
 
 temperature_data <- data.frame(temperatures = sort(rnorm(30, mean = 16, sd =3)),
                     dates = seq(ymd("2000-04-01"), ymd("2000-04-30"), by = "days"))
