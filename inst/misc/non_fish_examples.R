@@ -31,7 +31,7 @@ rana_pip_mod <- fit_model(temp = rana_pip_data$temp,
                         species = "Rana_pipiens",
                         development_type = "hatch")
 
-# Rana clamitans ----------------------------------------------------------
+# Lithobates clamitans ----------------------------------------------------------
 # from Moore 1939
 
 rana_c_data <- tibble(temp = c(15,19.8, 25.3,33.4),
@@ -40,7 +40,7 @@ rana_c_data <- tibble(temp = c(15,19.8, 25.3,33.4),
 
 rana_c_mod <- fit_model(temp = rana_c_data$temp,
                           days = rana_c_data$days,
-                          species = "Rana_clamitans",
+                          species = "Lithobates_clamitans",
                           development_type = "hatch")
 
 
@@ -107,19 +107,19 @@ colnames(froggy_hatch)[1] <- "days_to_develop"
 froggy_hatch <- froggy_hatch |>
   mutate(start = ymd("2000-04-01"),
          stop = start + days_to_develop,
-         species = c("Rana clamitans", "Rana palustris", "Rana pipiens", "Rana sylvaticus"),
+         species = c("Green Frog", "Pickerel Frog", "Northern Leopard Frog", "Wood Frog"),
          index = seq(20.5,17.5, by = -1))
 
 
 
 ggplot() +
-  geom_point(data = temp_data, aes(x = days, y = temps)) +
-  geom_line(data = temp_data, aes(x = days, y = temps)) +
+  geom_point(data = temperature_data, aes(x = dates, y = temperatures)) +
+  geom_line(data = temperature_data, aes(x = dates, y = temperatures)) +
   geom_rect(data = froggy_hatch, aes(xmin = start, xmax = stop, ymax =index-.15, ymin = index-.5, fill = species)) +
   geom_label(data = froggy_hatch, aes(x = start + (stop - start) / 1.45, y = (index -0.325), label = days_to_develop)) +
   labs(x = "Date", y = "Temperature (°C)",
        title = "Development periods of four North American Frog Species") +
-  scale_fill_manual(values = c("deepskyblue4", "grey23", "darkolivegreen4", "purple4")) +
+  scale_fill_manual(values = c("darkolivegreen4","deepskyblue4", "grey23",  "purple4"), name = "Species") +
   theme_classic() +
   theme(legend.position = c(0.75, 0.25))
 
