@@ -69,6 +69,18 @@ ascaphus_mod <- fit_model(temp = ascaphus_data$temp,
                       development_type = "hatch")
 
 
+
+# Crayfish (Astacus leptodactylus) ----------------------------------------
+# Aydin and Dilek 2004, Turkish journal of Fisheries and Aquatic Sciences
+# https://dergipark.org.tr/en/pub/trjfas-ayrildi/issue/13289/160618
+crayfish_data <- tibble(temp = c(11.8, 16, 20),
+                       days = c(120,92,71))
+
+crayfish_mod <- fit_model(temp = crayfish_data$temp,
+                          days = crayfish_data$days,
+                          species = "crayfish",
+                          development_type = "hatch")
+
 # Eastern Fence lizard ----------------------------------------------------
 
 # angilletta et al 2000, Ecology
