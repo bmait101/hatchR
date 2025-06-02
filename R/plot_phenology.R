@@ -44,9 +44,9 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
   dat <- plot
   x_lab <- "Date"
   y_lab <- "Mean daily temperature"
-  cols <- c("#1f78b4", "#d95f02", "#1b9e77")
+  cols <- c("#0072B2", "#E69F00", "#009E73")
   size.pts <- 1.0
-  size.line <- 1.0
+  size.line <- 0.75
 
   if (labels == TRUE) {
     all_label <- ggplot2::labs(
