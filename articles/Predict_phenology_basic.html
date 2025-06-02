@@ -282,14 +282,14 @@ to hatch or emerge.</p></li>
 dates corresponding to when your fish’s parent spawned (which you input
 with <code>predict_phenology(spawn.date = ...)</code>) and the date when
 the fish is predicted to hatch or emerge.</p></li>
-<li><p><code>WI_hatch$ef.tibble</code> is a <em>n</em> x 5 tibble
+<li><p><code>WI_hatch$ef_table</code> is a <em>n</em> x 5 tibble
 (<em>n</em> = number of days to hatch or emerge) and the columns are a
 row index, the date, each day’s temperature, effective value, and the
 cumulative sum of the effective values to that date. The
-<code>ef.tibble</code> object is meant to serve as the basis for users
-to make custom figures for their data beyond the functionality we
-discuss below.</p></li>
-<li><p><code>WI_hatch$model.specs</code> is a tibble showing the model
+<code>ef_table</code> object is meant to serve as the basis for users to
+make custom figures for their data beyond the functionality we discuss
+below.</p></li>
+<li><p><code>WI_hatch$model_specs</code> is a tibble showing the model
 specifications used to predict the phenology.</p></li>
 </ul>
 </div>
@@ -309,8 +309,8 @@ interests, but defaults to a figure with all information and lots of
 labeling.</p>
 <p>In the output of <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code> the <em>cumulative
 effective values</em> are scaled by the warmest temperature in
-<code>ef.tibble</code> and the <em>daily effective values</em> are
-scaled by multiplying by 100 so everything is visibly congruent in the
+<code>ef_table</code> and the <em>daily effective values</em> are scaled
+by multiplying by 100 so everything is visibly congruent in the
 figure.</p>
 <p>Let’s look at the basic call, which gives you all the
 information:</p>
@@ -418,7 +418,7 @@ Sciences</em> 76 (1): 123–35. <a href="https://doi.org/10.1139/cjfas-2017-0468
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
