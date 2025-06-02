@@ -167,9 +167,9 @@ We can access each element using the `$` operator:
 
 -   `WI_hatch$dev_period` is a 1x2 dataframe with the dates corresponding to when your fish's parent spawned (which you input with `predict_phenology(spawn.date = ...)`) and the date when the fish is predicted to hatch or emerge.
 
--   `WI_hatch$ef.tibble` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature, effective value, and the cumulative sum of the effective values to that date. The `ef.tibble` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
+-   `WI_hatch$ef_table` is a *n* x 5 tibble (*n* = number of days to hatch or emerge) and the columns are a row index, the date, each day's temperature, effective value, and the cumulative sum of the effective values to that date. The `ef_table` object is meant to serve as the basis for users to make custom figures for their data beyond the functionality we discuss below.
 
--   `WI_hatch$model.specs` is a tibble showing the model specifications used to predict the phenology.
+-   `WI_hatch$model_specs` is a tibble showing the model specifications used to predict the phenology.
 
 ## Visualizing phenology
 
@@ -181,7 +181,7 @@ We can access each element using the `$` operator:
 
 The function allows you to output various figures based on your interests, but defaults to a figure with all information and lots of labeling.
 
-In the output of `plot_phenology()` the *cumulative effective values* are scaled by the warmest temperature in `ef.tibble` and the *daily effective values* are scaled by multiplying by 100 so everything is visibly congruent in the figure.
+In the output of `plot_phenology()` the *cumulative effective values* are scaled by the warmest temperature in `ef_table` and the *daily effective values* are scaled by multiplying by 100 so everything is visibly congruent in the figure.
 
 Let's look at the basic call, which gives you all the information:
 
