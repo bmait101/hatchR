@@ -53,9 +53,9 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       subtitle = stringr::str_wrap(
         stringr::str_glue(
           "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
-          "<br><span style='color:#1f78b4'>Temperature</span>;
-          <span style='color:#d95f02'>Cumulative EF value</span>;
-          <span style='color:#1b9e77'>Daily EF value (x100)</span>"
+          "<br><span style='color:{cols[1]}'>Temperature</span>;
+          <span style='color:{cols[2]}'>Cumulative EF value</span>;
+          <span style='color:{cols[3]}'>Daily EF value (x100)</span>"
         ),
         width = 30
       )
@@ -67,8 +67,8 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       subtitle = stringr::str_wrap(
         stringr::str_glue(
           "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
-          "<br><span style='color:#1f78b4'>Temperature</span>;
-          <span style='color:#d95f02'>Cumulative EF value</span>"
+          "<br><span style='color:{cols[1]}'>Temperature</span>;
+          <span style='color:{cols[2]}'>Cumulative EF value</span>"
         ),
         width = 30
       )
@@ -80,8 +80,8 @@ plot_phenology <- function(plot, style = "all", labels = TRUE) {
       subtitle = stringr::str_wrap(
         stringr::str_glue(
           "Fish spawned: {dat$dev_period$start}; fish developed: {dat$dev_period$stop}",
-          "<br><span style='color:#1f78b4'>Temperature</span>;
-          <span style='color:#1b9e77'>Daily EF value (x100)</span>"
+          "<br><span style='color:{cols[1]}'>Temperature</span>;
+          <span style='color:{cols[3]}'>Daily EF value (x100)</span>"
         ),
         width = 30
       )
