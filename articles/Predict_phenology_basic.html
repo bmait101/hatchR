@@ -141,7 +141,7 @@ use <code><a href="../reference/plot_check_temp.html">plot_check_temp()</a></cod
 <span>  temperature <span class="op">=</span> <span class="va">temp_c</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_basic_files/figure-html/plot-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There appear to be outliers in the data, specifically in the very
 beginning and end of the period of record, and right in the middle. The
 loggers look to have been recording observations outside of the water
@@ -165,7 +165,7 @@ represent the approximate phenology window:</p>
 <span>    fill <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.01</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_basic_files/figure-html/plot-rect-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>If we just apply the model within the gray polygon we’ve drawn, the
 model should work just fine.</p>
 </div>
@@ -316,7 +316,7 @@ figure.</p>
 information:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_phenology.html">plot_phenology</a></span><span class="op">(</span><span class="va">WI_hatch</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_basic_files/figure-html/plot-pheno-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>You can turn of labeling or plot specific values using the function
 arguments <code>style</code> and <code>labels</code>, for example (plots
 not rendered):</p>
@@ -391,7 +391,7 @@ so negligible toward development over incubation.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Temperature (C)"</span>, y <span class="op">=</span> <span class="st">"Effective Value"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Predict_phenology_basic_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Predict_phenology_basic_files/figure-html/temp-example-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
