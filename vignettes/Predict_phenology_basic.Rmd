@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include=FALSE}
 # rmd style
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -38,7 +38,7 @@ Additionally, `predict_phenology()` has a companion function, `predict_spawn()`,
 
 First, we load needed packages:
 
-```{r, eval = FALSE}
+```{r packages, eval = FALSE}
 library(hatchR)    # for phenology modeling
 library(ggplot2)   # for additional plotting options
 library(lubridate) # for date manipulation
@@ -50,14 +50,14 @@ library(dplyr)     # for data manipulation
 
 First, let's check the data to make sure it's in the right format. We'll print the first few rows and `summary()` to get a sense of the data:
 
-```{r}
+```{r data}
 woody_island
 summary(woody_island)
 ```
 
 You can see that each day already is summarized as a mean temperature. You can also see that the data spans multiple years. We'll use `plot_check_temp()` to make visually check the data:
 
-```{r}
+```{r plot}
 p <- plot_check_temp(
   data = woody_island,
   dates = date,
@@ -70,7 +70,7 @@ There appear to be outliers in the data, specifically in the very beginning and 
 
 However, spawning in this system typically peaks around August 18 and hatching and emergence are done before the start of the following spawning season, so we can predict phenology within a subset of a year. Because `plot_check_temp()` is a **ggplot2** object, we can add additional plotting elements to the graph to represent the approximate phenology window:
 
-```{r}
+```{r plot-rect}
 p +
   geom_rect(
     aes(
@@ -90,7 +90,7 @@ If we just apply the model within the gray polygon we've drawn, the model should
 
 Now that our temperature data is usable, we can select our models. We'll predict both hatch and emergence, so we will obtain a model expression for each using `model_select()`. The only argument in `model_select()` that must be changed in this case is `development_type`, which can be either "hatch" or "emerge".
 
-```{r}
+```{r mod-select}
 sockeye_hatch_mod <- model_select(
   author = "Beacham and Murray 1990",
   species = "sockeye",
@@ -108,7 +108,7 @@ sockeye_emerge_mod <- model_select(
 
 Let's look at the model specifications for the two different parameterizations we've selected:
 
-```{r}
+```{r print}
 sockeye_hatch_mod
 sockeye_emerge_mod
 ```
@@ -119,7 +119,7 @@ You can see they are parameterized slightly different to account for the differe
 
 We can now use our model expressions to predict when sockeye would hatch and emerge at Woody Island in 1990. First we predict hatch timing using `predict_phenology()`:
 
-```{r, warning=TRUE}
+```{r pred-hatch, warning=TRUE}
 WI_hatch <- predict_phenology(
   data = woody_island,
   dates = date,
@@ -133,14 +133,14 @@ WI_hatch <- predict_phenology(
 
 Next, look inside the returned object to see days to hatch and development period (more on this in the [Understanding your results](#results) section)
 
-```{r}
+```{r print-hatch}
 WI_hatch$days_to_develop
 WI_hatch$dev_period
 ```
 
 We can also do the same with emergence:
 
-```{r, warning=TRUE}
+```{r pred-eme, warning=TRUE}
 WI_emerge <- predict_phenology(
   data = woody_island,
   dates = date,
@@ -157,7 +157,7 @@ WI_emerge$dev_period
 
 The output from `predict_phenology()` includes a lot of information. Here is a summary of the elements in the output list.
 
-```{r}
+```{r output}
 summary(WI_hatch)
 ```
 
@@ -185,13 +185,13 @@ In the output of `plot_phenology()` the *cumulative effective values* are scaled
 
 Let's look at the basic call, which gives you all the information:
 
-```{r}
+```{r plot-pheno}
 plot_phenology(WI_hatch)
 ```
 
 You can turn of labeling or plot specific values using the function arguments `style` and `labels`, for example (plots not rendered):
 
-```{r, eval=FALSE}
+```{r other-plots, eval=FALSE}
  # shows a plot with just the ef cumulative sum values
 plot_phenology(WI_hatch, style = "ef_cumsum")
 # shows a plot with just the ef daily values
@@ -206,7 +206,7 @@ Occasionally, temperature data sets will have a few negative values or values ve
 
 A toy example of this phenomenon is shown below.
 
-```{r}
+```{r temp-example}
 # vector of temps from -5 to 15 by 0.5
 x <- seq(from = -5, to = 15, by = 0.5)
 x
