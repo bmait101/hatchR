@@ -11,7 +11,8 @@ csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -280,7 +281,7 @@ WI_hatch <- predict_phenology(
 The returned object provides several outputs, including days to hatch and the full development period, allowing us to assess phenological patterns under the recorded thermal conditions:
 
 ```{r, echo=TRUE}
-WI_hatch$days_to_develop; WI_hatch$dev.period
+WI_hatch$days_to_develop; WI_hatch$dev_period
 ```
 
 ## Understanding your results
@@ -293,7 +294,7 @@ summary(WI_hatch)
 
 `WI_hatch$days_to_develop` -- Returns the predicted number of days required for development.
 
-`WI_hatch$dev.period` -- A 1x2 dataframe containing the spawning date (as input via `predict_phenology(spawn.date = ...)`) and predicted development completion date.
+`WI_hatch$dev_period` -- A 1x2 dataframe containing the spawning date (as input via `predict_phenology(spawn.date = ...)`) and predicted development completion date.
 
 `WI_hatch$ef_table` -- An *n* x 5 tibble (*n* = number of days to hatch or emerge), containing a row index, the date, each day's temperature and effective value, and the cumulative sum of the effective values. This table serves as a foundation for users to create custom visualizations beyond the built-in functionality discussed below.
 
@@ -431,15 +432,15 @@ all_res <- data.frame(matrix(NA, 3, 2))
 colnames(all_res) <- c("start", "stop")
 
 all_res$start <- c(
-  catfish_res$dev.period$start,
-  smb_res$dev.period$start,
-  sturgeon_res$dev.period$start
+  catfish_res$dev_period$start,
+  smb_res$dev_period$start,
+  sturgeon_res$dev_period$start
 )
 
 all_res$stop <- c(
-  catfish_res$dev.period$stop,
-  smb_res$dev.period$stop,
-  sturgeon_res$dev.period$stop
+  catfish_res$dev_period$stop,
+  smb_res$dev_period$stop,
+  sturgeon_res$dev_period$stop
 )
 
 
@@ -504,7 +505,7 @@ bt_emergence <- predict_phenology(
 )
 
 # fish emerge May 1, before June 1
-bt_emergence$dev.period$stop
+bt_emergence$dev_period$stop
 ```
 
 In this example, the model predicts that the last Bull Trout will emerge on April 21, before the road work target date (June 1). This suggests that the Fisheries Biologist can confidently approve the work in the area without concern for sediment disturbance impacting fish developing in the gravel.
@@ -583,7 +584,7 @@ hatch_res <- isaak_summ_bt |>
       dates = date,              # column of date in `summ_obj`
       model = bt_hatch           # model to use (from model_select())
     ) |>
-      map_df("dev.period") |>    # pull out just dev.period results
+      map_df("dev_period") |>    # pull out just dev_period results
       list()
   ) |>
   select(site, dev_period) |>           # just select the columns we want
