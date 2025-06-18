@@ -129,7 +129,8 @@ p2 <- grayling_ef |>
   lims(x = c(0,15)) +
   theme_classic()
 
-p1 + p2 + plot_annotation(tag_levels = "A")
+fig1 <- p1 + p2 + plot_annotation(tag_levels = "A")
+ggsave("./manuscript_figures/Figure 1.pdf", fig1, width = 8, height = 4, dpi = 1000)
 ```
 
 This framework is the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond salmonids.
