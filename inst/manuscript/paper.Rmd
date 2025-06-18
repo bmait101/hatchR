@@ -59,11 +59,13 @@ To maximize accessibility, **hatchR** is available in two formats. The first is 
 
 # **hatchR** Overview
 
+## Workflow
+
 The **hatchR** softeware is designed primarily as a tool for predicting early life history phenology in wild fishes. To maintain focus on this core function, we provide minimal built-in data validation and visualization tools, as users are expected to understand and check their own data. Given the diversity of potential data types, it is impractical to implement comprehensive validation checks. However, we include basic data-checking and summarization functions (`check_continuous()`, `summarize_temp()`) and limited built-in visualization capabilities (`plot_check_temp()`, `plot_phenology()`), the process for which is highlighted in Box 1. Intuitive functions are provided for users to apply models—either existing models from the literature using the `model_select()` function (Boxes 2,3) or fitting custom functions from data using the `fit_model()` function (Box 4). Users can then apply these models to water temperature data (*e.g.,* from an in-stream temperature logger) to predict when developmental phenology will occur using the `predict_phenology()` function (Box 2). Alternatively, if users had known or observed hatch or emergence dates, they could use `predict_spawn()` to backcalculate spawn timing using the appropriate corresponding developmental models. Finally, users can either use model output (Box 3) for custom graphics or generate simple plots using the `plot_phenology()` function which can use the output object generated from `predict_phenology()` or `predict_spawn()` (Box 5).
 
 The R package provides user-friendly example articles that build in complexity for teaching users the functionality and flexibility of each aspect of the work flow as well as customization for plotting model outputs. In contrast, the Shiny application includes a default output plot and an option to download results for external visualizations. For a high-level overview of **hatchR**'s applications, see Figure 1. Additional details on key functions and workflows, particularly for automating phenology predictions across multiple variables, are available in articles hosted on the software's webpage.
 
-```{r, echo = FALSE, out.height= "72%", fig.align = 'center', fig.cap="hatchR workflow. Data inputs are represented by folders, data processes by filled circles, hatchR functions as plain text rectangles, and decision choices as italicized text."}
+```{r, echo = FALSE, eval=FALSE, out.height= "72%", fig.align = 'center', fig.cap=""}
 knitr::include_graphics("./workflow.png")
 ```
 
@@ -85,7 +87,7 @@ $$
 
 To demonstrate this approach, we use European Grayling (*Thymallus thymallus*) that were raised in five experimental average temperatures ranging from 2-14 °C [@quinn2018]. We fit a developmental model to those experimental data (Figure 2A), reparameterize that model into an effective value model, and predict effective values for daily average temperatures ranging from 2-14 °C (Figure 2B).
 
-```{r, echo = FALSE, fig.height=3, fig.align = 'center', fig.cap = "Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference."}
+```{r, echo = FALSE, fig.height=3, fig.align = 'center', fig.cap = ""}
 grayling <- matrix(NA, 5, 2) |> tibble::tibble()
 colnames(grayling) <- c("temp", "days")
 
@@ -129,8 +131,8 @@ p2 <- grayling_ef |>
   lims(x = c(0,15)) +
   theme_classic()
 
-fig1 <- p1 + p2 + plot_annotation(tag_levels = "A")
-ggsave("./manuscript_figures/Figure 1.pdf", fig1, width = 8, height = 4, dpi = 1000)
+figure_2 <- p1 + p2 + plot_annotation(tag_levels = "A")
+ggsave("./manuscript_figures/Figure_2.pdf", figure_2, width = 8, height = 4, dpi = 1000)
 ```
 
 This framework is the foundation for phenological models in **hatchR**. The package includes a predefined `model_table` containing established parameterizations, including those from @beacham1990, @sparks2017, and @austin2019 (who extended @mcphail1979). While `model_table` incorporated more complex models from @beacham1990, users can also fit custom models using the `fit_model()` function. This flexibility allows for the incorporation of new parameterizations as they are developed, expanding the utility of **hatchR** beyond salmonids.
@@ -140,30 +142,6 @@ This framework is the foundation for phenological models in **hatchR**. The pack
 Water temperature datasets collected in the field typically fall into two categories: 1) summarized daily data, where mean daily temperatures are pre-computed, or 2) raw high-frequency data, such as those recorded by HOBO TidbiT loggers, which require summary into mean daily temperatures before use. Additionally, new statistical models that predict daily stream temperatures, such as those developed by @siegel2023, could also be implemented into this framework.
 
 The **hatchR** software assumes input data consists of at least two required columns: a date column indicating the date (and optionally time in the case of field) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but column names should not include spaces. Data should follow the format outlined in Table 1.
-
-```{r kabletable, echo=FALSE}
-df <- data.frame(
-  date = c(
-    "2000-01-01",
-    "...",
-    "2000-07-01",
-    "...",
-    "2000-12-31"
-  ),
-  temperature = c(
-    2.51,
-    "...",
-    16.32,
-    "...",
-    3.13
-  )
-)
-
-knitr::kable(df,
-  booktabs = TRUE,
-  caption = "Example temperature data for use in hatchR."
-)
-```
 
 The **hatchR** software will function with missing values, but gaps in the dataset may affect predictions. Since the package does not automatically handle missing data, users must check for gaps or errors before running analyses with the provided check functions (see section *Checking Data*). The **hatchR** software supports temperatures as low as 0 °C, though such values yield extremely small effective values, potentially extending hatch or emergence timing to a year or more. Users should critically assess whether such data align with biological expectations.
 
@@ -290,7 +268,7 @@ To predict hatch timing across these sites, we first set up the necessary models
 
 We then apply `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates each year (Early: September 1st, Peak: September 15th, Late: September 30th).
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 # apply predict_phenology() over multiple sites and spawn dates
 hatch_res <- isaak_summ_bt |>
   mutate(
@@ -312,7 +290,7 @@ hatch_res <- isaak_summ_bt |>
 
 By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 6, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range and across years. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
 
-```{r plot-bt, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap="Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data."}
+```{r plot-bt, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap=""}
 cut_ints <- date(
   c(
     "2011-08-31", "2012-08-31",
@@ -350,7 +328,7 @@ hatch_factors_sum <- hatch_factors |>
   )
 
 
-ggplot(
+figure_3 <- ggplot(
   data = hatch_factors,
   aes(
     x = days_to_hatch,
@@ -366,6 +344,8 @@ ggplot(
   labs(x = "Days to hatch", y = "Spawn time") +
   theme_classic() +
   theme(legend.position = "none")
+
+ggsave("./manuscript_figures/Figure_3.pdf", figure_3, width = 3.5, height = 5, dpi = 1000)
 ```
 
 # Discussion
@@ -442,13 +422,24 @@ head(year_sim)
 
 We recommend using `plot_check_temp()` to visually inspect imported data for outliers or unusual values. This function plots the temperature data against time, allowing users to set custom thresholds for minimum and maximum temperatures. In this example, we set the minimum and maximum thresholds to 0 and 25 °C, respectively.
 
-```{r plot-check-1, echo = TRUE,  fig.cap = "Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).", fig.height = 3.25}
+```{r plot-check-1, echo = TRUE, eval=FALSE, fig.cap = "", fig.height = 3.25}
 # visual check of temperature data
 plot_check_temp(data = year_sim,
                 dates = date,
                 temperature = temp,
                 temp_min = 0,
                 temp_max = 25)
+
+```
+
+```{r, echo=FALSE}
+box_1 <- plot_check_temp(data = year_sim,
+                dates = date,
+                temperature = temp,
+                temp_min = 0,
+                temp_max = 25)
+
+ggsave("./manuscript_figures/Box_1.pdf", box_1, width = 6, height = 3, dpi = 1000)
 ```
 
 In this case, no obvious outliers are present. However, each day contains 48 records, so the data must be summarized to daily mean temperature using `summarize_temp()`. After summarization, `check_continuous()` should be used to identify any missing days. We also suggest running `plot_check_temp()` again on the summarized data to verify its integrity, though we omit the resulting plot here for space efficiency.
@@ -623,7 +614,7 @@ smb_res <- predict_phenology(
 
 Finally, we summarize the outputs across species to visualize hatch timing and total developmental duration. This example highlights the flexibility of **hatchR** for accommodating diverse fish species and environmental conditions, making it a valuable tool for researchers and managers working outside of salmonid systems.
 
-```{r pred-pheno-warmwater, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.", fig.height=5}
+```{r pred-pheno-warmwater, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="", fig.height=5}
 # Catfish
 catfish_res <- predict_phenology(
   data = data_sim,
@@ -668,7 +659,7 @@ all_res <- all_res |>
 
 all_res$Species <- c("Channel Catfish", "Smallmouth Bass", "Lake Sturgeon")
 
-ggplot() +
+box_4 <- ggplot() +
   geom_point(data = data_sim, aes(x = date_sim, y = temp_sim)) +
   geom_line(data = data_sim, aes(x = date_sim, y = temp_sim)) +
   geom_rect(data = all_res, aes(xmin = start, xmax = stop, ymax = index - .35, ymin = index - .5, fill = Species)) +
@@ -677,15 +668,22 @@ ggplot() +
   scale_fill_manual(values = c("deepskyblue4", "grey23", "darkolivegreen4")) +
   theme_classic() +
   theme(legend.position = c(0.75, 0.25))
+
+ggsave("./manuscript_figures/Box_4.pdf", box_4, width = 4, height = 4, dpi = 1000)
 ```
 
 # Box 5: Plotting phenology
 
-The **hatchR software** includes a built in function, `plot_phenology()`, for visualizing phenology predictions. This function generates plots with three specific components: 1) the temperature regime over the prediction period, 2) the cumulative sum of effective values, and 3) the effective value for each day within the prediction span. By default, `plot_phenology()` produces a comprehensive figure that includes all three elements with corresponding labels and titles. However, users can customize the output to focus on specific aspects of interest, allowing for tailored visual representations of their results. This function provides a quick and effective way to interpret model outputs, facilitating comparisons between temperature regimes or species-specific phenological responses.
+The **hatchR software** includes a built in function, `plot_phenology()`, for visualizing phenology predictions from either `predict_phenology()` or `predict_spawn()`. This function generates plots with three specific components: 1) the temperature regime over the prediction period, 2) the cumulative sum of effective values, and 3) the effective value for each day within the prediction span. By default, `plot_phenology()` produces a comprehensive figure that includes all three elements with corresponding labels and titles. However, users can customize the output to focus on specific aspects of interest, allowing for tailored visual representations of their results. This function provides a quick and effective way to interpret model outputs, facilitating comparisons between temperature regimes or species-specific phenological responses.
 
-```{r, fig.cap="Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` dataset."}
+```{r, eval = FALSE, fig.cap=""}
 plot_phenology(WI_hatch)
 
+```
+
+```{r, echo=FALSE}
+box_5 <- plot_phenology(WI_hatch)
+ggsave("./manuscript_figures/Box_5.pdf", box_5, width = 6, height = 6, dpi = 1000)
 ```
 
 # Acknowledgements
@@ -711,3 +709,55 @@ All data was derived from pre-published sources or created synthetically.
 The authors declare no funding sources.
 
 # References
+
+::: {#refs}
+:::
+
+\newpage
+
+# Table Captions
+
+**Table 1.** Example temperature data for use in hatchR.
+
+\newpage
+
+# Figure Captions
+
+**Figure 1.** hatchR workflow. Data inputs are represented by folders, data processes by filled circles, hatchR functions as plain text rectangles, and decision choices as italicized text.
+
+**Figure 2.** Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.
+
+**Figure 3.** Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data.
+
+**Box 1.** Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).
+
+**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.
+
+**Box 5.** Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` dataset.
+
+\newpage
+
+# Tables
+
+```{r kabletable, echo=FALSE}
+df <- data.frame(
+  date = c(
+    "2000-01-01",
+    "...",
+    "2000-07-01",
+    "...",
+    "2000-12-31"
+  ),
+  temperature = c(
+    2.51,
+    "...",
+    16.32,
+    "...",
+    3.13
+  )
+)
+
+knitr::kable(df,
+  booktabs = TRUE
+)
+```
