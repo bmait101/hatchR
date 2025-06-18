@@ -1,6 +1,6 @@
 ---
 title: ""
-output: pdf_document
+output: word_document
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
@@ -47,7 +47,7 @@ Understanding the timing of key life history events is essential for effective f
 
 # Introduction
 
-Fish, as poikilothermic organisms, have developmental rates that are strongly influenced by ambient environmental conditions. This close relationship has allowed researchers to develop statistical models that predict developmental phenology with high accuracy. Historically, these models were created in aquaculture settings under the assumption of constant temperatures throughout development [@beacham1990; @mcphail1979; @alderdice1978]. As a result, accumulated thermal unit thresholds (ATU models) have become widely used to predict development in wild populations. However, this approach can be inaccurate, particularly at the cold and warm extremes of temperature ranges, due to the non-linear relationship between average incubation temperature and the thermal units required for development [@quinn2018].
+As poikilothermic organisms, fish have developmental rates that are strongly influenced by ambient environmental conditions. This close relationship has allowed researchers to develop statistical models that predict developmental phenology with high accuracy. Historically, these models were created in aquaculture settings under the assumption of constant temperatures throughout development [@beacham1990; @mcphail1979; @alderdice1978]. As a result, accumulated thermal unit thresholds (ATU models) have become widely used to predict development in wild populations. However, this approach can be inaccurate, particularly at the cold and warm extremes of temperature ranges, due to the non-linear relationship between average incubation temperature and the thermal units required for development [@quinn2018].
 
 In colder environments, fish require fewer accumulated thermal units to develop than those in warmer conditions, yet still experience longer overall developmental periods. Recognizing this non-linear relationship, @sparks2019 introduced the Effective Value model, which improves prediction accuracy by accounting for daily average temperatures following spawning. This model predicts hatch or emergence timing based on the cumulative effective values reaching a threshold of one, offering a more precise framework for forecasting developmental phenology in wild fish populations.
 
@@ -264,9 +264,7 @@ bt_hatch <- model_select(
 )
 ```
 
-To predict hatch timing across these sites, we first set up the necessary models and data, using the built-in Bull Trout parameterization (for concision, we omit this setup here, but full details are available in the `paper.Rmd` file in the GitHub repository, or in the *Predict fish phenology: Nested* article on **hatchR**'s website).
-
-We then apply `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates each year (Early: September 1st, Peak: September 15th, Late: September 30th).
+To predict hatch timing across these sites, we first set up the necessary models and data, using the built-in Bull Trout parameterization (for concision, we omit this setup here, but full details are available in the `paper.Rmd` file in the GitHub repository, or in the *Predict fish phenology: Nested* article on **hatchR**'s website). We then map `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates each year (Early: September 1st, Peak: September 15th, Late: September 30th).
 
 ```{r, echo=FALSE}
 # apply predict_phenology() over multiple sites and spawn dates
@@ -288,7 +286,7 @@ hatch_res <- isaak_summ_bt |>
   mutate(days_to_hatch = stop - start)  # make a new column of days to hatch
 ```
 
-By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 6, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range and across years. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
+By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 3, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range and across years. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
 
 ```{r plot-bt, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap=""}
 cut_ints <- date(
@@ -380,6 +378,8 @@ Finally, while **hatchR** was designed specifically for fishes, it has potential
 
 Importantly, hatchR extends the effective value framework developed by @sparks2019 into a generalizable tool that can be applied to any fish species or population, provided that appropriate source data are available. We present foundational applications of **hatchR**, with additional user-friendly cases and implementation guides available on the software's website. The software is designed for both applied and fundamental research, allowing users to engage with it either through a programmatic R environment or via a user-friendly Shiny app. We expect that the examples provided here represent only a fraction of **hatchR**'s potential applications and encourage the user community to explore and expand upon this framework for their own research and management needs.
 
+\newpage
+
 # Box 1: Checking and summarizing your data
 
 To demonstrate the process of checking your data we show the workflow for the functions `summarize_temp()`, `plot_check_temp()`, and `check_continuous()` using a simulated year-long dataset (`year_sim`). This dataset contains temperature readings taken every thirty minutes, and its structure (dimensions and first six rows) is shown below:
@@ -468,6 +468,8 @@ check_continuous(
 )
 ```
 
+\newpage
+
 # Box 2: Model selection and prediction
 
 To illustrate parameter selection and phenology prediction, we will replicate a portion of the analysis from @sparks2019 using the `woody_island` dataset included with **hatchR**. Specifically, we predict both hatch and emergence timing for Sockeye Salmon at Woody Island in 1990.
@@ -503,6 +505,8 @@ The returned object provides several outputs, including days to hatch and the fu
 WI_hatch$days_to_develop; WI_hatch$dev_period
 ```
 
+\newpage
+
 # Box 3: Understanding model output
 
 The output from `predict_phenology()` (in this example, our named object `WI_hatch` generated in Box 2) contains multiple elements in a list, which can be accessed using the `$` operator. Each component provides different insight into the predicted phenology:
@@ -518,6 +522,8 @@ summary(WI_hatch)
 `WI_hatch$ef_table` -- An *n* x 5 tibble (*n* = number of days to hatch or emerge), containing a row index, the date, each day's temperature and effective value, and the cumulative sum of the effective values. This table serves as a foundation for users to create custom visualizations beyond the built-in functionality discussed below.
 
 `WI_hatch$model_specs` -- Provides details about the model used for prediction, including whether it was retrieved from `model_select()` or generated using `fit_model()`. Most importantly, it contains the model expression (*i.e.*, the formula) used for phenology predictions.
+
+\newpage
 
 # Box 4: Generating custom models
 
@@ -672,6 +678,8 @@ box_4 <- ggplot() +
 ggsave("./manuscript_figures/Box_4.pdf", box_4, width = 4, height = 4, dpi = 1000)
 ```
 
+\newpage
+
 # Box 5: Plotting phenology
 
 The **hatchR software** includes a built in function, `plot_phenology()`, for visualizing phenology predictions from either `predict_phenology()` or `predict_spawn()`. This function generates plots with three specific components: 1) the temperature regime over the prediction period, 2) the cumulative sum of effective values, and 3) the effective value for each day within the prediction span. By default, `plot_phenology()` produces a comprehensive figure that includes all three elements with corresponding labels and titles. However, users can customize the output to focus on specific aspects of interest, allowing for tailored visual representations of their results. This function provides a quick and effective way to interpret model outputs, facilitating comparisons between temperature regimes or species-specific phenological responses.
@@ -685,6 +693,8 @@ plot_phenology(WI_hatch)
 box_5 <- plot_phenology(WI_hatch)
 ggsave("./manuscript_figures/Box_5.pdf", box_5, width = 6, height = 6, dpi = 1000)
 ```
+
+\newpage
 
 # Acknowledgements
 
