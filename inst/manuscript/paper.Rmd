@@ -1,6 +1,6 @@
 ---
 title: ""
-output: word_document
+output: pdf_document
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
@@ -708,7 +708,7 @@ The authors declare no known conflicts of interest.
 
 # Data Availability
 
-**hatchR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The Rmardkdown document with all the code to reproduce the examples from this manuscript is available at <https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper.Rmd>. The The latest version will be archived upon acceptance of the manuscript.
+**hatchR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The Rmardkdown document with all the code to reproduce the examples from this manuscript is available at <https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper.Rmd>. The latest version will be archived upon acceptance of the manuscript.
 
 # Ethics Statement
 
@@ -743,7 +743,7 @@ The authors declare no funding sources.
 
 **Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.
 
-**Box 5.** Output of `plot_phenolgy()` function using predicted hatch time from `woody_island` dataset.
+**Box 5.** Output of `plot_phenology()` function using predicted hatch time from `woody_island` dataset.
 
 \newpage
 
