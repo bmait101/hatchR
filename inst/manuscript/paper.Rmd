@@ -47,7 +47,7 @@ Understanding the timing of key life history events is essential for effective f
 
 # Introduction
 
-As poikilothermic organisms, fish have developmental rates that are strongly influenced by ambient environmental conditions. This close relationship has allowed researchers to develop statistical models that predict developmental phenology with high accuracy. Historically, these models were created in aquaculture settings under the assumption of constant temperatures throughout development [@beacham1990; @mcphail1979; @alderdice1978]. As a result, accumulated thermal unit thresholds (ATU models) have become widely used to predict development in wild populations. However, this approach can be inaccurate, particularly at the cold and warm extremes of temperature ranges, due to the non-linear relationship between average incubation temperature and the thermal units required for development [@quinn2018].
+As poikilothermic organisms, fish have developmental rates that are strongly influenced by ambient environmental conditions. This close relationship has allowed researchers to develop statistical models that predict developmental phenology with high accuracy. Historically, these models were created in aquaculture settings under the assumption of constant temperatures throughout development [@beacham1990; @mcphail1979; @alderdice1978]. As a result, accumulated thermal unit thresholds (*i.e.*, ATU models) have become widely used to predict development in wild populations. However, this approach can be inaccurate, particularly at the cold and warm extremes of temperature ranges, due to the non-linear relationship between average incubation temperature and the thermal units required for development [@quinn2018].
 
 In colder environments, fish require fewer accumulated thermal units to develop than those in warmer conditions, yet still experience longer overall developmental periods. Recognizing this non-linear relationship, @sparks2019 introduced the Effective Value model, which improves prediction accuracy by accounting for daily average temperatures following spawning. This model predicts hatch or emergence timing based on the cumulative effective values reaching a threshold of one, offering a more precise framework for forecasting developmental phenology in wild fish populations.
 
@@ -141,7 +141,7 @@ This framework is the foundation for phenological models in **hatchR**. The pack
 
 Water temperature datasets collected in the field typically fall into two categories: 1) summarized daily data, where mean daily temperatures are pre-computed, or 2) raw high-frequency data, such as those recorded by HOBO TidbiT loggers, which require summary into mean daily temperatures before use. Additionally, new statistical models that predict daily stream temperatures, such as those developed by @siegel2023, could also be implemented into this framework.
 
-The **hatchR** software assumes input data consists of at least two required columns: a date column indicating the date (and optionally time, as is commonly the case for field loggers) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but column names should not include spaces. Data should follow the format outlined in Table 1.
+The **hatchR** software assumes input data consists of at least two required columns: a date column indicating the date (and optionally time, as is commonly the case for field loggers) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but column names should not include spaces.
 
 The **hatchR** software will function with missing values, but gaps in the dataset may affect predictions. Since the package does not automatically handle missing data, users must check for gaps or errors before running analyses with the provided check functions (see section *Checking Data*). The **hatchR** software supports temperatures as low as 0 °C, though such values yield extremely small effective values, potentially extending hatch or emergence timing to a year or more. Users should critically assess whether such data align with biological expectations.
 
@@ -376,7 +376,7 @@ Finally, while **hatchR** was designed specifically for fishes, it has potential
 
 **hatchR** provides a versatile and accessible tool for predicting developmental phenology in wild fish populations. It offers basic data checks and summarization tools, pre-existing and customizable model parameterization options, and scalable applications from simple site-level predictions to complex multi-site analyses.
 
-Importantly, **hatchR** extends the effective value framework developed by @sparks2019 into a generalizable tool that can be applied to any fish species or population, provided that appropriate source data are available. We present foundational applications of **hatchR**, with additional user-friendly cases and implementation guides available on the software's website. The software is designed for both applied and fundamental research, allowing users to engage with it either through a programmatic R environment or via a user-friendly Shiny app. We expect that the examples provided here represent only a fraction of **hatchR**'s potential applications and encourage the user community to explore and expand upon this framework for their own research and management needs.
+Importantly, **hatchR** extends the effective value framework developed by @sparks2019 into a generalizable tool that can be applied to any fish species or population, provided that appropriate source data are available. We present foundational applications of **hatchR**, with additional user-friendly cases and implementation guides available on the software's website. The software is designed for both applied and fundamental research, allowing users to engage with it either through a programmatic R environment or via a user-friendly Shiny app. We expect that the examples provided here represent only a fraction of **hatchR**'s potential applications and encourage the user community to explore and expand upon this framework for their own research and management needs in the face of interacting stressors in aquatic ecosystems [@craig2017].
 
 \newpage
 
@@ -586,7 +586,7 @@ Note the *R^2^* fit from the models below. You can see they generally preform we
 c(smb_mod$r_squared, cat_mod$r_squared, sturgeon_mod$r_squared)
 ```
 
-Next, we generated a simulated thermal regime featuring an ascending thermograph with a mean temperature of 16 °C and standard deviation 1 °C (available in `paper.Rmd`, chosen to represent a reasonable putative temperature regime). Using this dataset, we apply the custom models for each species using `predict_phenology()` (only Smallmouth Bass shown below):
+Next, to emulate a wild environment, we simulated a thermal regime featuring an ascending thermograph with a mean temperature of 16 °C and standard deviation 1 °C (available in `paper.Rmd`, chosen to represent a reasonable putative temperature regime). To highlight how different species develop at different rates under identical thermal conditions, we apply the custom models for each species using `predict_phenology()` (only Smallmouth Bass shown below):
 
 ```{r make-temps, echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -725,49 +725,16 @@ The authors declare no funding sources.
 
 \newpage
 
-# Table Captions
-
-**Table 1.** Example temperature data for use in hatchR.
-
-\newpage
-
 # Figure Captions
 
 **Figure 1.** hatchR workflow. Data inputs are represented by folders, data processes by filled circles, hatchR functions as plain text rectangles, and decision choices as italicized text.
 
-**Figure 2.** Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.
+**Figure 2.** Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five different average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.
 
 **Figure 3.** Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data.
 
 **Box 1.** Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).
 
-**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.
+**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days. Note:
 
 **Box 5.** Output of `plot_phenology()` function using predicted hatch time from `woody_island` dataset.
-
-\newpage
-
-# Tables
-
-```{r kabletable, echo=FALSE}
-df <- data.frame(
-  date = c(
-    "2000-01-01",
-    "...",
-    "2000-07-01",
-    "...",
-    "2000-12-31"
-  ),
-  temperature = c(
-    2.51,
-    "...",
-    16.32,
-    "...",
-    3.13
-  )
-)
-
-knitr::kable(df,
-  booktabs = TRUE
-)
-```
