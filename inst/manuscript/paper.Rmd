@@ -735,33 +735,6 @@ The authors declare no funding sources.
 
 **Box 1.** Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).
 
-**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.
+**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days. Note:
 
 **Box 5.** Output of `plot_phenology()` function using predicted hatch time from `woody_island` dataset.
-
-\newpage
-
-# Tables
-
-```{r kabletable, echo=FALSE}
-df <- data.frame(
-  date = c(
-    "2000-01-01",
-    "...",
-    "2000-07-01",
-    "...",
-    "2000-12-31"
-  ),
-  temperature = c(
-    2.51,
-    "...",
-    16.32,
-    "...",
-    3.13
-  )
-)
-
-knitr::kable(df,
-  booktabs = TRUE
-)
-```
