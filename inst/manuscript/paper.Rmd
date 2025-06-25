@@ -729,7 +729,7 @@ The authors declare no funding sources.
 
 **Figure 1.** hatchR workflow. Data inputs are represented by folders, data processes by filled circles, hatchR functions as plain text rectangles, and decision choices as italicized text.
 
-**Figure 2.** Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five differrent average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.
+**Figure 2.** Effective value model fit and application for European Grayling. Panel A shows developmental rates (days to hatch) at five different average rearing temperatures and the corresponding model fit (blue line). Panel B uses the effective value model derived from the blue line in panel A to predict the effective value of daily average temperatures ranging from 2 to 14 °C. The dashed line is a 0.01 increase in effective value for every 1 °C increase as a point of reference.
 
 **Figure 3.** Predicted days to hatch for 139 putative bull trout populations over three spawning periods (Early = September 1, Peak = September 15, Late = September 30) and four years of temperature data.
 
