@@ -1,5 +1,6 @@
 # hatchR (development version)
 
+-   fix test for ggplot object class (#61)
 -   added [Predict spawn](https://bmait101.github.io/hatchR/articles/Predict_spawning.html) vignette for examples of using `predict_spawn()` function
 -   added new function `predict_spawn()` to take observed hatch or spawn events and back calculate when a parent spawned
 -   adding @pfrater and @allisonswartz as a contributors (should have been done for v0.3.2)
