@@ -586,7 +586,7 @@ Note the *R^2^* fit from the models below. You can see they generally preform we
 c(smb_mod$r_squared, cat_mod$r_squared, sturgeon_mod$r_squared)
 ```
 
-Next, we generated a simulated thermal regime featuring an ascending thermograph with a mean temperature of 16 °C and standard deviation 1 °C (available in `paper.Rmd`, chosen to represent a reasonable putative temperature regime). Using this dataset, we apply the custom models for each species using `predict_phenology()` (only Smallmouth Bass shown below):
+Next, to emulate a wild environment, we simulated a thermal regime featuring an ascending thermograph with a mean temperature of 16 °C and standard deviation 1 °C (available in `paper.Rmd`, chosen to represent a reasonable putative temperature regime). To highlight how different species develop at different rates under identical thermal conditions, we apply the custom models for each species using `predict_phenology()` (only Smallmouth Bass shown below):
 
 ```{r make-temps, echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
