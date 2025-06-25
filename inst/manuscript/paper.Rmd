@@ -141,7 +141,7 @@ This framework is the foundation for phenological models in **hatchR**. The pack
 
 Water temperature datasets collected in the field typically fall into two categories: 1) summarized daily data, where mean daily temperatures are pre-computed, or 2) raw high-frequency data, such as those recorded by HOBO TidbiT loggers, which require summary into mean daily temperatures before use. Additionally, new statistical models that predict daily stream temperatures, such as those developed by @siegel2023, could also be implemented into this framework.
 
-The **hatchR** software assumes input data consists of at least two required columns: a date column indicating the date (and optionally time, as is commonly the case for field loggers) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but column names should not include spaces. Data should follow the format outlined in Table 1.
+The **hatchR** software assumes input data consists of at least two required columns: a date column indicating the date (and optionally time, as is commonly the case for field loggers) of each temperature measurement, and a temperature column providing the corresponding temperature measurement (in °C). Other columns may be present, but column names should not include spaces.
 
 The **hatchR** software will function with missing values, but gaps in the dataset may affect predictions. Since the package does not automatically handle missing data, users must check for gaps or errors before running analyses with the provided check functions (see section *Checking Data*). The **hatchR** software supports temperatures as low as 0 °C, though such values yield extremely small effective values, potentially extending hatch or emergence timing to a year or more. Users should critically assess whether such data align with biological expectations.
 
@@ -722,12 +722,6 @@ The authors declare no funding sources.
 
 ::: {#refs}
 :::
-
-\newpage
-
-# Table Captions
-
-**Table 1.** Example temperature data for use in hatchR.
 
 \newpage
 
