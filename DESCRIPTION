@@ -3,14 +3,14 @@ Package: hatchR
 Title: Predict Fish Hatch and Emergence Timing
 Version: 0.3.2.9000
 Authors@R: c(
-    person("Bryan M.", "Maitland", , "bryan.maitland@usda.gov", role = c("aut", "cre"),
+    person("Bryan M.", "Maitland", "bryan.maitland@usda.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4491-5064")),
-    person("Morgan M.", "Sparks", , "morgan.sparks@usda.gov", role = c("aut", "cph"),
+    person("Morgan M.", "Sparks", "morgan.sparks@usda.gov", role = c("aut", "cph"),
            comment = c(ORCID = "0000-0003-0787-2218")),
-    person("Eli", "Felts", , "eli_felts@fws.gov", role = "ctb",
+    person("Eli", "Felts", "eli_felts@fws.gov", role = "ctb",
            comment = c(ORCID = "0000-0002-5888-9266")),
-    person("Allison", "Swartz", , "allison.swartz@oregonstate.edu", role = "ctb"),
-    person("Paul", "Frater", , "paul.frater@wisconsin.gov", role = "ctb")
+    person("Allison", "Swartz", "allison.swartz@oregonstate.edu", role = "ctb"),
+    person("Paul", "Frater", "paul.frater@wisconsin.gov", role = "ctb")
   )
 Maintainer: Bryan M. Maitland <bryan.maitland@usda.gov>
 Description: Predict hatch and emergence timing for a wide range of wild
