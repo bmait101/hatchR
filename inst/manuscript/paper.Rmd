@@ -25,7 +25,7 @@ Morgan M. Sparks^1,5,6^, Bryan M. Maitland^1,6^, Eli A. Felts^2^, Allison G. Swa
 
 ^1^Rocky Mountain Research Station, U.S. Forest Service, Boise, ID, USA
 
-^2^Clearwater Solutions, Lenore, ID, USA
+^2^Idaho Fish and Wildlife Conservation Office, U.S. Fish and Wildlife Service, Orofino, ID, USA
 
 ^3^College of Forestry, Oregon State University, Corvallis, OR, USA
 
@@ -735,6 +735,6 @@ The authors declare no funding sources.
 
 **Box 1.** Output of hatchR function `plot_check_temp()`, which is used as a visual data check on the raw `year_sim` dataset. Users can set custom thresholds for minimum and maximum temperatures (dashed lines).
 
-**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days. Note:
+**Box 4.** Predicted days to hatch for three warmwater species with custom parameterizations using a random thermal regime with an ascending thermograph with a mean temperature of 16 °C over 30 days.
 
 **Box 5.** Output of `plot_phenology()` function using predicted hatch time from `woody_island` dataset.
