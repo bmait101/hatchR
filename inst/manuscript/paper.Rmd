@@ -1,6 +1,6 @@
 ---
 title: ""
-output: word_document
+output: pdf_document
 header-includes:
    - \usepackage{lineno}
    - \linenumbers
@@ -697,7 +697,7 @@ ggsave("./manuscript_figures/Box_5.pdf", box_5, width = 6, height = 6, dpi = 100
 
 # Acknowledgements
 
-We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided helpful discussion about model development and temperature data sets. Matt Kaylor provided useful comments on an earlier trial run of the package and Shiny app. Three anonymous reviewers added thoghtful comments that greatly improved the manuscript.
+We thank Laura Koller for her help designing the **hatchR** logo. Dan Isaak provided helpful discussion about model development and temperature data sets. Matt Kaylor provided useful comments on an earlier trial run of the package and Shiny app. Three anonymous reviewers added thoughtful comments that greatly improved the manuscript.
 
 The views expressed in this manuscript are those of the authors and do not necessarily represent the views or policies of USFS and USFWS. Any mention of trade names, products, or services does not imply an endorsement by the U.S. government or USFS or USFWS. USFS and USFWS does not endorse any commercial products, services or enterprises.
 
