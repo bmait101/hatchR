@@ -24,6 +24,10 @@ articles:
     contents:
     - Shiny_app
 
+  - title: "Other use cases"
+    navbar: "Other use cases"
+    contents:
+    - Non-fish
 
   - title: "Model Bibliography"
     navbar: "Model Bibliography"
