@@ -5,13 +5,14 @@ articles:
   Advanced_plotting: Advanced_plotting.html
   Introduction: Introduction.html
   Model_bibliography: Model_bibliography.html
+  Non-fish: Non-fish.html
   Parameterize_models: Parameterize_models.html
   Predict_phenology_advanced: Predict_phenology_advanced.html
   Predict_phenology_basic: Predict_phenology_basic.html
   Predict_phenology_nested: Predict_phenology_nested.html
   Predict_spawning: Predict_spawning.html
   Shiny_app: Shiny_app.html
-last_built: 2025-07-02T15:27Z
+last_built: 2025-07-15T20:00Z
 urls:
   reference: https://bmait101.github.io/hatchR/reference
   article: https://bmait101.github.io/hatchR/articles
