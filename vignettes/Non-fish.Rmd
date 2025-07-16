@@ -1,5 +1,6 @@
 ---
 title: "Non-fish examples"
+author: "Morgan Sparks, Bryan M. Maitland"
 output: rmarkdown::html_vignette
 bibliography: '`r system.file("references.bib", package="hatchR")`'
 vignette: >
@@ -21,7 +22,9 @@ knitr::opts_chunk$set(
 options(tibble.print_min = 5, tibble.print_max = 5)
 ```
 
-Because poikilotherms largely have a similar mechanistic relationship with ambient temperature and developmental rates, **hatchR**, may easily be applied to other non-fish species. Unlike many examples in other articles, non-fish species will obviously rely exclusively on the `fit_model()` function for creating developmental models. An excellent starting place for potential model parameterization is the [Reptile Developmental Database](https://repdevo.com/).
+Because poikilotherms largely have a similar mechanistic relationship with ambient temperature and developmental rates, **hatchR**, may easily be applied to other non-fish species. Unlike many examples in other articles on this website, non-fish species will obviously rely exclusively on the `fit_model()` function for creating developmental models. An excellent starting place for potential model parameterization is the [Model sources] section below.
+
+Here, we outline examples of how one can use developmental studies from peer-reviewed or grey literature to develop species- or population-specific models in a generalizeable format.
 
 ```{r setup}
 #libraries
@@ -33,11 +36,11 @@ library(dplyr)
 library(purrr)
 ```
 
-## A simple example: coastal tailed frogs
+# A simple example: coastal tailed frogs
 
 Tailed frogs (*Ascaphus* spp.) are common amphibians in the Rocky and Cascade Mountain regions of the northern United States and southern Canada, generally occupying the cold and fast-flowing habitat of headwater streams of the region. Compared to many other frog species, tailed frogs are comparatively slow growing and occupy colder habitats.
 
-@brown1975 raised coastal tailed frogs (*A. truei*) at temperatures ranging from 5-20 °C. Using those data we can easily parameterize a developmental model for coastal tailed frogs to be used in similar situations we present with fish.
+Brown (1975) raised coastal tailed frogs (*A. truei*) at temperatures ranging from 5-20 °C. Using those data we can easily parameterize a developmental model for coastal tailed frogs to be used in similar situations we present with fish.
 
 First we set up the raw data from the study and parameterize the model with `fit_model()`:
 
@@ -53,7 +56,7 @@ ascaphus_mod <- fit_model(temp = ascaphus_data$temp,
 
 ```
 
-To demonstrate the respective effective value at different daily temperatures we can evaluate our model across a vectory of daily temperatures
+To demonstrate the respective effective value at different daily temperatures we can evaluate our model across a vector of daily temperatures
 
 ```{r tailed-frog-efs}
 ### get effective values
@@ -107,9 +110,9 @@ p1 + p2
 
 ```
 
-## Interspecific developmental rates of cabbage beetles
+# Multiple populations: developmental rates of cabbage beetles
 
-The application of **hatchR** need not be limited to aquatic species, though many such putative species source data are available. Here we demonstrate how data from a clinal study on cabbage beetles (*Colaphellus bowringi*) from @tang2017 can be leveraged to understand population specific developmental rates. Here we show how we can develop effective value models for five separate populations.
+The application of **hatchR** need not be limited to aquatic species, though many such putative species source data are available. Here we demonstrate how data from a clinal study on cabbage beetles (*Colaphellus bowringi*) from @tang2017 can be leveraged to understand population specific developmental rates, by generating effective value models for five separate populations.
 
 ```{r beetle-setup}
 # vector of experimental temps
@@ -144,7 +147,7 @@ beetle_mods <- pop_list |>
 
 ```
 
-Now we have our five beetle models stored as characters.
+Now we have our five beetle models stored as character strings (to be parsed and evaluated later on).
 
 ```{r}
 beetle_mods
@@ -200,3 +203,48 @@ ef_vals_pops |>
   theme_classic() +
   theme(legend.position = c(0.25, 0.75))
 ```
+
+# Model sources
+
+The above examples are meant to inform how we can easily leverage the `fit_model()` function for paramereterizing developmental models for non-fish taxa. We recommend our other articles on this site for examples of how these models may be leveraged for applied and basic questions. We also stress that the assumptions made for fish (as well taxa-specific ones not outlined here) should be considered when applying these models. Here we provide a non-exhaustive list of putative model sources for parameterizing developmental models for non-fish organisms.
+
+| Class | Order | Genus | Species | Study |
+|:--------------|:--------------|:--------------|:--------------|:--------------|
+| Amphibia | Anura | *Lithobates* | *L. sylvaticus* | @moore1939 |
+|  |  |  | *L. pipiens* |  |
+|  |  |  | *L. clamitans* |  |
+|  |  |  | *L. palustris* |  |
+|  |  | *Ascaphus* | *A. truei* | @brown1975 |
+|  | Urodela | *Ambystoma* | *A. gracile* | @brown1976 |
+| Reptilia | Squamata | *Sceloporus* | *S. undulatus* | @angillettajr.2000 |
+|  |  | *Podarcis* | *P. muralis* | @vandamme1992 |
+|  | Testudines | *Mauremys* | *M. reevesii* | @du2007 |
+|  |  |  | 181 species | 141 studies in @while2018 |
+| Insecta | Plecoptera | *Nemurella* | *N. pictetii* | @brittain1978 , @elliott1984 |
+|  |  | *Capnia* | *C. atra* | @brittain1984 |
+|  |  | *Capnia* | *C. bifrons* | @elliott1986 |
+|  |  | *Mesocapnia* | *M. oenone* | @brittain1984 |
+|  |  | *Taeniopteryx* | *T. nebulosa* | @brittain1977 |
+|  | Coleoptera | *Colaphellus* | *C. bowringi* | @tang2017 |
+|  |  |  | 18 species | Developmental equations in @pritchard1987 |
+| Malacostraca | Decapoda | *Pontastacus* | *P. leptodactylus* | @aydin2004 |
+| Copepoda | Calanoida | 10 genera | 28 species | @forster2011 |
+|  | Cyclopoida | *Limnoithona* | *L. tetraspina* |  |
+|  |  | *Oithona* | *O. davisae* |  |
+|  | Harpacticoida | *Microsetella* | *M. norvegica* |  |
+|  |  | *Mesochra* | *M.lilljeborgi* |  |
+|  | Poecilostomatoida | *Oncaea* | *O. venusta* |  |
+| Cephalopoda | Octopoda | *Octopus* | *O. vulgaris* | @márquez2021 |
+|  |  |  | *O. mimus* |  |
+|  | Myopsida | *Loligo* | *L. vulgaris* |  |
+|  |  |  | *L. reynaudii* |  |
+|  | Oegopsida | *Illex* | *I. coindetii* |  |
+|  |  |  | *I. illecebrosus* |  |
+|  |  | *Todarodes* | *T.pacificus* |  |
+|  |  | *Ommastrephes* | *O. bartramii* |  |
+| Asteroidea | Valvatida | *Odontaster* | *O. meridionalis* | @hoegh-guldberg1995 |
+|  |  |  | *O. validus* |  |
+|  |  | *Asterina* | *A. miniata* |  |
+|  |  | *Acanthaster* | *A. planci* |  |
+
+# References
