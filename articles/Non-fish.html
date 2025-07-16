@@ -75,6 +75,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Non-fish examples</h1>
+                        <h4 data-toc-skip class="author">Morgan Sparks,
+Bryan M. Maitland</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/bmait101/hatchR/blob/master/vignettes/Non-fish.Rmd" class="external-link"><code>vignettes/Non-fish.Rmd</code></a></small>
@@ -86,11 +88,13 @@
 <p>Because poikilotherms largely have a similar mechanistic relationship
 with ambient temperature and developmental rates,
 <strong>hatchR</strong>, may easily be applied to other non-fish
-species. Unlike many examples in other articles, non-fish species will
-obviously rely exclusively on the <code><a href="../reference/fit_model.html">fit_model()</a></code> function for
-creating developmental models. An excellent starting place for potential
-model parameterization is the <a href="https://repdevo.com/" class="external-link">Reptile
-Developmental Database</a>.</p>
+species. Unlike many examples in other articles on this website,
+non-fish species will obviously rely exclusively on the
+<code><a href="../reference/fit_model.html">fit_model()</a></code> function for creating developmental models. An
+excellent starting place for potential model parameterization is the <a href="#model-sources">Model sources</a> section below.</p>
+<p>Here, we outline examples of how one can use developmental studies
+from peer-reviewed or grey literature to develop species- or
+population-specific models in a generalizeable format.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bmait101.github.io/hatchR/">hatchR</a></span><span class="op">)</span></span>
@@ -108,10 +112,10 @@ southern Canada, generally occupying the cold and fast-flowing habitat
 of headwater streams of the region. Compared to many other frog species,
 tailed frogs are comparatively slow growing and occupy colder
 habitats.</p>
-<p><span class="citation">Brown (1975)</span> raised coastal tailed
-frogs (<em>A. truei</em>) at temperatures ranging from 5-20 °C. Using
-those data we can easily parameterize a developmental model for coastal
-tailed frogs to be used in similar situations we present with fish.</p>
+<p>Brown (1975) raised coastal tailed frogs (<em>A. truei</em>) at
+temperatures ranging from 5-20 °C. Using those data we can easily
+parameterize a developmental model for coastal tailed frogs to be used
+in similar situations we present with fish.</p>
 <p>First we set up the raw data from the study and parameterize the
 model with <code><a href="../reference/fit_model.html">fit_model()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -124,7 +128,7 @@ model with <code><a href="../reference/fit_model.html">fit_model()</a></code>:</
 <span>                          species <span class="op">=</span> <span class="st">"ascaphus"</span>,</span>
 <span>                          development_type <span class="op">=</span> <span class="st">"hatch"</span><span class="op">)</span></span></code></pre></div>
 <p>To demonstrate the respective effective value at different daily
-temperatures we can evaluate our model across a vectory of daily
+temperatures we can evaluate our model across a vector of daily
 temperatures</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### get effective values</span></span>
@@ -174,15 +178,15 @@ temperature:</p>
 <p><img src="Non-fish_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="interspecific-developmental-rates-of-cabbage-beetles">Interspecific developmental rates of cabbage beetles<a class="anchor" aria-label="anchor" href="#interspecific-developmental-rates-of-cabbage-beetles"></a>
+<h2 id="multiple-populations-developmental-rates-of-cabbage-beetles">Multiple populations: developmental rates of cabbage beetles<a class="anchor" aria-label="anchor" href="#multiple-populations-developmental-rates-of-cabbage-beetles"></a>
 </h2>
 <p>The application of <strong>hatchR</strong> need not be limited to
 aquatic species, though many such putative species source data are
 available. Here we demonstrate how data from a clinal study on cabbage
 beetles (<em>Colaphellus bowringi</em>) from <span class="citation">Tang
 et al. (2017)</span> can be leveraged to understand population specific
-developmental rates. Here we show how we can develop effective value
-models for five separate populations.</p>
+developmental rates, by generating effective value models for five
+separate populations.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># vector of experimental temps</span></span>
 <span><span class="va">tang_temps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">19</span>, <span class="fl">22</span>, <span class="fl">24</span>, <span class="fl">26</span>, <span class="fl">28</span><span class="op">)</span></span>
@@ -211,7 +215,8 @@ models for five separate populations.</p>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"expression"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"expression"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Now we have our five beetle models stored as characters.</p>
+<p>Now we have our five beetle models stored as character strings (to be
+parsed and evaluated later on).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">beetle_mods</span></span>
 <span><span class="co">#&gt; [1] "1 / exp(5.17706892381201 - log(x + -9.0421606255981))" </span></span>
@@ -268,11 +273,392 @@ reaction norm.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Non-fish_files/figure-html/beetle-plot-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="model-sources">Model sources<a class="anchor" aria-label="anchor" href="#model-sources"></a>
+</h2>
+<p>The above examples are meant to inform how we can easily leverage the
+<code><a href="../reference/fit_model.html">fit_model()</a></code> function for paramereterizing developmental
+models for non-fish taxa. We recommend our other articles on this site
+for examples of how these models may be leveraged for applied and basic
+questions. We also stress that the assumptions made for fish (as well
+taxa-specific ones not outlined here) should be considered when applying
+these models. Here we provide a non-exhaustive list of putative model
+sources for parameterizing developmental models for non-fish
+organisms.</p>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Class</th>
+<th align="left">Order</th>
+<th align="left">Genus</th>
+<th align="left">Species</th>
+<th align="left">Study</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Amphibia</td>
+<td align="left">Anura</td>
+<td align="left"><em>Lithobates</em></td>
+<td align="left"><em>L. sylvaticus</em></td>
+<td align="left"><span class="citation">Moore (1939)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>L. pipiens</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>L. clamitans</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>L. palustris</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Ascaphus</em></td>
+<td align="left"><em>A. truei</em></td>
+<td align="left"><span class="citation">Herbert A. Brown
+(1975)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Urodela</td>
+<td align="left"><em>Ambystoma</em></td>
+<td align="left"><em>A. gracile</em></td>
+<td align="left"><span class="citation">Herbert A. Brown
+(1976)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Reptilia</td>
+<td align="left">Squamata</td>
+<td align="left"><em>Sceloporus</em></td>
+<td align="left"><em>S. undulatus</em></td>
+<td align="left"><span class="citation">Angilletta Jr., Winters, and
+Dunham (2000)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Podarcis</em></td>
+<td align="left"><em>P. muralis</em></td>
+<td align="left"><span class="citation">Van Damme et al.
+(1992)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Testudines</td>
+<td align="left"><em>Mauremys</em></td>
+<td align="left"><em>M. reevesii</em></td>
+<td align="left"><span class="citation">Du et al. (2007)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">181 species</td>
+<td align="left">141 studies in <span class="citation">While et al.
+(2018)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left">Insecta</td>
+<td align="left">Plecoptera</td>
+<td align="left"><em>Nemurella</em></td>
+<td align="left"><em>N. pictetii</em></td>
+<td align="left">
+<span class="citation">John E. Brittain (1978)</span> ,
+<span class="citation">Elliott (1984)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Capnia</em></td>
+<td align="left"><em>C. atra</em></td>
+<td align="left"><span class="citation">John E. Brittain, Lillehammer,
+and Saltveit (1984)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Capnia</em></td>
+<td align="left"><em>C. bifrons</em></td>
+<td align="left"><span class="citation">Elliott (1986)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Mesocapnia</em></td>
+<td align="left"><em>M. oenone</em></td>
+<td align="left"><span class="citation">John E. Brittain, Lillehammer,
+and Saltveit (1984)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Taeniopteryx</em></td>
+<td align="left"><em>T. nebulosa</em></td>
+<td align="left"><span class="citation">J. E. Brittain
+(1977)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Coleoptera</td>
+<td align="left"><em>Colaphellus</em></td>
+<td align="left"><em>C. bowringi</em></td>
+<td align="left"><span class="citation">Tang et al. (2017)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">18 species</td>
+<td align="left">Developmental equations in <span class="citation">Pritchard and Leggott (1987)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left">Malacostraca</td>
+<td align="left">Decapoda</td>
+<td align="left"><em>Pontastacus</em></td>
+<td align="left"><em>P. leptodactylus</em></td>
+<td align="left"><span class="citation">Aydın and Dilek
+(2004)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Copepoda</td>
+<td align="left">Calanoida</td>
+<td align="left">10 genera</td>
+<td align="left">28 species</td>
+<td align="left"><span class="citation">Forster, Hirst, and Woodward
+(2011)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Cyclopoida</td>
+<td align="left"><em>Limnoithona</em></td>
+<td align="left"><em>L. tetraspina</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Oithona</em></td>
+<td align="left"><em>O. davisae</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Harpacticoida</td>
+<td align="left"><em>Microsetella</em></td>
+<td align="left"><em>M. norvegica</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Mesochra</em></td>
+<td align="left"><em>M.lilljeborgi</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Poecilostomatoida</td>
+<td align="left"><em>Oncaea</em></td>
+<td align="left"><em>O. venusta</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Cephalopoda</td>
+<td align="left">Octopoda</td>
+<td align="left"><em>Octopus</em></td>
+<td align="left"><em>O. vulgaris</em></td>
+<td align="left"><span class="citation">Márquez, Larson, and Almansa
+(2021)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>O. mimus</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Myopsida</td>
+<td align="left"><em>Loligo</em></td>
+<td align="left"><em>L. vulgaris</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>L. reynaudii</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Oegopsida</td>
+<td align="left"><em>Illex</em></td>
+<td align="left"><em>I. coindetii</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>I. illecebrosus</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Todarodes</em></td>
+<td align="left"><em>T.pacificus</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Ommastrephes</em></td>
+<td align="left"><em>O. bartramii</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Asteroidea</td>
+<td align="left">Valvatida</td>
+<td align="left"><em>Odontaster</em></td>
+<td align="left"><em>O. meridionalis</em></td>
+<td align="left"><span class="citation">HOEGH-GULDBERG and PEARSE
+(1995)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>O. validus</em></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Asterina</em></td>
+<td align="left"><em>A. miniata</em></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><em>Acanthaster</em></td>
+<td align="left"><em>A. planci</em></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-angillettajr.2000" class="csl-entry">
+Angilletta Jr., Michael J., R. Scott Winters, and Arthur E. Dunham.
+2000. <span>“Thermal Effects on the Energetics of Lizard Embryos:
+Implications for Hatchling Phenotypes.”</span> <em>Ecology</em> 81 (11):
+2957–68. <a href="https://doi.org/10.1890/0012-9658(2000)081%5B2957:TEOTEO%5D2.0.CO;2" class="external-link">https://doi.org/10.1890/0012-9658(2000)081[2957:TEOTEO]2.0.CO;2</a>.
+</div>
+<div id="ref-aydin2004" class="csl-entry">
+Aydın, Hamdi, and M. Kamil Dilek. 2004. <span>“Effects of Different
+Water Temperatures on the Hatching Time and Survival Rates of the
+Freshwater Crayfish Astacus leptodactylus (Esch., 1823) Eggs.”</span>
+<em>Turkish Journal of Fisheries and Aquatic Sciences</em> 4 (2): –. <a href="https://dergipark.org.tr/en/pub/trjfas-ayrildi/issue/13289/160618" class="external-link">https://dergipark.org.tr/en/pub/trjfas-ayrildi/issue/13289/160618</a>.
+</div>
+<div id="ref-brittain1977" class="csl-entry">
+Brittain, J. E. 1977. <span>“The Effect of Temperature on the Egg
+Incubation Period of Taeniopteryx Nebulosa (Plecoptera).”</span>
+<em>Oikos</em> 29 (2): 302–5. <a href="https://doi.org/10.2307/3543618" class="external-link">https://doi.org/10.2307/3543618</a>.
+</div>
+<div id="ref-brittain1978" class="csl-entry">
+Brittain, John E. 1978. <span>“Semivoltinism in Mountain Populations of
+Nemurella Pictetii (Plecoptera).”</span> <em>Oikos</em> 30 (1): 1–6. <a href="https://doi.org/10.2307/3543518" class="external-link">https://doi.org/10.2307/3543518</a>.
+</div>
+<div id="ref-brittain1984" class="csl-entry">
+Brittain, John E., Albert Lillehammer, and Svein Jakob Saltveit. 1984.
+<span>“The Effect of Temperature on Intraspecific Variation in Egg
+Biology and Nymphal Size in the Stonefly, Capnia Atra
+(Plecoptera).”</span> <em>Journal of Animal Ecology</em> 53 (1): 161–69.
+<a href="https://doi.org/10.2307/4349" class="external-link">https://doi.org/10.2307/4349</a>.
+</div>
 <div id="ref-brown1975" class="csl-entry">
 Brown, Herbert A. 1975. <span>“Temperature and Development of the Tailed
 Frog, <em><span>Ascaphus</span> Truei</em>.”</span> <em>Comparative
 Biochemistry and Physiology Part A: Physiology</em> 50 (2): 397–405. <a href="https://doi.org/10.1016/0300-9629(75)90033-X" class="external-link">https://doi.org/10.1016/0300-9629(75)90033-X</a>.
+</div>
+<div id="ref-brown1976" class="csl-entry">
+Brown, Herbert A. 1976. <span>“The Time<span></span>temperature Relation
+of Embryonic Development in the Northwestern Salamander,
+<span><em>Ambystoma Gracile</em></span>.”</span> <em>Canadian Journal of
+Zoology</em> 54 (4): 552–58. <a href="https://doi.org/10.1139/z76-063" class="external-link">https://doi.org/10.1139/z76-063</a>.
+</div>
+<div id="ref-du2007" class="csl-entry">
+Du, Wei-Guo, Ling-Jun Hu, Jian-Lei Lu, and Ling-Jun Zhu. 2007.
+<span>“Effects of Incubation Temperature on Embryonic Development Rate,
+Sex Ratio and Post-Hatching Growth in the Chinese Three-Keeled Pond
+Turtle, <span><em>Chinemys Reevesii</em></span>.”</span>
+<em>Aquaculture</em> 272 (1): 747–53. <a href="https://doi.org/10.1016/j.aquaculture.2007.09.009" class="external-link">https://doi.org/10.1016/j.aquaculture.2007.09.009</a>.
+</div>
+<div id="ref-elliott1984" class="csl-entry">
+Elliott, J. M. 1984. <span>“Hatching Time and Growth of
+Nemurellapictetii (Plecoptera: Nemouridae) in the Laboratory and a Lake
+District Stream.”</span> <em>Freshwater Biology</em> 14 (5): 491–99. <a href="https://doi.org/10.1111/j.1365-2427.1984.tb00169.x" class="external-link">https://doi.org/10.1111/j.1365-2427.1984.tb00169.x</a>.
+</div>
+<div id="ref-elliott1986" class="csl-entry">
+———. 1986. <span>“The Effect of Temperature on the Egg Incubation Period
+of Capnia Bifrons (Plecoptera: Capniidae) from Windermere (English Lake
+District).”</span> <em>Holarctic Ecology</em> 9 (2): 113–16. <a href="https://www.jstor.org/stable/3682086" class="external-link">https://www.jstor.org/stable/3682086</a>.
+</div>
+<div id="ref-forster2011" class="csl-entry">
+Forster, Jack, Andrew G. Hirst, and Guy Woodward. 2011. <span>“Growth
+and Development Rates Have Different Thermal Responses.”</span> <em>The
+American Naturalist</em> 178 (5): 668–78. <a href="https://doi.org/10.1086/662174" class="external-link">https://doi.org/10.1086/662174</a>.
+</div>
+<div id="ref-hoegh-guldberg1995" class="csl-entry">
+HOEGH-GULDBERG, OVE, and JOHN S. PEARSE. 1995. <span>“Temperature, Food
+Availability, and the Development of Marine Invertebrate
+Larvae1.”</span> <em>American Zoologist</em> 35 (4): 415–25. <a href="https://doi.org/10.1093/icb/35.4.415" class="external-link">https://doi.org/10.1093/icb/35.4.415</a>.
+</div>
+<div id="ref-márquez2021" class="csl-entry">
+Márquez, Lorenzo, Majorie Larson, and Eduardo Almansa. 2021.
+<span>“Effects of Temperature on the Rate of Embryonic Development of
+Cephalopods in the Light of Thermal Time Applied to Aquaculture.”</span>
+<em>Reviews in Aquaculture</em> 13 (1): 706–18. <a href="https://doi.org/10.1111/raq.12495" class="external-link">https://doi.org/10.1111/raq.12495</a>.
+</div>
+<div id="ref-moore1939" class="csl-entry">
+Moore, John A. 1939. <span>“Temperature Tolerance and Rates of
+Development in the Eggs of Amphibia.”</span> <em>Ecology</em> 20 (4):
+459–78. <a href="https://doi.org/10.2307/1930439" class="external-link">https://doi.org/10.2307/1930439</a>.
+</div>
+<div id="ref-pritchard1987" class="csl-entry">
+Pritchard, G., and M. A. Leggott. 1987. <span>“Temperature, Incubation
+Rates and Origins of Dragonflies.”</span> <em>Advances in
+Odonatology</em> 3 (1): 121–26. <a href="https://natuurtijdschriften.nl/pub/593065" class="external-link">https://natuurtijdschriften.nl/pub/593065</a>.
 </div>
 <div id="ref-tang2017" class="csl-entry">
 Tang, Jianjun, Haimin He, Chao Chen, Shu Fu, and Fangsen Xue. 2017.
@@ -280,6 +666,19 @@ Tang, Jianjun, Haimin He, Chao Chen, Shu Fu, and Fangsen Xue. 2017.
 Rate and a Negative Latitudinal Body Weight Cline in a Widely
 Distributed Cabbage Beetle.”</span> <em>PLOS ONE</em> 12 (7): e0181030.
 <a href="https://doi.org/10.1371/journal.pone.0181030" class="external-link">https://doi.org/10.1371/journal.pone.0181030</a>.
+</div>
+<div id="ref-vandamme1992" class="csl-entry">
+Van Damme, Raoul, Dirk Bauwens, Florentino Braña, and Rudolf F.
+Verheyen. 1992. <span>“Incubation Temperature Differentially Affects
+Hatching Time, Egg Survival, and Hatchling Performance in the Lizard
+Podarcis Muralis.”</span> <em>Herpetologica</em> 48 (2): 220–28. <a href="https://www.jstor.org/stable/3892675" class="external-link">https://www.jstor.org/stable/3892675</a>.
+</div>
+<div id="ref-while2018" class="csl-entry">
+While, Geoffrey M., Daniel W. A. Noble, Tobias Uller, Daniel A. Warner,
+Julia L. Riley, Wei-Guo Du, and Lisa E. Schwanz. 2018. <span>“Patterns
+of Developmental Plasticity in Response to Incubation Temperature in
+Reptiles.”</span> <em>Journal of Experimental Zoology Part A: Ecological
+and Integrative Physiology</em> 329 (4-5): 162–76. <a href="https://doi.org/10.1002/jez.2181" class="external-link">https://doi.org/10.1002/jez.2181</a>.
 </div>
 </div>
 </div>
