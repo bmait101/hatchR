@@ -55,55 +55,63 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="hatchr-development-version">hatchR (development version)<a class="anchor" aria-label="anchor" href="#hatchr-development-version"></a></h2>
-<ul><li>add new article showing how to parameterize for <a href="https://bmait101.github.io/hatchR/articles/Non-fish.html">non-fish</a> (<a href="https://github.com/bmait101/hatchR/issues/65" class="external-link">#65</a>)</li>
-<li>fix test for ggplot object class (<a href="https://github.com/bmait101/hatchR/issues/61" class="external-link">#61</a>)</li>
-<li>added <a href="https://bmait101.github.io/hatchR/articles/Predict_spawning.html">Predict spawn</a> vignette for examples of using <code><a href="../reference/predict_spawn.html">predict_spawn()</a></code> function</li>
-<li>added new function <code><a href="../reference/predict_spawn.html">predict_spawn()</a></code> to take observed hatch or spawn events and back calculate when a parent spawned</li>
-<li>adding <a href="https://github.com/pfrater" class="external-link">@pfrater</a> and <a href="https://github.com/allisonswartz" class="external-link">@allisonswartz</a> as a contributors (should have been done for v0.3.2)</li>
-<li>secondary y-axis in <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code> now “Cumulative EF Values” and updated documentation (<a href="https://github.com/bmait101/hatchR/issues/43" class="external-link">#43</a>)</li>
-<li>added new vignette for launching Shiny app (<a href="https://github.com/bmait101/hatchR/issues/45" class="external-link">#45</a>)</li>
-<li>changed name of element <code>dev.period</code> to <code>dev_period</code> in <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> output; updated name throughout (<a href="https://github.com/bmait101/hatchR/issues/50" class="external-link">#50</a>)</li>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="hatchr-100">hatchR 1.0.0<a class="anchor" aria-label="anchor" href="#hatchr-100"></a></h2>
+<div class="section level3">
+<h3 id="major-updates-1-0-0">Major updates<a class="anchor" aria-label="anchor" href="#major-updates-1-0-0"></a></h3>
+<ul><li>New article on how to parameterize for non-fish organisms (<a href="https://github.com/bmait101/hatchR/issues/65" class="external-link">#65</a>).</li>
+<li>New article with examples of using <code><a href="../reference/predict_spawn.html">predict_spawn()</a></code>.</li>
+<li>New <code><a href="../reference/predict_spawn.html">predict_spawn()</a></code> takes event and back calculates spawn time (<a href="https://github.com/bmait101/hatchR/issues/46" class="external-link">#46</a>).</li>
+<li>New article for launching Shiny app (<a href="https://github.com/bmait101/hatchR/issues/45" class="external-link">#45</a>).</li>
 </ul></div>
+<div class="section level3">
+<h3 id="minor-updates-1-0-0">Minor updates<a class="anchor" aria-label="anchor" href="#minor-updates-1-0-0"></a></h3>
+<ul><li>Fix tests for ggplot object class (<a href="https://github.com/bmait101/hatchR/issues/61" class="external-link">#61</a>).</li>
+<li>Fix output labels in <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> (<a href="https://github.com/bmait101/hatchR/issues/58" class="external-link">#58</a>).</li>
+<li>In <code><a href="../reference/predict_phenology.html">predict_phenology()</a></code> output, changed <code>dev.period</code> to <code>dev_period</code> (<a href="https://github.com/bmait101/hatchR/issues/50" class="external-link">#50</a>).</li>
+<li>Fix secondary y-axis in <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code> (<a href="https://github.com/bmait101/hatchR/issues/43" class="external-link">#43</a>).</li>
+<li>Fix Austin et al ref in Shiny app deployment (<a href="https://github.com/bmait101/hatchR/issues/42" class="external-link">#42</a>).</li>
+<li>Add <a href="https://github.com/pfrater" class="external-link">@pfrater</a> and <a href="https://github.com/allisonswartz" class="external-link">@allisonswartz</a> as a contributors.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="hatchr-032">hatchR 0.3.2<a class="anchor" aria-label="anchor" href="#hatchr-032"></a></h2><p class="text-muted">CRAN release: 2025-03-05</p>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2"></a></h3>
-<ul><li>omitted “+ file LICENSE” from DESCRIPTION and the file itself</li>
-<li>ommited the email address from README</li>
+<h3 id="minor-updates-0-3-2">Minor updates<a class="anchor" aria-label="anchor" href="#minor-updates-0-3-2"></a></h3>
+<ul><li>Omitted “+ file LICENSE” from DESCRIPTION and the file itself.</li>
+<li>Ommited the email address from README.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="hatchr-031">hatchR 0.3.1<a class="anchor" aria-label="anchor" href="#hatchr-031"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
-<ul><li>added a missing dependency on R &gt;= 4.1.0 because package code uses the pipe syntax added in R 4.1.0</li>
+<h3 id="minor-updates-0-3-1">Minor updates<a class="anchor" aria-label="anchor" href="#minor-updates-0-3-1"></a></h3>
+<ul><li>Added a missing dependency on R &gt;= 4.1.0.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="hatchr-030">hatchR 0.3.0<a class="anchor" aria-label="anchor" href="#hatchr-030"></a></h2>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-0-3-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-3-0"></a></h3>
-<ul><li>fix <code>model_table</code> bug (<a href="https://github.com/bmait101/hatchR/issues/11" class="external-link">#11</a>) and add link to Shiny app (<a href="https://github.com/bmait101/hatchR/issues/12" class="external-link">#12</a>); (PR <a href="https://github.com/bmait101/hatchR/issues/13" class="external-link">#13</a>)</li>
-<li>new contributions from <a href="https://github.com/pfrater" class="external-link">@pfrater</a> (<a href="https://github.com/bmait101/hatchR/issues/26" class="external-link">#26</a>)
-<ul><li>added axis labels to make output plot from <code><a href="../reference/fit_model.html">fit_model()</a></code> more intuitive</li>
-<li>added second axis to <code><a href="../reference/plot_phenology.html">plot_phenology()</a></code>
-</li>
-</ul></li>
-<li>fix citations in <code>model_table</code> and throughout (<a href="https://github.com/bmait101/hatchR/issues/11" class="external-link">#11</a>)</li>
-<li>added minimum versions for all dependencies (<a href="https://github.com/bmait101/hatchR/issues/16" class="external-link">#16</a>)</li>
+<h3 id="minor-updates-0-3-0">Minor updates<a class="anchor" aria-label="anchor" href="#minor-updates-0-3-0"></a></h3>
+<ul><li>Fix <code>model_table</code> bug (<a href="https://github.com/bmait101/hatchR/issues/11" class="external-link">#11</a>) and add link to Shiny app (<a href="https://github.com/bmait101/hatchR/issues/12" class="external-link">#12</a>), (PR <a href="https://github.com/bmait101/hatchR/issues/13" class="external-link">#13</a>).</li>
+<li>
+<code>fit_model</code> axis labels more intuitive (<a href="https://github.com/bmait101/hatchR/issues/26" class="external-link">#26</a>).<br></li>
+<li>
+<code><a href="../reference/plot_phenology.html">plot_phenology()</a></code> gains second axis (<a href="https://github.com/bmait101/hatchR/issues/26" class="external-link">#26</a>).</li>
+<li>
+<code>model_table</code> citations fixed, and throughout package (<a href="https://github.com/bmait101/hatchR/issues/11" class="external-link">#11</a>).</li>
+<li>Added minimum versions for all dependencies (<a href="https://github.com/bmait101/hatchR/issues/16" class="external-link">#16</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="hatchr-020">hatchR 0.2.0<a class="anchor" aria-label="anchor" href="#hatchr-020"></a></h2>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-0-2-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-2-0"></a></h3>
+<h3 id="minor-updates-0-2-0">Minor updates<a class="anchor" aria-label="anchor" href="#minor-updates-0-2-0"></a></h3>
 <ul><li>
-<code>model_select</code> and <code>predict_phenology</code> tweaks (<a href="https://github.com/bmait101/hatchR/issues/1" class="external-link">#1</a>)</li>
-<li>fix <code>predict_phenology</code> <code>NaN</code> problem (<a href="https://github.com/bmait101/hatchR/issues/3" class="external-link">#3</a>)</li>
-<li>fix Isaak data (<a href="https://github.com/bmait101/hatchR/issues/5" class="external-link">#5</a>)</li>
-<li>function cleaning (<a href="https://github.com/bmait101/hatchR/issues/6" class="external-link">#6</a>)</li>
-<li>adding unit tests (<a href="https://github.com/bmait101/hatchR/issues/7" class="external-link">#7</a>)</li>
+<code>model_select</code> and <code>predict_phenology</code> tweaks (<a href="https://github.com/bmait101/hatchR/issues/1" class="external-link">#1</a>).</li>
+<li>Fix <code>predict_phenology</code> <code>NaN</code> problem (<a href="https://github.com/bmait101/hatchR/issues/3" class="external-link">#3</a>).</li>
+<li>Fix Isaak data (<a href="https://github.com/bmait101/hatchR/issues/5" class="external-link">#5</a>).</li>
+<li>Function cleaning (<a href="https://github.com/bmait101/hatchR/issues/6" class="external-link">#6</a>).</li>
+<li>Adding unit tests (<a href="https://github.com/bmait101/hatchR/issues/7" class="external-link">#7</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
