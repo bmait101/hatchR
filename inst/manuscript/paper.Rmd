@@ -27,7 +27,7 @@ Morgan M. Sparks^1,5,6^, Bryan M. Maitland^1,6^, Eli A. Felts^2^, Allison G. Swa
 
 ^2^Idaho Fish and Wildlife Conservation Office, U.S. Fish and Wildlife Service, Orofino, ID, USA
 
-^3^College of Forestry, Oregon State University, Corvallis, OR, USA
+^3^Forest Ecosystems and Society, Oregon State University, Corvallis, OR, USA
 
 ^4^Wisconsin Department of Natural Resources, Madison, WI, USA
 
@@ -116,7 +116,7 @@ grayling_ef$ef <- ef_vals[, 1]
 
 p1 <- grayling_mod$pred_plot +
   labs(x = "Developmental average temperature (°C)", y = "Days to hatch") +
-  lims(x = c(0,15)) +
+  lims(x = c(0,15), y = c(0,115)) +
   theme_classic()
 
 data_1 <- tibble(t = c(0:14), e = seq(0, 0.14, by = 0.01))
@@ -128,7 +128,7 @@ p2 <- grayling_ef |>
   geom_line(data = data_1, aes(x = t, y = e), linetype = "dashed") +
   # geom_abline(intercept = 0, slope = .01, linetype = "dashed") +
   labs(x = "Daily average temperature (°C)", y = "Effective value") +
-  lims(x = c(0,15)) +
+  lims(x = c(0,15), y = c(0,.17)) +
   theme_classic()
 
 figure_2 <- p1 + p2 + plot_annotation(tag_levels = "A")
@@ -264,7 +264,7 @@ bt_hatch <- model_select(
 )
 ```
 
-To predict hatch timing across these sites, we first set up the necessary models and data, using the built-in Bull Trout parameterization. We then map `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates each year (Early: September 1st, Peak: September 15th, Late: September 30th).
+To predict hatch timing across these sites, we first set up the necessary models and data, using the built-in Bull Trout parameterization. We then iterate `predict_phenology()` across all 139 sites, running predictions for three representative spawn dates each year (Early: September 1st, Peak: September 15th, Late: September 30th).
 
 ```{r, echo=FALSE}
 # apply predict_phenology() over multiple sites and spawn dates
@@ -286,65 +286,74 @@ hatch_res <- isaak_summ_bt |>
   mutate(days_to_hatch = stop - start)  # make a new column of days to hatch
 ```
 
-By mapping predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 3, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range and across years. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
+By iterating predictions across this broad spatial extent, we generate a large-scale assessment of Bull Trout phenology, illustrating how hatch timing varies across different spawning habitats. The results of this analysis are presented in Figure 3, providing insights into how hatch timing might vary under different thermal regimes and across the species' geographic range and across years. This case study underscores the power of **hatchR** for large-scale ecological applications, particularly in conservation planning and habitat suitability assessments.
 
-```{r plot-bt, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap=""}
-cut_ints <- date(
-  c(
-    "2011-08-31", "2012-08-31",
-    "2013-08-31", "2014-08-31",
-    "2015-08-31"
-  )
-)
+-   <div>
 
-# add year and spawn time factors for plotting
-hatch_factors <- hatch_res |>
-  mutate(year = cut(start,
-    breaks = cut_ints,
-    labels = c(2011:2014)
-  )) |>
-  # cut coerces our labels to factors, this changes them back to numbers
-  mutate(year = as.numeric(as.character(year))) |>
-  mutate(day = day(start)) |>
-  mutate(spawn_time = case_when(
-    day == 1 ~ "Early",
-    day == 15 ~ "Peak",
-    day == 30 ~ "Late"
-  )) |>
-  mutate(spawn_time = factor(
-    spawn_time,
-    levels = c("Late", "Peak", "Early"),
-    ordered = TRUE
-  ))
+    ```{r plot-bt, message=FALSE, echo=FALSE,  out.width='75%', fig.align='center', fig.cap=""}
+    cut_ints <- date(
+      c(
+        "2011-08-31", "2012-08-31",
+        "2013-08-31", "2014-08-31",
+        "2015-08-31"
+      )
+    )
 
-hatch_factors_sum <- hatch_factors |>
-  group_by(year, spawn_time, start) |>
-  summarise(
-    mean_hatch = ceiling(mean(days_to_hatch)),
-    hatch_5 = ceiling(quantile(days_to_hatch, probs = 0.05)),
-    hatch_95 = ceiling(quantile(days_to_hatch, probs = 0.95))
-  )
+    # add year and spawn time factors for plotting
+    hatch_factors <- hatch_res |>
+      mutate(year = cut(start,
+        breaks = cut_ints,
+        labels = c(2011:2014)
+      )) |>
+      # cut coerces our labels to factors, this changes them back to numbers
+      mutate(year = as.numeric(as.character(year))) |>
+      mutate(day = day(start)) |>
+      mutate(spawn_time = case_when(
+        day == 1 ~ "Early",
+        day == 15 ~ "Peak",
+        day == 30 ~ "Late"
+      )) |>
+      mutate(spawn_time = factor(
+        spawn_time,
+        levels = c("Late", "Peak", "Early"),
+        ordered = TRUE
+      ))
+
+    hatch_factors_sum <- hatch_factors |>
+      group_by(year, spawn_time, start) |>
+      summarise(
+        mean_hatch = ceiling(mean(days_to_hatch)),
+        hatch_5 = ceiling(quantile(days_to_hatch, probs = 0.05)),
+        hatch_95 = ceiling(quantile(days_to_hatch, probs = 0.95))
+      )
 
 
-figure_3 <- ggplot(
-  data = hatch_factors,
-  aes(
-    x = days_to_hatch,
-    y = spawn_time,
-    fill = spawn_time,
-    color = spawn_time
-  )
-) +
-  geom_density_ridges(alpha = 0.9) +
-  facet_wrap(~year, ncol = 1) +
-  scale_fill_brewer(palette = "Blues", direction = 1) +
-  scale_color_brewer(palette = "Blues", direction = 1) +
-  labs(x = "Days to hatch", y = "Spawn time") +
-  theme_classic() +
-  theme(legend.position = "none")
+    figure_3 <- ggplot(
+      data = hatch_factors,
+      aes(
+        x = days_to_hatch,
+        y = spawn_time,
+        fill = spawn_time,
+        color = spawn_time
+      )
+    ) +
+      geom_density_ridges(alpha = 0.9, scale = .99,
+                           jittered_points = TRUE,
+        position = position_points_jitter(width = 0.05, height = 0),
+        point_shape = '|', point_size = 1.5, point_alpha = 1, alpha = 0.7,
+      ) +
+      facet_wrap(~year, ncol = 1) +
+      expand_limits(y = c(1, 4)) +
+      scale_fill_brewer(palette = "Blues", direction = 1) +
+      scale_color_brewer(palette = "Blues", direction = 1) +
+      labs(x = "Days to hatch", y = "Spawn time") +
+      theme_classic() +
+      theme(legend.position = "none")
 
-ggsave("./manuscript_figures/Figure_3.pdf", figure_3, width = 3.5, height = 5, dpi = 1000)
-```
+    ggsave("./manuscript_figures/Figure_3.pdf", figure_3, width = 3.5, height = 5, dpi = 1000)
+    ```
+
+    </div>
 
 # Discussion
 
@@ -707,7 +716,7 @@ The authors declare no known conflicts of interest.
 
 # Data Availability
 
-**hatchR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The Rmardkdown document with all the code to reproduce the examples from this manuscript is available at <https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper.Rmd>. The latest version will be archived upon acceptance of the manuscript.
+**hatchR** is fully open source and reproducible. Source code and data can be found at <https://github.com/bmait101/hatchR/>. The Rmardkdown document with all the code to reproduce the examples from this manuscript is available at <https://github.com/bmait101/hatchR/blob/master/inst/manuscript/paper.Rmd>. The software and manuscript versions associated with the accepted manuscript are archived on the Releases page of the software GitHub (<https://github.com/bmait101/hatchR/releases>).
 
 # Ethics Statement
 
