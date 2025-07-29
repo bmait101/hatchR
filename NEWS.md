@@ -1,3 +1,9 @@
+# hatchR 1.0.1
+
+## Minor updates
+
+* Fix url with mark up elements. 
+
 # hatchR 1.0.0
 
 ## Major updates
