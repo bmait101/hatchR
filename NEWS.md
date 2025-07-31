@@ -1,3 +1,5 @@
+# hatchR (development version)
+
 # hatchR 1.0.1
 
 ## Minor updates
