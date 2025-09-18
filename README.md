@@ -3,7 +3,7 @@
 
 # hatchR <a href="https://bmait101.github.io/hatchR/"><img src="man/figures/logo.png" align="right" height="139" alt="hatchR website" /></a>
 
-[![publication](https://img.shields.io/badge/Cite-Unpublished-yellow)](https://github.com/bmait101/hatchR/blob/master/inst/CITATION)
+[![publication](https://img.shields.io/badge/Cite-Fisheries_2025-green)](https://doi.org/10.1093/fshmag/vuaf078)
 [![downloads](https://cranlogs.r-pkg.org/badges/hatchR)](https://cran.r-project.org/package=hatchR)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/hatchR)](https://cranlogs.r-pkg.org/)
 
@@ -20,9 +20,6 @@ parameterizations using external datasets. The package includes
 functions for model selection, phenology prediction, and visualization.
 **hatchR** is designed to be user-friendly and accessible to a wide
 range of users, including researchers, managers, and educators.
-
-A manuscript accompanying this package is *in press* at *Fisheries*,
-forthcoming this Fall.
 
 ## Installation
 

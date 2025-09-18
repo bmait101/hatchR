@@ -12,8 +12,9 @@ bibentry(
                  person(given  = "Paul",
                         family = "Frater")
                         ),
-  journal    = "CRAN",
+  journal    = "Fisheries",
   year       = "2025",
-  doi       = "10.32614/CRAN.package.hatchR",
-  url       = "https://github.com/bmait101/hatchR",
+  pages     = "vuaf078",
+  doi       = "10.1093/fshmag/vuaf078",
+  url       = "https://doi.org/10.1093/fshmag/vuaf078",
 )
